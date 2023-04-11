@@ -37,6 +37,32 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
-  }
+    "com.unity.modules.xr": "1.0.0",
+    "com.cysharp.zstring": "2.5.0",
+    "com.cysharp.unitask": "2.3.3",
+    "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0",
+    "com.faster-games.t4": "1.4.1",
+    "com.zbase.collections.pooled": "2.8.1",
+    "com.zbase.foundation.pooling": "2.3.1",
+    "com.zbase.foundation.pubsub": "1.1.1",
+    "com.zbase.unityscreennavigator": "1.2.1"
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.cysharp.unitask",
+        "com.cysharp.zstring",
+        "com.faster-games.t4",
+        "com.openupm",
+        "com.zbase.collections.pooled",
+        "com.zbase.foundation",
+        "com.zbase.foundation.pooling",
+        "com.zbase.foundation.pubsub",
+        "com.zbase.unityscreennavigator",
+        "org.nuget.system.runtime.compilerservices.unsafe"
+      ]
+    }
+  ]
 }
