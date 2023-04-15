@@ -1,15 +1,20 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityMoveBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior
+    public class EntityPhysicMoveBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IDisposeEntityBehavior
     {
+        [SerializeField]
+        private Rigidbody2D _rb;
+
         private IEntityPositionData _positionData;
         private IEntityControlData _controlData;
         private float _moveSpeed;
+        private CancellationTokenSource _fixedUpdateTokenSource;
 
         protected override UniTask<bool> BuildDataAsync(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
         {
@@ -23,6 +28,8 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 _moveSpeed = moveSpeedStat.TotalValue;
                 moveSpeedStat.OnValueChanged += OnStatChanged;
+                _fixedUpdateTokenSource = new CancellationTokenSource();
+                StartFixedUpdateAsync().Forget();
                 return UniTask.FromResult(true);
             }
 #if UNITY_EDITOR
@@ -39,16 +46,25 @@ namespace Runtime.Gameplay.EntitySystem
 #endif
         }
 
-        public void OnUpdate(float deltaTime)
+        private async UniTaskVoid StartFixedUpdateAsync()
         {
-            Vector3 nextPosition = _positionData.Position + deltaTime * _controlData.MoveDirection * _moveSpeed;
-            transform.position = nextPosition;
-            _positionData.Position = nextPosition;
+            while (true)
+            {
+                Vector3 nextPosition = _rb.position + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
+                _rb.MovePosition(nextPosition);
+                _positionData.Position = _rb.position;
+                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken: _fixedUpdateTokenSource.Token);
+            }
         }
 
         private void OnStatChanged(float updatedValue)
         {
             _moveSpeed = updatedValue;
+        }
+
+        public void Dispose()
+        {
+            _fixedUpdateTokenSource.Cancel();
         }
     }
 

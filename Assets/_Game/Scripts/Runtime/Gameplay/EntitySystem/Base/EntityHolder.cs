@@ -38,9 +38,12 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid StartUpdateAsync()
         {
-            foreach (var updateBehavior in UpdateBehaviors)
-                updateBehavior.OnUpdate(Time.deltaTime);
-            await UniTask.Yield(updateCancellationTokenSource.Token);
+            while (true)
+            {
+                foreach (var updateBehavior in UpdateBehaviors)
+                    updateBehavior.OnUpdate(Time.deltaTime);
+                await UniTask.Yield(updateCancellationTokenSource.Token);
+            }
         }
 
         public override void Dispose()

@@ -12,13 +12,13 @@ namespace Runtime.Gameplay.EntitySystem
         public ClipTransition clipTransition;
     }
 
-    public interface ICharacterAnimation
+    public interface IEntityAnimation
     {
         void Play(AnimationType animationType);
     }
 
     [RequireComponent(typeof(AnimancerComponent))]
-    public class AnimancerCharacterAnimation : MonoBehaviour, ICharacterAnimation
+    public class AnimancerEntityAnimation : MonoBehaviour, IEntityAnimation
     {
         [SerializeField] private AnimancerComponent _animancer;
         [SerializeField] private AnimancerAnimation[] _animations;

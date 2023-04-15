@@ -13,6 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
         public void Init()
         {
             InitStats();
+            InitControl();
         }
     }
 }

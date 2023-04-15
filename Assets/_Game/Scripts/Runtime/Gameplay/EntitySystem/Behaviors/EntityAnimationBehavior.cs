@@ -1,18 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class EntityAnimationBehavior : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EntityAnimationBehavior : EntityBehavior<IEntityControlData>
     {
-        
-    }
+        private IEntityControlData _controlData;
+        private IEntityAnimation[] _entityAnimations;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
+        {
+            if (data == null)
+                return UniTask.FromResult(false);
+
+            _entityAnimations = GetComponentsInChildren<IEntityAnimation>(true);
+            if (_entityAnimations.Length == 0)
+                return UniTask.FromResult(false);
+
+            _controlData = data;
+            _controlData.MovementChangedEvent += OnMovementChanged;
+
+            return UniTask.FromResult(true);
+        }
+
+        private void OnMovementChanged()
+        {
+            if (_controlData.MoveDirection != Vector2.zero)
+            {
+                PlayerAnimation(AnimationType.Run);
+            }    
+            else
+            {
+                PlayerAnimation(AnimationType.Idle);
+            }    
+        }
+
+        private void PlayerAnimation(AnimationType animationType)
+        {
+            foreach (var entityAnimation in _entityAnimations)
+            {
+                entityAnimation.Play(animationType);
+            }
+        }
     }
 }

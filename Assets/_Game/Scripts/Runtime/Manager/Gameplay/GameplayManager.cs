@@ -10,12 +10,14 @@ namespace Runtime.Manager.Gameplay
         [SerializeField]
         private EntityHolder entityHolder;
 
-        private void Awake()
+
+        private void Start()
         {
             var entityModel = new EntityModel();
             entityModel.Init();
             entityHolder.BuildAsync(entityModel).Forget();
         }
+
     }
 
 }

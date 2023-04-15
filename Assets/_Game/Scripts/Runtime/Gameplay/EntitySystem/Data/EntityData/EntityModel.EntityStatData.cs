@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected void InitStats()
         {
             statsDictionary = new();
-            statsDictionary.Add(StatType.MoveSpeed, new EntityStat(5));
+            statsDictionary.Add(StatType.MoveSpeed, new EntityStat(8));
         }
 
         public void BuffStat(StatType statType, float value, StatModifyType statModifyType)
