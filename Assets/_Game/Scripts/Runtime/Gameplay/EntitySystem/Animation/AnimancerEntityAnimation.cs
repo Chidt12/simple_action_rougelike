@@ -14,7 +14,9 @@ namespace Runtime.Gameplay.EntitySystem
 
     public interface IEntityAnimation
     {
+        void Init(IEntityControlData controlData);
         void Play(AnimationType animationType);
+        void Dispose();
     }
 
     [RequireComponent(typeof(AnimancerComponent))]
@@ -24,6 +26,8 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] private AnimancerAnimation[] _animations;
         [SerializeField] private ClipTransition _defaultState;
 
+        protected AnimationType currentAnimationType;
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -31,13 +35,21 @@ namespace Runtime.Gameplay.EntitySystem
         }
 #endif
 
-        public void Play(AnimationType animationType)
+        public virtual void Init(IEntityControlData controlData)
+        { }
+
+        public virtual void Play(AnimationType animationType)
         {
             var animation = _animations.FirstOrDefault(x => x.animationType == animationType);
+
+            currentAnimationType = animationType;
+
             if (animation.animationType == AnimationType.None)
                 _animancer.Play(_defaultState);
             else
                 _animancer.Play(animation.clipTransition);
         }
+
+        public virtual void Dispose() { }
     }
 }

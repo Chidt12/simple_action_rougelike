@@ -4,12 +4,15 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public partial class EntityModel : IEntityModifiedStatData
     {
+        protected HealthEntityStat healthStat; // for quick access.
         protected Dictionary<StatType, EntityStat> statsDictionary;
 
         protected void InitStats()
         {
             statsDictionary = new();
             statsDictionary.Add(StatType.MoveSpeed, new EntityStat(8));
+            healthStat = new HealthEntityStat(100);
+            statsDictionary.Add(StatType.Health, healthStat);
         }
 
         public void BuffStat(StatType statType, float value, StatModifyType statModifyType)

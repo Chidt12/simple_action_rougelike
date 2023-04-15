@@ -21,5 +21,6 @@ namespace Runtime.Gameplay.EntitySystem
         public Vector2 FaceDirection { get; }
         public IEntityPositionData Target { get; } // TODO: Put here properly ?
         void SetMoveDirection(Vector2 direction);
+        void SetFaceDirection(Vector2 faceDirection);
     }
 }

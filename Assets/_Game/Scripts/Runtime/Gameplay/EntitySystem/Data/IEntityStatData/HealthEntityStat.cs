@@ -12,6 +12,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public HealthEntityStat(float baseValue) : base(baseValue)
         {
+            currentValue = TotalValue;
         }
 
         public void Heal(float value)

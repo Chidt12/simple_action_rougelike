@@ -22,6 +22,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             ActionTriggeredEvent = _ => { };
             MovementChangedEvent = () => { };
+            DirectionChangedEvent = () => { };
         }
 
         public void SetMoveDirection(Vector2 value)
@@ -41,6 +42,15 @@ namespace Runtime.Gameplay.EntitySystem
                     isMoving = true;
                     MovementChangedEvent.Invoke();
                 }
+            }
+        }
+
+        public void SetFaceDirection(Vector2 faceDirection)
+        {
+            if(this.faceDirection != faceDirection)
+            {
+                this.faceDirection = faceDirection;
+                DirectionChangedEvent?.Invoke();
             }
         }
     }

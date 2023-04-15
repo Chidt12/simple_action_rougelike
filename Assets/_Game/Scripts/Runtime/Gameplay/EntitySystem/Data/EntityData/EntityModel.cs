@@ -10,6 +10,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         public uint EntityUID => uid;
 
+        public bool IsDead => healthStat.CurrentValue <= 0;
+
         public void Init()
         {
             InitStats();
