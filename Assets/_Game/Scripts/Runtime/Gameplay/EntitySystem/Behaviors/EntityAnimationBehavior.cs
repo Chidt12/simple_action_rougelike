@@ -3,9 +3,16 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    public enum UpdateFaceRightType
+    {
+        MoveDirection,
+        FaceDirection,
+    }
+
     public class EntityAnimationBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior
     {
         [SerializeField] private Transform _flipTransform;
+        [SerializeField] private UpdateFaceRightType _updateFaceRightType;
         private IEntityControlData _controlData;
         private IEntityAnimation[] _entityAnimations;
 
@@ -26,7 +33,11 @@ namespace Runtime.Gameplay.EntitySystem
 
             _controlData = data;
             _controlData.MovementChangedEvent += OnMovementChanged;
-            _controlData.DirectionChangedEvent += OnDirectionChanged;
+
+            if (_updateFaceRightType == UpdateFaceRightType.FaceDirection)
+                _controlData.DirectionChangedEvent += OnFaceRightUpdateByFaceDirection;
+            else if (_updateFaceRightType == UpdateFaceRightType.MoveDirection)
+                _controlData.MovementChangedEvent += OnFaceRightUpdateByMoveDirection;
 
             foreach (var item in _entityAnimations)
                 item.Init(_controlData);
@@ -46,16 +57,20 @@ namespace Runtime.Gameplay.EntitySystem
             }    
         }
 
-        private void OnDirectionChanged()
+        private void OnFaceRightUpdateByFaceDirection()
         {
             if (_controlData.FaceDirection.x > 0)
-            {
                 _flipTransform.localScale = new Vector2(1, 1);
-            }
             else
-            {
                 _flipTransform.localScale = new Vector2(-1, 1);
-            }
+        }
+
+        private void OnFaceRightUpdateByMoveDirection()
+        {
+            if (_controlData.MoveDirection.x > 0)
+                _flipTransform.localScale = new Vector2(1, 1);
+            else
+                _flipTransform.localScale = new Vector2(-1, 1);
         }
 
         private void PlayerAnimation(AnimationType animationType)

@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _flipTransform: {fileID: 6875883244934980057}
+  _updateFaceRightType: 1
 --- !u!114 &926233781
 MonoBehaviour:
   m_ObjectHideFlags: 0
