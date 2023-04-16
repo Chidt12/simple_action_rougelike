@@ -209,10 +209,10 @@ namespace Pathfinding.RVO {
 
 		[SerializeField]
 		[FormerlySerializedAs("ai")]
-		IAstarAI aiBackingField;
+		protected IAstarAI aiBackingField;
 
 		/// <summary>Cached reference to a movement script (if one is used)</summary>
-		protected IAstarAI ai {
+		protected virtual IAstarAI ai {
 			get {
 #if UNITY_EDITOR
 				if (aiBackingField == null && !Application.isPlaying) aiBackingField = GetComponent<IAstarAI>();
@@ -377,9 +377,11 @@ namespace Pathfinding.RVO {
 			simulator.RemoveAgent(rvoAgent);
 		}
 
-		void OnEnable () {
+		// Oriianl
+		public void Init (IAstarAI ai) {
+
 			tr = transform;
-			ai = GetComponent<IAstarAI>();
+			this.ai = ai;
 
 			var aiBase = ai as AIBase;
 			// Make sure the AI finds this component

@@ -879,6 +879,67 @@ namespace Pathfinding {
 			}
 		}
 
+		public virtual GridNodeBase GetNode(Vector3 position)
+		{
+			position = transform.InverseTransform(position);
+			float xf = position.x;
+			float zf = position.z;
+			int x = Mathf.Clamp((int)xf, 0, width - 1);
+			int z = Mathf.Clamp((int)zf, 0, depth - 1);
+			return GetNode(x, z);
+		}
+
+		public virtual Vector3 GetNodePosition(Vector3 position)
+		{
+			var node = GetNode(position);
+			return (Vector3)node.position;
+		}
+
+		public virtual bool IsValidNodePosition(Vector3 position)
+		{
+			position = transform.InverseTransform(position);
+			float xf = position.x;
+			float zf = position.z;
+			int x = Mathf.Clamp((int)xf, 0, width - 1);
+			int z = Mathf.Clamp((int)zf, 0, depth - 1);
+			return IsValidNodeIndex(x, z);
+		}
+
+		public virtual bool IsValidNodeIndex(int nodeIndexX, int nodeIndexY)
+		{
+			if (nodeIndexX < 0 || nodeIndexY < 0 || nodeIndexX >= width || nodeIndexY >= depth)
+				return false;
+			else
+				return true;
+		}
+
+		public virtual Vector2Int GetNodeIndex(Vector3 position)
+		{
+			position = transform.InverseTransform(position);
+			float xf = position.x;
+			float zf = position.z;
+			int x = Mathf.Clamp((int)xf, 0, width - 1);
+			int z = Mathf.Clamp((int)zf, 0, depth - 1);
+			return new Vector2Int(x, z);
+		}
+
+		public virtual void UpdateNodeStatus(Vector3 position)
+		{
+			position = transform.InverseTransform(position);
+			float xf = position.x;
+			float zf = position.z;
+			int x = Mathf.Clamp((int)xf, 0, width - 1);
+			int z = Mathf.Clamp((int)zf, 0, depth - 1);
+			if (!(x < 0 || z < 0 || x >= width || z >= depth))
+				RecalculateCell(x, z);
+		}
+
+		public void UpdateNodeStatus(int indexX, int indexY)
+		{
+			RecalculateCell(indexX, indexY);
+			CalculateConnectionsForCellAndNeighbours(indexX, indexY);
+		}
+
 		public override NNInfoInternal GetNearest (Vector3 position, NNConstraint constraint, GraphNode hint) {
 			if (nodes == null || depth*width != nodes.Length) {
 				return new NNInfoInternal();

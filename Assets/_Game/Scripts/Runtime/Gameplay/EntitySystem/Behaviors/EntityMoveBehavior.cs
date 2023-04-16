@@ -41,7 +41,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
-            Vector3 nextPosition = _positionData.Position + deltaTime * _controlData.MoveDirection * _moveSpeed;
+            Vector3 nextPosition = _positionData.Position + _controlData.MoveDelta * Mathf.CeilToInt(deltaTime) + deltaTime * _controlData.MoveDirection * _moveSpeed;
             transform.position = nextPosition;
             _positionData.Position = nextPosition;
         }

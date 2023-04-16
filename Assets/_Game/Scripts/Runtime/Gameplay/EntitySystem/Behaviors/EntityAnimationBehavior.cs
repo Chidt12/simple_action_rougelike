@@ -13,6 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         [SerializeField] private Transform _flipTransform;
         [SerializeField] private UpdateFaceRightType _updateFaceRightType;
+        [SerializeField] private bool _originalFaceRight;
         private IEntityControlData _controlData;
         private IEntityAnimation[] _entityAnimations;
 
@@ -47,7 +48,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnMovementChanged()
         {
-            if (_controlData.MoveDirection != Vector2.zero)
+            if (_controlData.IsMoving)
             {
                 PlayerAnimation(AnimationType.Run);
             }    
@@ -60,17 +61,18 @@ namespace Runtime.Gameplay.EntitySystem
         private void OnFaceRightUpdateByFaceDirection()
         {
             if (_controlData.FaceDirection.x > 0)
-                _flipTransform.localScale = new Vector2(1, 1);
+                _flipTransform.localScale = new Vector2(_originalFaceRight ? 1 : -1, 1);
             else
-                _flipTransform.localScale = new Vector2(-1, 1);
+                _flipTransform.localScale = new Vector2(_originalFaceRight ? -1 : 1, 1);
         }
 
         private void OnFaceRightUpdateByMoveDirection()
         {
-            if (_controlData.MoveDirection.x > 0)
-                _flipTransform.localScale = new Vector2(1, 1);
+            var moveVector = _controlData.MoveDirection != Vector2.zero ? _controlData.MoveDirection : _controlData.MoveDelta;
+            if (moveVector.x > 0)
+                _flipTransform.localScale = new Vector2(_originalFaceRight ? 1 : -1, 1);
             else
-                _flipTransform.localScale = new Vector2(-1, 1);
+                _flipTransform.localScale = new Vector2(_originalFaceRight ? -1 : 1, 1);
         }
 
         private void PlayerAnimation(AnimationType animationType)

@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         public override UniTask<bool> BuildAsync(IEntityData data)
         {
-            throw new System.NotImplementedException();
+            return UniTask.FromResult(false);
         }
     }
 }

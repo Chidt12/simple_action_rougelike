@@ -50,7 +50,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             while (true)
             {
-                Vector3 nextPosition = _rb.position + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
+                Vector3 nextPosition = _rb.position + _controlData.MoveDelta * Mathf.CeilToInt(Time.fixedDeltaTime) + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
                 _rb.MovePosition(nextPosition);
                 _positionData.Position = _rb.position;
                 await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken: _fixedUpdateTokenSource.Token);
