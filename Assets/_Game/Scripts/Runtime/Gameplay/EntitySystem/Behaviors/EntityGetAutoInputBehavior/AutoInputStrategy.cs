@@ -315,11 +315,16 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual void CheckFindPath()
         {
-            if (canFindNewPath)
+            if (CanFindPath())
             {
                 canFindNewPath = false;
                 FindNewPath();
             }
+        }
+
+        protected virtual bool CanFindPath()
+        {
+            return canFindNewPath;
         }
 
         protected abstract void FindNewPath();

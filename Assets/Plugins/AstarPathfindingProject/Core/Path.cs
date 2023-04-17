@@ -102,6 +102,11 @@ namespace Pathfinding {
 		public bool error { get { return CompleteState == PathCompleteState.Error; } }
 
 		/// <summary>
+		/// The path returned must have at least 2 points in the list, so this is a must check.
+		/// </summary>
+		public bool hasPath { get { return vectorPath.Count > 1; } }
+
+		/// <summary>
 		/// Additional info on why a path failed.
 		/// See: <see cref="AstarPath.logPathResults"/>
 		/// </summary>
