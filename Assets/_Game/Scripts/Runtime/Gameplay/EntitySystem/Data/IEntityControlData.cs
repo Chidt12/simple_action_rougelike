@@ -25,5 +25,6 @@ namespace Runtime.Gameplay.EntitySystem
         void SetMoveDirection(Vector2 direction);
         void SetFaceDirection(Vector2 faceDirection);
         void SetMoveDelta(Vector2 moveDelta);
+        void SetTarget(IEntityPositionData taret);
     }
 }

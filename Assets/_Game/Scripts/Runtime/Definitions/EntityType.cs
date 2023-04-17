@@ -3,7 +3,7 @@ namespace Runtime.Definition
     public enum EntityType
     {
         Hero,
-        Zombie,
+        Enemy,
         Object,
         Trap,
         Boss,

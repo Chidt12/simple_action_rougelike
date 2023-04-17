@@ -31,7 +31,7 @@ namespace Runtime.Gameplay.CollisionDetection
 
         public static CollisionSearchTargetType GetCollisionBodySearchType(this EntityType entityType)
         {
-            if (entityType == EntityType.Boss || entityType == EntityType.Zombie)
+            if (entityType == EntityType.Boss || entityType == EntityType.Enemy)
                 return CollisionSearchTargetType.Hero;
             else if (entityType == EntityType.Hero)
                 return CollisionSearchTargetType.ZombieAndObject;
@@ -40,7 +40,7 @@ namespace Runtime.Gameplay.CollisionDetection
 
         public static CollisionBodyType GetCollisionBodyType(this EntityType entityType)
         {
-            if (entityType == EntityType.Boss || entityType == EntityType.Zombie)
+            if (entityType == EntityType.Boss || entityType == EntityType.Enemy)
                 return CollisionBodyType.Zombie;
             else if (entityType == EntityType.Hero)
                 return CollisionBodyType.Hero;

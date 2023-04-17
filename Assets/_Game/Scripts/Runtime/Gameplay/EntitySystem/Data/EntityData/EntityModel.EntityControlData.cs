@@ -28,6 +28,11 @@ namespace Runtime.Gameplay.EntitySystem
             DirectionChangedEvent = () => { };
         }
 
+        public void SetTarget(IEntityPositionData positionData)
+        {
+            target = positionData;
+        }
+
         public void SetMoveDirection(Vector2 value)
         {
             var direction = value;

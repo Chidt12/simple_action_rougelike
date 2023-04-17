@@ -8,17 +8,30 @@ namespace Runtime.Manager.Gameplay
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
         [SerializeField]
-        private EntityHolder[] entityHolder;
+        private EntityHolder heroHolder;
+        [SerializeField]
+        private EntityHolder enemyHolder;
 
 
         private void Start()
         {
-            foreach (var item in entityHolder)
-            {
-                var entityModel = new EntityModel();
-                entityModel.Init();
-                item.BuildAsync(entityModel).Forget();
-            }
+            InitGameAsync().Forget();
+        }
+
+        private async UniTaskVoid InitGameAsync()
+        {
+            EntitiesManager.Instance.Initialize();
+
+            var heroModel = new EntityModel();
+
+            var enemyModel = new EntityModel();
+            enemyModel.Init(Definition.EntityType.Enemy, 2);
+            await enemyHolder.BuildAsync(enemyModel);
+
+            heroModel.Init(Definition.EntityType.Hero, 1);
+            await heroHolder.BuildAsync(heroModel);
+
+            EntitiesManager.Instance.CollectAllCurrentEntities();
         }
 
     }

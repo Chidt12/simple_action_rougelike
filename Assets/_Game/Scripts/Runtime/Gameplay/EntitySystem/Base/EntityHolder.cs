@@ -7,12 +7,18 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class EntityHolder : Disposable, IEntityHolder
     {
+        protected EntityModel entityModel;
+
         protected CancellationTokenSource updateCancellationTokenSource;
         private List<IUpdateEntityBehavior> UpdateBehaviors { get; set; }
         private List<IDisposeEntityBehavior> DisposableBehaviors { get; set; }
 
+        public EntityModel EntityModel => entityModel;
+
         public async UniTask<bool> BuildAsync(EntityModel entityModel)
         {
+            this.entityModel = entityModel;
+
             UpdateBehaviors = new();
             DisposableBehaviors = new();
 
