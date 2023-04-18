@@ -36,10 +36,7 @@ namespace Runtime.Gameplay.EntitySystem
                     }
                     else
                     {
-                        if (_controlData.MoveDirection != Vector2.zero)
-                            _controlData.SetFaceDirection(_controlData.MoveDirection);
-                        else
-                            _controlData.SetFaceDirection(_controlData.MoveDelta);
+                        _controlData.SetFaceDirection(_controlData.MoveDirection);
                     }
                     break;
                 case FaceDirectionType.MoveDirection:

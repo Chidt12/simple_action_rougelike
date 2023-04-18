@@ -357,10 +357,10 @@ GameObject:
   - component: {fileID: 6875883244815912859}
   - component: {fileID: 926233772}
   - component: {fileID: 926233771}
+  - component: {fileID: 7481569175909803089}
   - component: {fileID: 926233765}
   - component: {fileID: 926233767}
   - component: {fileID: 7249555408300571290}
-  - component: {fileID: 7481569175909803089}
   - component: {fileID: 926233775}
   - component: {fileID: 926233781}
   m_Layer: 8
@@ -436,6 +436,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!210 &7481569175909803089
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875883244815912860}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
 --- !u!114 &926233765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,17 +484,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 926233771}
---- !u!210 &7481569175909803089
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6875883244815912860}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
 --- !u!114 &926233775
 MonoBehaviour:
   m_ObjectHideFlags: 0

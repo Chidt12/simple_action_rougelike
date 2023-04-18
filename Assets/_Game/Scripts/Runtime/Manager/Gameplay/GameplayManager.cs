@@ -26,10 +26,12 @@ namespace Runtime.Manager.Gameplay
 
             var enemyModel = new EntityModel();
             enemyModel.Init(Definition.EntityType.Enemy, 2);
-            await enemyHolder.BuildAsync(enemyModel);
+            if(enemyHolder)
+                await enemyHolder.BuildAsync(enemyModel);
 
             heroModel.Init(Definition.EntityType.Hero, 1);
-            await heroHolder.BuildAsync(heroModel);
+            if(heroHolder)
+                await heroHolder.BuildAsync(heroModel);
 
             EntitiesManager.Instance.CollectAllCurrentEntities();
         }

@@ -18,6 +18,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             _positionData = positionData;
             _controlData = controlData;
+            _positionData.Position = transform.position;
 
             if (entityStatData.TryGetStat(StatType.MoveSpeed, out var moveSpeedStat))
             {
@@ -41,8 +42,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
-            Vector3 nextPosition = _positionData.Position + _controlData.MoveDelta * Mathf.CeilToInt(deltaTime) + deltaTime * _controlData.MoveDirection * _moveSpeed;
-            transform.position = nextPosition;
+            Vector3 nextPosition = _positionData.Position +  _controlData.MoveDirection.normalized * _moveSpeed * deltaTime;
+            transform.position = Vector2.MoveTowards(_positionData.Position, nextPosition, _moveSpeed * deltaTime);
             _positionData.Position = nextPosition;
         }
 

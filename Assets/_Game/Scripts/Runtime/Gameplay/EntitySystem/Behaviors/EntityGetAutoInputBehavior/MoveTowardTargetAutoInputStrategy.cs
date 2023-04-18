@@ -9,15 +9,17 @@ namespace Runtime.Gameplay.EntitySystem
         private static float s_stoppingDistance = 0.5f;
         private float _castRange;
 
-        public MoveTowardTargetAutoInputStrategy(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange, CustomRVOController rvoController) 
-            : base(positionData, controlData, statData, castRange, rvoController)
+        public MoveTowardTargetAutoInputStrategy(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange) 
+            : base(positionData, controlData, statData, castRange)
         {
             _castRange = castRange;
         }
 
         protected override bool CanFindPath()
         {
-            return base.CanFindPath() && ControlData.Target != null && !ControlData.Target.IsDead;
+            return base.CanFindPath() 
+                && ControlData.Target != null 
+                && !ControlData.Target.IsDead;
         }
 
         protected override void FindNewPath() => RunFindPathToTarget();
@@ -31,10 +33,18 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnRunFindPathToTargetComplete(Path path)
         {
+            currentRefindTargetTime = 0.0f;
             if (!path.error && path.hasPath)
+            {
                 PathFoundCompleted(path);
+            }
             else
-                RunFindPathToAroundTarget();
+            {
+                canFindNewPath = true;
+                var distance = Vector2.Distance(PositionData.Position, ControlData.Target.Position);
+                if (ControlData.Target != null && distance < s_stoppingDistance + Time.deltaTime * moveSpeed)
+                    currentRefindTargetTime = 0;
+            }
         }
 
         private void RunFindPathToAroundTarget()
@@ -62,7 +72,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnRunFindPathRandomlyComplete(Path path)
         {
-            if (!path.error && path.hasPath)
+            if (!path.error && (path.hasPath && Vector2.Distance(ControlData.Target.Position, PositionData.Position) > s_stoppingDistance))
             {
                 PathFoundCompleted(path);
             }
@@ -82,25 +92,26 @@ namespace Runtime.Gameplay.EntitySystem
                 return;
             }
 
+            // Make a move.
+            Move();
+
             if (!IsObscured())
             {
                 // If the chased target is now near the character by the skill cast range, then stop chasing and send a trigger skill usage.
-                if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) <= _castRange * _castRange)
+                var distanceToTarget = Vector2.Distance(ControlData.Target.Position, PositionData.Position);
+                if (distanceToTarget <=  _castRange)
                 {
                     // TRIGGER SKILL OR SOMETHING.
+                    return;
                 }
 
                 // If the target has moved far from the destination where the character was supposed to move to, then find another new path.
                 if (Vector2.SqrMagnitude(ControlData.Target.Position - moveToPosition) >= refindTargetThresholdSqr && currentRefindTargetTime > RefindTargetMinTime)
                 {
-                    currentRefindTargetTime = 0.0f;
-                    RefindNewPath();
+                    ResetToRefindNewPath();
                     return;
                 }
             }
-
-            // Make a move.
-            Move();
         }
     }
 }

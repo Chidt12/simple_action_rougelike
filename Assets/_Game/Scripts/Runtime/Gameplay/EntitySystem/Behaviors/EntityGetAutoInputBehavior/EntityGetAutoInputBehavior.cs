@@ -5,8 +5,6 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class EntityGetAutoInputBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior , IDisposeEntityBehavior
     {
-        [SerializeField]
-        private CustomRVOController _rvoController;
         private IAutoInputStrategy _autoInputStrategy;
 
         public void Dispose()
@@ -21,7 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override UniTask<bool> BuildDataAsync(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData)
         {
-            _autoInputStrategy = new MoveTowardTargetAutoInputStrategy(positionData, controlData, statData, 5f, _rvoController);
+            _autoInputStrategy = new MoveTowardTargetAutoInputStrategy(positionData, controlData, statData, 0.5f);
             return UniTask.FromResult(true);
         }
 

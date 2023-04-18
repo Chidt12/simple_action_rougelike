@@ -68,7 +68,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnFaceRightUpdateByMoveDirection()
         {
-            var moveVector = _controlData.MoveDirection != Vector2.zero ? _controlData.MoveDirection : _controlData.MoveDelta;
+            var moveVector = _controlData.MoveDirection;
             if (moveVector.x > 0)
                 _flipTransform.localScale = new Vector2(_originalFaceRight ? 1 : -1, 1);
             else

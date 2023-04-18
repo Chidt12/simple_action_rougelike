@@ -3,7 +3,7 @@ using System;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public interface IAutoInputStrategy : IDisposable, IAstarAI
+    public interface IAutoInputStrategy : IDisposable
     {
         void Update();
     }
