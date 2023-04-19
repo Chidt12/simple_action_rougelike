@@ -18,6 +18,10 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected static readonly float RefindTargetBonusRange = 2.0f;
         protected static readonly float RefindTargetMinTime = 1f;
+
+        protected static readonly int RandomMoveSearchSlotsCount = 3;
+        protected static readonly int RandomMoveSearchSpreadSlotsCount = 2;
+
         protected static readonly float CheckObscurationFragmentDistance = 1 / 5.0f;
         protected static readonly float CheckSideObscurationCount = 0;
 
@@ -30,6 +34,8 @@ namespace Runtime.Gameplay.EntitySystem
         protected float refindTargetThresholdSqr;
         protected float currentRefindTargetTime;
 
+        protected int randomMoveSearchLength;
+        protected int randomMoveSearchSpreadLength;
 
         protected List<Vector3> pathPositions;
         protected Vector2 moveToPosition;
@@ -57,6 +63,9 @@ namespace Runtime.Gameplay.EntitySystem
             stopChasingTargetDistanceSqr = castRange * castRange;
             stopChasingTargetDistance = castRange;
             refindTargetThresholdSqr = (castRange + RefindTargetBonusRange) * (castRange + RefindTargetBonusRange);
+
+            randomMoveSearchLength = Mathf.CeilToInt(RandomMoveSearchSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
+            randomMoveSearchSpreadLength = Mathf.CeilToInt(RandomMoveSearchSpreadSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
 
             if (statData.TryGetStat(StatType.MoveSpeed, out var statSpeed))
             {

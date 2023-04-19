@@ -19,7 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override UniTask<bool> BuildDataAsync(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData)
         {
-            _autoInputStrategy = new MoveTowardTargetAutoInputStrategy(positionData, controlData, statData, 0.5f);
+            _autoInputStrategy = new KeepDistanceToTargetAutoInputStrategy(positionData, controlData, statData, 4f);
             return UniTask.FromResult(true);
         }
 
