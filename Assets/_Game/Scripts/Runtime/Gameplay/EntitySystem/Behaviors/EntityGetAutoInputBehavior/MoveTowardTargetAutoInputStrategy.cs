@@ -19,7 +19,8 @@ namespace Runtime.Gameplay.EntitySystem
         {
             return base.CanFindPath() 
                 && ControlData.Target != null 
-                && !ControlData.Target.IsDead;
+                && !ControlData.Target.IsDead
+                && Vector2.Distance(PositionData.Position, ControlData.Target.Position) > s_stoppingDistance;
         }
 
         protected override void FindNewPath() => RunFindPathToTarget();
@@ -41,45 +42,6 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 canFindNewPath = true;
-                var distance = Vector2.Distance(PositionData.Position, ControlData.Target.Position);
-                if (ControlData.Target != null && distance < s_stoppingDistance + Time.deltaTime * moveSpeed)
-                    currentRefindTargetTime = 0;
-            }
-        }
-
-        private void RunFindPathToAroundTarget()
-        {
-            MapManager.Instance.FindNeighbourTargetPath(PositionData.Position,
-                                                        ControlData.Target.Position,
-                                                        OnRunFindPathToAroundTargetComplete);
-        }
-
-        private void OnRunFindPathToAroundTargetComplete(Path path)
-        {
-            if (!path.error && path.hasPath)
-                PathFoundCompleted(path);
-            else
-                RunFindPathRandomly();
-        }
-
-        private void RunFindPathRandomly()
-        {
-            MapManager.Instance.FindNeighbourEmptyPath(PositionData.Position,
-                                                       randomMoveSearchLength,
-                                                       randomMoveSearchSpreadLength,
-                                                       OnRunFindPathRandomlyComplete);
-        }
-
-        private void OnRunFindPathRandomlyComplete(Path path)
-        {
-            if (!path.error && (path.hasPath && Vector2.Distance(ControlData.Target.Position, PositionData.Position) > s_stoppingDistance))
-            {
-                PathFoundCompleted(path);
-            }
-            else
-            {
-                canFindNewPath = true;
-                hasFoundAPath = false;
             }
         }
 

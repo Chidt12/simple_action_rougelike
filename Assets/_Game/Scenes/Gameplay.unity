@@ -3370,7 +3370,6 @@ GameObject:
   - component: {fileID: 8043680452385606914}
   - component: {fileID: 8043680452385606942}
   - component: {fileID: 8043680452385606944}
-  - component: {fileID: 8043680452385606943}
   - component: {fileID: 8043680452385606945}
   - component: {fileID: 8043680452385606946}
   m_Layer: 7
@@ -3704,33 +3703,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42466a96407794f48b01c4281e0afdb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8043680452385606943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3516448882501858859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89803ea8a34eb58429affe3c40b401a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 2
-  radiusBackingField: 0.5
-  heightBackingField: 2
-  centerBackingField: 1
-  locked: 0
-  lockWhenNotMoving: 0
-  agentTimeHorizon: 0.6
-  obstacleTimeHorizon: 0.2
-  maxNeighbours: 10
-  layer: 1
-  collidesWith: -1
-  wallAvoidForce: 1
-  wallAvoidFalloff: 1
-  priority: 0.5
-  debug: 0
 --- !u!114 &8043680452385606944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3743,7 +3715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc71e4e1b75649c43b888bc550cc84ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rvoController: {fileID: 8043680452385606943}
 --- !u!114 &8043680452385606945
 MonoBehaviour:
   m_ObjectHideFlags: 0
