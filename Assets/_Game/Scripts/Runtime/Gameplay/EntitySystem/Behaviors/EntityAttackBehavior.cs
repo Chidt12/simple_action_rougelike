@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,19 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-
-    public class EntityAttackBehavior : MonoBehaviour
+    public class EntityAttackBehavior : EntityBehavior<IEntityControlData>
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        private IEntityControlData controlData;
 
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
+        {
+            controlData.TriggerAttack += OnTriggerAttack;
+            return UniTask.FromResult(true);
         }
 
-        // Update is called once per frame
-        void Update()
+        private void OnTriggerAttack(int index)
         {
-
+            
         }
     }
 }

@@ -26,11 +26,11 @@ namespace Runtime.Gameplay.EntitySystem
 
             if (Input.GetMouseButtonDown(0))
             {
-                _controlData.ActionTriggeredEvent.Invoke(ActionInputType.Attack1);
+                _controlData.TriggerAttack.Invoke(0);
             }
             if (Input.GetMouseButtonDown(1))
             {
-                _controlData.ActionTriggeredEvent.Invoke(ActionInputType.Attack2);
+                _controlData.TriggerAttack.Invoke(1);
             }
         }
     }

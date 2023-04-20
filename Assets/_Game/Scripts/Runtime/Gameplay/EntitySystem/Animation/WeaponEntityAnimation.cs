@@ -6,7 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
     public class WeaponEntityAnimation : AnimancerEntityAnimation
     {
         [SerializeField] private Transform[] _vfxSpawners;
-        [SerializeField] private bool _canRotate;
+        [SerializeField] private bool _rotateTowardFaceDirection;
         [SerializeField] private Transform _flipPivotTransform;
         [SerializeField] private Transform _rotateTransform;
 
@@ -23,7 +23,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             if(currentAnimationType == AnimationType.None || currentAnimationType == AnimationType.Idle || currentAnimationType == AnimationType.Run)
             {
-                if (_canRotate)
+                if (_rotateTowardFaceDirection)
                 {
                     var toRotation = _controlData.FaceDirection.ToQuaternion(0);
                     _rotateTransform.rotation = Quaternion.RotateTowards(_rotateTransform.rotation, toRotation, ROTATE_SPEED * Time.deltaTime);

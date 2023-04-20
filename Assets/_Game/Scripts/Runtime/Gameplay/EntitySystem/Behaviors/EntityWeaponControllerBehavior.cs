@@ -6,7 +6,6 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class EntityWeaponControllerBehavior : MonoBehaviour
     {
-        // Who control faceright => movement, attack direction
-        // attack direction => control by weapon / pattern of character
+         
     }
 }
