@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
-public class EntityUseSkillBehavior : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData>
     {
-        
-    }
+        private IEntityControlData _controlData;
+        private ISkillStrategy[] _skillStrategies;
+        private CancellationTokenSource[] _skillCooldownCancellationTokenSource;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
+        {
+            _controlData = data;
+            return UniTask.FromResult(true);
+        }
     }
 }

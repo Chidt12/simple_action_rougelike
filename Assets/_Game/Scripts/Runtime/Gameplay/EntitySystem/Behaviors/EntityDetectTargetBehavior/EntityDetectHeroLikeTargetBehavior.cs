@@ -28,11 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
             return UniTask.FromResult(true);
         }
 
-        private void OnHeroSpawned()
-        {
-            SearchForHero();
-        }
-
+        private void OnHeroSpawned() => SearchForHero();
 
         private void SearchForHero()
         {
