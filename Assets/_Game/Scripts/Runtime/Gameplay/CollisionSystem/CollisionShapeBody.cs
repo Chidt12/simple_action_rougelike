@@ -1,17 +1,19 @@
-using UnityEngine;
 using Runtime.Gameplay.CollisionDetection;
+using System;
+using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
     [RequireComponent(typeof(Collider2D))]
-    public class CollisionBody : Disposable, ICollisionBody
+    public abstract class CollisionShapeBody : Disposable, ICollisionBody
     {
         #region Members
 
         [SerializeField]
         private CollisionSearchTargetType _collisionBodySearchType = CollisionSearchTargetType.All;
+        [SerializeField]
+        private CollisionBodyType _collisionBodyType = CollisionBodyType.Default;
         private ICollisionShape _collisionShape;
-        private Collider2D _collider;
 
         #endregion Members
 
@@ -20,18 +22,19 @@ namespace Runtime.Gameplay.EntitySystem
         public int RefId { get; set; }
         public ICollisionShape CollisionShape => _collisionShape;
         public CollisionSearchTargetType CollisionSearchTargetType => _collisionBodySearchType;
-        public Vector2 CollisionSystemPosition => _collider.bounds.center;
-        public Collider2D Collider => _collider;
-        public CollisionBodyType CollisionBodyType => CollisionBodyType.Default;
+        public Vector2 CollisionSystemPosition => transform.position;
+        public Collider2D Collider => null;
+        public CollisionBodyType CollisionBodyType => _collisionBodyType;
+
+        protected Action<CollisionResult, ICollisionBody> OnCollisionEvent { get; set;}
 
         #endregion Properties
 
         #region API Methods
 
-        private void OnEnable()
+        public void Init()
         {
-            _collider = gameObject.GetComponent<Collider2D>();
-            _collisionShape = this.CreateCollisionShape(_collider);
+            _collisionShape = CreateShape();
             HasDisposed = false;
             CollisionSystem.Instance.AddBody(this);
         }
@@ -43,7 +46,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Class Methods
 
-        public void OnCollision(CollisionResult result, ICollisionBody other) { }
+        protected abstract ICollisionShape CreateShape();
+
+        public void OnCollision(CollisionResult result, ICollisionBody other) => OnCollisionEvent?.Invoke(result, other);
 
         public override void Dispose()
         {

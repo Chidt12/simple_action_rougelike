@@ -8,9 +8,11 @@ namespace Runtime.Gameplay.CollisionDetection
     {
         None = -1,
         All = 0,
-        ZombieAndObject = 1,
+        EnemyAndObject = 1,
         Hero = 2,
         Projectile = 3,
+        Enemy = 4,
+        Object = 5
     }
 
     public enum CollisionBodyType
@@ -34,7 +36,7 @@ namespace Runtime.Gameplay.CollisionDetection
             if (entityType == EntityType.Boss || entityType == EntityType.Enemy)
                 return CollisionSearchTargetType.Hero;
             else if (entityType == EntityType.Hero)
-                return CollisionSearchTargetType.ZombieAndObject;
+                return CollisionSearchTargetType.EnemyAndObject;
             return CollisionSearchTargetType.All;
         }
 

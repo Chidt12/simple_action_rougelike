@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         protected EntityModel entityModel;
 
-        protected CancellationTokenSource updateCancellationTokenSource;
+        protected CancellationTokenSource disposeCancellationTokenSource;
         private List<IUpdateEntityBehavior> UpdateBehaviors { get; set; }
         private List<IDisposeEntityBehavior> DisposableBehaviors { get; set; }
 
@@ -21,12 +21,13 @@ namespace Runtime.Gameplay.EntitySystem
 
             UpdateBehaviors = new();
             DisposableBehaviors = new();
+            disposeCancellationTokenSource = new CancellationTokenSource();
 
             var behaviors = GetComponents<IEntityBehavior>();
             var activatedBehaviors = new List<IEntityBehavior>();
             foreach (var behavior in behaviors)
             {
-                var result = await behavior.BuildAsync(entityModel);
+                var result = await behavior.BuildAsync(entityModel, disposeCancellationTokenSource.Token);
                 if (result)
                 {
                     activatedBehaviors.Add(behavior);
@@ -37,7 +38,6 @@ namespace Runtime.Gameplay.EntitySystem
                 }
             }
 
-            updateCancellationTokenSource = new CancellationTokenSource();
             StartUpdateAsync().Forget();
             return true;
         }
@@ -48,13 +48,13 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 foreach (var updateBehavior in UpdateBehaviors)
                     updateBehavior.OnUpdate(Time.deltaTime);
-                await UniTask.Yield(updateCancellationTokenSource.Token);
+                await UniTask.Yield(disposeCancellationTokenSource.Token);
             }
         }
 
         public override void Dispose()
         {
-            updateCancellationTokenSource?.Cancel();
+            disposeCancellationTokenSource?.Cancel();
             foreach (var item in DisposableBehaviors)
                 item.Dispose();
         }

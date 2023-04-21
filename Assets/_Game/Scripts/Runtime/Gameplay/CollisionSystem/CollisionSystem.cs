@@ -22,10 +22,9 @@ namespace Runtime.Gameplay.CollisionDetection
         private ICollisionBody[] _bodyList = new ICollisionBody[MAX_COLLISION_BODIES];
         private HashSet<int> _collidedPair = new HashSet<int>();
         private List<int> _collidedPairCache = new List<int>();
-        private QuadTree[] _quadTrees = new QuadTree[4];
+        private QuadTree[] _quadTrees = new QuadTree[6];
         private Queue<int> _refIdsQueue = new Queue<int>();
         private int _currentBodyCount;
-        private bool _justAddBody;
 
         #endregion Members
 
@@ -59,10 +58,11 @@ namespace Runtime.Gameplay.CollisionDetection
         public void InitQuadTree(RectConfig rect, int maxBodiesPerNode = 6, int maxLevel = 6)
         {
             _quadTrees[(int)CollisionSearchTargetType.All] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
-            _quadTrees[(int)CollisionSearchTargetType.ZombieAndObject] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
+            _quadTrees[(int)CollisionSearchTargetType.EnemyAndObject] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
             _quadTrees[(int)CollisionSearchTargetType.Hero] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
             _quadTrees[(int)CollisionSearchTargetType.Projectile] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
-            _justAddBody = false;
+            _quadTrees[(int)CollisionSearchTargetType.Enemy] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
+            _quadTrees[(int)CollisionSearchTargetType.Object] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
         }
 
         public void Dispose()
@@ -79,14 +79,7 @@ namespace Runtime.Gameplay.CollisionDetection
                 {
                     body.RefId = _refIdsQueue.Dequeue();
                     _bodyList[body.RefId] = body;
-                    try
-                    {
-                        AddBodyToQuadTree(body);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e);
-                    }
+                    AddBodyToQuadTree(body);
                 }
                 else if (_currentBodyCount < MAX_COLLISION_BODIES)
                 {
@@ -105,20 +98,25 @@ namespace Runtime.Gameplay.CollisionDetection
             switch (collisionBody.CollisionBodyType)
             {
                 case CollisionBodyType.Default:
-                    _quadTrees[(int)CollisionSearchTargetType.All]?.AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Hero:
-                    _quadTrees[(int)CollisionSearchTargetType.Hero]?.AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All]?.AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.Hero].AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Zombie:
+                    _quadTrees[(int)CollisionSearchTargetType.Enemy].AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.EnemyAndObject]?.AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
+                    break;
                 case CollisionBodyType.Object:
-                    _quadTrees[(int)CollisionSearchTargetType.ZombieAndObject]?.AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All]?.AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.Object].AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.EnemyAndObject]?.AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Projectile:
-                    _quadTrees[(int)CollisionSearchTargetType.Projectile]?.AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All]?.AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.Projectile].AddBody(collisionBody.RefId);
+                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Trap:
                 case CollisionBodyType.DamageArea:
@@ -127,8 +125,6 @@ namespace Runtime.Gameplay.CollisionDetection
                 default:
                     break;
             }
-
-            _justAddBody = true;
         }
 
         public bool RemoveBody(ICollisionBody body)
@@ -172,12 +168,6 @@ namespace Runtime.Gameplay.CollisionDetection
 
         public void Step()
         {
-            if (!_justAddBody)
-            {
-                _justAddBody = false;
-                return;
-            }
-
             // Get collided pair and remove pair not collide anymore.
             for (int i = 0; i <= _currentBodyCount; i++)
             {

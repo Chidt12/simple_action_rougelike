@@ -8,6 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
         Action<int> TriggerAttack { get; set; }
         Action MovementChangedEvent { get; set; }
         Action DirectionChangedEvent { get; set; }
+
         public Vector2 MoveDirection { get; }
         public bool IsMoving { get; }
         public Vector2 FaceDirection { get; }
