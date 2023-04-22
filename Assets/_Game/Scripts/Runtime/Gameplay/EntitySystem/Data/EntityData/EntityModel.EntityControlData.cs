@@ -1,3 +1,4 @@
+using Runtime.Definition;
 using System;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Runtime.Gameplay.EntitySystem
         public Vector2 FaceDirection => faceDirection;
         public Vector2 MoveDelta => moveDelta;
         public bool IsMoving => isMoving;
-        public Action<int> TriggerAttack { get; set; }
+        public Action<ActionInputType> PlayActionEvent { get; set; }
         public Action MovementChangedEvent { get; set; }
         public Action DirectionChangedEvent { get; set; }
 
@@ -23,7 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected void InitControl()
         {
-            TriggerAttack = _ => { };
+            PlayActionEvent = _ => { };
             MovementChangedEvent = () => { };
             DirectionChangedEvent = () => { };
         }

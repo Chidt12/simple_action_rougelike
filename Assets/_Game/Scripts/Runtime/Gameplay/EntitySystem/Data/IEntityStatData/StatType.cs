@@ -48,5 +48,6 @@ namespace Runtime.Gameplay.EntitySystem
         AttackDamage = 14,
         DetectRange = 15,
         CollideDamage = 16,
+        Shield = 17
     }
 }

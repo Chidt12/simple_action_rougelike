@@ -11,18 +11,18 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private uint _entityUId;
         private int _defeatedEnemiesCount;
-        private List<EntityModel> _entitiesModels;
+        private List<IEntityData> _entitiesData;
 
-        public EntityModel HeroModel { get; private set; }
-        public List<EntityModel> EntitiesModels => _entitiesModels;
+        public IEntityData HeroData { get; private set; }
+        public List<IEntityData> EntitiesData => _entitiesData;
         public int DefeatedEnemiesCount => _defeatedEnemiesCount;
 
         public void Initialize()
         {
             _defeatedEnemiesCount = 0;
             _entityUId = 0;
-            HeroModel = null;
-            _entitiesModels = new();
+            HeroData = null;
+            _entitiesData = new();
         }
 
         public void CollectAllCurrentEntities()
@@ -30,12 +30,12 @@ namespace Runtime.Gameplay.EntitySystem
             var entityHolders = FindObjectsOfType<EntityHolder>();
             foreach (var holder in entityHolders)
             {
-                if(_entitiesModels.Any(x => x.EntityUID != holder.EntityModel.EntityUID))
-                    _entitiesModels.Add(holder.EntityModel);
+                if(_entitiesData.Any(x => x.EntityUID != holder.EntityData.EntityUID))
+                    _entitiesData.Add(holder.EntityData);
 
-                if (holder.EntityModel.EntityType == Definition.EntityType.Hero)
+                if (holder.EntityData.EntityType == Definition.EntityType.Hero)
                 {
-                    HeroModel = holder.EntityModel;
+                    HeroData = holder.EntityData;
                     SimpleMessenger.Publish(new SpawnedHeroMessage());
                 }
             }

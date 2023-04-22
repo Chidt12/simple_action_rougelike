@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -7,6 +8,9 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private IEntityControlData _controlData;
         private ISkillStrategy[] _skillStrategies;
+
+        private int _currentlyUsedSkillIndex;
+        private List<SkillModel> _skillModels;
         private CancellationTokenSource[] _skillCooldownCancellationTokenSource;
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data)

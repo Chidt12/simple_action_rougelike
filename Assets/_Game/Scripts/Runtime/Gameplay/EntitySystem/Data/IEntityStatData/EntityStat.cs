@@ -35,7 +35,7 @@ namespace Runtime.Gameplay.EntitySystem
             _totalBonus = 0f;
         }
 
-        public void BuffValue(float value, StatModifyType statModifyType)
+        public virtual void BuffValue(float value, StatModifyType statModifyType)
         {
             switch (statModifyType)
             {
@@ -62,7 +62,7 @@ namespace Runtime.Gameplay.EntitySystem
             OnValueChanged.Invoke(TotalValue);
         }
 
-        public void DebuffValue(float value, StatModifyType statModifyType)
+        public virtual void DebuffValue(float value, StatModifyType statModifyType)
         {
             switch (statModifyType)
             {

@@ -1,5 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using Runtime.Core.Message;
+using Runtime.Extensions;
+using Runtime.Message;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -7,9 +8,9 @@ namespace Runtime.Gameplay.EntitySystem
     public class FlyForwardProjectileStrategyData : FlyProjectileStrategyData
     {
 
-        public FlyForwardProjectileStrategyData(DamageSource damageSource, float moveDistance, float moveSpeed, float damageBonus = 0,
-                                                DamageFactor[] damageFactors = null, StatusEffectModel[] damageModifierModels = null)
-            : base(damageSource, ProjectileStrategyType.Forward, moveDistance, moveSpeed, damageBonus, damageFactors, damageModifierModels) { }
+        public FlyForwardProjectileStrategyData(EffectSource damageSource, EffectProperty damageProperty, float moveDistance, float moveSpeed, float damageBonus = 0,
+                                                DamageFactor[] damageFactors = null)
+            : base(damageSource, damageProperty, moveDistance, moveSpeed, damageBonus, damageFactors) { }
     }
 
     public class FlyForwardProjectileStrategy : FlyForwardProjectileStrategy<FlyForwardProjectileStrategyData> { }
@@ -30,10 +31,16 @@ namespace Runtime.Gameplay.EntitySystem
             base.Update();
         }
 
-        protected override void HitTarget(IInteractable target, Vector2 hitPoint, Vector2 hitDirection)
+        protected override void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection)
         {
-            var damageInfo = controllerProjectile.CreatorModel.GetDamageInfo(strategyData.damageSource, strategyData.damageBonus, strategyData.damageFactors, strategyData.modifierModels, target.Model);
-            target.GetHit(damageInfo, new DamageMetaData(hitDirection, controllerProjectile.CenterPosition));
+            SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
+                strategyData.damageSource, 
+                strategyData.effectProperty,
+                strategyData.damageBonus,
+                strategyData.damageFactors,
+                controllerProjectile.Creator,
+                target)
+            );
             CreateImpactEffect(hitPoint);
             controllerProjectile.CompleteStrategy(true);
         }

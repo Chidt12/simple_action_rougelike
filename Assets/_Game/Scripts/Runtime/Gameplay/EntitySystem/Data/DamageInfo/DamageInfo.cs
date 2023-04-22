@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public enum DamageSource
+    public enum EffectSource
     {
         None
     }
 
-    public enum DamageProperty
+    public enum EffectProperty
     {
         Normal,
         Crit,
@@ -24,10 +24,10 @@ namespace Runtime.Gameplay.EntitySystem
         public float armorPenetration;
         public IEntityData creatorData;
         public IEntityData targetData;
-        public DamageSource damageSource;
-        public DamageProperty damageProperty;
+        public EffectSource damageSource;
+        public EffectProperty damageProperty;
 
-        public DamageInfo(DamageSource damageSource, float damage, float armorPenetration, IEntityData creatorData, IEntityData targetData, DamageProperty damageProperty)
+        public DamageInfo(EffectSource damageSource, float damage, float armorPenetration, IEntityData creatorData, IEntityData targetData, EffectProperty damageProperty)
         {
             this.damageSource = damageSource;
             this.damage = damage;
@@ -37,7 +37,7 @@ namespace Runtime.Gameplay.EntitySystem
             this.armorPenetration = armorPenetration;
         }
 
-        public DamageInfo(DamageSource damageSource, float damage, IEntityData creatorData, IEntityData targetData, DamageProperty damageProperty)
+        public DamageInfo(EffectSource damageSource, float damage, IEntityData creatorData, IEntityData targetData, EffectProperty damageProperty)
         {
             this.damageSource = damageSource;
             this.damage = damage;

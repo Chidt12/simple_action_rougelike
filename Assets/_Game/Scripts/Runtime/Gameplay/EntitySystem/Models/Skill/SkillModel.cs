@@ -17,13 +17,15 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsUsing { get; set; }
         public bool IsReady => CurrentCooldown <= 0;
         public SkillTargetType TargetType { get; protected set; }
+        public bool CanBeCanceled { get; protected set; }
 
 
-        public SkillModel(float castRange, float cooldown, SkillTargetType targetType)
+        public SkillModel(float castRange, float cooldown, SkillTargetType targetType, bool canBeCanceled = true)
         {
             TargetType = targetType;
             CastRange = castRange;
             Cooldown = cooldown;
+            CanBeCanceled = canBeCanceled;
         }
     }
 }

@@ -25,8 +25,8 @@ namespace Runtime.Gameplay.EntitySystem
     public interface ISkillStrategy
     {
         public bool CheckCanUseSkill();
-        public UniTask ExecuteAsync(CancellationToken cancellationToken);
-        public void Cancel();
+        public UniTask ExecuteAsync(CancellationToken cancellationToken, int index);
+        public SkillCancelResult Cancel();
         public void Dispose();
     }
 }

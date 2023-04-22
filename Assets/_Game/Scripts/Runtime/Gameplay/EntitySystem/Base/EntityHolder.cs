@@ -7,17 +7,17 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class EntityHolder : Disposable, IEntityHolder
     {
-        protected EntityModel entityModel;
+        protected IEntityData entityData;
 
         protected CancellationTokenSource disposeCancellationTokenSource;
         private List<IUpdateEntityBehavior> UpdateBehaviors { get; set; }
         private List<IDisposeEntityBehavior> DisposableBehaviors { get; set; }
 
-        public EntityModel EntityModel => entityModel;
+        public IEntityData EntityData => entityData;
 
-        public async UniTask<bool> BuildAsync(EntityModel entityModel)
+        public async UniTask<bool> BuildAsync(IEntityData entityData)
         {
-            this.entityModel = entityModel;
+            this.entityData = entityData;
 
             UpdateBehaviors = new();
             DisposableBehaviors = new();
@@ -27,7 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
             var activatedBehaviors = new List<IEntityBehavior>();
             foreach (var behavior in behaviors)
             {
-                var result = await behavior.BuildAsync(entityModel, disposeCancellationTokenSource.Token);
+                var result = await behavior.BuildAsync(this.entityData, disposeCancellationTokenSource.Token);
                 if (result)
                 {
                     activatedBehaviors.Add(behavior);

@@ -1,11 +1,19 @@
+using Runtime.Definition;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    public interface IEntitySkillControlData : IEntityData
+    {
+        List<SkillModel> SkillModels { get; }
+    }
+
+
     public interface IEntityControlData : IEntityData
     {
-        Action<int> TriggerAttack { get; set; }
+        Action<ActionInputType> PlayActionEvent { get; set; }
         Action MovementChangedEvent { get; set; }
         Action DirectionChangedEvent { get; set; }
 

@@ -78,9 +78,7 @@ namespace Runtime.Gameplay.EntitySystem
         private void PlayerAnimation(AnimationType animationType)
         {
             foreach (var entityAnimation in _entityAnimations)
-            {
                 entityAnimation.Play(animationType);
-            }
         }
     }
 }

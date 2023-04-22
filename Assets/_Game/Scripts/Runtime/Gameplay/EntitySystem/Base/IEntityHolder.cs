@@ -4,7 +4,9 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IEntityHolder
     {
-        UniTask<bool> BuildAsync(EntityModel entityModel);
+        IEntityData EntityData { get; }
+
+        UniTask<bool> BuildAsync(IEntityData entityModel);
 
         void Dispose();
     }

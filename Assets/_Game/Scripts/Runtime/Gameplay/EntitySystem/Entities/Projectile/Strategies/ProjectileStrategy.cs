@@ -11,7 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected Projectile controllerProjectile;
         protected CancellationTokenSource cancellationTokenSource;
 
-        public virtual void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityData targetData = null)
+        public virtual void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityPositionData targetData = null)
         {
             cancellationTokenSource = new CancellationTokenSource();
             strategyData = projectileStrategyData as T;

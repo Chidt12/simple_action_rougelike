@@ -1,18 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldEntityStat : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ShieldEntityStat : EntityStat
     {
-        
-    }
+        private float currentValue;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public float CurrentValue => currentValue;
+
+        public ShieldEntityStat(float baseValue) : base(baseValue)
+        {
+            currentValue = TotalValue;
+        }
+
+        public override void BuffValue(float value, StatModifyType statModifyType)
+        {
+            base.BuffValue(value, statModifyType);
+            currentValue = TotalValue;
+        }
+
+        public override void DebuffValue(float value, StatModifyType statModifyType)
+        {
+            base.DebuffValue(value, statModifyType);
+            currentValue = TotalValue;
+        }
+
+        public void Heal(float value)
+        {
+            currentValue = Mathf.Min(currentValue + value, TotalValue);
+        }
+
+        public void TakeDamage(float value)
+        {
+            currentValue = Mathf.Max(0, currentValue - value);
+        }
     }
 }

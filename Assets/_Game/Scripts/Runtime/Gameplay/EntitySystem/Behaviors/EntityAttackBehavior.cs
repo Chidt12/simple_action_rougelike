@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Definition;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +13,11 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
         {
-            controlData.TriggerAttack += OnTriggerAttack;
+            controlData.PlayActionEvent += OnTriggerAttack;
             return UniTask.FromResult(true);
         }
 
-        private void OnTriggerAttack(int index)
+        private void OnTriggerAttack(ActionInputType inputType)
         {
             
         }

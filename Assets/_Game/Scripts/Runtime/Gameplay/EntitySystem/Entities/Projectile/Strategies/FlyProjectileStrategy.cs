@@ -19,9 +19,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Class Methods
 
-        public FlyProjectileStrategyData(DamageSource damageSource, float moveDistance, float moveSpeed,
+        public FlyProjectileStrategyData(EffectSource damageSource, EffectProperty effectProperty, float moveDistance, float moveSpeed,
                                         float damageBonus = 0, DamageFactor[] damageFactors = null)
-            : base(damageSource)
+            : base(damageSource, effectProperty)
         {
             this.moveDistance = moveDistance;
             this.moveSpeed = moveSpeed;
@@ -58,25 +58,24 @@ namespace Runtime.Gameplay.EntitySystem
 
         public override void Collide(Collider2D collider)
         {
-            var entity = collider.GetComponent<EntityHolder>();
-            if (entity != null)
+            var entityHolder = collider.GetComponent<EntityHolder>();
+            if (entityHolder != null)
             {
-                //var interactable = entity.GetBehavior<IInteractable>();
-                //if (interactable != null && !interactable.Model.IsDead)
-                //{
-                //    if (controllerProjectile.Creator.EntityType.CanCauseDamage(interactable.Model.EntityType))
-                //    {
-                //        var hitPoint = collider.ClosestPoint(controllerProjectile.CenterPosition);
-                //        var hitDirection = controllerProjectile.Direction;
-                //        HitTarget(interactable, hitPoint, hitDirection);
-                //    }
-                //}
-                //else controllerProjectile.CompleteStrategy(true);
+                if (entityHolder.EntityData.IsDead)
+                {
+                    if (controllerProjectile.Creator.EntityType.CanCauseDamage(entityHolder.EntityData.EntityType))
+                    {
+                        var hitPoint = collider.ClosestPoint(controllerProjectile.CenterPosition);
+                        var hitDirection = controllerProjectile.Direction;
+                        HitTarget(entityHolder.EntityData, hitPoint, hitDirection);
+                    }
+                }
+                else controllerProjectile.CompleteStrategy(true);
             }
             else controllerProjectile.CompleteStrategy(true);
         }
 
-        //protected virtual void HitTarget(IInteractable target, Vector2 hitPoint, Vector2 hitDirection) { }
+       protected virtual void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection) { }
 
         #endregion Class Methods
     }

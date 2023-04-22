@@ -6,7 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IProjectileStrategy : IDisposable
     {
-        void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityData creatorData = null);
+        void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityPositionData creatorData = null);
         void Start();
         void Update();
         void Collide(Collider2D collider);
@@ -14,11 +14,13 @@ namespace Runtime.Gameplay.EntitySystem
 
     public abstract class ProjectileStrategyData 
     {
-        public DamageSource damageSource;
+        public EffectProperty effectProperty;
+        public EffectSource damageSource;
 
-        public ProjectileStrategyData(DamageSource damageSource)
+        public ProjectileStrategyData(EffectSource damageSource, EffectProperty effectProperty)
         {
             this.damageSource = damageSource;
+            this.effectProperty = effectProperty;
         }
     }
 }

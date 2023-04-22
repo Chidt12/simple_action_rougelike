@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -61,6 +62,16 @@ namespace Runtime.Gameplay.EntitySystem
                 statValue = null;
                 return false;
             }
+        }
+
+        public void GetDamage(float damage, EffectSource damageSource, EffectProperty damageProperty)
+        {
+            healthStat.TakeDamage(damage, damageSource, damageProperty);
+        }
+
+        public void Heal(float value, EffectSource healSource, EffectProperty healDamage)
+        {
+            healthStat.TakeDamage(value, healSource, healDamage);
         }
     }
 }
