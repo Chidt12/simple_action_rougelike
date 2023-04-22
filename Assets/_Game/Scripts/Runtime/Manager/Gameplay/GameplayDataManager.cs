@@ -13,7 +13,7 @@ namespace Runtime.Gameplay
 {
     public class GameplayDataManager : MonoSingleton<GameplayDataManager>
     {
-        private Dictionary<uint, EnemyConfigItem> ZombieConfigDictionary { get; set; } = new();
+        private Dictionary<uint, EnemyConfigItem> EnemyConfigDictionary { get; set; } = new();
         public StageLoadConfigItem StageLoadConfig { get; private set; }
 
         protected override void Awake()
@@ -58,15 +58,15 @@ namespace Runtime.Gameplay
 
         public async UniTask<EnemyLevelModel> GetZombieDataAsync(uint enemyId, uint level)
         {
-            if (!ZombieConfigDictionary.ContainsKey(enemyId))
+            if (!EnemyConfigDictionary.ContainsKey(enemyId))
             {
                 var zombieConfig = await LoadConfig<EnemyConfig>(enemyId.ToString());
                 var configItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
-                ZombieConfigDictionary.TryAdd(enemyId, configItem);
+                EnemyConfigDictionary.TryAdd(enemyId, configItem);
                 Addressables.Release(zombieConfig);
             }
 
-            var zombieConfigItem = ZombieConfigDictionary[enemyId];
+            var zombieConfigItem = EnemyConfigDictionary[enemyId];
             var zombieLevelConfigItem = zombieConfigItem.levels.FirstOrDefault(x => x.level == level);
             var skillIdentity = zombieLevelConfigItem.skillIdentity;
             SkillDataConfigItem skillDataConfigItem = null;
