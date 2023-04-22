@@ -43,12 +43,12 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Class Methods
 
-        public override void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityPositionData targetData = null)
-        {
-            base.Init(projectileStrategyData, controllerProjectile, direction, originalPosition, targetData);
-            this.originalPosition = originalPosition;
-            this.currentDirection = direction;
-        }
+        //public override void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityPositionData targetData = null)
+        //{
+        //    base.Init(projectileStrategyData, controllerProjectile, direction, originalPosition, targetData);
+        //    this.originalPosition = originalPosition;
+        //    this.currentDirection = direction;
+        //}
 
         public override void Update()
         {

@@ -1,0 +1,2 @@
+﻿id,point,level,detect_range,detected_priority,hp,armor,armor_penetration,crit_chance,crit_damage,move_speed,life_steal,attack_speed,dodge_chance,cc_reduction,cooldown_reduction,damage_reduction,attack_damage
+1001,3,1,11,1000,900,0,0,0,2,4.1,0,1,0,0,0,0,100
