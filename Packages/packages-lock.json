@@ -21,6 +21,15 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.littlebigfun.addressable-importer": {
+      "version": "https://github.com/favoyang/unity-addressable-importer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.addressables": "1.1.5"
+      },
+      "hash": "dfea8700d057b3c7074c162249ee523c0887f7e4"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.6",
       "depth": 1,

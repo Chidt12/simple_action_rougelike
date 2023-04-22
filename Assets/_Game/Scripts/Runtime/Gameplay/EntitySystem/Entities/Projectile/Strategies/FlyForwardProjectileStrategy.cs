@@ -7,9 +7,12 @@ namespace Runtime.Gameplay.EntitySystem
     public class FlyForwardProjectileStrategyData : FlyProjectileStrategyData
     {
 
-        public FlyForwardProjectileStrategyData(DamageSource damageSource, float moveDistance, float moveSpeed, float damageBonus = 0,
-                                                DamageFactor[] damageFactors = null, StatusEffectModel[] damageModifierModels = null)
-            : base(damageSource, ProjectileStrategyType.Forward, moveDistance, moveSpeed, damageBonus, damageFactors, damageModifierModels) { }
+        //public FlyForwardProjectileStrategyData(DamageSource damageSource, float moveDistance, float moveSpeed, float damageBonus = 0,
+        //                                        DamageFactor[] damageFactors = null, StatusEffectModel[] damageModifierModels = null)
+        //    : base(damageSource, ProjectileStrategyType.Forward, moveDistance, moveSpeed, damageBonus, damageFactors, damageModifierModels) { }
+        public FlyForwardProjectileStrategyData(DamageSource damageSource, float moveDistance, float moveSpeed, float damageBonus = 0, DamageFactor[] damageFactors = null) : base(damageSource, moveDistance, moveSpeed, damageBonus, damageFactors)
+        {
+        }
     }
 
     public class FlyForwardProjectileStrategy : FlyForwardProjectileStrategy<FlyForwardProjectileStrategyData> { }
@@ -21,7 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
         public override void Start()
         {
             base.Start();
-            controllerProjectile.UpdateRotation(currentDirection.ToQuaternion());
+            //controllerProjectile.UpdateRotation(currentDirection.ToQuaternion());
         }
 
         public override void Update()
@@ -30,13 +33,13 @@ namespace Runtime.Gameplay.EntitySystem
             base.Update();
         }
 
-        protected override void HitTarget(IInteractable target, Vector2 hitPoint, Vector2 hitDirection)
-        {
-            var damageInfo = controllerProjectile.CreatorModel.GetDamageInfo(strategyData.damageSource, strategyData.damageBonus, strategyData.damageFactors, strategyData.modifierModels, target.Model);
-            target.GetHit(damageInfo, new DamageMetaData(hitDirection, controllerProjectile.CenterPosition));
-            CreateImpactEffect(hitPoint);
-            controllerProjectile.CompleteStrategy(true);
-        }
+        //protected override void HitTarget(IInteractable target, Vector2 hitPoint, Vector2 hitDirection)
+        //{
+        //    var damageInfo = controllerProjectile.CreatorModel.GetDamageInfo(strategyData.damageSource, strategyData.damageBonus, strategyData.damageFactors, strategyData.modifierModels, target.Model);
+        //    target.GetHit(damageInfo, new DamageMetaData(hitDirection, controllerProjectile.CenterPosition));
+        //    CreateImpactEffect(hitPoint);
+        //    controllerProjectile.CompleteStrategy(true);
+        //}
 
         #endregion Class Methods
     }

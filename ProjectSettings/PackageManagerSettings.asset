@@ -32,6 +32,7 @@ MonoBehaviour:
     - com.cysharp.unitask
     - com.cysharp.zstring
     - com.faster-games.t4
+    - com.littlebigfun.addressable-importer
     - com.openupm
     - com.zbase.collections.pooled
     - com.zbase.foundation
