@@ -12,6 +12,7 @@ namespace Runtime.Gameplay.EntitySystem
         private uint _entityUId;
         private int _defeatedEnemiesCount;
         private List<EntityModel> _entitiesModels;
+        private MapEditorEntity[] _mapEditorEntities;
 
         public EntityModel HeroModel { get; private set; }
         public List<EntityModel> EntitiesModels => _entitiesModels;
@@ -23,6 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
             _entityUId = 0;
             HeroModel = null;
             _entitiesModels = new();
+            _mapEditorEntities = FindObjectsOfType<MapEditorEntity>(true);
         }
 
         public void CollectAllCurrentEntities()

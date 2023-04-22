@@ -1,5 +1,6 @@
 using Pathfinding;
 using Runtime.Core.Singleton;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,12 @@ namespace Runtime.Manager.Gameplay
     public class MapManager : MonoSingleton<MapManager>, IDisposable
     {
         #region Properties
+
+        [ReadOnly]
+        [SerializeField]
+        private MapSpawnPoint[] _spawnPoints;
+
+        public MapSpawnPoint[] SpawnPoints => _spawnPoints;
 
         public GridGraph ActiveGraph
         {
@@ -97,6 +104,12 @@ namespace Runtime.Manager.Gameplay
             }
 
             return validPositions;
+        }
+
+        [Button("Load Stage Data")]
+        private void LoadStageData()
+        {
+            _spawnPoints = gameObject.GetComponentsInChildren<MapSpawnPoint>(true);
         }
 
         #endregion Class Methods
