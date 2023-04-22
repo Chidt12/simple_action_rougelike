@@ -12,7 +12,6 @@ using UnityEngine;
 
 namespace CsvReader
 {
-    [GlobalConfig("Assets/Plugins/CsvReader")]
     [Title("Setting")]
     public class CsvConfig : GlobalConfig<CsvConfig>
     {
@@ -46,11 +45,11 @@ namespace CsvReader
         }
 
         [PropertySpace(10)]
-        [ReadOnly] [Title("Path to config tool")] [FolderPath(RequireExistingPath = true)]
-        public string toolConfigPath = "Assets/Plugins/CsvReader";
+        [Title("Path to config tool")] [FolderPath(RequireExistingPath = true)]
+        public string toolConfigPath = "Assets/_Game/Plugins/CsvReader";
 
-        [ReadOnly] [FolderPath(RequireExistingPath = true)]
-        public string csvConfigPath = "Assets/Plugins/CsvReader/Data";
+        [FolderPath(RequireExistingPath = true)]
+        public string csvConfigPath = "Assets/_Game/Plugins/CsvReader/Data";
 
         [PropertySpace(20)]
         [FolderPath(RequireExistingPath = true)]

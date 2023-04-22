@@ -10,7 +10,6 @@ using UnityEngine;
 
 namespace CsvReader
 {
-    [GlobalConfig("Assets/Plugins/CsvReader")]
     public class CsvDataController : GlobalConfig<CsvDataController>
     {
 #pragma warning disable CS8618
@@ -83,7 +82,7 @@ namespace CsvReader
                 return;
             }
 
-            var guids = AssetDatabase.FindAssets("t:ScriptableObject", new[] { "Assets/Plugins/CsvReader/Data" });
+            var guids = AssetDatabase.FindAssets("t:ScriptableObject", new[] { "Assets/_Game/Plugins/CsvReader/Data" });
 
             CsvDataController.Instance.data = guids.Select(AssetDatabase.GUIDToAssetPath)
                 .Select(AssetDatabase.LoadAssetAtPath<CsvData>).Where(data => data).ToArray();

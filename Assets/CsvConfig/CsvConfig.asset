@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8be4f6ad8730c47afb2263fedf9316, type: 3}
+  m_Script: {fileID: 11500000, guid: 63af14d364eb60e478c203b542d1a525, type: 3}
   m_Name: CsvConfig
   m_EditorClassIdentifier: 
-  assemblyNames: []
-  toolConfigPath: Assets/Plugins/CsvReader
-  csvConfigPath: Assets/Plugins/CsvReader/Data
-  csvPath: Assets/Samples/Csv
-  scriptableObjectPath: Assets/Samples/ScriptableObject
+  assemblyNames:
+  - \Library\ScriptAssemblies\Assembly-CSharp.dll
+  toolConfigPath: Assets/_Game/Plugins/CsvReader
+  csvConfigPath: Assets/_Game/Plugins/CsvReader/Data
+  csvPath: Assets/_Game/Csv
+  scriptableObjectPath: Assets/_Game/Addressables/Data
   enabledFilter:
     enabled: 0
     namespaceList: []
