@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Runtime.Constants
 {
-    public class Constants : MonoBehaviour
+    public class Constants
     {
-        
+        public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
     }
 
 
