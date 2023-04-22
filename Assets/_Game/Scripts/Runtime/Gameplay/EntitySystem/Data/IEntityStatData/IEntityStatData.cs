@@ -1,3 +1,5 @@
+using Runtime.Definition;
+
 namespace Runtime.Gameplay.EntitySystem
 {
     public interface IEntityStatData : IEntityData

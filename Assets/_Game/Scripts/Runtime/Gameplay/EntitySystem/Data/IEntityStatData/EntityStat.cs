@@ -1,3 +1,4 @@
+using Runtime.Definition;
 using System;
 
 namespace Runtime.Gameplay.EntitySystem

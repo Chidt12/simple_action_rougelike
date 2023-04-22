@@ -1,4 +1,4 @@
-namespace Runtime.Gameplay.EntitySystem
+namespace Runtime.Definition
 {
     public static class StatModifyTypeExtension
     {

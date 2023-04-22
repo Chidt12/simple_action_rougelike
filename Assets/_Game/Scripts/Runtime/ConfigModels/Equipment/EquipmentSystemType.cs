@@ -1,7 +1,7 @@
 namespace Runtime.Definition
 {
-    public enum SkillType
+    public enum EquipmentSystemType
     {
-        None = 0
+
     }
 }
