@@ -31,11 +31,12 @@ namespace Runtime.Core.Pool
             return pool;
         }
 
-        public async UniTask<GameObject> Rent(string source, CancellationToken token = default)
+        public async UniTask<GameObject> Rent(string source, bool isActive = true, CancellationToken token = default)
         {
             AddressGameObjectPool pool = GetPool(source);
             var gameObject = await pool.Rent(token);
             gameObject.name = source;
+            gameObject.SetActive(isActive);
             return gameObject;
         }
 

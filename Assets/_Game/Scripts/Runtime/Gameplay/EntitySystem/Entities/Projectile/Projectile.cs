@@ -74,7 +74,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (string.IsNullOrEmpty(impactPrefabName) || GeneratedImpact)
                 return;
 
-            var impact = await PoolManager.Instance.Rent(impactPrefabName, cancellationTokenSource.Token);
+            var impact = await PoolManager.Instance.Rent(impactPrefabName, token: cancellationTokenSource.Token);
             impact.transform.position = position;
         }
     }

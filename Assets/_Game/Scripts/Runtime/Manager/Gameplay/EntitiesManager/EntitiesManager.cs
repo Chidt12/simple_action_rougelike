@@ -253,7 +253,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public async UniTask<GameObject> CreateProjectileAsync(string projectileId, IEntityPositionData creatorData, Vector2 spawnPosition, CancellationToken cancellationToken = default)
         {
-            var projectileGameObject = await PoolManager.Instance.Rent(projectileId, cancellationToken);
+            var projectileGameObject = await PoolManager.Instance.Rent(projectileId, token: cancellationToken);
             await projectileGameObject.GetComponent<IProjectile>().BuildAsync(creatorData, spawnPosition);
             return projectileGameObject;
         }

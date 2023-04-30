@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,12 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class EntityMoveBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior
     {
+        [SerializeField]
+        private bool _moveWithRandomSpeed;
+        [ShowIf(nameof(_moveWithRandomSpeed))]
+        [SerializeField]
+        private float _moveRandomOffset;
+
         private IEntityPositionData _positionData;
         private IEntityControlData _controlData;
         private float _moveSpeed;
@@ -43,8 +50,13 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
-            Vector3 nextPosition = _positionData.Position +  _controlData.MoveDirection.normalized * _moveSpeed * deltaTime;
-            transform.position = Vector2.MoveTowards(_positionData.Position, nextPosition, _moveSpeed * deltaTime);
+            var moveSpeed = _moveSpeed;
+            if (_moveWithRandomSpeed)
+            {
+                moveSpeed = Random.Range(_moveSpeed, _moveSpeed + _moveRandomOffset);
+            }
+            Vector3 nextPosition = _positionData.Position +  _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
+            transform.position = Vector2.MoveTowards(_positionData.Position, nextPosition, moveSpeed * deltaTime);
             _positionData.Position = nextPosition;
         }
 

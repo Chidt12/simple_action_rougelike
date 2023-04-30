@@ -81,7 +81,7 @@ MonoBehaviour:
         entityNumber: 1
         entityLevel: 1
       waveIndex: 0
-      delaySpawnTime: 2
+      delaySpawnTime: 2.5
       followHero: 1
       distanceFromHero: 6
       spawnPointIndex: 0
