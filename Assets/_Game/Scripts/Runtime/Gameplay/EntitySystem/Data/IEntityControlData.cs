@@ -6,6 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IEntityControlData : IEntityData
     {
+        Action<EntityReactionType> ReactionChangedEvent { get; set; }
         Action<ActionInputType> PlayActionEvent { get; set; }
         Action MovementChangedEvent { get; set; }
         Action DirectionChangedEvent { get; set; }

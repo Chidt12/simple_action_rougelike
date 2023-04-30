@@ -17,6 +17,6 @@ namespace Runtime.Gameplay.EntitySystem
 
     public interface IEntityTriggerActionEventProxy
     {
-        UniTask TriggerEvent(AnimationType animationType, CancellationToken cancellationToken, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false);
+        void TriggerEvent(AnimationType animationType, CancellationToken cancellationToken, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false);
     }
 }

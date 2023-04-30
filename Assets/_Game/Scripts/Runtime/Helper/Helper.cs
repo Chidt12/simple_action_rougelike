@@ -4,8 +4,34 @@ using UnityEngine;
 
 namespace Runtime.Helper
 {
-    public class Helper
+    public static class Helper
     {
+        public static T GetSuitableValue<T>(this List<T> values, T defaultValue, int index = 0)
+        {
+            if(values != null && values.Count > index)
+            {
+                return values[index];
+            }
+            return defaultValue;
+        }
+
+        public static T GetSuitableValue<T>(this T[] values, T defaultValue, int index = 0)
+        {
+            if (values != null && values.Length > index)
+            {
+                return values[index];
+            }
+            return defaultValue;
+        }
+
+        public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
+        {
+            T component = gameObject.GetComponent<T>();
+            if (component == null)
+                return gameObject.AddComponent<T>();
+            return component;
+        }
+
         //arrayToCurve is original Vector3 array, smoothness is the number of interpolations. 
         public static List<Vector3> MakeSmoothCurve(List<Vector3> arrayToCurve, float smoothness)
         {

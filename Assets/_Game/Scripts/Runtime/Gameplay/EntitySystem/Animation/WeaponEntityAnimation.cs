@@ -1,11 +1,11 @@
 using Runtime.Extensions;
+using System.Linq;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
     public class WeaponEntityAnimation : AnimancerEntityAnimation
     {
-        [SerializeField] private Transform[] _vfxSpawners;
         [SerializeField] private bool _rotateTowardFaceDirection;
         [SerializeField] private Transform _flipPivotTransform;
         [SerializeField] private Transform _rotateTransform;

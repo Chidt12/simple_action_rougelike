@@ -11,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         public bool isMainPart;
         public AnimationType animationType;
         public ClipTransition clipTransition;
+        public Transform[] vfxSpawnPoints;
     }
 
     public interface IEntityAnimation
@@ -18,23 +19,28 @@ namespace Runtime.Gameplay.EntitySystem
         bool IsMainPart(AnimationType animationType);
         void Init(IEntityControlData controlData);
         void Play(AnimationType animationType);
+        void SetTriggeredEvent(AnimationType animationType, Action<SetStateData> stateAction, Action<SetStateData> endAction);
         void Dispose();
+        Transform[] GetVFXSpawnPoints(AnimationType animationType);
     }
 
     [RequireComponent(typeof(AnimancerComponent))]
     public class AnimancerEntityAnimation : MonoBehaviour, IEntityAnimation
     {
-        [SerializeField] private AnimancerComponent _animancer;
-        [SerializeField] private AnimancerAnimation[] _animations;
-        [SerializeField] private ClipTransition _defaultState;
-        [SerializeField] private bool _isMainPart;
+        [SerializeField] protected AnimancerComponent animancer;
+        [SerializeField] protected AnimancerAnimation[] animations;
+        [SerializeField] protected ClipTransition defaultState;
 
         protected AnimationType currentAnimationType;
+
+        protected Action OperatedPointTriggeredCallbackAction { get; set; }
+        protected Action EndActionCallbackAction { get; set; }
+
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            _animancer = GetComponent<AnimancerComponent>();
+            animancer = GetComponent<AnimancerComponent>();
         }
 #endif
 
@@ -43,22 +49,47 @@ namespace Runtime.Gameplay.EntitySystem
 
         public virtual bool IsMainPart(AnimationType animationType)
         {
-            var animation = _animations.FirstOrDefault(x => x.animationType == animationType);
+            var animation = animations.FirstOrDefault(x => x.animationType == animationType);
             return animation.isMainPart;
         }
 
         public virtual void Play(AnimationType animationType)
         {
-            var animation = _animations.FirstOrDefault(x => x.animationType == animationType);
+            var animation = animations.FirstOrDefault(x => x.animationType == animationType);
 
             currentAnimationType = animationType;
 
             if (animation.animationType == AnimationType.None)
-                _animancer.Play(_defaultState);
+                animancer.Play(defaultState);
             else
-                _animancer.Play(animation.clipTransition);
+                animancer.Play(animation.clipTransition);
         }
 
         public virtual void Dispose() { }
+
+        public void SetTriggeredEvent(AnimationType animationType, Action<SetStateData> stateAction, Action<SetStateData> endAction)
+        {
+            OperatedPointTriggeredCallbackAction = () => stateAction?.Invoke(new SetStateData(GetVFXSpawnPoints(animationType)));
+            EndActionCallbackAction = () => endAction?.Invoke(new SetStateData(GetVFXSpawnPoints(animationType))); ;
+        }
+
+        public Transform[] GetVFXSpawnPoints(AnimationType animationType)
+        {
+            var animation = animations.FirstOrDefault(x => x.animationType == animationType);
+            if (animation.animationType == AnimationType.None)
+                return null;
+            else
+                return animation.vfxSpawnPoints;
+        }
+
+        #region Unity Animation Callback Event Methods
+
+        public void TriggerWeaponOperatedPointActionEvent()
+            => OperatedPointTriggeredCallbackAction?.Invoke();
+
+        public void TriggerWeaponEndActionEvent()
+            => EndActionCallbackAction?.Invoke();
+
+        #endregion Unity Animation Callback Event Methods
     }
 }

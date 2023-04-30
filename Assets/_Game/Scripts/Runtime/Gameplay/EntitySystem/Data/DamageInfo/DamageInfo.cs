@@ -8,7 +8,8 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public enum EffectSource
     {
-        None
+        None,
+        FromNormalAttack
     }
 
     public enum EffectProperty

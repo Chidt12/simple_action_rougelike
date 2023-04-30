@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - attackSpeedPercent: 2
-    attackRange: 4
+    attackRange: 6
     damageBonus: 0
     damageFactors:
     - damageFactorStatType: 14
@@ -22,4 +22,4 @@ MonoBehaviour:
     mechanics:
     - triggerRarityType: 1
     projectileId: short_gun_projectile
-    projectileSpeed: 5
+    projectileSpeed: 10

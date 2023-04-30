@@ -311,6 +311,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             var enemyData = await GameplayDataManager.Instance.GetEnemyDataAsync(entityId, entityLevel);
             var enemyModel = new EnemyModel();
+            enemyModel.Init(EntityType.Enemy, _entityUId++, entityId);
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
             var enemyGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
@@ -326,6 +327,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             var enemyData = await GameplayDataManager.Instance.GetEnemyDataAsync(entityId, entityLevel);
             var enemyModel = new EnemyModel();
+            enemyModel.Init(EntityType.Enemy, _entityUId++, entityId);
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
             entityGameObject.SetActive(true);

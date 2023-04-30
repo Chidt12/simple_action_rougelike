@@ -1,4 +1,7 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -9,13 +12,14 @@ namespace Runtime.Gameplay.EntitySystem
         FaceDirection,
     }
 
-    public class EntityAnimationBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior
+    public class EntityAnimationBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior, IEntityTriggerActionEventProxy
     {
         [SerializeField] private Transform _flipTransform;
         [SerializeField] private UpdateFaceRightType _updateFaceRightType;
         [SerializeField] private bool _originalFaceRight;
         private IEntityControlData _controlData;
         private IEntityAnimation[] _entityAnimations;
+        private bool _canUpdateAnimation;
 
         public void Dispose()
         {
@@ -40,10 +44,29 @@ namespace Runtime.Gameplay.EntitySystem
             else if (_updateFaceRightType == UpdateFaceRightType.MoveDirection)
                 _controlData.MovementChangedEvent += OnFaceRightUpdateByMoveDirection;
 
+            _controlData.ReactionChangedEvent += OnReactionChanged;
+
             foreach (var item in _entityAnimations)
                 item.Init(_controlData);
 
             return UniTask.FromResult(true);
+        }
+
+        private void OnReactionChanged(EntityReactionType reactionType)
+        {
+            if(reactionType == EntityReactionType.JustFinishedAttack || reactionType == EntityReactionType.JustFinishedUseSkill)
+            {
+                _canUpdateAnimation = true;
+                OnMovementChanged();
+                if (_updateFaceRightType == UpdateFaceRightType.FaceDirection)
+                    OnFaceRightUpdateByFaceDirection();
+                else if (_updateFaceRightType == UpdateFaceRightType.MoveDirection)
+                    OnFaceRightUpdateByMoveDirection();
+            }
+            else if (reactionType == EntityReactionType.JustPlayAttack || reactionType == EntityReactionType.JustPlaySkill)
+            {
+                _canUpdateAnimation = false;
+            }
         }
 
         private void OnMovementChanged()
@@ -77,8 +100,30 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void PlayerAnimation(AnimationType animationType)
         {
+            if (!_canUpdateAnimation)
+                return;
             foreach (var entityAnimation in _entityAnimations)
                 entityAnimation.Play(animationType);
+        }
+
+        public void TriggerEvent(AnimationType animationType, CancellationToken cancellationToken, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false)
+        {
+            bool assignedEvent = false;
+            foreach (var entityAnimation in _entityAnimations)
+            {
+                entityAnimation.Play(animationType);
+                if (entityAnimation.IsMainPart(animationType) && !assignedEvent)
+                {
+                    assignedEvent = true;
+                    entityAnimation.SetTriggeredEvent(animationType, stateAction, endAction);
+                }
+            }
+
+            if (!assignedEvent)
+            {
+                stateAction?.Invoke(new SetStateData(new[] { transform }));
+                endAction?.Invoke(new SetStateData(new[] { transform }));
+            }
         }
     }
 }

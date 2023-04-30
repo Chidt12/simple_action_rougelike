@@ -274,21 +274,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14057ad9c3499e84a8b941a3aa97ea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animancer: {fileID: 1461995774}
-  _animations:
-  - isMainPart: 0
+  animancer: {fileID: 1461995774}
+  animations:
+  - isMainPart: 1
     animationType: 4
     clipTransition:
-      _FadeDuration: 0.25
+      _FadeDuration: 0
       _Events:
-        _NormalizedTimes: []
-        _Callbacks: []
+        _NormalizedTimes:
+        - 0.072463766
+        - 1
+        _Callbacks:
+        - m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1461995773}
+              m_TargetAssemblyTypeName: Runtime.Gameplay.EntitySystem.AnimancerEntityAnimation,
+                Assembly-CSharp
+              m_MethodName: TriggerWeaponOperatedPointActionEvent
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+        - m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1461995773}
+              m_TargetAssemblyTypeName: Runtime.Gameplay.EntitySystem.AnimancerEntityAnimation,
+                Assembly-CSharp
+              m_MethodName: TriggerWeaponEndActionEvent
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
         _Names: []
       _Clip: {fileID: 7400000, guid: d2874970f4daa474ba171671be4de364, type: 2}
       _Speed: 1
       _NormalizedStartTime: NaN
-  _defaultState:
-    _FadeDuration: 0.25
+    vfxSpawnPoints:
+    - {fileID: 8398711655092860047}
+  defaultState:
+    _FadeDuration: 0
     _Events:
       _NormalizedTimes: []
       _Callbacks: []
@@ -296,9 +330,6 @@ MonoBehaviour:
     _Clip: {fileID: 7400000, guid: 08fa79f447923ad4cbcde38b9d7a8472, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
-  _isMainPart: 0
-  _vfxSpawners:
-  - {fileID: 8398711655092860047}
   _rotateTowardFaceDirection: 1
   _flipPivotTransform: {fileID: 2935717118845554942}
   _rotateTransform: {fileID: 3489594938250721989}
@@ -365,6 +396,7 @@ GameObject:
   - component: {fileID: 7249555408300571290}
   - component: {fileID: 926233775}
   - component: {fileID: 926233781}
+  - component: {fileID: 3326386649176865464}
   m_Layer: 8
   m_Name: 1001
   m_TagString: Untagged
@@ -514,6 +546,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _faceDirectionType: 2
+--- !u!114 &3326386649176865464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875883244815912860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2b3303a3fe71a4d97d8b484cb72c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6875883244934980058
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,8 +691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8dd422b8a3c6b04da1c03fc71d26c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animancer: {fileID: 6875883244934980055}
-  _animations:
+  animancer: {fileID: 6875883244934980055}
+  animations:
   - isMainPart: 0
     animationType: 2
     clipTransition:
@@ -660,7 +704,8 @@ MonoBehaviour:
       _Clip: {fileID: 7400000, guid: 01eddd4b7247d1a40a3a0c59aded1724, type: 2}
       _Speed: 1
       _NormalizedStartTime: NaN
-  _defaultState:
+    vfxSpawnPoints: []
+  defaultState:
     _FadeDuration: 0.25
     _Events:
       _NormalizedTimes: []
@@ -669,7 +714,6 @@ MonoBehaviour:
     _Clip: {fileID: 7400000, guid: 5ddb45613d5f8db40a88f1f9c13a2e84, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
-  _isMainPart: 0
 --- !u!1 &6875883245388638909
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +854,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7286570763866990771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.124, y: -0.037, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

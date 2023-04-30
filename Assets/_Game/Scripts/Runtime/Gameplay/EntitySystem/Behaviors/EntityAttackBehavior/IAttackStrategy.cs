@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
-public class IAttackStrategy : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IAttackStrategy : IDisposable
     {
-        
-    }
+        #region Interface Methods
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void Init(WeaponModel weaponModel, IEntityStatData entityData, Transform creatorTransform);
+        void InitEventProxy(IEntityTriggerActionEventProxy triggerActionEventProxy);
+        bool CheckCanAttack();
+        bool CheckCanSpecialAttack();
+        UniTask OperateAttack();
+        UniTask OperateSpecialAttack();
+        void Cancel();
+
+        #endregion Interface Methods
     }
 }

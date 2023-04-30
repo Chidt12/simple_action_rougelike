@@ -28,13 +28,22 @@ namespace Runtime.Gameplay.EntitySystem
         public async UniTask ExecuteAsync(CancellationToken cancellationToken, int index)
         {
             currentSkillActionPhase = SkillPhase.Precheck;
-            await entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), cancellationToken);
+            await PrecheckSkillAsync();
+
+            var precasting = true;
+            entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), cancellationToken, endAction: _ => precasting = false);
+            await UniTask.WaitUntil(() => !precasting, cancellationToken: cancellationToken);
+
             currentSkillActionPhase = SkillPhase.Cast;
             await PresentSkillAsync(cancellationToken, index);
+
+            var backswinging = true;
             currentSkillActionPhase = SkillPhase.Backswing;
-            await entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), cancellationToken);
+            entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), cancellationToken,endAction: _ => backswinging = false);
+            await UniTask.WaitUntil(() => !backswinging, cancellationToken: cancellationToken);
         }
 
+        protected virtual UniTask PrecheckSkillAsync() => UniTask.CompletedTask;
         protected abstract UniTask PresentSkillAsync(CancellationToken cancellationToken, int index);
 
         public SkillCancelResult Cancel()

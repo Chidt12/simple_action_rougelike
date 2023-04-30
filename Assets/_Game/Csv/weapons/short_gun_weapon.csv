@@ -1,2 +1,2 @@
 ﻿attack_speed_percent,attack_range,damage_bonus,damage_factor_stat_type,damage_factor_value,projectile_id,projectile_speed,trigger_rarity_type
-2,4,0,AttackDamage,1,short_gun_projectile,5,1
+2,6,0,AttackDamage,1,short_gun_projectile,10,1
