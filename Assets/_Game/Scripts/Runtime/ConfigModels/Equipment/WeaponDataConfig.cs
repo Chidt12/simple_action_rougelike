@@ -42,17 +42,17 @@ namespace Runtime.ConfigModel
         #endregion Properties
     }
 
-    public interface IWeaponDataConfig : IEquipmentMechanicDataConfig
+    public abstract class WeaponDataConfig : EquipmentMechanicDataConfig
     {
         #region Interface Methods
 
-        IWeaponDataConfigItem GetWeaponDataConfigItem();
+        public abstract IWeaponDataConfigItem GetWeaponDataConfigItem();
 
         #endregion Interface Methods
     }
 
-    public abstract class WeaponDataConfig<T, TMechanic> : ScriptableObject, IWeaponDataConfig where T : WeaponDataConfigItem<TMechanic>
-                                                                                                                             where TMechanic : EquipmentMechanicDataConfigItem, new()
+    public abstract class WeaponDataConfig<T, TMechanic> : WeaponDataConfig where T : WeaponDataConfigItem<TMechanic>
+        where TMechanic : EquipmentMechanicDataConfigItem, new()
     {
         #region Members
 
@@ -68,9 +68,9 @@ namespace Runtime.ConfigModel
 
         #region Interface Methods
 
-        public IWeaponDataConfigItem GetWeaponDataConfigItem() => items.FirstOrDefault();
+        public override IWeaponDataConfigItem GetWeaponDataConfigItem() => items.FirstOrDefault();
 
-        public EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType)
+        public override EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType)
         {
             var weaponConfig = GetWeaponDataConfigItem();
             if (weaponConfig != null && weaponConfig.Mechanics != null)

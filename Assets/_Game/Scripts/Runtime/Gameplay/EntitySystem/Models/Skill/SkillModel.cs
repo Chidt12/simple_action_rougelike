@@ -1,14 +1,8 @@
+using Runtime.ConfigModel;
+using Runtime.Definition;
+
 namespace Runtime.Gameplay.EntitySystem
 {
-    public enum SkillTargetType
-    {
-        None = 0,
-        Self = 1,
-        All = 2,
-        Opponent = 3,
-        Ally = 4
-    }
-
     public abstract class SkillModel
     {
         public float CastRange { get; protected set; }
@@ -27,5 +21,23 @@ namespace Runtime.Gameplay.EntitySystem
             Cooldown = cooldown;
             CanBeCanceled = canBeCanceled;
         }
+    }
+
+    public class SkillData
+    {
+        #region Members
+
+        public SkillDataConfigItem configItem;
+
+        #endregion Members
+
+        #region Class Methods
+
+        public SkillData(SkillDataConfigItem configItem)
+        {
+            this.configItem = configItem;
+        }
+
+        #endregion Class Methods
     }
 }

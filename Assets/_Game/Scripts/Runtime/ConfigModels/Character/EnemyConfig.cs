@@ -14,14 +14,14 @@ namespace Runtime.ConfigModel
     {
         #region Members
 
-        public EnemyLevelStats zombieLevelStats;
+        public EnemyLevelStats enemyLevelStats;
         public SkillIdentity skillIdentity;
 
         #endregion Members
 
         #region Properties
 
-        public override CharacterLevelStats CharacterLevelStats => zombieLevelStats;
+        public override CharacterLevelStats CharacterLevelStats => enemyLevelStats;
 
         #endregion Properties
     }

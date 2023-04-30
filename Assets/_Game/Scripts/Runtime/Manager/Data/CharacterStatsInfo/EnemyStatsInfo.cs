@@ -1,4 +1,5 @@
 using Runtime.ConfigModel;
+using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 
 namespace Runtime.Manager.Data

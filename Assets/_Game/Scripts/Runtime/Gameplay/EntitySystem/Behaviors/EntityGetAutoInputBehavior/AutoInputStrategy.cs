@@ -1,6 +1,7 @@
 using Pathfinding;
 using Pathfinding.RVO;
 using Pathfinding.Util;
+using Runtime.Definition;
 using Runtime.Manager.Gameplay;
 using System;
 using System.Collections.Generic;

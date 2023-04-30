@@ -13,7 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool IsDead => healthStat.CurrentValue <= 0;
 
-        public void Init(EntityType entityType, int uid)
+        public virtual void Init(EntityType entityType, int uid)
         {
             this.entityType = entityType;
             this.uid = uid;

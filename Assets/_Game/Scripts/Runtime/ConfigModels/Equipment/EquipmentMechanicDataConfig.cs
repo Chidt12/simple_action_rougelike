@@ -14,16 +14,16 @@ namespace Runtime.ConfigModel
         #endregion Members
     }
 
-    public interface IEquipmentMechanicDataConfig
+    public abstract class EquipmentMechanicDataConfig : ScriptableObject
     {
         #region Interface Methods
 
-        public EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType);
+        public abstract EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType);
 
         #endregion Interface Methods
     }
 
-    public abstract class EquipmentMechanicDataConfig<T> : ScriptableObject, IEquipmentMechanicDataConfig where T : EquipmentMechanicDataConfigItem, new()
+    public abstract class EquipmentMechanicDataConfig<T> : EquipmentMechanicDataConfig where T : EquipmentMechanicDataConfigItem, new()
     {
         #region Members
 
@@ -39,7 +39,7 @@ namespace Runtime.ConfigModel
 
         #region Class Methods
 
-        public EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType)
+        public override EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType)
         {
             var equipmentDataConfigItem = new T();
             foreach (var item in items)

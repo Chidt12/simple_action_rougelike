@@ -7,13 +7,11 @@ using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.AddressableAssets;
 
 namespace Runtime.Gameplay
 {
     public class GameplayDataManager : MonoSingleton<GameplayDataManager>
     {
-        private Dictionary<uint, EnemyConfigItem> EnemyConfigDictionary { get; set; } = new();
         public StageLoadConfigItem StageLoadConfig { get; private set; }
 
         protected override void Awake()
@@ -29,15 +27,14 @@ namespace Runtime.Gameplay
 
         private async UniTask LoadStageLoadConfig()
         {
-            var stageLoadConfigs = await LoadConfig<StageLoadConfig>();
+            var stageLoadConfigs = await ConfigDataManager.Instance.Load<StageLoadConfig>();
             var stageId = GameplayDataDispatcher.Instance.StageId;
             StageLoadConfig = stageLoadConfigs.items.FirstOrDefault(x => x.stageId == stageId);
-            Addressables.Release(stageLoadConfigs);
         }
 
-        public async UniTask<(HeroLevelModel, WeaponModel)> GetHeroDataAsync(uint heroId)
+        public async UniTask<(HeroStatsInfo, WeaponModel)> GetHeroDataAsync(uint heroId)
         {
-            var heroConfig = await LoadConfig<HeroConfig>();
+            var heroConfig = await ConfigDataManager.Instance.Load<HeroConfig>();
             var heroConfigItem = heroConfig.items.FirstOrDefault(x => x.id == heroId);
             var heroLevel = GameplayDataDispatcher.Instance.HeroLevel;
             var heroLevelConfigItem = heroConfigItem.levels.FirstOrDefault(x => x.level == heroLevel);
@@ -48,25 +45,15 @@ namespace Runtime.Gameplay
             var weaponData = await GetWeaponDataAsync(weaponType, equipmentEquip.RarityType, equipmentEquip.Level);
             var weaponModel = WeaponModelFactory.GetWeaponModel(weaponType, weaponData);
             var heroStatsInfo = await GameplayDataDispatcher.Instance.GetHeroStatsInfo(heroLevelConfigItem.CharacterLevelStats);
-            var heroLevelModel = new HeroLevelModel((uint)heroLevel,
-                                                    heroLevelConfigItem.detectedPriority,
-                                                    heroStatsInfo);
 
-            Addressables.Release(heroConfig);
-            return new(heroLevelModel, weaponModel);
+            return (heroStatsInfo, weaponModel);
         }
 
-        public async UniTask<EnemyLevelModel> GetZombieDataAsync(uint enemyId, uint level)
+        public async UniTask<(EnemyStatsInfo, List<SkillModel>, int)> GetZombieDataAsync(uint enemyId, uint level)
         {
-            if (!EnemyConfigDictionary.ContainsKey(enemyId))
-            {
-                var zombieConfig = await LoadConfig<EnemyConfig>(enemyId.ToString());
-                var configItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
-                EnemyConfigDictionary.TryAdd(enemyId, configItem);
-                Addressables.Release(zombieConfig);
-            }
+            var zombieConfig = await ConfigDataManager.Instance.Load<EnemyConfig>(enemyId.ToString());
+            var zombieConfigItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
 
-            var zombieConfigItem = EnemyConfigDictionary[enemyId];
             var zombieLevelConfigItem = zombieConfigItem.levels.FirstOrDefault(x => x.level == level);
             var skillIdentity = zombieLevelConfigItem.skillIdentity;
             SkillDataConfigItem skillDataConfigItem = null;
@@ -74,45 +61,33 @@ namespace Runtime.Gameplay
 
             if (skillIdentity.skillType != SkillType.None)
             {
-                skillDataConfigItem = await SkillDataFactory.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
+                skillDataConfigItem = await ConfigDataManager.Instance.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
                 var skillData = new SkillData(skillDataConfigItem);
                 var skillModel = SkillModelFactory.GetSkillModel(skillIdentity.skillType, skillData);
                 skillModels.Add(skillModel);
             }
 
             var enemyStatsInfo = new EnemyStatsInfo(zombieLevelConfigItem.CharacterLevelStats);
-            var zombieLevelModel = new EnemyLevelModel(level,
-                                                        zombieLevelConfigItem.detectedPriority,
-                                                        enemyStatsInfo,
-                                                        skillModels);
-            return new(zombieLevelModel);
+            return (enemyStatsInfo, skillModels, zombieLevelConfigItem.detectedPriority);
         }
 
 
         private async UniTask<WeaponData> GetWeaponDataAsync(WeaponType weaponType, RarityType weaponEquipmentRarityType, int weaponLevel)
         {
             string weaponDataConfigAssetName = string.Format(AddressableKeys.WEAPON_DATA_CONFIG_ASSET_FORMAT, weaponType);
-            var weaponDataConfig = await Addressables.LoadAssetAsync<IWeaponDataConfig>(weaponDataConfigAssetName);
+            var weaponDataConfig = await ConfigDataManager.Instance.Load<WeaponDataConfig>(weaponDataConfigAssetName);
             var weaponDataConfigItem = weaponDataConfig.GetWeaponDataConfigItem();
             EquipmentMechanicDataConfigItem mechanicDataConfigItem = null;
             mechanicDataConfigItem = weaponDataConfig.GetEquipmentDataConfigItem(RarityType.Ultimate);
-            Addressables.Release(weaponDataConfig);
             return new WeaponData(weaponDataConfigItem, mechanicDataConfigItem);
         }
 
-        private async UniTask<T> LoadConfig<T>(string id = "") where T : class
+        private string GetConfigAssetName<T>(string id = "")
         {
             if (string.IsNullOrEmpty(id))
-            {
-                var config = await Addressables.LoadAssetAsync<T>(typeof(T).ToString());
-                return config;
-            }
+                return typeof(T).ToString();
             else
-            {
-                var config = await Addressables.LoadAssetAsync<T>(typeof(T).ToString() + "_" + id + ".csv");
-                return config;
-            }
+                return typeof(T).ToString() + "_" + id + ".csv";
         }
-
     }
 }
