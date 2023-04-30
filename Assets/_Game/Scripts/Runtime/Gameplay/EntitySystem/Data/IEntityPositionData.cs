@@ -6,6 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
     public interface IEntityData 
     { 
         public EntityType EntityType { get; }
+        public int EntityId { get; }
         public bool IsDead { get; }
         int EntityUID { get; }
     }

@@ -1,4 +1,5 @@
 using Runtime.Definition;
+using Runtime.Manager.Data;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +10,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected HealthEntityStat healthStat; // for quick access.
         protected Dictionary<StatType, EntityStat> statsDictionary;
 
-        protected void InitStats()
+        public void InitStats(CharacterStatsInfo characterStatsInfo)
         {
             statsDictionary = new();
             statsDictionary.Add(StatType.MoveSpeed, new EntityStat(8));

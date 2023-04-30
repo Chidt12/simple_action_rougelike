@@ -9,6 +9,7 @@ namespace Runtime.ConfigModel
     {
         WeaponType WeaponType { get; }
         float AttackSpeedPercent { get; }
+        float AttackRange { get; }
         float DamageBonus { get; }
         DamageFactor[] DamageFactors { get; }
         EquipmentMechanicDataConfigItem[] Mechanics { get; }

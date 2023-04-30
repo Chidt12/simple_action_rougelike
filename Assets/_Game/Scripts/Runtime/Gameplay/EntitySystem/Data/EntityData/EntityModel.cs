@@ -5,19 +5,21 @@ namespace Runtime.Gameplay.EntitySystem
     public partial class EntityModel : IEntityData
     {
         protected int uid;
+        protected int entityId;
         protected EntityType entityType;
 
         public EntityType EntityType => entityType;
 
+        public int EntityId => entityId;
         public int EntityUID => uid;
 
         public bool IsDead => healthStat.CurrentValue <= 0;
 
-        public virtual void Init(EntityType entityType, int uid)
+        public virtual void Init(EntityType entityType, int uid, int entityId)
         {
             this.entityType = entityType;
             this.uid = uid;
-            InitStats();
+            this.entityId = entityId;
             InitControl();
         }
     }

@@ -174,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4508445895273613800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.764, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -276,7 +276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animancer: {fileID: 1461995774}
   _animations:
-  - animationType: 4
+  - isMainPart: 0
+    animationType: 4
     clipTransition:
       _FadeDuration: 0.25
       _Events:
@@ -295,9 +296,10 @@ MonoBehaviour:
     _Clip: {fileID: 7400000, guid: 08fa79f447923ad4cbcde38b9d7a8472, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
+  _isMainPart: 0
   _vfxSpawners:
   - {fileID: 8398711655092860047}
-  _canRotate: 1
+  _rotateTowardFaceDirection: 1
   _flipPivotTransform: {fileID: 2935717118845554942}
   _rotateTransform: {fileID: 3489594938250721989}
 --- !u!114 &1461995774
@@ -647,7 +649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animancer: {fileID: 6875883244934980055}
   _animations:
-  - animationType: 2
+  - isMainPart: 0
+    animationType: 2
     clipTransition:
       _FadeDuration: 0.25
       _Events:
@@ -666,6 +669,7 @@ MonoBehaviour:
     _Clip: {fileID: 7400000, guid: 5ddb45613d5f8db40a88f1f9c13a2e84, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
+  _isMainPart: 0
 --- !u!1 &6875883245388638909
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,9 +10,9 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField]
         private EntityType _entityType = EntityType.Object;
         [SerializeField]
-        private uint _level;
+        private int _level;
         [SerializeField]
-        private uint _entityId;
+        private int _entityId;
         [SerializeField]
         private int _waveActive = 0;
         [SerializeField]
@@ -21,9 +21,9 @@ namespace Runtime.Gameplay.EntitySystem
         #endregion Members
 
         #region Properties
-        public uint Level => _level;
+        public int Level => _level;
         public EntityType EntityType => _entityType;
-        public uint EntityId => _entityId;
+        public int EntityId => _entityId;
         public int WaveActive => _waveActive;
         public float DelaySpawnInWave => _delaySpawnInWave;
         public bool ShouldDisable => _waveActive != 0 || _delaySpawnInWave > 0;

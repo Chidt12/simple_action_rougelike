@@ -10,19 +10,19 @@ namespace Runtime.ConfigModel
     {
         public string entityId;
         public EntityType entityType;
-        public uint entityNumber;
-        public uint entityLevel;
+        public int entityNumber;
+        public int entityLevel;
     }
 
     [Serializable]
     public struct EntityStageLoadConfigItem
     {
         public SpawnedEntityInfo entityConfigItem;
-        public uint waveIndex;
+        public int waveIndex;
         public float delaySpawnTime;
         public bool followHero;
         public float distanceFromHero;
-        public uint spawnPointIndex;
+        public int spawnPointIndex;
     }
 
     [Serializable]
@@ -35,7 +35,7 @@ namespace Runtime.ConfigModel
     [Serializable]
     public struct WaveStageLoadConfigItem
     {
-        public uint waveIndex;
+        public int waveIndex;
         public int duration;
         public bool IsInfiniteDuration => duration == -1;
     }

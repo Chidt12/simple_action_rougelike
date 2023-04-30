@@ -1,10 +1,12 @@
 using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Constants;
+using Runtime.Core.Message;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
+using Runtime.Message;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,8 +14,6 @@ namespace Runtime.Gameplay
 {
     public class GameplayDataManager : MonoSingleton<GameplayDataManager>
     {
-        public StageLoadConfigItem StageLoadConfig { get; private set; }
-
         protected override void Awake()
         {
             base.Awake();
@@ -23,16 +23,20 @@ namespace Runtime.Gameplay
         private async UniTask LoadConfig()
         {
             await LoadStageLoadConfig();
+            FinishedLoading();
+        }
+
+        private void FinishedLoading()
+        {
+            SimpleMessenger.Publish(new GameplayDataLoadedMessage());
         }
 
         private async UniTask LoadStageLoadConfig()
         {
-            var stageLoadConfigs = await ConfigDataManager.Instance.Load<StageLoadConfig>();
-            var stageId = GameplayDataDispatcher.Instance.StageId;
-            StageLoadConfig = stageLoadConfigs.items.FirstOrDefault(x => x.stageId == stageId);
+            await ConfigDataManager.Instance.Load<StageLoadConfig>();
         }
 
-        public async UniTask<(HeroStatsInfo, WeaponModel)> GetHeroDataAsync(uint heroId)
+        public async UniTask<(HeroStatsInfo, WeaponModel)> GetHeroDataAsync(int heroId)
         {
             var heroConfig = await ConfigDataManager.Instance.Load<HeroConfig>();
             var heroConfigItem = heroConfig.items.FirstOrDefault(x => x.id == heroId);
@@ -49,9 +53,9 @@ namespace Runtime.Gameplay
             return (heroStatsInfo, weaponModel);
         }
 
-        public async UniTask<(EnemyStatsInfo, List<SkillModel>, int)> GetZombieDataAsync(uint enemyId, uint level)
+        public async UniTask<(EnemyStatsInfo, List<SkillModel>, int)> GetEnemyDataAsync(int enemyId, int level)
         {
-            var zombieConfig = await ConfigDataManager.Instance.Load<EnemyConfig>(enemyId.ToString());
+            var zombieConfig = await ConfigDataManager.Instance.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(enemyId.ToString()));
             var zombieConfigItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
 
             var zombieLevelConfigItem = zombieConfigItem.levels.FirstOrDefault(x => x.level == level);

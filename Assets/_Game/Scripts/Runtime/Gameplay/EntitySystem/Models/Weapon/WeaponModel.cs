@@ -8,10 +8,15 @@ namespace Runtime.Gameplay.EntitySystem
         public abstract WeaponType WeaponType { get; }
         public float DamageBonus { get; }
         public DamageFactor[] DamageFactors { get; }
+        public float AttackSpeedPercent { get; protected set; }
+        public float AttackRange { get; protected set; }
 
-        public WeaponModel()
+        public WeaponModel(WeaponData weaponData)
         {
-
+            AttackSpeedPercent = weaponData.weaponConfigItem.AttackSpeedPercent;
+            AttackRange = weaponData.weaponConfigItem.AttackRange;
+            DamageBonus = weaponData.weaponConfigItem.DamageBonus;
+            DamageFactors = weaponData.weaponConfigItem.DamageFactors;
         }
     }
 

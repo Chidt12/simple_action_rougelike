@@ -8,6 +8,12 @@ namespace Runtime.Manager.Data
 {
     public partial class ConfigDataManager
     {
+        public  StageLoadConfigItem GetStageConfigData(int stageId)
+        {
+            var stageLoadConfigs = GetData<StageLoadConfig>();
+            return stageLoadConfigs.items.FirstOrDefault(x => x.stageId == stageId);
+        }
+
         public async UniTask<SkillDataConfigItem> GetSkillDataConfigItem(SkillType skillType, int dataId)
         {
             string skillDataConfigAssetName = string.Format(AddressableKeys.SKILL_DATA_CONFIG_ASSET_FORMAT, skillType);

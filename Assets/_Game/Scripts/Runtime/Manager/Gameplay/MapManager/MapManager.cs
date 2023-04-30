@@ -1,5 +1,6 @@
 using Pathfinding;
 using Runtime.Core.Singleton;
+using Runtime.Gameplay.Manager;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
