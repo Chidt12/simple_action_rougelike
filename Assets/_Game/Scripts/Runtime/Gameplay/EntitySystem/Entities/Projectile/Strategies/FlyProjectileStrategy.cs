@@ -43,7 +43,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Class Methods
 
-        public override void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityPositionData targetData = null)
+        public override void Init(ProjectileStrategyData projectileStrategyData, Projectile controllerProjectile, Vector2 direction, Vector2 originalPosition, IEntityData targetData = null)
         {
             base.Init(projectileStrategyData, controllerProjectile, direction, originalPosition, targetData);
             this.originalPosition = originalPosition;
@@ -61,7 +61,7 @@ namespace Runtime.Gameplay.EntitySystem
             var entityHolder = collider.GetComponent<EntityHolder>();
             if (entityHolder != null)
             {
-                if (entityHolder.EntityData.IsDead)
+                if (!entityHolder.EntityData.IsDead)
                 {
                     if (controllerProjectile.Creator.EntityType.CanCauseDamage(entityHolder.EntityData.EntityType))
                     {

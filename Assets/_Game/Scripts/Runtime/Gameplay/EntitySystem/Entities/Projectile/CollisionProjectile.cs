@@ -21,10 +21,11 @@ namespace Runtime.Gameplay.EntitySystem
         private void OnDisable()
             => Dispose();
 
-        public override async UniTask BuildAsync(IEntityPositionData entityData, Vector3 position)
+        public override async UniTask BuildAsync(IEntityData entityData, Vector3 position)
         {
             await base.BuildAsync(entityData, position);
 
+            HasDisposed = false;
             RefId = -1;
             _collisionBodySearchType = entityData.EntityType.GetCollisionBodySearchType();
             _collider = gameObject.GetComponent<Collider2D>();

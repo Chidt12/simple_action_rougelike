@@ -4,7 +4,7 @@ using Runtime.Gameplay.EntitySystem;
 
 namespace Runtime.Manager.Data
 {
-    public class HeroStatsInfo : CharacterStatsInfo
+    public class HeroStatsInfo : EntityStatsInfo
     {
         public HeroStatsInfo(CharacterLevelStats characterLevelStats) : base(characterLevelStats)
         {

@@ -39,7 +39,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid SpawnProjectileAsync(Vector2 direction, Transform[] spawnPoints, CancellationToken cancellationToken)
         {
-            var positionData = (IEntityPositionData)creatorData;
+            var positionData = (IEntityData)creatorData;
             if (positionData != null)
             {
                 FlyForwardProjectileStrategyData flyForwardProjectileStrategyData = null;

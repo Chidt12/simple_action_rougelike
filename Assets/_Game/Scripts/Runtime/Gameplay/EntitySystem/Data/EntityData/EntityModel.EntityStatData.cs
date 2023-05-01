@@ -1,6 +1,5 @@
 using Runtime.Definition;
 using Runtime.Manager.Data;
-using System;
 using System.Collections.Generic;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -10,12 +9,24 @@ namespace Runtime.Gameplay.EntitySystem
         protected HealthEntityStat healthStat; // for quick access.
         protected Dictionary<StatType, EntityStat> statsDictionary;
 
-        public void InitStats(CharacterStatsInfo characterStatsInfo)
+        public virtual void InitStats(EntityStatsInfo entityStatsInfo)
         {
             statsDictionary = new();
-            statsDictionary.Add(StatType.MoveSpeed, new EntityStat(8));
-            healthStat = new HealthEntityStat(100);
-            statsDictionary.Add(StatType.Health, healthStat);
+            foreach (var statType in entityStatsInfo.StatTypes)
+            {
+                var statTotalValue = entityStatsInfo.GetStatTotalValue(statType);
+                if (statType == StatType.Health)
+                {
+                    var newStat = new HealthEntityStat(statTotalValue);
+                    statsDictionary.Add(statType, newStat);
+                    healthStat = newStat;
+                }
+                else
+                {
+                    var newStat = new EntityStat(statTotalValue);
+                    statsDictionary.Add(statType, newStat);
+                }
+            }
         }
 
         public void BuffStat(StatType statType, float value, StatModifyType statModifyType)
@@ -66,14 +77,17 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public void GetDamage(float damage, EffectSource damageSource, EffectProperty damageProperty)
+        public float GetDamage(float damage, EffectSource damageSource, EffectProperty damageProperty)
         {
-            healthStat.TakeDamage(damage, damageSource, damageProperty);
+            var value = healthStat.TakeDamage(damage, damageSource, damageProperty);
+            if (IsDead)
+                DeathEvent.Invoke();
+            return value;
         }
 
-        public void Heal(float value, EffectSource healSource, EffectProperty healDamage)
+        public float Heal(float value, EffectSource healSource, EffectProperty healDamage)
         {
-            healthStat.TakeDamage(value, healSource, healDamage);
+            return healthStat.TakeDamage(value, healSource, healDamage);
         }
     }
 }

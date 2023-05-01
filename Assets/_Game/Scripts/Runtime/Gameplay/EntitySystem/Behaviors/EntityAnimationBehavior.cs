@@ -20,6 +20,7 @@ namespace Runtime.Gameplay.EntitySystem
         private IEntityControlData _controlData;
         private IEntityAnimation[] _entityAnimations;
         private bool _canUpdateAnimation;
+        private AnimationType _currentAnimationType;
 
         public void Dispose()
         {
@@ -73,11 +74,13 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if (_controlData.IsMoving)
             {
-                PlayerAnimation(AnimationType.Run);
+                if(_currentAnimationType != AnimationType.Run)
+                    PlayerAnimation(AnimationType.Run);
             }    
             else
             {
-                PlayerAnimation(AnimationType.Idle);
+                if (_currentAnimationType != AnimationType.Idle)
+                    PlayerAnimation(AnimationType.Idle);
             }    
         }
 
@@ -102,6 +105,8 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if (!_canUpdateAnimation)
                 return;
+
+            _currentAnimationType = animationType;
             foreach (var entityAnimation in _entityAnimations)
                 entityAnimation.Play(animationType);
         }

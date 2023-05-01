@@ -15,14 +15,14 @@ namespace Runtime.Gameplay.EntitySystem
 
         public string ImpactPrefabName => impactPrefabName;
         public bool GeneratedImpact { get; set; }
-        public IEntityPositionData Creator { get; private set; }
+        public IEntityData Creator { get; private set; }
         public Vector2 CreatorPosition => Creator.Position;
         public Vector2 CenterPosition => transform.position;
         public Vector2 Direction => transform.up;
 
         private void Update() => currentStrategy?.Update();
 
-        public virtual UniTask BuildAsync(IEntityPositionData creatorData, Vector3 position)
+        public virtual UniTask BuildAsync(IEntityData creatorData, Vector3 position)
         {
             GeneratedImpact = false;
             transform.position = position;
@@ -74,6 +74,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (string.IsNullOrEmpty(impactPrefabName) || GeneratedImpact)
                 return;
 
+            GeneratedImpact = true;
             var impact = await PoolManager.Instance.Rent(impactPrefabName, token: cancellationTokenSource.Token);
             impact.transform.position = position;
         }

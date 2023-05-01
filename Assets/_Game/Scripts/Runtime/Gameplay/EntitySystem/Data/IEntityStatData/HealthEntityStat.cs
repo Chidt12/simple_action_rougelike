@@ -31,18 +31,20 @@ namespace Runtime.Gameplay.EntitySystem
             currentValue = TotalValue;
         }
 
-        public void Heal(float value, EffectSource healSource, EffectProperty healProperty)
+        public float Heal(float value, EffectSource healSource, EffectProperty healProperty)
         {
             var oldValue = currentValue;
             currentValue = Mathf.Min(TotalValue, currentValue + value);
             OnHealed.Invoke(currentValue - oldValue, healSource, healProperty);
+            return currentValue - oldValue;
         }
 
-        public void TakeDamage(float value, EffectSource damageSource, EffectProperty damageProperty)
+        public float TakeDamage(float value, EffectSource damageSource, EffectProperty damageProperty)
         {
             var oldValue = currentValue;
             currentValue = Mathf.Max(0, currentValue - value);
             OnDamaged.Invoke(oldValue - currentValue, damageSource, damageProperty);
+            return oldValue - currentValue;
         }
     }
 }

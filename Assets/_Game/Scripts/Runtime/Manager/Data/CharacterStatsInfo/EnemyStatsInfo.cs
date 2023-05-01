@@ -4,7 +4,7 @@ using Runtime.Gameplay.EntitySystem;
 
 namespace Runtime.Manager.Data
 {
-    public class EnemyStatsInfo : CharacterStatsInfo
+    public class EnemyStatsInfo : EntityStatsInfo
     {
         public EnemyStatsInfo(CharacterLevelStats characterLevelStats) : base(characterLevelStats)
         {

@@ -25,7 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
         private int _awayMoveSearchSpreadLength;
         private MoveState _moveState = MoveState.MoveTowardsHero;
 
-        public KeepDistanceToTargetAutoInputStrategy(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange)
+        public KeepDistanceToTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange)
             : base(positionData, controlData, statData, castRange)
         {
             _isMoveAwayFromTarget = false;

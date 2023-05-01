@@ -41,7 +41,6 @@ namespace Runtime.Gameplay.EntitySystem
                 controllerProjectile.Creator,
                 target)
             );
-            CreateImpactEffect(hitPoint);
             controllerProjectile.CompleteStrategy(true);
         }
 

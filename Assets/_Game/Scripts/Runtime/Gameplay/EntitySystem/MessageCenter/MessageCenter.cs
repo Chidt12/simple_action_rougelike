@@ -18,8 +18,8 @@ namespace Runtime.Gameplay.EntitySystem
         {
             base.Awake();
             _subscriptions = new();
-            _subscriptions.Add(SimpleMessenger.Subscribe<SentHealMessage>(OnSentHeal));
-            _subscriptions.Add(SimpleMessenger.Subscribe<SentDamageMessage>(OnSentDamage));
+            _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentHealMessage>(OnSentHeal));
+            _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentDamageMessage>(OnSentDamage));
         }
 
         private void OnDestroy()
@@ -39,43 +39,84 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnSentDamage(SentDamageMessage message)
         {
-            var statData = message.Creator as IEntityStatData;
-            if (statData != null)
+            var targetModifiedStatData = message.Target as IEntityModifiedStatData;
+            if(targetModifiedStatData == null)
             {
-                var critChance = statData.GetTotalStatValue(StatType.CritChance);
-                if (message.DamageSource != EffectSource.FromNormalAttack)
-                    critChance = 0;
+                return;
+            }
 
-                var attackDamage = statData.GetTotalStatValue(StatType.AttackDamage);
-                var isCrit = Random.Range(0, 1f) < critChance;
-                var damageValue = attackDamage;
-                if (message.DamageFactors != null && message.DamageFactors.Length > 0)
-                {
-                    float damageConfig = 0;
-                    foreach (var damageFactor in message.DamageFactors)
-                        damageConfig += (statData.GetTotalStatValue(damageFactor.damageFactorStatType) * damageFactor.damageFactorValue);
-                    damageValue = damageConfig;
-                }
-                else
-                {
-                    damageValue = 0;
-                }
-                damageValue += message.DamageBonus;
+            // Calculated Damage created
 
-                float critDamage = 0;
-                if (isCrit)
-                {
-                    critDamage = statData.GetTotalStatValue(StatType.CritDamage);
-                    damageValue = damageValue * (1 + critDamage);
-                }
+            var creatorStatData = message.Creator as IEntityStatData;
+            float critChance = 0;
+            float attackDamage = 0;
+            float critDamage = 0;
+            float armorPenetration = 0;
+            float lifeSteal = 0;
 
-                var armorPenetration = statData.GetTotalStatValue(StatType.ArmorPenetration);
+            if (creatorStatData != null)
+            {
+                critChance = creatorStatData.GetTotalStatValue(StatType.CritChance);
+                attackDamage = creatorStatData.GetTotalStatValue(StatType.AttackDamage);
+                critDamage = creatorStatData.GetTotalStatValue(StatType.CritDamage);
+                armorPenetration = creatorStatData.GetTotalStatValue(StatType.ArmorPenetration);
+                lifeSteal = creatorStatData.GetTotalStatValue(StatType.LifeSteal);
+            }
+
+            var damageValue = message.DamageBonus;
+            if (creatorStatData != null && message.DamageFactors != null && message.DamageFactors.Length > 0)
+            {
+                float damageConfig = 0;
+                foreach (var damageFactor in message.DamageFactors)
+                    damageConfig += (creatorStatData.GetTotalStatValue(damageFactor.damageFactorStatType) * damageFactor.damageFactorValue);
+                damageValue += damageConfig;
+            }
+
+            if (message.DamageSource != EffectSource.FromNormalAttack)
+                critChance = 0;
+            var isCrit = critChance <= 0 ? false : Random.Range(0, 1f) < critChance;
+            if (isCrit)
+                damageValue = damageValue * (1 + critDamage);
+
 #if UNITY_EDITOR
-                Debug.Log($"damage_log|| owner: {message.Creator.EntityId}/{message.Creator.EntityType} | damage source: {message.DamageSource}| attack damage: {attackDamage} | isCrit: {isCrit} | critDamage: {critDamage}" +
-                      $" | armorPenet: {armorPenetration} | damageFactor: {(message.DamageFactors != null && message.DamageFactors.Length > 0 ? GetTextFactorLog(message.DamageFactors) : "1")} | damageBonus: {message.DamageBonus}");
+            Debug.Log($"damage_log|| owner: {message.Creator.EntityId}/{message.Creator.EntityType} | damage source: {message.DamageSource}| attack damage: {attackDamage} | isCrit: {isCrit} | critDamage: {critDamage}" +
+                  $" | armorPenet: {armorPenetration} | damageFactor: {(message.DamageFactors != null && message.DamageFactors.Length > 0 ? GetTextFactorLog(message.DamageFactors) : "1")} | damageBonus: {message.DamageBonus}");
 #endif
 
-                SimpleMessenger.Publish(new MessageToEntity(message.Target.EntityUID), new ReceivedDamageMessage());
+
+            // Calculate Damage Received
+
+            float dodgeChance = 0;
+            float armor = 0;
+            float damageReduction = 0;
+
+            if(targetModifiedStatData != null)
+            {
+                dodgeChance = targetModifiedStatData.GetTotalStatValue(StatType.DodgeChance);
+                armor = targetModifiedStatData.GetTotalStatValue(StatType.Armor);
+                damageReduction = targetModifiedStatData.GetTotalStatValue(StatType.DamageReduction);
+            }
+
+            if (Random.Range(0, 1f) >= dodgeChance)
+            {
+                var damageTaken = (damageValue - armor * (1 - armorPenetration)) * (1 - damageReduction);
+                damageTaken = damageTaken > 0 ? damageTaken : 0;
+
+#if UNITY_EDITOR
+                var log = $"get_damage_log || target: {message.Target.EntityId}/{message.Target.EntityType} | damageReduction: {damageReduction} " +
+                      $"| armor: {armor} | damageTaken: {damageTaken}";
+                Debug.Log($"{log}");
+#endif
+
+                var finalCreatedDamage = targetModifiedStatData.GetDamage(damageTaken, message.DamageSource, isCrit ? EffectProperty.Crit : message.DamageProperty);
+
+                // TODO: Apply lifesteal and spawn sthing after death.
+                if (message.Target.IsDead)
+                    SimpleMessenger.Publish(new EntityDiedMessage(message.Target, false));
+            }
+            else
+            {
+                message.Target.ReactionChangedEvent.Invoke(EntityReactionType.Dodge);
             }
         }
 

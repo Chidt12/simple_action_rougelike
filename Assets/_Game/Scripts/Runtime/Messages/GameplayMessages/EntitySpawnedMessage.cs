@@ -8,14 +8,14 @@ namespace Runtime.Message
     {
         #region Members
 
-        public readonly IEntityPositionData EntityData;
+        public readonly IEntityData EntityData;
         public readonly Transform EntityTransform;
 
         #endregion Members
 
         #region Struct Methods
 
-        public EntitySpawnedMessage(IEntityPositionData entityData, Transform entityTransform)
+        public EntitySpawnedMessage(IEntityData entityData, Transform entityTransform)
         {
             EntityData = entityData;
             EntityTransform = entityTransform;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityGetAutoInputBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior , IDisposeEntityBehavior
+    public class EntityGetAutoInputBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior , IDisposeEntityBehavior
     {
         private IAutoInputStrategy _autoInputStrategy;
 
@@ -17,7 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
             _autoInputStrategy.Update();
         }
 
-        protected override UniTask<bool> BuildDataAsync(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData)
+        protected override UniTask<bool> BuildDataAsync(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData)
         {
             _autoInputStrategy = new KeepDistanceToTargetAutoInputStrategy(positionData, controlData, statData, 4f);
             return UniTask.FromResult(true);

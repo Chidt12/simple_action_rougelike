@@ -5,8 +5,8 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IProjectile
     {
-        IEntityPositionData Creator { get; }
-        UniTask BuildAsync(IEntityPositionData creatorData, Vector3 position);
+        IEntityData Creator { get; }
+        UniTask BuildAsync(IEntityData creatorData, Vector3 position);
         void InitStrategy(IProjectileStrategy projectileStrategy);
         void CompleteStrategy(bool displayImpact);
 

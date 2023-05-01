@@ -10,28 +10,26 @@ namespace Runtime.Gameplay.EntitySystem
         protected bool isMoving;
         protected Vector2 faceDirection;
         protected Vector2 moveDelta;
-        protected IEntityPositionData target;
+        protected IEntityData target;
 
         public Vector2 MoveDirection => moveDirection;
         public Vector2 FaceDirection => faceDirection;
         public Vector2 MoveDelta => moveDelta;
         public bool IsMoving => isMoving;
-        public Action<EntityReactionType> ReactionChangedEvent { get; set; }
         public Action<ActionInputType> PlayActionEvent { get; set; }
         public Action MovementChangedEvent { get; set; }
         public Action DirectionChangedEvent { get; set; }
 
-        public IEntityPositionData Target => target;
+        public IEntityData Target => target;
 
         protected void InitControl()
         {
             PlayActionEvent = _ => { };
             MovementChangedEvent = () => { };
             DirectionChangedEvent = () => { };
-            ReactionChangedEvent = _ => { };
         }
 
-        public void SetTarget(IEntityPositionData positionData)
+        public void SetTarget(IEntityData positionData)
         {
             target = positionData;
         }

@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityPhysicMoveBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IDisposeEntityBehavior
+    public class EntityPhysicMoveBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IDisposeEntityBehavior
     {
         [SerializeField]
         private Rigidbody2D _rb;
 
-        private IEntityPositionData _positionData;
+        private IEntityData _positionData;
         private IEntityControlData _controlData;
         private float _moveSpeed;
         private CancellationTokenSource _fixedUpdateTokenSource;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
+        protected override UniTask<bool> BuildDataAsync(IEntityData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
         {
             if (positionData == null || entityStatData == null || controlData == null)
                 return UniTask.FromResult(false);

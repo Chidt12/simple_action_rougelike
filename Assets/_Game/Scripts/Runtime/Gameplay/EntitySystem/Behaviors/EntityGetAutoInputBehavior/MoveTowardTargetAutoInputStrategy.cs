@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
         private static float s_stoppingDistance = 0.5f;
         private float _castRange;
 
-        public MoveTowardTargetAutoInputStrategy(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange) 
+        public MoveTowardTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange) 
             : base(positionData, controlData, statData, castRange)
         {
             _castRange = castRange;

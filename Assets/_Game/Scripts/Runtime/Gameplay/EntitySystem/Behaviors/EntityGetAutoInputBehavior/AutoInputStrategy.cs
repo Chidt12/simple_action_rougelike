@@ -43,19 +43,19 @@ namespace Runtime.Gameplay.EntitySystem
         protected int currentPathPositionIndex;
 
         // Custom parameters
-        protected IEntityPositionData target;
+        protected IEntityData target;
 
         #endregion Members
 
         #region Properties
         protected IEntityControlData ControlData { get; private set; }
-        protected IEntityPositionData PositionData { get; private set; }
+        protected IEntityData PositionData { get; private set; }
 
         #endregion Properties
 
         #region Class Methods
 
-        public AutoInputStrategy(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange)
+        public AutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange)
         {
             ControlData = controlData;
             PositionData = positionData;

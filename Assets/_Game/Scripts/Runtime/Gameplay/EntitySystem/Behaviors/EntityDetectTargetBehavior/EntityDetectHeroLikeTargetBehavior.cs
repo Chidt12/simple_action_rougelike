@@ -32,7 +32,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void SearchForHero()
         {
-            _controlData.SetTarget((IEntityPositionData)EntitiesManager.Instance.HeroData);
+            _controlData.SetTarget((IEntityData)EntitiesManager.Instance.HeroData);
         }
     }
 }

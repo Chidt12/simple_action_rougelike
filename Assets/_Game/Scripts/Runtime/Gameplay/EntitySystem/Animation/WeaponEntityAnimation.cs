@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class WeaponEntityAnimation : AnimancerEntityAnimation
+    public class WeaponEntityAnimation : AnimatorEntityAnimation
     {
         [SerializeField] private bool _rotateTowardFaceDirection;
         [SerializeField] private Transform _flipPivotTransform;

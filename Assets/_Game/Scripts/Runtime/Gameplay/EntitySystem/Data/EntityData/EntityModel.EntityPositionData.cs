@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public partial class EntityModel : IEntityPositionData
+    public partial class EntityModel : IEntityData
     {
-        public Vector2 Position { get; set; }
+        
     }
 }

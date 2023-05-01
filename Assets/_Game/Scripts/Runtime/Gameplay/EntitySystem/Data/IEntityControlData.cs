@@ -6,7 +6,6 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IEntityControlData : IEntityData
     {
-        Action<EntityReactionType> ReactionChangedEvent { get; set; }
         Action<ActionInputType> PlayActionEvent { get; set; }
         Action MovementChangedEvent { get; set; }
         Action DirectionChangedEvent { get; set; }
@@ -14,9 +13,9 @@ namespace Runtime.Gameplay.EntitySystem
         public Vector2 MoveDirection { get; }
         public bool IsMoving { get; }
         public Vector2 FaceDirection { get; }
-        public IEntityPositionData Target { get; } // TODO: Put here properly ?
+        public IEntityData Target { get; } // TODO: Put here properly ?
         void SetMoveDirection(Vector2 direction);
         void SetFaceDirection(Vector2 faceDirection);
-        void SetTarget(IEntityPositionData taret);
+        void SetTarget(IEntityData taret);
     }
 }

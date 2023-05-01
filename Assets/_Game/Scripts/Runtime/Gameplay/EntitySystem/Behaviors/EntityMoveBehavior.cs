@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityMoveBehavior : EntityBehavior<IEntityPositionData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior
+    public class EntityMoveBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior
     {
         [SerializeField]
         private bool _moveWithRandomSpeed;
@@ -15,11 +15,11 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField]
         private float _moveRandomOffset;
 
-        private IEntityPositionData _positionData;
+        private IEntityData _positionData;
         private IEntityControlData _controlData;
         private float _moveSpeed;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityPositionData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
+        protected override UniTask<bool> BuildDataAsync(IEntityData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
         {
             if (positionData == null || entityStatData == null || controlData == null)
                 return UniTask.FromResult(false);

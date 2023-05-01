@@ -42,7 +42,7 @@ namespace Runtime.Gameplay.EntitySystem
         private bool _finishedSpawnInConfig = false;
         private bool _finishedSpawnInStageData = false;
 
-        public IEntityPositionData HeroData { get; private set; }
+        public IEntityData HeroData { get; private set; }
         public List<IEntityData> EnemiesData => _enemiesData;
         public bool HaveNoEnemiesLeft => EnemiesData.Count <= 0 && _currentWarningSpawnedEnemyCount <= 0;
         public int DefeatedEnemiesCount => _defeatedEnemiesCount;
@@ -251,7 +251,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public async UniTask<GameObject> CreateProjectileAsync(string projectileId, IEntityPositionData creatorData, Vector2 spawnPosition, CancellationToken cancellationToken = default)
+        public async UniTask<GameObject> CreateProjectileAsync(string projectileId, IEntityData creatorData, Vector2 spawnPosition, CancellationToken cancellationToken = default)
         {
             var projectileGameObject = await PoolManager.Instance.Rent(projectileId, token: cancellationToken);
             await projectileGameObject.GetComponent<IProjectile>().BuildAsync(creatorData, spawnPosition);

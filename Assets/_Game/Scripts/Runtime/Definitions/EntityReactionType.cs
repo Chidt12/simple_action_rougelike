@@ -7,5 +7,11 @@ namespace Runtime.Definition
         JustGetHit,
         JustFinishedAttack,
         JustFinishedUseSkill,
+        Dodge,
+        BuffDamage,
+        BuffMoveSpeed,
+        BuffAttackSpeed,
+        BuffArmor,
+        BuffDefense,
     }
 }

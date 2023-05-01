@@ -7,7 +7,7 @@ namespace Runtime.Message
     {
         #region Members
 
-        public readonly IEntityPositionData EntityData;
+        public readonly IEntityData EntityData;
         public readonly bool SpawnedEnemyAfterDeath;
 
         #endregion Members
@@ -21,7 +21,7 @@ namespace Runtime.Message
 
         #region Struct Methods
 
-        public EntityDiedMessage(IEntityPositionData entityData, bool spawnedEnemyAfterDeath)
+        public EntityDiedMessage(IEntityData entityData, bool spawnedEnemyAfterDeath)
         {
             EntityData = entityData;
             SpawnedEnemyAfterDeath = spawnedEnemyAfterDeath;
