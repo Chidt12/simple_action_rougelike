@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityCollideBehavior : EntityBehavior, ICollisionBody
+    public class EntityCollideBehavior : EntityBehavior, ICollisionBody, IDisposeEntityBehavior
     {
         #region Members
 
@@ -45,8 +45,12 @@ namespace Runtime.Gameplay.EntitySystem
             return false;
         }
 
-        public virtual void Disable() => CollisionSystem.Instance.RemoveBody(this);
         public virtual void OnCollision(CollisionResult result, ICollisionBody other) { }
+
+        public void Dispose()
+        {
+            CollisionSystem.Instance.RemoveBody(this);
+        }
 
         #endregion Class Methods
     }

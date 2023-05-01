@@ -28,6 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void Init(WeaponModel weaponModel, IEntityStatData entityData, Transform creatorTransform)
         {
+            triggerActionEventProxy = new DummyEntityTriggerActionEventProxy();
             creatorData = entityData;
             ownerWeaponModel = weaponModel as T;
 
@@ -68,7 +69,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void InitEventProxy(IEntityTriggerActionEventProxy triggerActionEventProxy)
         {
-            this.triggerActionEventProxy = triggerActionEventProxy;
+            if(triggerActionEventProxy != null)
+                this.triggerActionEventProxy = triggerActionEventProxy;
         }
 
         public virtual async UniTask OperateAttack()

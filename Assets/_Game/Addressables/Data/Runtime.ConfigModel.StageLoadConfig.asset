@@ -30,7 +30,7 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 1
         entityLevel: 1
-      waveIndex: 0
+      waveIndex: 1
       delaySpawnTime: 0
       followHero: 1
       distanceFromHero: 3
@@ -40,7 +40,7 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 1
         entityLevel: 1
-      waveIndex: 0
+      waveIndex: 2
       delaySpawnTime: 1
       followHero: 0
       distanceFromHero: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 1
         entityLevel: 1
-      waveIndex: 0
+      waveIndex: 2
       delaySpawnTime: 1.2
       followHero: 0
       distanceFromHero: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 1
         entityLevel: 1
-      waveIndex: 0
+      waveIndex: 2
       delaySpawnTime: 1.4
       followHero: 0
       distanceFromHero: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 2
         entityLevel: 1
-      waveIndex: 0
+      waveIndex: 3
       delaySpawnTime: 2
       followHero: 1
       distanceFromHero: 5
@@ -80,8 +80,8 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 1
         entityLevel: 1
-      waveIndex: 0
-      delaySpawnTime: 2.5
+      waveIndex: 4
+      delaySpawnTime: 2
       followHero: 1
       distanceFromHero: 6
       spawnPointIndex: 0

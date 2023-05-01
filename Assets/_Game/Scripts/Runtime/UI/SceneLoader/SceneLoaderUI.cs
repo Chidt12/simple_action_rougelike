@@ -19,10 +19,6 @@ namespace Runtime.SceneLoading
         [SerializeField]
         private float _startLoadSceneDelay = 1.0f;
         [SerializeField]
-        private float _backgroundShowTime = 2.0f;
-        [SerializeField]
-        private float _backgroundFadeSpeed = 2.0f;
-        [SerializeField]
         private float _tipShowTime = 5.0f;
         [SerializeField]
         private float _changeTipDelay = 0.1f;

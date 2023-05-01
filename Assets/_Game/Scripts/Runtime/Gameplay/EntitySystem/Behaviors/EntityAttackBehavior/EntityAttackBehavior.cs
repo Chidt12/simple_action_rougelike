@@ -1,9 +1,10 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
-
+using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    [DisallowMultipleComponent]
     public class EntityAttackBehavior : EntityBehavior<IEntityControlData, IEntityWeaponData, IEntityStatData>
     {
         private IAttackStrategy _attackStrategy;

@@ -50,7 +50,7 @@ namespace Runtime.Manager.Gameplay
                 {
                     count++;
                     _currentGameplayTime++;
-                    SimpleMessenger.Publish(new WaveTimeUpdatedMessage(false, _currentGameplayTime));
+                    //SimpleMessenger.Publish(new WaveTimeUpdatedMessage(false, _currentGameplayTime));
                     await UniTask.Delay(TimeSpan.FromSeconds(1), ignoreTimeScale: false, cancellationToken: _cancellationTokenSource.Token);
                 }
             }
@@ -59,7 +59,7 @@ namespace Runtime.Manager.Gameplay
                 for (int i = 0; i < duration; i++)
                 {
                     _currentGameplayTime++;
-                    SimpleMessenger.Publish(new WaveTimeUpdatedMessage(false, _currentGameplayTime));
+                    //SimpleMessenger.Publish(new WaveTimeUpdatedMessage(false, _currentGameplayTime));
                     await UniTask.Delay(TimeSpan.FromSeconds(1), ignoreTimeScale: false, cancellationToken: _cancellationTokenSource.Token);
                 }
             }

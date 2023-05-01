@@ -14,10 +14,10 @@ namespace Runtime.Gameplay.EntitySystem
 
         public Vector2 MoveDirection => moveDirection;
         public Vector2 FaceDirection => faceDirection;
-        public Vector2 MoveDelta => moveDelta;
         public bool IsMoving => isMoving;
         public Action<ActionInputType> PlayActionEvent { get; set; }
         public Action MovementChangedEvent { get; set; }
+        public Action MovementUpdatedValueEvent { get; set; }
         public Action DirectionChangedEvent { get; set; }
 
         public IEntityData Target => target;
@@ -27,6 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
             PlayActionEvent = _ => { };
             MovementChangedEvent = () => { };
             DirectionChangedEvent = () => { };
+            MovementUpdatedValueEvent = () => { };
         }
 
         public void SetTarget(IEntityData positionData)
@@ -37,13 +38,10 @@ namespace Runtime.Gameplay.EntitySystem
         public void SetMoveDirection(Vector2 value)
         {
             var direction = value;
-
-            if (moveDelta != Vector2.zero)
-                moveDelta = Vector2.zero;
-
             if (moveDirection != value)
             {
                 moveDirection = value;
+                MovementUpdatedValueEvent.Invoke();
                 if (isMoving && moveDirection == Vector2.zero)
                 {
                     isMoving = false;
@@ -63,27 +61,6 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 this.faceDirection = faceDirection;
                 DirectionChangedEvent?.Invoke();
-            }
-        }
-
-        public void SetMoveDelta(Vector2 value)
-        {
-            if (moveDirection != Vector2.zero)
-                moveDirection = Vector2.zero;
-
-            if (moveDelta != value)
-            {
-                moveDelta = value;
-                if (isMoving && moveDelta == Vector2.zero)
-                {
-                    isMoving = false;
-                    MovementChangedEvent.Invoke();
-                }
-                else if (!isMoving && moveDelta != Vector2.zero)
-                {
-                    isMoving = true;
-                    MovementChangedEvent.Invoke();
-                }
             }
         }
     }

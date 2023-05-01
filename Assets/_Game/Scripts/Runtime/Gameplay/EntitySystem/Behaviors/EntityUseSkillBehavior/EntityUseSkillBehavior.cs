@@ -1,9 +1,11 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    [DisallowMultipleComponent]
     public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData>
     {
         private IEntityControlData _controlData;

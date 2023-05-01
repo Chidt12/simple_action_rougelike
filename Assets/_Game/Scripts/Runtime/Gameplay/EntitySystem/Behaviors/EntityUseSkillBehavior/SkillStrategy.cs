@@ -13,11 +13,13 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void SetTriggerEventProxy(IEntityTriggerActionEventProxy entityTriggerActionEventProxy)
         {
-            this.entityTriggerActionEventProxy = entityTriggerActionEventProxy;
+            if(entityTriggerActionEventProxy != null)
+                this.entityTriggerActionEventProxy = entityTriggerActionEventProxy;
         }
 
         public void Init(SkillModel skillModel, IEntityData creatorData)
         {
+            entityTriggerActionEventProxy = new DummyEntityTriggerActionEventProxy();
             ownerModel = skillModel as T;
             this.creatorData = creatorData;
             Init(ownerModel);
@@ -31,7 +33,7 @@ namespace Runtime.Gameplay.EntitySystem
             await PrecheckSkillAsync();
 
             var precasting = true;
-            entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), cancellationToken, endAction: _ => precasting = false);
+            entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), endAction: _ => precasting = false);
             await UniTask.WaitUntil(() => !precasting, cancellationToken: cancellationToken);
 
             currentSkillActionPhase = SkillPhase.Cast;
@@ -39,7 +41,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             var backswinging = true;
             currentSkillActionPhase = SkillPhase.Backswing;
-            entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), cancellationToken,endAction: _ => backswinging = false);
+            entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), endAction: _ => backswinging = false);
             await UniTask.WaitUntil(() => !backswinging, cancellationToken: cancellationToken);
         }
 

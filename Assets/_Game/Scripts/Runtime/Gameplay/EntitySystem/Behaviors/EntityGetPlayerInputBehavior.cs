@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    [DisallowMultipleComponent]
     public class EntityGetPlayerInputBehavior : EntityBehavior<IEntityControlData>, IUpdateEntityBehavior
     {
         private IEntityControlData _controlData;
@@ -24,11 +25,11 @@ namespace Runtime.Gameplay.EntitySystem
             var controlDirection = (new Vector2(horizontalValue, verticalValue)).normalized;
             _controlData.SetMoveDirection(controlDirection);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack);
             }
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButton(1))
             {
                 _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack1);
             }

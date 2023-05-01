@@ -14,9 +14,12 @@ namespace Runtime.Gameplay.EntitySystem
         private List<IDisposeEntityBehavior> DisposableBehaviors { get; set; }
 
         public IEntityData EntityData => entityData;
+        private bool _built;
 
         public async UniTask<bool> BuildAsync(IEntityData entityData)
         {
+            _built = false;
+            HasDisposed = false;
             this.entityData = entityData;
 
             UpdateBehaviors = new();
@@ -38,25 +41,33 @@ namespace Runtime.Gameplay.EntitySystem
                 }
             }
 
-            StartUpdateAsync().Forget();
+            _built = true;
             return true;
         }
 
-        private async UniTaskVoid StartUpdateAsync()
+        private void Update()
         {
-            while (true)
-            {
-                foreach (var updateBehavior in UpdateBehaviors)
-                    updateBehavior.OnUpdate(Time.deltaTime);
-                await UniTask.Yield(disposeCancellationTokenSource.Token);
-            }
+            if (!_built)
+                return;
+
+            foreach (var updateBehavior in UpdateBehaviors)
+                updateBehavior.OnUpdate(Time.deltaTime);
+        }
+
+        private void OnDisable()
+        {
+            Dispose();
         }
 
         public override void Dispose()
         {
-            disposeCancellationTokenSource?.Cancel();
-            foreach (var item in DisposableBehaviors)
-                item.Dispose();
+            if (!HasDisposed)
+            {
+                HasDisposed = true;
+                disposeCancellationTokenSource?.Cancel();
+                foreach (var item in DisposableBehaviors)
+                    item.Dispose();
+            }
         }
     }
 }

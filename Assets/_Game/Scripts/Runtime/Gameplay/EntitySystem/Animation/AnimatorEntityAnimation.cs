@@ -57,9 +57,8 @@ namespace Runtime.Gameplay.EntitySystem
             var animation = animations.FirstOrDefault(x => x.animationType == animationType);
 
             currentAnimationType = animationType;
-
             if (animation.animationType == AnimationType.None)
-                animator.Play(animation.stateName, 0, 0);
+                animator.Play(defaultState, 0, 0);
             else
                 animator.Play(animation.stateName, 0, 0);
         }
@@ -84,10 +83,14 @@ namespace Runtime.Gameplay.EntitySystem
         #region Unity Animation Callback Event Methods
 
         public void TriggerWeaponOperatedPointActionEvent()
-            => OperatedPointTriggeredCallbackAction?.Invoke();
+        {
+            OperatedPointTriggeredCallbackAction?.Invoke();
+        }
 
         public void TriggerWeaponEndActionEvent()
-            => EndActionCallbackAction?.Invoke();
+        {
+            EndActionCallbackAction?.Invoke();
+        }
 
         #endregion Unity Animation Callback Event Methods
     }

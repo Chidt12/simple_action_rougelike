@@ -17,7 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected override async UniTask TriggerAttack(CancellationToken cancellationToken)
         {
             _isShooting = true;
-            triggerActionEventProxy.TriggerEvent(AnimationType.Attack1, cancellationToken,
+            triggerActionEventProxy.TriggerEvent(AnimationType.Attack1,
                     stateAction: data => {
                         FireProjectiles(data.spawnVFXPoints, cancellationToken);
                     },
@@ -50,7 +50,7 @@ namespace Runtime.Gameplay.EntitySystem
                                                                                             damageBonus: ownerWeaponModel.DamageBonus,
                                                                                             damageFactors: ownerWeaponModel.DamageFactors);
 
-                var suitablePosition = spawnPoints.Select(x => x.position).ToList().GetSuitableValue(positionData.Position);
+                var suitablePosition = spawnPoints == null ? (Vector3)positionData.Position : spawnPoints.Select(x => x.position).ToList().GetSuitableValue(positionData.Position);
                 var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerWeaponModel.ProjectileId, positionData, suitablePosition, cancellationToken);
                 var projectile = projectileGameObject.GetOrAddComponent<Projectile>();
                 var projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyForward);

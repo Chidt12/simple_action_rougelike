@@ -28,7 +28,7 @@ MonoBehaviour:
         moveSpeed: 4.1
         lifeSteal: 0
         attackDamage: 101
-        attackSpeed: 1
+        attackSpeed: 3
         dodgeChance: 0
         ccReduction: 0
         cooldownReduction: 0

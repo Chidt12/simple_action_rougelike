@@ -251,7 +251,7 @@ Animator:
   m_GameObject: {fileID: 5303810000141845720}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f8dbffc4ce842e4428f53ecfd5473416, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -277,10 +277,10 @@ MonoBehaviour:
   animations:
   - isMainPart: 1
     animationType: 4
-    stateName: 
+    stateName: weapon_attack
     vfxSpawnPoints:
     - {fileID: 8398711655092860047}
-  defaultState: 
+  defaultState: weapon_idle
   _rotateTowardFaceDirection: 1
   _flipPivotTransform: {fileID: 2935717118845554942}
   _rotateTransform: {fileID: 3489594938250721989}
@@ -331,9 +331,9 @@ GameObject:
   - component: {fileID: 926233765}
   - component: {fileID: 926233767}
   - component: {fileID: 7249555408300571290}
-  - component: {fileID: 926233775}
   - component: {fileID: 926233781}
   - component: {fileID: 3326386649176865464}
+  - component: {fileID: 6698709696889002781}
   m_Layer: 8
   m_Name: 1001
   m_TagString: Untagged
@@ -455,21 +455,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 926233771}
---- !u!114 &926233775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6875883244815912860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flipTransform: {fileID: 6875883244934980057}
-  _updateFaceRightType: 1
-  _originalFaceRight: 1
 --- !u!114 &926233781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +480,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2b3303a3fe71a4d97d8b484cb72c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6698709696889002781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875883244815912860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flipTransform: {fileID: 6875883244934980057}
+  _updateFaceRightType: 1
+  _originalFaceRight: 1
 --- !u!1 &6875883244934980058
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +591,7 @@ Animator:
   m_GameObject: {fileID: 6875883244934980058}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 16a883796b6e410428f66d77f7879a66, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -617,9 +617,9 @@ MonoBehaviour:
   animations:
   - isMainPart: 0
     animationType: 2
-    stateName: 
+    stateName: run
     vfxSpawnPoints: []
-  defaultState: 
+  defaultState: idle
 --- !u!1 &6875883245388638909
 GameObject:
   m_ObjectHideFlags: 0

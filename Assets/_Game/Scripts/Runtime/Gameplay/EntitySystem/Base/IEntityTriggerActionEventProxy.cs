@@ -1,6 +1,4 @@
-using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -17,6 +15,15 @@ namespace Runtime.Gameplay.EntitySystem
 
     public interface IEntityTriggerActionEventProxy
     {
-        void TriggerEvent(AnimationType animationType, CancellationToken cancellationToken, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false);
+        void TriggerEvent(AnimationType animationType, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false);
+    }
+
+    public class DummyEntityTriggerActionEventProxy : IEntityTriggerActionEventProxy
+    {
+        public void TriggerEvent(AnimationType animationType, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false)
+        {
+            stateAction?.Invoke(new SetStateData());
+            endAction?.Invoke(new SetStateData());
+        }
     }
 }

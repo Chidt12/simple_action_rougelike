@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using System;
-using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -12,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         FaceDirection,
     }
 
+    [DisallowMultipleComponent]
     public class EntityAnimationBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior, IEntityTriggerActionEventProxy
     {
         [SerializeField] private Transform _flipTransform;
@@ -43,13 +43,15 @@ namespace Runtime.Gameplay.EntitySystem
             if (_updateFaceRightType == UpdateFaceRightType.FaceDirection)
                 _controlData.DirectionChangedEvent += OnFaceRightUpdateByFaceDirection;
             else if (_updateFaceRightType == UpdateFaceRightType.MoveDirection)
-                _controlData.MovementChangedEvent += OnFaceRightUpdateByMoveDirection;
+                _controlData.MovementUpdatedValueEvent += OnFaceRightUpdateByMoveDirection;
 
             _controlData.ReactionChangedEvent += OnReactionChanged;
 
             foreach (var item in _entityAnimations)
                 item.Init(_controlData);
 
+            _canUpdateAnimation = true;
+            OnMovementChanged();
             return UniTask.FromResult(true);
         }
 
@@ -72,15 +74,18 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnMovementChanged()
         {
+            if (!_canUpdateAnimation)
+                return;
+
             if (_controlData.IsMoving)
             {
                 if(_currentAnimationType != AnimationType.Run)
-                    PlayerAnimation(AnimationType.Run);
+                    TriggerEvent(AnimationType.Run);
             }    
             else
             {
                 if (_currentAnimationType != AnimationType.Idle)
-                    PlayerAnimation(AnimationType.Idle);
+                    TriggerEvent(AnimationType.Idle);
             }    
         }
 
@@ -101,23 +106,14 @@ namespace Runtime.Gameplay.EntitySystem
                 _flipTransform.localScale = new Vector2(_originalFaceRight ? -1 : 1, 1);
         }
 
-        private void PlayerAnimation(AnimationType animationType)
-        {
-            if (!_canUpdateAnimation)
-                return;
-
-            _currentAnimationType = animationType;
-            foreach (var entityAnimation in _entityAnimations)
-                entityAnimation.Play(animationType);
-        }
-
-        public void TriggerEvent(AnimationType animationType, CancellationToken cancellationToken, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false)
+        public void TriggerEvent(AnimationType animationType, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false)
         {
             bool assignedEvent = false;
+            _currentAnimationType = animationType;
             foreach (var entityAnimation in _entityAnimations)
             {
                 entityAnimation.Play(animationType);
-                if (entityAnimation.IsMainPart(animationType) && !assignedEvent)
+                if ((stateAction != null || endAction != null) && entityAnimation.IsMainPart(animationType) && !assignedEvent)
                 {
                     assignedEvent = true;
                     entityAnimation.SetTriggeredEvent(animationType, stateAction, endAction);

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    [DisallowMultipleComponent]
     public class EntityGetAutoInputBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior , IDisposeEntityBehavior
     {
         private IAutoInputStrategy _autoInputStrategy;

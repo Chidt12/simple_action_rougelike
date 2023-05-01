@@ -72,9 +72,7 @@ namespace Runtime.Manager.Gameplay
         }
 
         private void OnFinishSpawnWave()
-        {
-
-        }
+        => hasFinishedSpawnWave = true;
 
         protected virtual void FinishWave(bool isClearWave)
         {

@@ -1,12 +1,11 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    [DisallowMultipleComponent]
     public class EntityPhysicMoveBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IDisposeEntityBehavior
     {
         [SerializeField]

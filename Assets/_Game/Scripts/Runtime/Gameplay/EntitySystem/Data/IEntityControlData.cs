@@ -8,6 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         Action<ActionInputType> PlayActionEvent { get; set; }
         Action MovementChangedEvent { get; set; }
+        Action MovementUpdatedValueEvent { get; set; }
         Action DirectionChangedEvent { get; set; }
 
         public Vector2 MoveDirection { get; }

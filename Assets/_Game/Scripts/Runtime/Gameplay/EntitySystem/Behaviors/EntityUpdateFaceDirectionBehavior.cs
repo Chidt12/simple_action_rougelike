@@ -10,6 +10,7 @@ namespace Runtime.Gameplay.EntitySystem
         Pointer,
     }
 
+    [DisallowMultipleComponent]
     public class EntityUpdateFaceDirectionBehavior : EntityBehavior<IEntityControlData>, IUpdateEntityBehavior
     {
         [SerializeField] private FaceDirectionType _faceDirectionType;

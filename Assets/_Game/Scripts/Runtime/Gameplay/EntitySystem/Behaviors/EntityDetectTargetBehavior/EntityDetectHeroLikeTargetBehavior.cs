@@ -1,11 +1,13 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Message;
+using UnityEngine;
 using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
     public readonly struct SpawnedHeroMessage : IMessage { }
 
+    [DisallowMultipleComponent]
     public class EntityDetectHeroLikeTargetBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior
     {
         #region Members
@@ -24,7 +26,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             _controlData = data;
             SearchForHero();
-            var registry = SimpleMessenger.Subscribe<SpawnedHeroMessage>(OnHeroSpawned);
+            _subcription = SimpleMessenger.Subscribe<SpawnedHeroMessage>(OnHeroSpawned);
             return UniTask.FromResult(true);
         }
 
