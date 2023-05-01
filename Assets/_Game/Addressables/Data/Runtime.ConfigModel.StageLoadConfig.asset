@@ -30,69 +30,11 @@ MonoBehaviour:
         entityType: 1
         entityNumber: 1
         entityLevel: 1
-      waveIndex: 1
+      waveIndex: 0
       delaySpawnTime: 0
       followHero: 1
       distanceFromHero: 3
       spawnPointIndex: 0
-    - entityConfigItem:
-        entityId: 2001
-        entityType: 1
-        entityNumber: 1
-        entityLevel: 1
-      waveIndex: 2
-      delaySpawnTime: 1
-      followHero: 0
-      distanceFromHero: 0
-      spawnPointIndex: 0
-    - entityConfigItem:
-        entityId: 2001
-        entityType: 1
-        entityNumber: 1
-        entityLevel: 1
-      waveIndex: 2
-      delaySpawnTime: 1.2
-      followHero: 0
-      distanceFromHero: 0
-      spawnPointIndex: 0
-    - entityConfigItem:
-        entityId: 2001
-        entityType: 1
-        entityNumber: 1
-        entityLevel: 1
-      waveIndex: 2
-      delaySpawnTime: 1.4
-      followHero: 0
-      distanceFromHero: 0
-      spawnPointIndex: 0
-    - entityConfigItem:
-        entityId: 2001
-        entityType: 1
-        entityNumber: 2
-        entityLevel: 1
-      waveIndex: 3
-      delaySpawnTime: 2
-      followHero: 1
-      distanceFromHero: 5
-      spawnPointIndex: 0
-    - entityConfigItem:
-        entityId: 2001
-        entityType: 1
-        entityNumber: 1
-        entityLevel: 1
-      waveIndex: 4
-      delaySpawnTime: 2
-      followHero: 1
-      distanceFromHero: 6
-      spawnPointIndex: 0
     waveConfigs:
     - waveIndex: 0
-      duration: 0
-    - waveIndex: 1
-      duration: -1
-    - waveIndex: 2
-      duration: -1
-    - waveIndex: 3
-      duration: -1
-    - waveIndex: 4
       duration: -1

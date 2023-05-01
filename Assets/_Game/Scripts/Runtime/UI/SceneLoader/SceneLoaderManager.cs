@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Singleton;
+using Runtime.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,7 @@ namespace Runtime.SceneLoading
             var sceneLoadingInfo = Instance.GetSceneLoadingInfo(sceneName);
             sceneLoadingInfo.UpdateLoadedSceneName(sceneName);
             await sceneLoader.LoadLevelAsync(sceneLoadingInfo);
+            await ScreenNavigator.Instance.CleanAll();
         }
 
 

@@ -38,7 +38,9 @@ namespace Runtime.Gameplay.CollisionDetection
         }
 
         private void Update()
-            => Step();
+        {
+            Step();
+        }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -166,7 +168,7 @@ namespace Runtime.Gameplay.CollisionDetection
             return false;
         }
 
-        public void Step()
+        private void Step()
         {
             // Get collided pair and remove pair not collide anymore.
             for (int i = 0; i <= _currentBodyCount; i++)

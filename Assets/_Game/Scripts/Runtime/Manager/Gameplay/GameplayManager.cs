@@ -1,14 +1,19 @@
 using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
+using Runtime.Constants;
 using Runtime.Core.Message;
 using Runtime.Core.Singleton;
 using Runtime.Gameplay;
+using Runtime.Gameplay.CollisionDetection;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
 using Runtime.Message;
+using Runtime.SceneLoading;
+using Runtime.UI;
 using System.Linq;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
+using ZBase.UnityScreenNavigator.Core.Views;
 
 namespace Runtime.Manager.Gameplay
 {
@@ -32,6 +37,7 @@ namespace Runtime.Manager.Gameplay
             waveTimer = new WaveTimer();
             _gameplayDataLoadedRegistry = SimpleMessenger.Subscribe<GameplayDataLoadedMessage>(OnGameplayDataLoaded);
             _entityDiedRegistry = SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied);
+            SceneLoaderManager.RegisterScenePreloadedAction(Dispose);
         }
 
         #endregion API Methods
@@ -112,7 +118,7 @@ namespace Runtime.Manager.Gameplay
 
         private void HandleWinStage()
         {
-            Debug.LogError("WIN GAME");
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.VICTORY)).Forget();
         }
 
         private void HandleLoseStage()
@@ -124,6 +130,13 @@ namespace Runtime.Manager.Gameplay
         {
             _gameplayDataLoadedRegistry.Dispose();
             _entityDiedRegistry.Dispose();
+            var disposables = FindObjectsOfType<Disposable>();
+            foreach (var dispose in disposables)
+                dispose.Dispose();
+
+            CollisionSystem.Instance.Dispose();
+            EntitiesManager.Instance.Dipose();
+            MapManager.Instance.Dispose();
         }
 
         #endregion Class Methods

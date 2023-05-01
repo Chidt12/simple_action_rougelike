@@ -150,12 +150,26 @@ namespace Runtime.UI
 
         public async UniTask CloseAllModals()
         {
+            isLoading = true;
+            var modalContainer = globalContainerLayerManager.Find<ModalContainer>(ContainerKey.MODAL_CONTAINER_LAYER_NAME);
+            while (modalContainer.Modals.Count > 0)
+                await modalContainer.PopAsync(false);
+            isLoading = false;
+        }
 
+        public async UniTask CloseAllScreens()
+        {
+            isLoading = true;
+            var screenContainer = globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.SCREEN_CONTAINER_LAYER_NAME);
+            while (screenContainer.Screens.Count > 0)
+                await screenContainer.PopAsync(false);
+            isLoading = false;
         }
 
         public async UniTask CleanAll()
         {
-            
+            await CloseAllModals();
+            await CloseAllScreens();
         }
     }
 }

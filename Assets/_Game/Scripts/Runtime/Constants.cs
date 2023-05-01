@@ -13,6 +13,7 @@ namespace Runtime.Constants
     public class ModalIds
     {
         public const string NONE = "NONE";
+        public const string VICTORY = "prefab_modal_victory";
     }
 
     public class ScreenIds
