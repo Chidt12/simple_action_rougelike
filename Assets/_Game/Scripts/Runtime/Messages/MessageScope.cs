@@ -1,9 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Runtime.Message
 {
+    public struct MessageToEntity
+    {
+        public int entityUid;
+
+        public MessageToEntity(int uid)
+        {
+            this.entityUid = uid;
+        }
+    }
+
 
     public enum MessageScope
     {

@@ -314,6 +314,7 @@ GameObject:
   - component: {fileID: 4174411560668395842}
   - component: {fileID: 4174411560668395843}
   - component: {fileID: 4174411560668395840}
+  - component: {fileID: 2902679917969227405}
   m_Layer: 7
   m_Name: 2001
   m_TagString: Untagged
@@ -439,3 +440,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveWithRandomSpeed: 1
   _moveRandomOffset: 0.1
+--- !u!114 &2902679917969227405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386596438375481929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flipTransform: {fileID: 0}
+  _updateFaceRightType: 0
+  _originalFaceRight: 0

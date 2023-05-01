@@ -1,17 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ZBase.Foundation.PubSub;
 
-public class ReceivedHealMessage : MonoBehaviour
+namespace Runtime.Message
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+    public readonly struct ReceivedHealMessage : IMessage
     {
         
     }
