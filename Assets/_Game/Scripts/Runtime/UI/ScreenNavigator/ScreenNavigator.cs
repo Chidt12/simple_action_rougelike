@@ -147,5 +147,15 @@ namespace Runtime.UI
                 await screenContainer.PopAsync(playAnimation, args);
             isLoading = false;
         }
+
+        public async UniTask CloseAllModals()
+        {
+
+        }
+
+        public async UniTask CleanAll()
+        {
+            
+        }
     }
 }
