@@ -16,6 +16,7 @@ namespace Runtime.Manager.Gameplay
         protected override void Awake()
         {
             base.Awake();
+            SimpleMessenger.Publish(new UpdateCameraMessage(Camera.main));
             _heroSpawnedSubScription = SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned);
         }
 

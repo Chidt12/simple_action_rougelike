@@ -40,7 +40,6 @@ namespace Runtime.Manager.Gameplay
         public void LoadLevelMap(MapLevel mapLevel)
         {
             _spawnPoints = mapLevel.mapSpawnPoints;
-            
             ActiveGraph.active.Scan();
         }
 

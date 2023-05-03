@@ -14,11 +14,13 @@ using Runtime.Manager.Data;
 using Runtime.Message;
 using Runtime.SceneLoading;
 using Runtime.UI;
+using System;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
 using ZBase.UnityScreenNavigator.Core.Views;
+using TweenType = Runtime.Helper.TweenType;
 
 namespace Runtime.Manager.Gameplay
 {
@@ -84,9 +86,19 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTaskVoid LoadNextLevelAsync()
         {
+            // Fade In
+            var fadeTween = new TweenType(TweenHelper.TweenCurve.EaseInSinusoidal);
+            SimpleMessenger.Publish(new FadeOutMessage(0.75f, fadeTween, false, EntitiesManager.Instance.HeroData.Position, false));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token);
+
             await LoadLevelAsync();
             EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position);
 
+            // Delay to wait for camera move to hero.
+            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token);
+            // Fade Out
+            SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, false, EntitiesManager.Instance.HeroData.Position, true));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token);
             // TODO JUST FOR TEST LOAD MAP
             CurrentWaveIndex = 0;
             waveTimer.SetUp();
@@ -113,10 +125,11 @@ namespace Runtime.Manager.Gameplay
         private async UniTask LoadLevelAsync()
         {
             // Load Level Graphic
-            var newLevel = await PoolManager.Instance.Rent(Levels[Random.Range(0, Levels.Length)], token: _cancellationTokenSource.Token);
+            var newLevel = await PoolManager.Instance.Rent(Levels[UnityEngine.Random.Range(0, Levels.Length)], token: _cancellationTokenSource.Token);
             if (_currentMapLevel)
                 PoolManager.Instance.Return(_currentMapLevel.gameObject);
 
+            _currentMapLevel = null;
             _currentMapLevel = newLevel.GetOrAddComponent<MapLevel>();
             CameraManager.Instance.SetConfinder(_currentMapLevel.confinder);
             MapManager.Instance.LoadLevelMap(_currentMapLevel);
