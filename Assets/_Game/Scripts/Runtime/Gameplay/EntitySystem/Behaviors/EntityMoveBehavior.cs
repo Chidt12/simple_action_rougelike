@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Runtime.Gameplay.EntitySystem
 {
     [DisallowMultipleComponent]
-    public class EntityMoveBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior
+    public class EntityMoveBehavior : EntityBehavior<IEntityControlData, IEntityStatData>, IUpdateEntityBehavior
     {
         [SerializeField]
         private bool _moveWithRandomSpeed;
@@ -14,18 +14,17 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField]
         private float _moveRandomOffset;
 
-        private IEntityData _positionData;
         private IEntityControlData _controlData;
         private float _moveSpeed;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData controlData, IEntityStatData entityStatData)
         {
-            if (positionData == null || entityStatData == null || controlData == null)
+            if (entityStatData == null || controlData == null)
                 return UniTask.FromResult(false);
 
-            _positionData = positionData;
             _controlData = controlData;
-            _positionData.Position = transform.position;
+            _controlData.Position = transform.position;
+            _controlData.ForceUpdatePosition = OnForceUpdatePosition;
 
             if (entityStatData.TryGetStat(StatType.MoveSpeed, out var moveSpeedStat))
             {
@@ -54,9 +53,15 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 moveSpeed = Random.Range(_moveSpeed, _moveSpeed + _moveRandomOffset);
             }
-            Vector3 nextPosition = _positionData.Position +  _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
-            transform.position = Vector2.MoveTowards(_positionData.Position, nextPosition, moveSpeed * deltaTime);
-            _positionData.Position = nextPosition;
+            Vector3 nextPosition = _controlData.Position +  _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
+            transform.position = Vector2.MoveTowards(_controlData.Position, nextPosition, moveSpeed * deltaTime);
+            _controlData.Position = nextPosition;
+        }
+
+        public void OnForceUpdatePosition(Vector2 position)
+        {
+            transform.position = position;
+            _controlData.Position = position;
         }
 
         private void OnStatChanged(float updatedValue)

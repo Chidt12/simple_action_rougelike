@@ -6,23 +6,22 @@ using UnityEngine;
 namespace Runtime.Gameplay.EntitySystem
 {
     [DisallowMultipleComponent]
-    public class EntityPhysicMoveBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IDisposeEntityBehavior
+    public class EntityPhysicMoveBehavior : EntityBehavior<IEntityControlData, IEntityStatData>, IDisposeEntityBehavior
     {
         [SerializeField]
         private Rigidbody2D _rb;
 
-        private IEntityData _positionData;
         private IEntityControlData _controlData;
         private float _moveSpeed;
         private CancellationTokenSource _fixedUpdateTokenSource;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityData positionData, IEntityControlData controlData, IEntityStatData entityStatData)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData controlData, IEntityStatData entityStatData)
         {
-            if (positionData == null || entityStatData == null || controlData == null)
+            if (entityStatData == null || controlData == null)
                 return UniTask.FromResult(false);
 
-            _positionData = positionData;
             _controlData = controlData;
+            _controlData.ForceUpdatePosition = OnForceUpdatePosition;
 
             if (entityStatData.TryGetStat(StatType.MoveSpeed, out var moveSpeedStat))
             {
@@ -52,9 +51,15 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 Vector3 nextPosition = _rb.position + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
                 _rb.MovePosition(nextPosition);
-                _positionData.Position = _rb.position;
+                _controlData.Position = _rb.position;
                 await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken: _fixedUpdateTokenSource.Token);
             }
+        }
+
+        public void OnForceUpdatePosition(Vector2 position)
+        {
+            transform.position = position;
+            _controlData.Position = position;
         }
 
         private void OnStatChanged(float updatedValue)

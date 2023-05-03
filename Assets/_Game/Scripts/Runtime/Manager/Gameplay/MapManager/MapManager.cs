@@ -12,10 +12,7 @@ namespace Runtime.Manager.Gameplay
     {
         #region Properties
 
-        [ReadOnly]
-        [SerializeField]
         private MapSpawnPoint[] _spawnPoints;
-
         public MapSpawnPoint[] SpawnPoints => _spawnPoints;
 
         public GridGraph ActiveGraph
@@ -38,6 +35,14 @@ namespace Runtime.Manager.Gameplay
         #region Class Methods
 
         public void Dispose() { }
+
+
+        public void LoadLevelMap(MapLevel mapLevel)
+        {
+            _spawnPoints = mapLevel.mapSpawnPoints;
+            
+            ActiveGraph.active.Scan();
+        }
 
         public void FindPath(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
         {

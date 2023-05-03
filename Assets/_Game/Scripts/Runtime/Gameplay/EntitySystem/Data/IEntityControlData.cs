@@ -10,7 +10,6 @@ namespace Runtime.Gameplay.EntitySystem
         Action MovementChangedEvent { get; set; }
         Action MovementUpdatedValueEvent { get; set; }
         Action DirectionChangedEvent { get; set; }
-
         public Vector2 MoveDirection { get; }
         public bool IsMoving { get; }
         public Vector2 FaceDirection { get; }

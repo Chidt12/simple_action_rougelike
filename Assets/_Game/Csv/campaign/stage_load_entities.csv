@@ -1,6 +1,5 @@
 stage_id,entity_level,entity_id,entity_type,entity_number,spawn_point_index,wave_index,delay_spawn_time,follow_hero,distance_from_hero
-101000,1,1001,Hero,1,0,0,0,FALSE,0
-,1,2001,Enemy,1,0,1,0,TRUE,3
+101000,1,2001,Enemy,1,0,1,0,TRUE,3
 ,1,2001,Enemy,1,0,2,1,FALSE,0
 ,1,2001,Enemy,1,0,2,1.2,FALSE,0
 ,1,2001,Enemy,1,0,2,1.4,FALSE,0
