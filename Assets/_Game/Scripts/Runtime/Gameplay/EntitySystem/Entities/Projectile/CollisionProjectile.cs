@@ -9,12 +9,12 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private ICollisionShape _collisionShape;
         private Collider2D _collider;
-        private CollisionSearchTargetType _collisionBodySearchType;
+        private CollisionSearchTargetType[] _collisionBodySearchTypes;
 
         public int RefId { get; set; }
         public Vector2 CollisionSystemPosition => _collider.bounds.center;
         public ICollisionShape CollisionShape => _collisionShape;
-        public CollisionSearchTargetType CollisionSearchTargetType => _collisionBodySearchType;
+        public CollisionSearchTargetType[] CollisionSearchTargetTypes => _collisionBodySearchTypes;
         public Collider2D Collider => _collider;
         public CollisionBodyType CollisionBodyType => CollisionBodyType.Projectile;
 
@@ -27,7 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             HasDisposed = false;
             RefId = -1;
-            _collisionBodySearchType = entityData.EntityType.GetCollisionBodySearchType();
+            _collisionBodySearchTypes = entityData.EntityType.GetCollisionBodySearchTypes(true);
             _collider = gameObject.GetComponent<Collider2D>();
             _collisionShape = this.CreateCollisionShape(_collider);
             CollisionSystem.Instance.AddBody(this);

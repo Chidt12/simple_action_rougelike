@@ -7,12 +7,10 @@ namespace Runtime.Gameplay.CollisionDetection
     public enum CollisionSearchTargetType : int
     {
         None = -1,
-        All = 0,
-        EnemyAndObject = 1,
-        Hero = 2,
+        Hero = 0,
+        Enemy = 1,
+        Object = 2, 
         Projectile = 3,
-        Enemy = 4,
-        Object = 5
     }
 
     public enum CollisionBodyType
@@ -20,30 +18,34 @@ namespace Runtime.Gameplay.CollisionDetection
         Default,
         TargetDetect,
         Hero,
-        Zombie,
+        Enemy,
         Projectile,
         Object,
         Trap,
-        DamageArea
     }
 
     public static class CollisionBodyExtensions
     {
         #region Class Methods
 
-        public static CollisionSearchTargetType GetCollisionBodySearchType(this EntityType entityType)
+        public static CollisionSearchTargetType[] GetCollisionBodySearchTypes(this EntityType entityType, bool isProjectile)
         {
             if (entityType == EntityType.Boss || entityType == EntityType.Enemy)
-                return CollisionSearchTargetType.Hero;
+            {
+                if (isProjectile)
+                    return new[] { CollisionSearchTargetType.Hero, CollisionSearchTargetType.Object };
+                else
+                    return new[] { CollisionSearchTargetType.Hero };
+            }
             else if (entityType == EntityType.Hero)
-                return CollisionSearchTargetType.EnemyAndObject;
-            return CollisionSearchTargetType.All;
+                return new[] { CollisionSearchTargetType.Enemy, CollisionSearchTargetType.Object };
+            return new CollisionSearchTargetType[0];
         }
 
         public static CollisionBodyType GetCollisionBodyType(this EntityType entityType)
         {
             if (entityType == EntityType.Boss || entityType == EntityType.Enemy)
-                return CollisionBodyType.Zombie;
+                return CollisionBodyType.Enemy;
             else if (entityType == EntityType.Hero)
                 return CollisionBodyType.Hero;
             else if (entityType == EntityType.Object)
@@ -79,7 +81,7 @@ namespace Runtime.Gameplay.CollisionDetection
 
         int RefId { get; set; }
         ICollisionShape CollisionShape { get; }
-        CollisionSearchTargetType CollisionSearchTargetType { get; }
+        CollisionSearchTargetType[] CollisionSearchTargetTypes { get; }
         CollisionBodyType CollisionBodyType { get; }
         Collider2D Collider { get; }
         Vector2 CollisionSystemPosition { get; }

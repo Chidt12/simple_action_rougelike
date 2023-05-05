@@ -59,12 +59,10 @@ namespace Runtime.Gameplay.CollisionDetection
 
         public void InitQuadTree(RectConfig rect, int maxBodiesPerNode = 6, int maxLevel = 6)
         {
-            _quadTrees[(int)CollisionSearchTargetType.All] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
-            _quadTrees[(int)CollisionSearchTargetType.EnemyAndObject] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
             _quadTrees[(int)CollisionSearchTargetType.Hero] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
-            _quadTrees[(int)CollisionSearchTargetType.Projectile] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
             _quadTrees[(int)CollisionSearchTargetType.Enemy] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
             _quadTrees[(int)CollisionSearchTargetType.Object] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
+            _quadTrees[(int)CollisionSearchTargetType.Projectile] = new QuadTree(_bodyList, rect, maxBodiesPerNode, maxLevel);
         }
 
         public void Dispose()
@@ -99,30 +97,21 @@ namespace Runtime.Gameplay.CollisionDetection
         {
             switch (collisionBody.CollisionBodyType)
             {
-                case CollisionBodyType.Default:
-                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
-                    break;
                 case CollisionBodyType.Hero:
                     _quadTrees[(int)CollisionSearchTargetType.Hero].AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
-                case CollisionBodyType.Zombie:
+                case CollisionBodyType.Enemy:
                     _quadTrees[(int)CollisionSearchTargetType.Enemy].AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.EnemyAndObject]?.AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Object:
                     _quadTrees[(int)CollisionSearchTargetType.Object].AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.EnemyAndObject]?.AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Projectile:
                     _quadTrees[(int)CollisionSearchTargetType.Projectile].AddBody(collisionBody.RefId);
-                    _quadTrees[(int)CollisionSearchTargetType.All].AddBody(collisionBody.RefId);
                     break;
                 case CollisionBodyType.Trap:
-                case CollisionBodyType.DamageArea:
                 case CollisionBodyType.TargetDetect:
+                case CollisionBodyType.Default:
                     break;
                 default:
                     break;
@@ -173,20 +162,28 @@ namespace Runtime.Gameplay.CollisionDetection
             // Get collided pair and remove pair not collide anymore.
             for (int i = 0; i <= _currentBodyCount; i++)
             {
-                if (_bodyList[i] == null || _bodyList[i].CollisionSearchTargetType == CollisionSearchTargetType.None)
+                if (_bodyList[i] == null || _bodyList[i].CollisionSearchTargetTypes == null || _bodyList[i].CollisionSearchTargetTypes.Length == 0)
                     continue;
 
                 var maxDist = _bodyList[i].CollisionShape.MaxExtent;
-                var bodies = _quadTrees[(int)_bodyList[i].CollisionSearchTargetType].GetBodies(_bodyList[i].CollisionSystemPosition, maxDist); // Improved?
-
-                foreach (var bodyRefId in bodies)
+                var searchTargetsLength = _bodyList[i].CollisionSearchTargetTypes.Length;
+                for (int j = 0; j < searchTargetsLength; j++)
                 {
                     if (_bodyList[i] == null)
                         break;
-                    var otherBody = _bodyList[bodyRefId];
-                    if (otherBody == null || i == bodyRefId)
-                        continue;
-                    var result = CheckCollide(_bodyList[i], otherBody);
+
+                    var collisionSearchType = _bodyList[i].CollisionSearchTargetTypes[j];
+                    var bodies = _quadTrees[(int)collisionSearchType].GetBodies(_bodyList[i].CollisionSystemPosition, maxDist); // Improved?
+
+                    foreach (var bodyRefId in bodies)
+                    {
+                        if (_bodyList[i] == null)
+                            break;
+                        var otherBody = _bodyList[bodyRefId];
+                        if (otherBody == null || i == bodyRefId)
+                            continue;
+                        var result = CheckCollide(_bodyList[i], otherBody);
+                    }
                 }
             }
 

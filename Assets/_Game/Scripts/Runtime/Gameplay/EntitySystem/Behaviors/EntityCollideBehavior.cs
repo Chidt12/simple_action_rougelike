@@ -11,7 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected ICollisionShape collisionShape;
         private Collider2D _collider;
-        protected CollisionSearchTargetType collisionBodySearchType;
+        protected CollisionSearchTargetType[] collisionBodySearchTypes;
         protected CollisionBodyType collisionBodyType;
 
         #endregion Members
@@ -21,7 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
         public int RefId { get; set; }
         public ICollisionShape CollisionShape => collisionShape;
         public Vector2 CollisionSystemPosition => _collider.bounds.center;
-        public CollisionSearchTargetType CollisionSearchTargetType => collisionBodySearchType;
+        public CollisionSearchTargetType[] CollisionSearchTargetTypes => collisionBodySearchTypes;
         public Collider2D Collider => _collider;
         public CollisionBodyType CollisionBodyType => collisionBodyType;
 
@@ -32,7 +32,7 @@ namespace Runtime.Gameplay.EntitySystem
         public async override UniTask<bool> BuildAsync(IEntityData data, CancellationToken cancellationToken)
         {
             await base.BuildAsync(data, cancellationToken);
-            collisionBodySearchType = data.EntityType.GetCollisionBodySearchType();
+            collisionBodySearchTypes = data.EntityType.GetCollisionBodySearchTypes(false);
             collisionBodyType = data.EntityType.GetCollisionBodyType();
             var collider = transform.GetComponent<Collider2D>();
             if (collider != null)

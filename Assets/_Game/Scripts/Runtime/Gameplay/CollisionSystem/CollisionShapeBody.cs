@@ -10,7 +10,7 @@ namespace Runtime.Gameplay.EntitySystem
         #region Members
 
         [SerializeField]
-        private CollisionSearchTargetType _collisionBodySearchType = CollisionSearchTargetType.All;
+        private CollisionSearchTargetType[] _collisionBodySearchTypes;
         [SerializeField]
         private CollisionBodyType _collisionBodyType = CollisionBodyType.Default;
         private ICollisionShape _collisionShape;
@@ -21,7 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public int RefId { get; set; }
         public ICollisionShape CollisionShape => _collisionShape;
-        public CollisionSearchTargetType CollisionSearchTargetType => _collisionBodySearchType;
+        public CollisionSearchTargetType[] CollisionSearchTargetTypes => _collisionBodySearchTypes;
         public Vector2 CollisionSystemPosition => transform.position;
         public Collider2D Collider => null;
         public CollisionBodyType CollisionBodyType => _collisionBodyType;
