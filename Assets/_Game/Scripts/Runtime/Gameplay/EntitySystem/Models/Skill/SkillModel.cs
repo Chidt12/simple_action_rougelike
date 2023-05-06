@@ -8,17 +8,18 @@ namespace Runtime.Gameplay.EntitySystem
         public float CastRange { get; protected set; }
         public float CurrentCooldown { get; set; }
         public float Cooldown { get; set; }
-        public bool IsUsing { get; set; }
         public bool IsReady => CurrentCooldown <= 0;
+        public bool DependTarget { get; protected set; }
         public SkillTargetType TargetType { get; protected set; }
         public bool CanBeCanceled { get; protected set; }
+        public abstract SkillType SkillType { get; }
 
-
-        public SkillModel(float castRange, float cooldown, SkillTargetType targetType, bool canBeCanceled = true)
+        public SkillModel(SkillDataConfigItem configItem, bool canBeCanceled = true)
         {
-            TargetType = targetType;
-            CastRange = castRange;
-            Cooldown = cooldown;
+            TargetType = configItem.targetType;
+            CastRange = configItem.castRange;
+            Cooldown = configItem.cooldown;
+            DependTarget = configItem.dependTarget;
             CanBeCanceled = canBeCanceled;
         }
     }

@@ -6,6 +6,12 @@ namespace Runtime.Gameplay.EntitySystem
     {
         public List<SkillModel> _skillModels;
         public List<SkillModel> SkillModels => _skillModels;
+        public bool IsPlayingSkill { get; set; }
+
+        public bool CheckCanUseSkill()
+        {
+            return !(IsDead || IsPlayingSkill);
+        }
 
         public void InitSkills(List<SkillModel> skillModels)
         {

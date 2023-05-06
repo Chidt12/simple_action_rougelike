@@ -9,7 +9,8 @@ namespace Runtime.Gameplay.EntitySystem
     public enum EffectSource
     {
         None,
-        FromNormalAttack
+        FromNormalAttack,
+        FromSkill,
     }
 
     public enum EffectProperty

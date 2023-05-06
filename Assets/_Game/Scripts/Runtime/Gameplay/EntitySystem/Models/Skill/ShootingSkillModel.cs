@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Runtime.ConfigModel;
+using Runtime.Definition;
 
-public class ShootingSkillModel : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ShootingSkillModel : SkillModel
     {
-        
-    }
+        public string ProjectileId { get; private set; }
+        public int NumberOfProjectiles { get; private set; }
+        public float DelayBetweenProjectiles { get; private set; }
+        public float ProjectileMoveSpeed { get; private set; }
+        public float ProjectileMoveDistance { get; private set; }
+        public ProjectileStrategyType ProjectileStrategyType { get; private set; }
+        public float ProjectileDamageBonus { get; private set; }
+        public DamageFactor[] ProjectileDamageFactors { get; private set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override SkillType SkillType => SkillType.Shooting;
+
+        public ShootingSkillModel(SkillDataConfigItem skillDataConfigItem, bool canBeCanceled = true) 
+            : base(skillDataConfigItem, canBeCanceled)
+        {
+            var dataConfig = skillDataConfigItem as ShootingSkillDataConfigItem;
+            ProjectileId = dataConfig.projectileId;
+            NumberOfProjectiles = dataConfig.numberOfProjectiles;
+            DelayBetweenProjectiles = dataConfig.delayBetweenProjectiles;
+            ProjectileMoveSpeed = dataConfig.projectileMoveSpeed;
+            ProjectileMoveDistance = dataConfig.projectileMoveDistance;
+            ProjectileStrategyType = dataConfig.projectileStrategyType;
+            ProjectileDamageBonus = dataConfig.projectileDamageBonus;
+            ProjectileDamageFactors = dataConfig.projectileDamageFactors;
+        }
     }
 }

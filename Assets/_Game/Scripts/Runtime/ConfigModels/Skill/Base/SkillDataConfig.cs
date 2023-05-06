@@ -11,26 +11,12 @@ namespace Runtime.ConfigModel
         #region Members
 
         public int dataId;
-        public SkillTargetType[] targetTypes;
+        public SkillTargetType targetType;
         public float castRange;
         public float cooldown;
+        public bool dependTarget;
 
         #endregion Members
-
-        #region Properties
-
-        public SkillTargetType TargetType
-        {
-            get
-            {
-                var returnTargetType = SkillTargetType.None;
-                foreach (var targetType in targetTypes)
-                    returnTargetType |= targetType;
-                return returnTargetType;
-            }
-        }
-
-        #endregion Properties
     }
 
     public abstract class SkillDataConfig : ScriptableObject

@@ -11,7 +11,7 @@ namespace Runtime.Definition
                 skillIndex = 0;
             else if (actionInputType == ActionInputType.UseSkill2)
                 skillIndex = 1;
-            else if (actionInputType == ActionInputType.UseSkill13)
+            else if (actionInputType == ActionInputType.UseSkill3)
                 skillIndex = 2;
             return skillIndex;
         }
@@ -35,7 +35,7 @@ namespace Runtime.Definition
         Attack1 = 1,
         UseSkill1 = 2,
         UseSkill2 = 3,
-        UseSkill13 = 4,
+        UseSkill3 = 4,
         Dash = 100,
         StartUseSkill = 101,
     }

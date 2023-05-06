@@ -42,6 +42,7 @@ namespace Runtime.Core.Pool
 
         public void Return(GameObject instance)
         {
+            instance.transform.SetParent(transform);
             AddressGameObjectPool pool = GetPool(instance.name);
             pool.Return(instance);
         }

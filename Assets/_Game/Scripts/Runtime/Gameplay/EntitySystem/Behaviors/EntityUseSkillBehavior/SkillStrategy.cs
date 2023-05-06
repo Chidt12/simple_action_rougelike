@@ -8,7 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected IEntityTriggerActionEventProxy entityTriggerActionEventProxy;
         protected CancellationTokenSource cancellationTokenSource;
         protected SkillPhase currentSkillActionPhase;
-        protected IEntityData creatorData;
+        protected IEntityControlData creatorData;
         protected T ownerModel;
 
         public void SetTriggerEventProxy(IEntityTriggerActionEventProxy entityTriggerActionEventProxy)
@@ -17,7 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
                 this.entityTriggerActionEventProxy = entityTriggerActionEventProxy;
         }
 
-        public void Init(SkillModel skillModel, IEntityData creatorData)
+        public void Init(SkillModel skillModel, IEntityControlData creatorData)
         {
             entityTriggerActionEventProxy = new DummyEntityTriggerActionEventProxy();
             ownerModel = skillModel as T;
@@ -25,24 +25,27 @@ namespace Runtime.Gameplay.EntitySystem
             Init(ownerModel);
         }
 
-        public abstract void Init(T skillModel);
+        protected virtual void Init(T skillModel) { }
 
         public async UniTask ExecuteAsync(CancellationToken cancellationToken, int index)
         {
             currentSkillActionPhase = SkillPhase.Precheck;
-            await PrecheckSkillAsync();
+            if (CheckCanUseSkill())
+            {
+                await PrecheckSkillAsync();
 
-            var precasting = true;
-            entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), endAction: _ => precasting = false);
-            await UniTask.WaitUntil(() => !precasting, cancellationToken: cancellationToken);
+                var precasting = true;
+                entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), endAction: _ => precasting = false);
+                await UniTask.WaitUntil(() => !precasting, cancellationToken: cancellationToken);
 
-            currentSkillActionPhase = SkillPhase.Cast;
-            await PresentSkillAsync(cancellationToken, index);
+                currentSkillActionPhase = SkillPhase.Cast;
+                await PresentSkillAsync(cancellationToken, index);
 
-            var backswinging = true;
-            currentSkillActionPhase = SkillPhase.Backswing;
-            entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), endAction: _ => backswinging = false);
-            await UniTask.WaitUntil(() => !backswinging, cancellationToken: cancellationToken);
+                var backswinging = true;
+                currentSkillActionPhase = SkillPhase.Backswing;
+                entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), endAction: _ => backswinging = false);
+                await UniTask.WaitUntil(() => !backswinging, cancellationToken: cancellationToken);
+            }
         }
 
         protected virtual UniTask PrecheckSkillAsync() => UniTask.CompletedTask;
@@ -58,7 +61,12 @@ namespace Runtime.Gameplay.EntitySystem
             else return new SkillCancelResult(false, currentSkillActionPhase);
         }
 
-        public abstract bool CheckCanUseSkill();
+        public virtual bool CheckCanUseSkill()
+        {
+            if (ownerModel.DependTarget)
+                return creatorData.Target != null && !creatorData.Target.IsDead;
+            return true;
+        }
 
         public void Dispose()
         {

@@ -24,6 +24,8 @@ namespace Runtime.Gameplay.EntitySystem
 
     public interface ISkillStrategy
     {
+        public void Init(SkillModel skillModel, IEntityControlData creatorData);
+        public void SetTriggerEventProxy(IEntityTriggerActionEventProxy entityTriggerActionEventProxy);
         public bool CheckCanUseSkill();
         public UniTask ExecuteAsync(CancellationToken cancellationToken, int index);
         public SkillCancelResult Cancel();

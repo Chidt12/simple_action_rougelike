@@ -30,5 +30,5 @@ MonoBehaviour:
         attackDamage: 0
         collideDamage: 47
       skillIdentity:
-        skillType: 0
-        skillDataId: -1
+        skillType: 1
+        skillDataId: 1

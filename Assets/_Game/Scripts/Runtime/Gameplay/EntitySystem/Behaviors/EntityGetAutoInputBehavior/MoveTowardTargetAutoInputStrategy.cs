@@ -7,12 +7,10 @@ namespace Runtime.Gameplay.EntitySystem
     public class MoveTowardTargetAutoInputStrategy : AutoInputStrategy
     {
         private static float s_stoppingDistance = 0.5f;
-        private float _castRange;
 
-        public MoveTowardTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange) 
-            : base(positionData, controlData, statData, castRange)
+        public MoveTowardTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy) 
+            : base(positionData, controlData, statData, controlCastRangeProxy)
         {
-            _castRange = castRange;
         }
 
         protected override bool CanFindPath()
@@ -61,14 +59,14 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 // If the chased target is now near the character by the skill cast range, then stop chasing and send a trigger skill usage.
                 var distanceToTarget = Vector2.Distance(ControlData.Target.Position, PositionData.Position);
-                if (distanceToTarget <=  _castRange)
+                if (distanceToTarget <=  ControlCastRangeProxy.CastRange)
                 {
                     // TRIGGER SKILL OR SOMETHING.
                     return;
                 }
 
                 // If the target has moved far from the destination where the character was supposed to move to, then find another new path.
-                if (Vector2.SqrMagnitude(ControlData.Target.Position - moveToPosition) >= refindTargetThresholdSqr && currentRefindTargetTime > RefindTargetMinTime)
+                if (Vector2.SqrMagnitude(ControlData.Target.Position - moveToPosition) >= RefindTargetThreshold * RefindTargetThreshold && currentRefindTargetTime > RefindTargetMinTime)
                 {
                     ResetToRefindNewPath();
                     return;

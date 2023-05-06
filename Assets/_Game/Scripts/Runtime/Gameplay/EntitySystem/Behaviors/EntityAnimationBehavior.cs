@@ -16,7 +16,6 @@ namespace Runtime.Gameplay.EntitySystem
     {
         [SerializeField] private Transform _flipTransform;
         [SerializeField] private UpdateFaceRightType _updateFaceRightType;
-        [SerializeField] private bool _originalFaceRight;
         private IEntityControlData _controlData;
         private IEntityAnimation[] _entityAnimations;
         private bool _canUpdateAnimation;
@@ -92,18 +91,18 @@ namespace Runtime.Gameplay.EntitySystem
         private void OnFaceRightUpdateByFaceDirection()
         {
             if (_controlData.FaceDirection.x > 0)
-                _flipTransform.localScale = new Vector2(_originalFaceRight ? 1 : -1, 1);
+                _flipTransform.localScale = new Vector2(1, 1);
             else
-                _flipTransform.localScale = new Vector2(_originalFaceRight ? -1 : 1, 1);
+                _flipTransform.localScale = new Vector2(-1, 1);
         }
 
         private void OnFaceRightUpdateByMoveDirection()
         {
             var moveVector = _controlData.MoveDirection;
             if (moveVector.x > 0)
-                _flipTransform.localScale = new Vector2(_originalFaceRight ? 1 : -1, 1);
+                _flipTransform.localScale = new Vector2(1, 1);
             else
-                _flipTransform.localScale = new Vector2(_originalFaceRight ? -1 : 1, 1);
+                _flipTransform.localScale = new Vector2(-1, 1);
         }
 
         public void TriggerEvent(AnimationType animationType, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false)

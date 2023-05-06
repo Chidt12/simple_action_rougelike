@@ -30,9 +30,8 @@ namespace Runtime.Gameplay.EntitySystem
         protected bool canFindNewPath;
         protected bool hasFoundAPath;
         protected float moveSpeed;
-        protected float stopChasingTargetDistanceSqr;
-        protected float stopChasingTargetDistance;
-        protected float refindTargetThresholdSqr;
+        protected float StopChasingTargetDistance => ControlCastRangeProxy.CastRange;
+        protected float RefindTargetThreshold => StopChasingTargetDistance + RefindTargetBonusRange;
         protected float currentRefindTargetTime;
 
         protected int randomMoveSearchLength;
@@ -50,20 +49,18 @@ namespace Runtime.Gameplay.EntitySystem
         #region Properties
         protected IEntityControlData ControlData { get; private set; }
         protected IEntityData PositionData { get; private set; }
+        protected IEntityControlCastRangeProxy ControlCastRangeProxy { get; private set; }
 
         #endregion Properties
 
         #region Class Methods
 
-        public AutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange)
+        public AutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy entityControlCastRangeProxy)
         {
             ControlData = controlData;
             PositionData = positionData;
             canFindNewPath = true;
             hasFoundAPath = false;
-            stopChasingTargetDistanceSqr = castRange * castRange;
-            stopChasingTargetDistance = castRange;
-            refindTargetThresholdSqr = (castRange + RefindTargetBonusRange) * (castRange + RefindTargetBonusRange);
 
             randomMoveSearchLength = Mathf.CeilToInt(RandomMoveSearchSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
             randomMoveSearchSpreadLength = Mathf.CeilToInt(RandomMoveSearchSpreadSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;

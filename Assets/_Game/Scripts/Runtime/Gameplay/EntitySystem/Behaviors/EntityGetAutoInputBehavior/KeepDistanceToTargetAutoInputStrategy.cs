@@ -19,17 +19,16 @@ namespace Runtime.Gameplay.EntitySystem
         private static readonly int s_awayMoveSearchMinSlotsCount = 3;
         private static readonly int s_awayMoveSearchMaxSlotsCount = 6;
         private static readonly float s_awayMoveAimStrength = 0.5f;
-        private float _stayBeforeAwayTargetDistanceSqr;
+        private float StayBeforeAwayTargetDistance => ControlCastRangeProxy.CastRange - s_stayBeforeAwayTargetBonusRange;
         private bool _isMoveAwayFromTarget;
         private int _awayMoveSearchLength;
         private int _awayMoveSearchSpreadLength;
         private MoveState _moveState = MoveState.MoveTowardsHero;
 
-        public KeepDistanceToTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, float castRange)
-            : base(positionData, controlData, statData, castRange)
+        public KeepDistanceToTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy)
+            : base(positionData, controlData, statData, controlCastRangeProxy)
         {
             _isMoveAwayFromTarget = false;
-            _stayBeforeAwayTargetDistanceSqr = (castRange - s_stayBeforeAwayTargetBonusRange) * (castRange - s_stayBeforeAwayTargetBonusRange);
             _awayMoveSearchLength = Mathf.CeilToInt(s_awayMoveSearchMinSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
             _awayMoveSearchSpreadLength = Mathf.CeilToInt(s_awayMoveSearchMaxSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
         }
@@ -57,7 +56,7 @@ namespace Runtime.Gameplay.EntitySystem
                 if (!IsObscured())
                 {
                     // If the chased hero target is far away the character by a specific distance, then make the character move away from the hero target.
-                    if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) <= _stayBeforeAwayTargetDistanceSqr)
+                    if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) <= StayBeforeAwayTargetDistance * StayBeforeAwayTargetDistance)
                     {
                         _isMoveAwayFromTarget = true;
                         ResetToRefindNewPath();
@@ -66,7 +65,7 @@ namespace Runtime.Gameplay.EntitySystem
                     }
 
                     // If the chased hero target is now near the character by the skill cast range, then stop chasing, send a trigger skill usage.
-                    if (Vector2.SqrMagnitude(PositionData.Position - ControlData.Target.Position) <= (stopChasingTargetDistanceSqr))
+                    if (Vector2.SqrMagnitude(PositionData.Position - ControlData.Target.Position) <= (StopChasingTargetDistance * StopChasingTargetDistance))
                     {
                         LockMovement();
                         // Use skill
@@ -74,7 +73,7 @@ namespace Runtime.Gameplay.EntitySystem
                     }
 
                     // If the chased hero target has moved far from the destination where the character was supposed to move to, then find another new path.
-                    if (Vector2.SqrMagnitude(ControlData.Target.Position - moveToPosition) >= refindTargetThresholdSqr)
+                    if (Vector2.SqrMagnitude(ControlData.Target.Position - moveToPosition) >= RefindTargetThreshold * RefindTargetThreshold)
                     {
                         ResetToRefindNewPath();
                         return;
@@ -84,7 +83,7 @@ namespace Runtime.Gameplay.EntitySystem
             else if (_moveState == MoveState.MoveAwayFromHero)
             {
                 // If the chased hero target is now far from the character by a specific distance, then find a new path to chase the hero again.
-                if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) > stopChasingTargetDistanceSqr)
+                if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) > StopChasingTargetDistance * StopChasingTargetDistance)
                 {
                     _isMoveAwayFromTarget = false;
                     ResetToRefindNewPath();

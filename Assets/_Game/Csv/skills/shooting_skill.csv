@@ -1,0 +1,2 @@
+﻿data_id,target_type,cast_range,cooldown,depend_target,number_of_projectiles,delay_between_projectiles,projectile_move_speed,projectile_move_distance,projectile_strategy_type,projectile_damage_bonus,projectile_damage_factor_stat_type,projectile_damage_factor_value,projectile_id
+1,3,4,2,TRUE,1,0.2,10,6,FlyForward,0,14,1,short_gun_projectile
