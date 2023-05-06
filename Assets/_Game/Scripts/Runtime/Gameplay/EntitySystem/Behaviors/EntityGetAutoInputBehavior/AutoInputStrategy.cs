@@ -48,17 +48,16 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Properties
         protected IEntityControlData ControlData { get; private set; }
-        protected IEntityData PositionData { get; private set; }
         protected IEntityControlCastRangeProxy ControlCastRangeProxy { get; private set; }
 
         #endregion Properties
 
         #region Class Methods
 
-        public AutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy entityControlCastRangeProxy)
+        public AutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy entityControlCastRangeProxy)
         {
             ControlData = controlData;
-            PositionData = positionData;
+            ControlCastRangeProxy = entityControlCastRangeProxy;
             canFindNewPath = true;
             hasFoundAPath = false;
 
@@ -154,21 +153,21 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 // Update current move;
-                if(Vector2.Distance(moveToPosition, PositionData.Position) <= REACH_END_DISTANCE + moveSpeed * Time.deltaTime)
+                if(Vector2.Distance(moveToPosition, ControlData.Position) <= REACH_END_DISTANCE + moveSpeed * Time.deltaTime)
                 {
                     reachedEndOfPath = true;
                 }
                 else
                 {
                     var currentPathTargetPosition = pathPositions[currentPathPositionIndex];
-                    if (Vector2.Distance(currentPathTargetPosition, PositionData.Position) <= REACH_END_DISTANCE + moveSpeed * Time.deltaTime)
+                    if (Vector2.Distance(currentPathTargetPosition, ControlData.Position) <= REACH_END_DISTANCE + moveSpeed * Time.deltaTime)
                     {
                         currentPathPositionIndex += 1;
-                        ControlData.SetMoveDirection(((Vector2)pathPositions[currentPathPositionIndex] - PositionData.Position).normalized);
+                        ControlData.SetMoveDirection(((Vector2)pathPositions[currentPathPositionIndex] - ControlData.Position).normalized);
                     }
                     else
                     {
-                        ControlData.SetMoveDirection(((Vector2)currentPathTargetPosition - PositionData.Position).normalized);
+                        ControlData.SetMoveDirection(((Vector2)currentPathTargetPosition - ControlData.Position).normalized);
                     }
                 }
             }
@@ -182,14 +181,14 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual bool IsObscured()
         {
-            float distanceBetweenSqr = Vector2.SqrMagnitude(PositionData.Position - ControlData.Target.Position);
+            float distanceBetweenSqr = Vector2.SqrMagnitude(ControlData.Position - ControlData.Target.Position);
             float currentCheckForwardObscureDistance = CheckObscurationFragmentDistance;
-            Vector2 checkForwardDirection = (ControlData.Target.Position - PositionData.Position).normalized;
+            Vector2 checkForwardDirection = (ControlData.Target.Position - ControlData.Position).normalized;
             Vector2 checkSideDirection = Vector3.Cross(checkForwardDirection, Vector3.forward);
 
             while (distanceBetweenSqr > currentCheckForwardObscureDistance * currentCheckForwardObscureDistance)
             {
-                Vector2 checkForwardObscurePosition = PositionData.Position + checkForwardDirection * currentCheckForwardObscureDistance;
+                Vector2 checkForwardObscurePosition = ControlData.Position + checkForwardDirection * currentCheckForwardObscureDistance;
                 if (!MapManager.Instance.IsWalkable(checkForwardObscurePosition))
                     return true;
 

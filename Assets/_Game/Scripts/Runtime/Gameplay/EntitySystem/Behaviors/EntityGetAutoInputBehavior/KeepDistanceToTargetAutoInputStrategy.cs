@@ -25,8 +25,8 @@ namespace Runtime.Gameplay.EntitySystem
         private int _awayMoveSearchSpreadLength;
         private MoveState _moveState = MoveState.MoveTowardsHero;
 
-        public KeepDistanceToTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy)
-            : base(positionData, controlData, statData, controlCastRangeProxy)
+        public KeepDistanceToTargetAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy)
+            : base(controlData, statData, controlCastRangeProxy)
         {
             _isMoveAwayFromTarget = false;
             _awayMoveSearchLength = Mathf.CeilToInt(s_awayMoveSearchMinSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
@@ -56,19 +56,17 @@ namespace Runtime.Gameplay.EntitySystem
                 if (!IsObscured())
                 {
                     // If the chased hero target is far away the character by a specific distance, then make the character move away from the hero target.
-                    if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) <= StayBeforeAwayTargetDistance * StayBeforeAwayTargetDistance)
+                    if (Vector2.SqrMagnitude(ControlData.Target.Position - ControlData.Position) <= StayBeforeAwayTargetDistance * StayBeforeAwayTargetDistance)
                     {
                         _isMoveAwayFromTarget = true;
                         ResetToRefindNewPath();
-                        // use skill
                         return;
                     }
 
                     // If the chased hero target is now near the character by the skill cast range, then stop chasing, send a trigger skill usage.
-                    if (Vector2.SqrMagnitude(PositionData.Position - ControlData.Target.Position) <= (StopChasingTargetDistance * StopChasingTargetDistance))
+                    if (Vector2.SqrMagnitude(ControlData.Position - ControlData.Target.Position) <= (StopChasingTargetDistance * StopChasingTargetDistance))
                     {
                         LockMovement();
-                        // Use skill
                         return;
                     }
 
@@ -83,7 +81,7 @@ namespace Runtime.Gameplay.EntitySystem
             else if (_moveState == MoveState.MoveAwayFromHero)
             {
                 // If the chased hero target is now far from the character by a specific distance, then find a new path to chase the hero again.
-                if (Vector2.SqrMagnitude(ControlData.Target.Position - PositionData.Position) > StopChasingTargetDistance * StopChasingTargetDistance)
+                if (Vector2.SqrMagnitude(ControlData.Target.Position - ControlData.Position) > StopChasingTargetDistance * StopChasingTargetDistance)
                 {
                     _isMoveAwayFromTarget = false;
                     ResetToRefindNewPath();
@@ -105,7 +103,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void RunFindPathAwayTarget()
         {
-            MapManager.Instance.FindMoveAwayTargetPath(PositionData.Position,
+            MapManager.Instance.FindMoveAwayTargetPath(ControlData.Position,
                                                        ControlData.Target.Position,
                                                        _awayMoveSearchLength,
                                                        _awayMoveSearchSpreadLength,
@@ -125,7 +123,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void RunFindPathTowardsTarget()
         {
-            MapManager.Instance.FindPath(PositionData.Position,
+            MapManager.Instance.FindPath(ControlData.Position,
                                          ControlData.Target.Position,
                                          OnRunFindPathTowardsTargetComplete);
         }
@@ -142,7 +140,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void RunFindPathRandomly()
         {
-            MapManager.Instance.FindNeighbourEmptyPath(PositionData.Position,
+            MapManager.Instance.FindNeighbourEmptyPath(ControlData.Position,
                                                        randomMoveSearchLength,
                                                        randomMoveSearchSpreadLength,
                                                        OnRunFindPathRandomlyComplete);

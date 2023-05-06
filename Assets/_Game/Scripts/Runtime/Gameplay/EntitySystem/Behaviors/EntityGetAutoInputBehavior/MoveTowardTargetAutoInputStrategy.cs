@@ -8,8 +8,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private static float s_stoppingDistance = 0.5f;
 
-        public MoveTowardTargetAutoInputStrategy(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy) 
-            : base(positionData, controlData, statData, controlCastRangeProxy)
+        public MoveTowardTargetAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy) 
+            : base(controlData, statData, controlCastRangeProxy)
         {
         }
 
@@ -18,14 +18,14 @@ namespace Runtime.Gameplay.EntitySystem
             return base.CanFindPath() 
                 && ControlData.Target != null 
                 && !ControlData.Target.IsDead
-                && Vector2.Distance(PositionData.Position, ControlData.Target.Position) > s_stoppingDistance;
+                && Vector2.Distance(ControlData.Position, ControlData.Target.Position) > s_stoppingDistance;
         }
 
         protected override void FindNewPath() => RunFindPathToTarget();
 
         private void RunFindPathToTarget()
         {
-            MapManager.Instance.FindPath(PositionData.Position,
+            MapManager.Instance.FindPath(ControlData.Position,
                                          ControlData.Target.Position,
                                          OnRunFindPathToTargetComplete);
         }
@@ -58,10 +58,9 @@ namespace Runtime.Gameplay.EntitySystem
             if (!IsObscured())
             {
                 // If the chased target is now near the character by the skill cast range, then stop chasing and send a trigger skill usage.
-                var distanceToTarget = Vector2.Distance(ControlData.Target.Position, PositionData.Position);
+                var distanceToTarget = Vector2.Distance(ControlData.Target.Position, ControlData.Position);
                 if (distanceToTarget <=  ControlCastRangeProxy.CastRange)
                 {
-                    // TRIGGER SKILL OR SOMETHING.
                     return;
                 }
 

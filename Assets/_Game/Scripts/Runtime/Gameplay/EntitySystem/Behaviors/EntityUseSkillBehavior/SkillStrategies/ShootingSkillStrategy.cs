@@ -8,6 +8,20 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class ShootingSkillStrategy : SkillStrategy<ShootingSkillModel>
     {
+        public override bool CheckCanUseSkill()
+        {
+            if (ownerModel.DependTarget)
+            {
+                if(creatorData.Target != null && !creatorData.Target.IsDead)
+                {
+                    var distance = Vector2.Distance(creatorData.Position, creatorData.Target.Position);
+                    return distance <= ownerModel.ProjectileMoveDistance;
+                }
+                return false;
+            }
+            return true;
+        }
+
         protected async override UniTask PresentSkillAsync(CancellationToken cancellationToken, int index)
         {
             var direction = creatorData.FaceDirection;

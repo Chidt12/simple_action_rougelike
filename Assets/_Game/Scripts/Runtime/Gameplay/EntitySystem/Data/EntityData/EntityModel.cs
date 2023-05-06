@@ -15,6 +15,8 @@ namespace Runtime.Gameplay.EntitySystem
         public int EntityUID => uid;
         public bool IsDead => healthStat.CurrentValue <= 0;
         public bool IsDamagable => true;
+        public bool IsMovable => !(IsPlayingSkill || IsDead);
+        public bool IsControllable => !(IsPlayingSkill || IsDead);
         public Vector2 Position { get; set; }
 
         public Action DeathEvent { get; set; }

@@ -4,9 +4,10 @@ using UnityEngine;
 namespace Runtime.Gameplay.EntitySystem
 {
     [DisallowMultipleComponent]
-    public class EntityGetAutoInputBehavior : EntityBehavior<IEntityData, IEntityControlData, IEntityStatData>, IUpdateEntityBehavior , IDisposeEntityBehavior
+    public class EntityGetAutoInputBehavior : EntityBehavior<IEntityControlData, IEntityStatData>, IUpdateEntityBehavior , IDisposeEntityBehavior
     {
         private IAutoInputStrategy _autoInputStrategy;
+        private IEntityControlData _controlData;
 
         public void Dispose()
         {
@@ -15,21 +16,23 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
-            _autoInputStrategy.Update();
+            if(_controlData.IsControllable)
+                _autoInputStrategy.Update();
         }
 
-        protected override UniTask<bool> BuildDataAsync(IEntityData positionData, IEntityControlData controlData, IEntityStatData statData)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData controlData, IEntityStatData statData)
         {
             var controlCastRange = GetComponent<IEntityControlCastRangeProxy>();
             if(controlCastRange != null)
             {
-                _autoInputStrategy = new KeepDistanceToTargetAutoInputStrategy(positionData, controlData, statData, controlCastRange);
+                _autoInputStrategy = new KeepDistanceToTargetAutoInputStrategy(controlData, statData, controlCastRange);
             }
             else
             {
                 return UniTask.FromResult(false);
             }
-            
+
+            _controlData = controlData;
             return UniTask.FromResult(true);
         }
 

@@ -19,6 +19,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
+            if (!_controlData.IsControllable)
+                return;
+
             var horizontalValue  = Input.GetAxisRaw("Horizontal");
             var verticalValue = Input.GetAxisRaw("Vertical");
 

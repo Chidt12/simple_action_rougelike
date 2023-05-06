@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Threading;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -7,7 +8,6 @@ namespace Runtime.Gameplay.EntitySystem
     {
         protected IEntityTriggerActionEventProxy entityTriggerActionEventProxy;
         protected CancellationTokenSource cancellationTokenSource;
-        protected SkillPhase currentSkillActionPhase;
         protected IEntityControlData creatorData;
         protected T ownerModel;
 
@@ -27,9 +27,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual void Init(T skillModel) { }
 
-        public async UniTask ExecuteAsync(CancellationToken cancellationToken, int index)
+        public async UniTask ExecuteAsync(CancellationToken cancellationToken, int index, Func<UniTask> finishedPrecheckAction = null)
         {
-            currentSkillActionPhase = SkillPhase.Precheck;
+            ownerModel.CurrentSkillPhase = SkillPhase.Precheck;
             if (CheckCanUseSkill())
             {
                 await PrecheckSkillAsync();
@@ -38,11 +38,15 @@ namespace Runtime.Gameplay.EntitySystem
                 entityTriggerActionEventProxy.TriggerEvent(index.GetPrecastSkillByIndex(), endAction: _ => precasting = false);
                 await UniTask.WaitUntil(() => !precasting, cancellationToken: cancellationToken);
 
-                currentSkillActionPhase = SkillPhase.Cast;
+                ownerModel.CurrentSkillPhase = SkillPhase.Cast;
+
+                if(finishedPrecheckAction != null)
+                    await finishedPrecheckAction.Invoke();
+
                 await PresentSkillAsync(cancellationToken, index);
 
                 var backswinging = true;
-                currentSkillActionPhase = SkillPhase.Backswing;
+                ownerModel.CurrentSkillPhase = SkillPhase.Backswing;
                 entityTriggerActionEventProxy.TriggerEvent(index.GetBackswingSkillByIndex(), endAction: _ => backswinging = false);
                 await UniTask.WaitUntil(() => !backswinging, cancellationToken: cancellationToken);
             }
@@ -56,9 +60,9 @@ namespace Runtime.Gameplay.EntitySystem
             if (ownerModel.CanBeCanceled)
             {
                 cancellationTokenSource?.Cancel();
-                return new SkillCancelResult(true, currentSkillActionPhase);
+                return new SkillCancelResult(true);
             }
-            else return new SkillCancelResult(false, currentSkillActionPhase);
+            else return new SkillCancelResult(false);
         }
 
         public virtual bool CheckCanUseSkill()

@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -11,7 +12,6 @@ namespace Runtime.Gameplay.EntitySystem
     public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData>, IDisposeEntityBehavior, IEntityControlCastRangeProxy
     {
         private static string s_warningSkillVFX = "warning_execute_skill_vfx";
-        private static float s_defaultCastRange = 1f;
 
         [SerializeField]
         private Transform _displayWarningTransform;
@@ -25,7 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
         private CancellationTokenSource[] _skillCooldownCancellationTokenSources;
         private CancellationTokenSource _cancellationTokenSource;
 
-        public float CastRange => _currentlyUsedSkillIndex == -1 ? s_defaultCastRange :  _skillModels[_currentlyUsedSkillIndex].CastRange;
+        public float CastRange => _skillModels[_currentlyUsedSkillIndex].CastRange;
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData)
         {
@@ -37,7 +37,6 @@ namespace Runtime.Gameplay.EntitySystem
                 if (_skillModels != null && _skillModels.Count > 0)
                 {
                     var cooldownReduction = statData.GetTotalStatValue(StatType.CooldownReduction);
-                    _currentlyUsedSkillIndex = -1;
                     _skillCooldownCancellationTokenSources = new CancellationTokenSource[_skillModels.Count];
                     _skillStrategies = new ISkillStrategy[_skillModels.Count];
 
@@ -69,6 +68,9 @@ namespace Runtime.Gameplay.EntitySystem
                 actionInputType == ActionInputType.UseSkill3)
             {
                 var skillIndex = actionInputType.GetSkillIndex();
+                if (skillIndex >= _skillModels.Count)
+                    skillIndex = 0;
+
                 var skillModel = _skillModels[skillIndex];
                 if (skillModel != null && skillModel.IsReady)
                 {
@@ -76,50 +78,63 @@ namespace Runtime.Gameplay.EntitySystem
                     {
                         _skillData.IsPlayingSkill = true;
                         _currentlyUsedSkillIndex = skillIndex;
-                        StartExecutingSkillAsync(_skillStrategies[skillIndex], skillModel, skillIndex).Forget();
+                        _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlaySkill);
+                        StartExecutingSkillAsync(_skillStrategies[skillIndex], skillIndex).Forget();
                     }
                 }
             }
         }
 
-        private async UniTaskVoid StartExecutingSkillAsync(ISkillStrategy skillStrategy, SkillModel skillModel, int skillIndex)
+        private async UniTaskVoid StartExecutingSkillAsync(ISkillStrategy skillStrategy, int skillIndex)
         {
-            _skillData.IsPlayingSkill = true;
-            _controlData.SetMoveDirection(Vector2.zero);
-            if(_controlData.EntityType.IsDisplayWarningExecuteSkill())
-                await SpawnWarningVFXAsync();
-            await skillStrategy.ExecuteAsync(_cancellationTokenSource.Token, skillIndex);
+            await skillStrategy.ExecuteAsync(_cancellationTokenSource.Token, skillIndex, FinishedPrecheck);
             FinishSkill();
         }
 
-        private async UniTask SpawnWarningVFXAsync()
+        private async UniTask FinishedPrecheck()
         {
-            var warningVFX = await PoolManager.Instance.Rent(s_warningSkillVFX, token: _cancellationTokenSource.Token);
-            warningVFX.transform.SetParent(_displayWarningTransform);
-            warningVFX.transform.localPosition = Vector2.zero;
+            _controlData.SetMoveDirection(Vector2.zero);
+            if (_controlData.EntityType.IsDisplayWarningExecuteSkill())
+            {
+                var warningVFX = await PoolManager.Instance.Rent(s_warningSkillVFX, token: _cancellationTokenSource.Token);
+                warningVFX.transform.SetParent(_displayWarningTransform);
+                warningVFX.transform.localPosition = Vector2.zero;
+            }
         }
 
         private void FinishSkill()
         {
-            if (_currentlyUsedSkillIndex != -1)
+            if (!_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase.IsCast())
             {
-                _skillModels[_currentlyUsedSkillIndex].CurrentCooldown = _skillModels[_currentlyUsedSkillIndex].Cooldown;
+                if(_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase == SkillPhase.Precheck)
+                {
+                    _skillData.IsPlayingSkill = false;
+                    _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
+
+                    _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
+                }
+            }
+            else
+            {
+                _skillData.IsPlayingSkill = false;
+                _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
+
+                _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Cooldown;
                 var cancellationTokenSource = new CancellationTokenSource();
                 RunCountdownSkillAsync(_skillModels[_currentlyUsedSkillIndex], cancellationTokenSource.Token).Forget();
                 _skillCooldownCancellationTokenSources[_currentlyUsedSkillIndex] = cancellationTokenSource;
-                _currentlyUsedSkillIndex = -1;
-                _skillData.IsPlayingSkill = false;
-                _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
             }
         }
 
         private async UniTaskVoid RunCountdownSkillAsync(SkillModel skillModel, CancellationToken cancellationToken)
         {
-            while (skillModel.CurrentCooldown > 0)
+            skillModel.CurrentCooldown = skillModel.Cooldown;
+            while(skillModel.CurrentCooldown > 0)
             {
-                skillModel.CurrentCooldown -= Time.deltaTime;
                 await UniTask.Yield(cancellationToken);
+                skillModel.CurrentCooldown -= Time.deltaTime;
             }
+            skillModel.CurrentSkillPhase = SkillPhase.Ready;
         }
 
         public void Dispose()
