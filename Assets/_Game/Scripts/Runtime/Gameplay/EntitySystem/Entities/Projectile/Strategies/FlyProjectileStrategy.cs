@@ -1,4 +1,5 @@
 using Runtime.Definition;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,21 +13,16 @@ namespace Runtime.Gameplay.EntitySystem
 
         public float moveDistance;
         public float moveSpeed;
-        public float damageBonus;
-        public DamageFactor[] damageFactors;
 
         #endregion Members
 
         #region Class Methods
 
-        public FlyProjectileStrategyData(EffectSource damageSource, EffectProperty effectProperty, float moveDistance, float moveSpeed,
-                                        float damageBonus = 0, DamageFactor[] damageFactors = null)
-            : base(damageSource, effectProperty)
+        public FlyProjectileStrategyData(float moveDistance, float moveSpeed, Action<ProjectileCallbackData> callbackAction)
+            : base(callbackAction)
         {
             this.moveDistance = moveDistance;
             this.moveSpeed = moveSpeed;
-            this.damageBonus = damageBonus;
-            this.damageFactors = damageFactors;
         }
 
         #endregion Class Methods

@@ -4,6 +4,8 @@ using System.Threading;
 using UnityEngine;
 using System.Linq;
 using Runtime.Definition;
+using Runtime.Core.Message;
+using Runtime.Message;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -43,12 +45,9 @@ namespace Runtime.Gameplay.EntitySystem
             if (positionData != null)
             {
                 FlyForwardProjectileStrategyData flyForwardProjectileStrategyData = null;
-                flyForwardProjectileStrategyData = new FlyForwardProjectileStrategyData(EffectSource.FromNormalAttack,
-                                                                                        EffectProperty.Normal,
-                                                                                            ownerWeaponModel.AttackRange,
-                                                                                            ownerWeaponModel.ProjectileSpeed,
-                                                                                            damageBonus: ownerWeaponModel.DamageBonus,
-                                                                                            damageFactors: ownerWeaponModel.DamageFactors);
+                flyForwardProjectileStrategyData = new FlyForwardProjectileStrategyData(ownerWeaponModel.AttackRange,
+                                                                                        ownerWeaponModel.ProjectileSpeed,
+                                                                                        ProjectileCallback);
 
                 var suitablePosition = spawnPoints == null ? (Vector3)positionData.Position : spawnPoints.Select(x => x.position).ToList().GetSuitableValue(positionData.Position);
                 var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerWeaponModel.ProjectileId, positionData, suitablePosition, cancellationToken);
@@ -57,6 +56,18 @@ namespace Runtime.Gameplay.EntitySystem
                 projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, suitablePosition, positionData);
                 projectile.InitStrategy(projectileStrategy);
             }
+        }
+
+        private void ProjectileCallback(ProjectileCallbackData callbackData)
+        {
+            SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
+                EffectSource.FromNormalAttack,
+                EffectProperty.Normal,
+                ownerWeaponModel.DamageBonus,
+                ownerWeaponModel.DamageFactors,
+                creatorData,
+                callbackData.target
+            ));
         }
 
         protected override UniTask TriggerSpecialAttack(CancellationToken cancellationToken)

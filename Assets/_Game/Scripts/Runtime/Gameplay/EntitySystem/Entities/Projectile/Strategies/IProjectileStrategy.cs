@@ -14,13 +14,25 @@ namespace Runtime.Gameplay.EntitySystem
 
     public abstract class ProjectileStrategyData 
     {
-        public EffectProperty effectProperty;
-        public EffectSource damageSource;
+        public Action<ProjectileCallbackData> callbackAction;
 
-        public ProjectileStrategyData(EffectSource damageSource, EffectProperty effectProperty)
+        public ProjectileStrategyData(Action<ProjectileCallbackData> callbackAction)
         {
-            this.damageSource = damageSource;
-            this.effectProperty = effectProperty;
+            this.callbackAction = callbackAction;
+        }
+    }
+
+    public class ProjectileCallbackData
+    {
+        public Vector2 hitPoint;
+        public Vector2 direction;
+        public IEntityData target;
+
+        public ProjectileCallbackData(Vector2 hitPoint, Vector2 direction, IEntityData target)
+        {
+            this.hitPoint = hitPoint;
+            this.direction = direction;
+            this.target = target;
         }
     }
 }

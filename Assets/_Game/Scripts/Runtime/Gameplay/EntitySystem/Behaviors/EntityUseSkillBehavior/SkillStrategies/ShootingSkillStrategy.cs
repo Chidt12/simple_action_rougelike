@@ -3,6 +3,8 @@ using System.Threading;
 using UnityEngine;
 using System.Linq;
 using Runtime.Helper;
+using Runtime.Core.Message;
+using Runtime.Message;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -46,18 +48,27 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTaskVoid FireProjectile(Vector2 spawnPosition, Vector2 direction, CancellationToken cancellationToken)
         {
             FlyForwardProjectileStrategyData flyForwardProjectileStrategyData = null;
-            flyForwardProjectileStrategyData = new FlyForwardProjectileStrategyData(EffectSource.FromSkill,
-                                                                                    EffectProperty.Normal,
-                                                                                        ownerModel.ProjectileMoveDistance,
-                                                                                        ownerModel.ProjectileMoveSpeed,
-                                                                                        damageBonus: ownerModel.ProjectileDamageBonus,
-                                                                                        damageFactors: ownerModel.ProjectileDamageFactors);
+            flyForwardProjectileStrategyData = new FlyForwardProjectileStrategyData(ownerModel.ProjectileMoveDistance,
+                                                                                    ownerModel.ProjectileMoveSpeed,
+                                                                                    ProjectileCallback);
 
             var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerModel.ProjectileId, creatorData, spawnPosition, cancellationToken);
             var projectile = projectileGameObject.GetOrAddComponent<Projectile>();
             var projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ownerModel.ProjectileStrategyType);
             projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, spawnPosition, creatorData);
             projectile.InitStrategy(projectileStrategy);
+        }
+
+        private void ProjectileCallback(ProjectileCallbackData callbackData)
+        {
+            SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
+                EffectSource.FromSkill,
+                EffectProperty.Normal,
+                ownerModel.ProjectileDamageBonus,
+                ownerModel.ProjectileDamageFactors,
+                creatorData,
+                callbackData.target
+            ));
         }
     }
 }

@@ -1,6 +1,7 @@
 using Runtime.Core.Message;
 using Runtime.Extensions;
 using Runtime.Message;
+using System;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -8,9 +9,8 @@ namespace Runtime.Gameplay.EntitySystem
     public class FlyForwardProjectileStrategyData : FlyProjectileStrategyData
     {
 
-        public FlyForwardProjectileStrategyData(EffectSource damageSource, EffectProperty damageProperty, float moveDistance, float moveSpeed, float damageBonus = 0,
-                                                DamageFactor[] damageFactors = null)
-            : base(damageSource, damageProperty, moveDistance, moveSpeed, damageBonus, damageFactors) { }
+        public FlyForwardProjectileStrategyData(float moveDistance, float moveSpeed, Action<ProjectileCallbackData> callbackAction)
+            : base(moveDistance, moveSpeed, callbackAction) { }
     }
 
     public class FlyForwardProjectileStrategy : FlyForwardProjectileStrategy<FlyForwardProjectileStrategyData> { }
@@ -33,14 +33,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection)
         {
-            SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
-                strategyData.damageSource, 
-                strategyData.effectProperty,
-                strategyData.damageBonus,
-                strategyData.damageFactors,
-                controllerProjectile.Creator,
-                target)
-            );
+            strategyData.callbackAction?.Invoke(new ProjectileCallbackData(hitDirection, hitDirection, target));
             controllerProjectile.CompleteStrategy(true);
         }
 
