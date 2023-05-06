@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Runtime.Constants
 {
     public class Constants
@@ -9,11 +5,11 @@ namespace Runtime.Constants
         public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
     }
 
-
     public class ModalIds
     {
         public const string NONE = "NONE";
         public const string VICTORY = "prefab_modal_victory";
+        public const string LOSE = "prefab_modal_lose";
     }
 
     public class ScreenIds

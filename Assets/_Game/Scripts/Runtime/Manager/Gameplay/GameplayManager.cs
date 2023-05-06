@@ -181,7 +181,7 @@ namespace Runtime.Manager.Gameplay
 
         private void KillHero()
         {
-            Debug.LogError("END GAME");
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.LOSE)).Forget();
         }
 
         private void HandleWinStage()

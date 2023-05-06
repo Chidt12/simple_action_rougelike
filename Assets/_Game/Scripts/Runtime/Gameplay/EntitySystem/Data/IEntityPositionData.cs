@@ -14,7 +14,6 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsMovable { get; }
         int EntityUID { get; }
         public Vector2 Position { get; set; }
-
         Action DeathEvent { get; set; }
         Action<EntityReactionType> ReactionChangedEvent { get; set; }
         Action<Vector2> ForceUpdatePosition { get; set; }

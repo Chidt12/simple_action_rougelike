@@ -7,7 +7,12 @@ namespace Runtime.Gameplay.EntitySystem
     public partial class EntityModel : IEntityModifiedStatData
     {
         protected HealthEntityStat healthStat; // for quick access.
+        protected ShieldEntityStat shieldStat;
         protected Dictionary<StatType, EntityStat> statsDictionary;
+
+        public HealthEntityStat HealthStat => healthStat;
+
+        public ShieldEntityStat ShieldStat => shieldStat;
 
         public virtual void InitStats(EntityStatsInfo entityStatsInfo)
         {
@@ -20,6 +25,12 @@ namespace Runtime.Gameplay.EntitySystem
                     var newStat = new HealthEntityStat(statTotalValue);
                     statsDictionary.Add(statType, newStat);
                     healthStat = newStat;
+                }
+                else if (statType == StatType.Shield)
+                {
+                    var newStat = new ShieldEntityStat(statTotalValue);
+                    statsDictionary.Add(statType, newStat);
+                    shieldStat = newStat;
                 }
                 else
                 {

@@ -271,6 +271,10 @@ namespace Runtime.Gameplay.EntitySystem
                     return HandleCharacterDiedResultType.DeletedAllEnemyOnMap;
                 }
             }
+            else if (entityDiedMessage.IsHeroDied)
+            {
+                return HandleCharacterDiedResultType.HeroDied;
+            }
 
             CreateEntityDestroyVfxAsync(entityDiedMessage.EntityData.EntityType, entityDiedMessage.EntityData.Position, this.GetCancellationTokenOnDestroy()).Forget();
             return HandleCharacterDiedResultType.None;
