@@ -13,6 +13,8 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsDamagable { get; }
         public bool IsControllable { get; }
         public bool IsMovable { get; }
+        public bool IsDashing { get; set; }
+        public bool IsPausedControl { get; set; }
         int EntityUID { get; }
         public Vector2 Position { get; set; }
         Action DeathEvent { get; set; }

@@ -7,8 +7,10 @@ using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
 using Runtime.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Runtime.Gameplay
 {
@@ -23,6 +25,7 @@ namespace Runtime.Gameplay
         private async UniTask LoadConfig()
         {
             await LoadStageLoadConfig();
+            await LoadStatusConfig();
             FinishedLoading();
         }
 
@@ -31,9 +34,13 @@ namespace Runtime.Gameplay
             SimpleMessenger.Publish(new GameplayDataLoadedMessage());
         }
 
-        private async UniTask LoadStageLoadConfig()
+        private async UniTask LoadStageLoadConfig() => await ConfigDataManager.Instance.Load<StageLoadConfig>();
+
+        private async UniTask LoadStatusConfig()
         {
-            await ConfigDataManager.Instance.Load<StageLoadConfig>();
+            var statusTypes = Enum.GetValues(typeof(StatusType)).Cast<StatusType>();
+            foreach (var statusType in statusTypes)
+                await ConfigDataManager.Instance.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
         }
 
         public async UniTask<(HeroStatsInfo, WeaponModel)> GetHeroDataAsync(int heroId)

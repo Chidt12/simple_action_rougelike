@@ -18,6 +18,8 @@ namespace Runtime.Gameplay.EntitySystem
         bool IsMainPart(AnimationType animationType);
         void Init(IEntityControlData controlData);
         void Play(AnimationType animationType);
+        void Continue();
+        void Pause();
         void SetTriggeredEvent(AnimationType animationType, Action<SetStateData> stateAction, Action<SetStateData> endAction);
         void Dispose();
         Transform[] GetVFXSpawnPoints(AnimationType animationType);
@@ -61,6 +63,16 @@ namespace Runtime.Gameplay.EntitySystem
                 animator.Play(defaultState, 0, 0);
             else
                 animator.Play(animation.stateName, 0, 0);
+        }
+
+        public void Pause()
+        {
+            animator.enabled = false;
+        }
+
+        public void Continue()
+        {
+            animator.enabled = true;
         }
 
         public virtual void Dispose() { }

@@ -5,13 +5,14 @@ using UnityEngine;
 namespace Runtime.Gameplay.EntitySystem
 {
     [DisallowMultipleComponent]
-    public class EntityAttackBehavior : EntityBehavior<IEntityControlData, IEntityWeaponData, IEntityStatData>
+    public class EntityAttackBehavior : EntityBehavior<IEntityControlData, IEntityWeaponData, IEntityStatData, IEntityStatusData>
     {
         private IAttackStrategy _attackStrategy;
         private IEntityControlData controlData;
+        private IEntityStatusData _statusData;
         private IEntityWeaponData _weaponData;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityWeaponData weaponData, IEntityStatData statData)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityWeaponData weaponData, IEntityStatData statData, IEntityStatusData statusData)
         {
             controlData = data;
             _weaponData = weaponData;
@@ -19,7 +20,23 @@ namespace Runtime.Gameplay.EntitySystem
             _attackStrategy = AttackStrategyFactory.GetAttackStrategy(_weaponData.WeaponModel.WeaponType);
             _attackStrategy.Init(weaponData.WeaponModel, statData, transform);
             _attackStrategy.InitEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
+
+            if (statusData != null)
+            {
+                _statusData = statusData;
+                _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
+            }
+
             return UniTask.FromResult(true);
+        }
+
+        private void OnUpdateCurrentStatus()
+        {
+            if (_statusData.CurrentState.IsInHardCCStatus())
+            {
+                _attackStrategy.Cancel();
+                _weaponData.IsAttacking = false;
+            }
         }
 
         private void OnTriggerAttack(ActionInputType inputType)

@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Singleton;
 using Runtime.Helper;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -29,6 +28,16 @@ namespace Runtime.Manager.Data
         public T GetData<T>() where T : ScriptableObject
         {
             if (_cachedData.TryGetValue(typeof(T).ToString(), out ScriptableObject data))
+            {
+                return data as T;
+            }
+
+            return null;
+        }
+
+        public T GetData<T>(string assetName) where T : ScriptableObject
+        {
+            if (_cachedData.TryGetValue(assetName, out ScriptableObject data))
             {
                 return data as T;
             }

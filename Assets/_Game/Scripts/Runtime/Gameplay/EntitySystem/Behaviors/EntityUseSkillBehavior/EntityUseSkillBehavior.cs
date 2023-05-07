@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Pool;
 using Runtime.Definition;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -9,7 +8,8 @@ using UnityEngine;
 namespace Runtime.Gameplay.EntitySystem
 {
     [DisallowMultipleComponent]
-    public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData>, IDisposeEntityBehavior, IEntityControlCastRangeProxy
+    public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData, IEntityStatusData>, 
+        IDisposeEntityBehavior, IEntityControlCastRangeProxy
     {
         private static string s_warningSkillVFX = "warning_execute_skill_vfx";
 
@@ -17,6 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         private Transform _displayWarningTransform;
 
         private IEntityControlData _controlData;
+        private IEntityStatusData _statusData;
         private IEntitySkillData _skillData;
         private ISkillStrategy[] _skillStrategies;
 
@@ -27,7 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public float CastRange => _skillModels[_currentlyUsedSkillIndex].CastRange;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData, IEntityStatusData statusData)
         {
             _controlData = data;
             _skillData = skillData;
@@ -57,8 +58,26 @@ namespace Runtime.Gameplay.EntitySystem
                     return UniTask.FromResult(true);
                 }
             }
-            
+
+            if (statusData != null)
+            {
+                _statusData = statusData;
+                _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
+            }
+
             return UniTask.FromResult(false);
+        }
+
+        private void OnUpdateCurrentStatus()
+        {
+            if (_statusData.CurrentState.IsInHardCCStatus())
+            {
+                var triggerResult = _skillStrategies[_currentlyUsedSkillIndex].Cancel();
+                if (triggerResult.Result)
+                {
+                    FinishSkill();
+                }
+            }
         }
 
         private void OnActionTriggered(ActionInputType actionInputType)

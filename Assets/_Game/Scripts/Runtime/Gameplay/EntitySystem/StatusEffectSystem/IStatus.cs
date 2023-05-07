@@ -5,14 +5,12 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IStatus
     {
+        public StatusModel OwnerModel { get; }
         public StatusType StatusType { get; }
-        public bool IsActivating { get; }
         public IEntityData Creator { get; }
-        public IEntityData Owner { get; }
-
-        public void Init(StatusModel statusModel, IEntityData creator, IEntityData owner, StatusMetaData metaData);
-        public abstract void Update();
-        public abstract void Stop();
+        public IEntityStatusData Owner { get; }
+        public void Init(StatusModel statusModel, IEntityData creator, IEntityStatusData owner, StatusMetaData metaData);
+        public abstract void Dispose();
     }
 
     public struct StatusMetaData

@@ -1,3 +1,5 @@
+using Runtime.Definition;
+
 namespace Runtime.Gameplay.EntitySystem
 {
     public partial class EntityModel : IEntityWeaponData
@@ -9,7 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool CheckCanAttack()
         {
-            return !IsAttacking;
+            return !(IsDead || IsAttacking || IsPlayingSkill || IsDashing || currentState.IsInAttackLockedStatus());
         }
 
         public void InitWeapon(WeaponModel weaponModel)

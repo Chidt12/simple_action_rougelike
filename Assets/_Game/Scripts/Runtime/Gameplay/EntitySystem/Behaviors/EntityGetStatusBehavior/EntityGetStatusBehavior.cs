@@ -1,13 +1,16 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Core.Pool;
 using Runtime.Definition;
-using System.Collections;
+using Runtime.Helper;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using System.Linq;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityGetStatusBehavior : EntityBehavior<IEntityStatusData>
+    [DisallowMultipleComponent]
+    public class EntityGetStatusBehavior : EntityBehavior<IEntityStatusData>, IDisposeEntityBehavior
     {
         [SerializeField]
         private Transform _topPosition;
@@ -16,9 +19,9 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField]
         private Transform _bottomPosition;
 
-        private List<IStatus> _statuses;
-        private Dictionary<StatusType, StatusVFX> _statusEffectVFXsDictionary;
+        private IEntityStatusData _statusData;
         private CancellationTokenSource _cancellationTokenSource;
+        private Dictionary<StatusType, StatusVFX> _statusVFXsDictionary;
 
         protected override UniTask<bool> BuildDataAsync(IEntityStatusData data)
         {
@@ -27,12 +30,90 @@ namespace Runtime.Gameplay.EntitySystem
                 return UniTask.FromResult(false);
             }
 
+            _cancellationTokenSource = new();
+            _statusVFXsDictionary = new();
+            _statusData = data;
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _statuses = new();
-            _statusEffectVFXsDictionary = new();
+            _statusData.UpdateCurrentStatus += UpdateCurrentStatus;
 
             return UniTask.FromResult(true);
+        }
+
+        private void UpdateCurrentStatus()
+        {
+            var allStatusTypes = _statusData.CurrentStatuses.Select(x => x.StatusType).Distinct().ToList();
+            if(allStatusTypes.Count == 0)
+            {
+                RemoveAllVFX();
+            }
+            else
+            {
+                var removedStatusTypes = _statusVFXsDictionary.Keys.Where(x => !allStatusTypes.Contains(x));
+                foreach (var statusType in removedStatusTypes)
+                {
+                    if (_statusVFXsDictionary.ContainsKey(statusType))
+                    {
+                        _statusVFXsDictionary[statusType].Dispose();
+                        _statusVFXsDictionary.Remove(statusType);
+                    }
+                }
+
+                foreach (var statusType in allStatusTypes)
+                {
+                    if (!_statusVFXsDictionary.ContainsKey(statusType))
+                        CreateStatusEffectVFX(statusType).Forget();
+                }
+            }
+        }
+
+        private async UniTaskVoid CreateStatusEffectVFX(StatusType statusType)
+        {
+            _statusVFXsDictionary.Add(statusType, null);
+
+            var statusVFXGameObject = await PoolManager.Instance.Rent(GetStatusEffectPrefabName(statusType), token: _cancellationTokenSource.Token);
+            var statusVFX = statusVFXGameObject.GetOrAddComponent<StatusVFX>();
+            statusVFXGameObject.transform.SetParent(GetStatusEffectPosition(statusType));
+            statusVFXGameObject.transform.localPosition = Vector2.zero;
+            _statusVFXsDictionary[statusType]  = statusVFX;
+        }
+
+        public void Dispose()
+        {
+            _cancellationTokenSource?.Dispose();
+            _statusData.RemoveAllStatus();
+
+            RemoveAllVFX();
+        }
+
+        private void RemoveAllVFX()
+        {
+            var statusEffectsVFX = transform.GetComponentsInChildren<StatusVFX>();
+            foreach (var statusEffectVFX in statusEffectsVFX)
+                statusEffectVFX.Dispose();
+        }
+
+        private string GetStatusEffectPrefabName(StatusType statusType)
+        {
+            return $"{statusType.ToString().ToSnakeCase()}_status_vfx";
+        }
+
+        private Transform GetStatusEffectPosition(StatusType statusType)
+        {
+            switch (statusType)
+            {
+                case StatusType.Stun:
+                case StatusType.Taunt:
+                case StatusType.Terror:
+                    return _topPosition;
+                case StatusType.Poison:
+                case StatusType.Chill:
+                case StatusType.Bleed:
+                    return _middlePosition;
+                case StatusType.Freeze:
+                    return _bottomPosition;
+                default:
+                    return _bottomPosition;
+            }
         }
     }
 }

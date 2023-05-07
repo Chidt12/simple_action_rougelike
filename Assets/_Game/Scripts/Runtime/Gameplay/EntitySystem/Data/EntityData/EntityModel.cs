@@ -14,11 +14,12 @@ namespace Runtime.Gameplay.EntitySystem
         public int EntityId => entityId;
         public int EntityUID => uid;
         public bool IsDead => healthStat.CurrentValue <= 0;
-        public bool IsDamagable => true;
-        public bool IsMovable => !(IsPlayingSkill || IsDead);
-        public bool IsControllable => !(IsPlayingSkill || IsDead);
+        public bool IsDamagable => !(IsDead || IsDashing);
+        public bool IsMovable => !(IsPlayingSkill || IsDead || IsDashing || IsPausedControl || currentState.IsInHardCCStatus());
+        public bool IsControllable => !(IsPlayingSkill || IsDead || IsPausedControl || currentState.IsInMovementLockedStatus());
+        public bool IsDashing { get; set; }
+        public bool IsPausedControl { get; set; }
         public Vector2 Position { get; set; }
-
         public Action DeathEvent { get; set; }
         public Action<EntityReactionType> ReactionChangedEvent { get; set; }
         public Action<Vector2> ForceUpdatePosition { get; set; }

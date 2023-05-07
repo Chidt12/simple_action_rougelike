@@ -5,6 +5,7 @@ using System.Linq;
 using Runtime.Helper;
 using Runtime.Core.Message;
 using Runtime.Message;
+using Runtime.Definition;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -69,6 +70,17 @@ namespace Runtime.Gameplay.EntitySystem
                 creatorData,
                 callbackData.target
             ));
+
+            var targetStatusData = (IEntityStatusData)callbackData.target;
+            if(targetStatusData != null)
+            {
+                SimpleMessenger.Publish(MessageScope.EntityMessage, new SentStatusEffectMessage(
+                    creatorData,
+                    targetStatusData,
+                    StatusType.Stun,
+                    0
+                ));
+            }
         }
     }
 }

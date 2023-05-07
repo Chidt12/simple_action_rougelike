@@ -1,3 +1,4 @@
+using Runtime.Definition;
 using System.Collections.Generic;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -10,7 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool CheckCanUseSkill()
         {
-            return !(IsDead || IsPlayingSkill);
+            return !(IsDead || IsPlayingSkill || IsDashing || currentState.IsInSkillLockedStatus());
         }
 
         public void InitSkills(List<SkillModel> skillModels)

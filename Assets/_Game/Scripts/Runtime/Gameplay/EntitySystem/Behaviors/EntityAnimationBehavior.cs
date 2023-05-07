@@ -12,11 +12,12 @@ namespace Runtime.Gameplay.EntitySystem
     }
 
     [DisallowMultipleComponent]
-    public class EntityAnimationBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior, IEntityTriggerActionEventProxy
+    public class EntityAnimationBehavior : EntityBehavior<IEntityControlData, IEntityStatusData>, IDisposeEntityBehavior, IEntityTriggerActionEventProxy
     {
         [SerializeField] private Transform _flipTransform;
         [SerializeField] private UpdateFaceRightType _updateFaceRightType;
         private IEntityControlData _controlData;
+        private IEntityStatusData _statusData;
         private IEntityAnimation[] _entityAnimations;
         private bool _canUpdateAnimation;
         private AnimationType _currentAnimationType;
@@ -27,7 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
                 item.Dispose();
         }
 
-        protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityStatusData statusData)
         {
             if (data == null)
                 return UniTask.FromResult(false);
@@ -37,7 +38,7 @@ namespace Runtime.Gameplay.EntitySystem
                 return UniTask.FromResult(false);
 
             _controlData = data;
-            _controlData.MovementChangedEvent += OnMovementChanged;
+            _controlData.MovementChangedEvent += UpdateCurrentAnimation;
 
             if (_updateFaceRightType == UpdateFaceRightType.FaceDirection)
                 _controlData.DirectionChangedEvent += OnFaceRightUpdateByFaceDirection;
@@ -50,8 +51,31 @@ namespace Runtime.Gameplay.EntitySystem
                 item.Init(_controlData);
 
             _canUpdateAnimation = true;
-            OnMovementChanged();
+            UpdateCurrentAnimation();
+
+            if(statusData != null)
+            {
+                _statusData = statusData;
+                _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
+            }
+
             return UniTask.FromResult(true);
+        }
+
+        private void OnUpdateCurrentStatus()
+        {
+            if(_statusData.CurrentState.IsInAnimationLockedStatus())
+            {
+                foreach (var animation in _entityAnimations)
+                    animation.Pause();
+            }
+            else
+            {
+                foreach (var animation in _entityAnimations)
+                    animation.Continue();
+
+                UpdateCurrentAnimation();
+            }
         }
 
         private void OnReactionChanged(EntityReactionType reactionType)
@@ -59,7 +83,7 @@ namespace Runtime.Gameplay.EntitySystem
             if(reactionType == EntityReactionType.JustFinishedAttack || reactionType == EntityReactionType.JustFinishedUseSkill)
             {
                 _canUpdateAnimation = true;
-                OnMovementChanged();
+                UpdateCurrentAnimation();
                 if (_updateFaceRightType == UpdateFaceRightType.FaceDirection)
                     OnFaceRightUpdateByFaceDirection();
                 else if (_updateFaceRightType == UpdateFaceRightType.MoveDirection)
@@ -71,7 +95,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        private void OnMovementChanged()
+        private void UpdateCurrentAnimation()
         {
             if (!_canUpdateAnimation)
                 return;

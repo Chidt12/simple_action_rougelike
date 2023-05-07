@@ -287,6 +287,7 @@ namespace Runtime.Gameplay.EntitySystem
             heroModel.Init(EntityType.Hero, _entityUId++, entityId);
             heroModel.InitStats(heroData.Item1);
             heroModel.InitWeapon(heroData.Item2);
+            heroModel.InitStatus();
             var heroGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
             heroGameObject.transform.position = spawnPosition;
             await heroGameObject.GetComponent<IEntityHolder>().BuildAsync(heroModel);
@@ -303,6 +304,7 @@ namespace Runtime.Gameplay.EntitySystem
             heroModel.Init(EntityType.Hero, _entityUId++, entityId);
             heroModel.InitStats(heroData.Item1);
             heroModel.InitWeapon(heroData.Item2);
+            heroModel.InitStatus();
             entityGameObject.SetActive(true);
             entityGameObject.transform.position = entityGameObject.transform.position;
             await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(heroModel);
@@ -318,6 +320,7 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.Init(EntityType.Enemy, _entityUId++, entityId);
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
+            enemyModel.InitStatus();
             var enemyGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
             enemyGameObject.transform.position = spawnPosition;
             await enemyGameObject.GetComponent<IEntityHolder>().BuildAsync(enemyModel);
@@ -334,6 +337,7 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.Init(EntityType.Enemy, _entityUId++, entityId);
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
+            enemyModel.InitStatus();
             entityGameObject.SetActive(true);
             entityGameObject.transform.position = entityGameObject.transform.position;
             await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(enemyModel);

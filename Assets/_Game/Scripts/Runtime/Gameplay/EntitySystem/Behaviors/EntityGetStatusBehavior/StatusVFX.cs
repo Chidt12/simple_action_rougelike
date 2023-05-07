@@ -1,6 +1,5 @@
+using Runtime.Core.Pool;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -9,7 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         public void Dispose()
         {
-            
+            PoolManager.Instance.Return(gameObject);
         }
     }
 }
