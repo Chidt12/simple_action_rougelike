@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LightGlow
   m_Shader: {fileID: 4800000, guid: 041c3ea843ec4e449a48be4702b425eb, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_ValidKeywords:
+  - ETC1_EXTERNAL_ALPHA
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -63,6 +65,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - AnimatedInfiniteZoomUV_AnimatedInfiniteZoomUV_Intensity_1: 0.84
     - AnimatedInfiniteZoomUV_AnimatedInfiniteZoomUV_PosX_1: 0
@@ -170,7 +173,7 @@ Material:
     - _OperationBlend_Fade_2: 1
     - _Parallax: 0.02
     - _ShadowLight_Intensity_1: 4
-    - _ShadowLight_NoSprite_1: 2
+    - _ShadowLight_NoSprite_1: 0.12503844
     - _ShadowLight_PosX_1: 0
     - _ShadowLight_PosY_1: 0
     - _ShadowLight_Precision_1: 32
@@ -197,3 +200,4 @@ Material:
     - _ShadowLight_Color_1: {r: 0, g: 1, b: 0.9911163, a: 1}
     - _TintColor: {r: 0, g: 0.647059, b: 1, a: 1}
     - _TintRGBA_Color_1: {r: 1, g: 0.7941177, b: 0, a: 1}
+  m_BuildTextureStacks: []

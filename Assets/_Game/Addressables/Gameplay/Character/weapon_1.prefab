@@ -117,7 +117,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: a7d7645f72e65594288f7380c05d405f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   animator: {fileID: 635132995464408118}
   animations:
   - isMainPart: 1
-    animationType: 4
+    animationType: 9
     stateName: weapon_attack
     vfxSpawnPoints:
     - {fileID: 8961677106561110085}
