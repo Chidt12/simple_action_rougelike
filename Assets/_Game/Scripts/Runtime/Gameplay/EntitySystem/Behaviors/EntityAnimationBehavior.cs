@@ -83,9 +83,13 @@ namespace Runtime.Gameplay.EntitySystem
                     _isPaused = false;
                     foreach (var animation in _entityAnimations)
                         animation.Continue();
-                    UpdateCurrentAnimation();
                 }
             }
+
+            if (_statusData.CurrentState.IsInMovementLockedStatus())
+                TriggerEvent(AnimationType.Idle);
+            else
+                UpdateCurrentAnimation();
         }
 
         private void OnReactionChanged(EntityReactionType reactionType)

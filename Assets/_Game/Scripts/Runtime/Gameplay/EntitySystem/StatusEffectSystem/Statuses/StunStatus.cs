@@ -10,8 +10,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override UniTask FinishStatus(StatusMetaData metaData)
         {
-            if (owner is IEntityControlData)
-                ((IEntityControlData)owner).SetMoveDirection(Vector2.zero);
             return UniTask.CompletedTask;
         }
 
