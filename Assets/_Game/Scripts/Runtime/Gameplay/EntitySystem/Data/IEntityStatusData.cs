@@ -1,6 +1,6 @@
 namespace Runtime.Gameplay.EntitySystem
 {
-    public interface IEntityStatusData
+    public interface IEntityStatusData : IEntityData
     {
        
     }
