@@ -53,15 +53,19 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     if (_statusVFXsDictionary.ContainsKey(statusType))
                     {
-                        _statusVFXsDictionary[statusType].Dispose();
+                        var status = _statusVFXsDictionary[statusType];
                         _statusVFXsDictionary.Remove(statusType);
+                        status.Dispose();
                     }
                 }
 
                 foreach (var statusType in allStatusTypes)
                 {
-                    if (!_statusVFXsDictionary.ContainsKey(statusType))
-                        CreateStatusEffectVFX(statusType).Forget();
+                    if (HasStatusVFX(statusType))
+                    {
+                        if (!_statusVFXsDictionary.ContainsKey(statusType))
+                            CreateStatusEffectVFX(statusType).Forget();
+                    }
                 }
             }
         }
@@ -90,11 +94,25 @@ namespace Runtime.Gameplay.EntitySystem
             var statusEffectsVFX = transform.GetComponentsInChildren<StatusVFX>();
             foreach (var statusEffectVFX in statusEffectsVFX)
                 statusEffectVFX.Dispose();
+
+            _statusVFXsDictionary.Clear();
         }
 
         private string GetStatusEffectPrefabName(StatusType statusType)
         {
             return $"{statusType.ToString().ToSnakeCase()}_status_vfx";
+        }
+        
+
+        private bool HasStatusVFX(StatusType statusType)
+        {
+            switch (statusType)
+            {
+                case StatusType.Stun:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         private Transform GetStatusEffectPosition(StatusType statusType)

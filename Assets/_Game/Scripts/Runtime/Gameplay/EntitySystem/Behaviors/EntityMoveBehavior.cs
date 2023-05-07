@@ -48,20 +48,26 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
-            var moveSpeed = _moveSpeed;
-            if (_moveWithRandomSpeed)
+            if (_controlData.IsMovable)
             {
-                moveSpeed = Random.Range(_moveSpeed, _moveSpeed + _moveRandomOffset);
+                var moveSpeed = _moveSpeed;
+                if (_moveWithRandomSpeed)
+                {
+                    moveSpeed = Random.Range(_moveSpeed, _moveSpeed + _moveRandomOffset);
+                }
+                Vector3 nextPosition = _controlData.Position + _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
+                transform.position = Vector2.MoveTowards(_controlData.Position, nextPosition, moveSpeed * deltaTime);
+                _controlData.Position = nextPosition;
             }
-            Vector3 nextPosition = _controlData.Position +  _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
-            transform.position = Vector2.MoveTowards(_controlData.Position, nextPosition, moveSpeed * deltaTime);
-            _controlData.Position = nextPosition;
         }
 
         public void OnForceUpdatePosition(Vector2 position)
         {
-            transform.position = position;
-            _controlData.Position = position;
+            if (_controlData.IsMovable)
+            {
+                transform.position = position;
+                _controlData.Position = position;
+            }
         }
 
         private void OnStatChanged(float updatedValue)

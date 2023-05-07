@@ -13,12 +13,13 @@ namespace Runtime.Gameplay.EntitySystem
         private const float ROTATE_SPEED = 1080;
         private IEntityControlData _controlData;
         private bool _inited;
+        private bool _isPaused;
 
         #region API Methods
 
         private void Update()
         {
-            if (!_inited)
+            if (!_inited || _isPaused)
                 return;
 
             if(currentAnimationType == AnimationType.None || currentAnimationType == AnimationType.Idle || currentAnimationType == AnimationType.Run)
@@ -42,7 +43,20 @@ namespace Runtime.Gameplay.EntitySystem
         {
             base.Init(controlData);
             _inited = true;
+            _isPaused = false;
             _controlData = controlData;
+        }
+
+        public override void Continue()
+        {
+            base.Continue();
+            _isPaused = false;
+        }
+
+        public override void Pause()
+        {
+            base.Pause();
+            _isPaused = true;
         }
 
         public override void Dispose() 

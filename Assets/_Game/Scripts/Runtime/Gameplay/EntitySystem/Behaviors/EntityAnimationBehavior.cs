@@ -21,6 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
         private IEntityAnimation[] _entityAnimations;
         private bool _canUpdateAnimation;
         private AnimationType _currentAnimationType;
+        private bool _isPaused;
 
         public void Dispose()
         {
@@ -32,6 +33,8 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if (data == null)
                 return UniTask.FromResult(false);
+
+            _isPaused = false;
 
             _entityAnimations = GetComponentsInChildren<IEntityAnimation>(true);
             if (_entityAnimations.Length == 0)
@@ -66,15 +69,22 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if(_statusData.CurrentState.IsInAnimationLockedStatus())
             {
-                foreach (var animation in _entityAnimations)
-                    animation.Pause();
+                if(!_isPaused)
+                {
+                    _isPaused = true;
+                    foreach (var animation in _entityAnimations)
+                        animation.Pause();
+                }
             }
             else
             {
-                foreach (var animation in _entityAnimations)
-                    animation.Continue();
-
-                UpdateCurrentAnimation();
+                if (_isPaused)
+                {
+                    _isPaused = false;
+                    foreach (var animation in _entityAnimations)
+                        animation.Continue();
+                    UpdateCurrentAnimation();
+                }
             }
         }
 

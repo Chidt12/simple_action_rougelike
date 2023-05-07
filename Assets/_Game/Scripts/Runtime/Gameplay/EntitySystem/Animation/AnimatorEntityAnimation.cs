@@ -65,12 +65,12 @@ namespace Runtime.Gameplay.EntitySystem
                 animator.Play(animation.stateName, 0, 0);
         }
 
-        public void Pause()
+        public virtual void Pause()
         {
             animator.enabled = false;
         }
 
-        public void Continue()
+        public virtual void Continue()
         {
             animator.enabled = true;
         }

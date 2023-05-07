@@ -40,7 +40,23 @@ namespace Runtime.Gameplay
         {
             var statusTypes = Enum.GetValues(typeof(StatusType)).Cast<StatusType>();
             foreach (var statusType in statusTypes)
-                await ConfigDataManager.Instance.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
+            {
+                if(HasConifg(statusType))
+                {
+                    await ConfigDataManager.Instance.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
+                }
+            }
+        }
+
+        private bool HasConifg(StatusType statusType)
+        {
+            switch (statusType)
+            {
+                case StatusType.Stun:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public async UniTask<(HeroStatsInfo, WeaponModel)> GetHeroDataAsync(int heroId)

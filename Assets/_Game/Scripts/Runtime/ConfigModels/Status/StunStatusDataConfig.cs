@@ -6,6 +6,6 @@ namespace Runtime.ConfigModel
     public class StunStatusDataConfigItem : StatusDataConfigItem
     {}
 
-    public class StunStatusDataConfig : BaseConfig<StunStatusDataConfigItem>
+    public class StunStatusDataConfig : StatusDataConfig<StunStatusDataConfigItem>
     {}
 }

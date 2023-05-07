@@ -49,17 +49,23 @@ namespace Runtime.Gameplay.EntitySystem
         {
             while (true)
             {
-                Vector3 nextPosition = _rb.position + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
-                _rb.MovePosition(nextPosition);
-                _controlData.Position = _rb.position;
+                if (_controlData.IsMovable)
+                {
+                    Vector3 nextPosition = _rb.position + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
+                    _rb.MovePosition(nextPosition);
+                    _controlData.Position = _rb.position;
+                }
                 await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken: _fixedUpdateTokenSource.Token);
             }
         }
 
         public void OnForceUpdatePosition(Vector2 position)
         {
-            transform.position = position;
-            _controlData.Position = position;
+            if (_controlData.IsMovable)
+            {
+                transform.position = position;
+                _controlData.Position = position;
+            }
         }
 
         private void OnStatChanged(float updatedValue)
