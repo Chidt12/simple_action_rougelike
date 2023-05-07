@@ -2,6 +2,7 @@ using Runtime.Definition;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -82,7 +83,6 @@ namespace Runtime.Gameplay.EntitySystem
                     return true;
                 }
             }
-                
             else
             {
                 var statusType = statuses.Min(x => x.StatusType);

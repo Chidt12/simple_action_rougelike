@@ -15,4 +15,4 @@ MonoBehaviour:
   items:
   - dataId: 0
     chance: 1
-    duration: 0.5
+    duration: 2
