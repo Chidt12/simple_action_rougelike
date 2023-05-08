@@ -709,6 +709,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 635132995464408119, guid: f5f8657302f2dbe4f9f7b9f6f50095fd, type: 3}
+      propertyPath: animations.Array.data[0].animationType
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4704740987404279826, guid: f5f8657302f2dbe4f9f7b9f6f50095fd, type: 3}
       propertyPath: m_Name
       value: weapon_1

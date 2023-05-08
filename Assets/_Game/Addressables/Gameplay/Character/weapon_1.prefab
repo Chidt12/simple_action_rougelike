@@ -218,7 +218,7 @@ MonoBehaviour:
   animator: {fileID: 635132995464408118}
   animations:
   - isMainPart: 1
-    animationType: 9
+    animationType: 4
     stateName: weapon_attack
     vfxSpawnPoints:
     - {fileID: 8961677106561110085}

@@ -86,7 +86,10 @@ namespace Runtime.Gameplay.EntitySystem
                 }
             }
 
-            UpdateCurrentAnimation();
+            if (_statusData.CurrentState.IsInMovementLockedStatus())
+                TriggerEvent(AnimationType.Idle);
+            else
+                UpdateCurrentAnimation();
         }
 
         private void OnReactionChanged(EntityReactionType reactionType)

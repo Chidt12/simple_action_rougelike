@@ -107,7 +107,6 @@ GameObject:
   - component: {fileID: 7249555408300571290}
   - component: {fileID: 926233781}
   - component: {fileID: 3326386649176865464}
-  - component: {fileID: 6698709696889002781}
   - component: {fileID: 2295363477677041631}
   - component: {fileID: -1492507533332718906}
   - component: {fileID: 8599281477896062603}
@@ -260,20 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2b3303a3fe71a4d97d8b484cb72c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6698709696889002781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6875883244815912860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flipTransform: {fileID: 6875883244934980057}
-  _updateFaceRightType: 1
 --- !u!114 &2295363477677041631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,6 +651,10 @@ PrefabInstance:
     - target: {fileID: 470465208472622545, guid: f5f8657302f2dbe4f9f7b9f6f50095fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635132995464408119, guid: f5f8657302f2dbe4f9f7b9f6f50095fd, type: 3}
+      propertyPath: animations.Array.data[0].animationType
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4704740987404279826, guid: f5f8657302f2dbe4f9f7b9f6f50095fd, type: 3}
       propertyPath: m_Name

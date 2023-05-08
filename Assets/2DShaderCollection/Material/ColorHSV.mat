@@ -90,7 +90,7 @@ Material:
     - _CircleHole_PosY_1: 0.5
     - _CircleHole_Size_1: 0
     - _ColorHSV_Brightness_1: 0.52
-    - _ColorHSV_Hue_1: 360
+    - _ColorHSV_Hue_1: 0.6617139
     - _ColorHSV_Saturation_1: 2
     - _ColorMask: 15
     - _Cutoff: 0.5

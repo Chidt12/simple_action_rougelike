@@ -48,25 +48,33 @@ namespace Runtime.Gameplay.EntitySystem
                 return;
             }
 
+            var isObscured = IsObscured();
+
             // Make a move.
+            if(_moveState == MoveState.MoveTowardsHero)
+            {
+                if (!isObscured)
+                {
+                    // If the chased hero target is now near the character by the skill cast range, then stop chasing, send a trigger skill usage.
+                    if (Vector2.SqrMagnitude(ControlData.Position - ControlData.Target.Position) <= (StopChasingTargetDistance * StopChasingTargetDistance))
+                    {
+                        LockMovement();
+                        return;
+                    }
+                }
+            }
+
             Move();
 
             if (_moveState == MoveState.MoveTowardsHero)
             {
-                if (!IsObscured())
+                if (!isObscured)
                 {
                     // If the chased hero target is far away the character by a specific distance, then make the character move away from the hero target.
                     if (Vector2.SqrMagnitude(ControlData.Target.Position - ControlData.Position) <= StayBeforeAwayTargetDistance * StayBeforeAwayTargetDistance)
                     {
                         _isMoveAwayFromTarget = true;
                         ResetToRefindNewPath();
-                        return;
-                    }
-
-                    // If the chased hero target is now near the character by the skill cast range, then stop chasing, send a trigger skill usage.
-                    if (Vector2.SqrMagnitude(ControlData.Position - ControlData.Target.Position) <= (StopChasingTargetDistance * StopChasingTargetDistance))
-                    {
-                        LockMovement();
                         return;
                     }
 

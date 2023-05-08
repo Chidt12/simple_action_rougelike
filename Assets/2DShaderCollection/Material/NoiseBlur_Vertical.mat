@@ -84,7 +84,7 @@ Material:
     - Desintegration_Value: 0
     - Disolve_Seed: 0.5
     - Disolve_Value: 0.57083243
-    - Displacement_Value: -0.7499231
+    - Displacement_Value: 0.3234278
     - DistortionUV_DistanceX_1: 0.507
     - DistortionUV_DistanceY_1: 0.598
     - DistortionUV_Speed_1: 0.71
