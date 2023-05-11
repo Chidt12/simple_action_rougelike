@@ -330,6 +330,7 @@ MonoBehaviour:
     stateName: 2001_run
     vfxSpawnPoints: []
   defaultState: 2001_idle
+  changeColorSprite: {fileID: 7386596438361353229}
 --- !u!1 &7386596438375481929
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flipTransform: {fileID: 7386596438361353228}
   _updateFaceRightType: 0
+  _playDotweenTransform: {fileID: 7775985078590227464}
 --- !u!114 &4572192897293976343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,6 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayWarningTransform: {fileID: 5750138514969153640}
+  _delayBeforeExecuteSkillTime: 3
 --- !u!114 &3836183063686295378
 MonoBehaviour:
   m_ObjectHideFlags: 0

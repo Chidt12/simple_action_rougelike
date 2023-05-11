@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: -1492507533332718906}
   - component: {fileID: 8599281477896062603}
   - component: {fileID: 5496076449872901601}
+  - component: {fileID: 67869302148463647}
   m_Layer: 8
   m_Name: 1001
   m_TagString: Untagged
@@ -311,6 +312,20 @@ MonoBehaviour:
   _topPosition: {fileID: 1287718807160369687}
   _middlePosition: {fileID: 189768702332091211}
   _bottomPosition: {fileID: 1603413396219099761}
+--- !u!114 &67869302148463647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875883244815912860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flipTransform: {fileID: 6875883244934980057}
+  _updateFaceRightType: 1
 --- !u!1 &6875883244934980058
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +451,7 @@ MonoBehaviour:
     stateName: run
     vfxSpawnPoints: []
   defaultState: idle
+  changeColorSprite: {fileID: 6875883244934980056}
 --- !u!1 &6875883245388638909
 GameObject:
   m_ObjectHideFlags: 0

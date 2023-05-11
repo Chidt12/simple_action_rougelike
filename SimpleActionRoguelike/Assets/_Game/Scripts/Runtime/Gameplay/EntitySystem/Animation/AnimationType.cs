@@ -17,6 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         BackswingSkill1,
         BackswingSkill2,
         BackswingSkill3,
+        GetHurt,
     }
 
     public static class AnimationTypeExtensions

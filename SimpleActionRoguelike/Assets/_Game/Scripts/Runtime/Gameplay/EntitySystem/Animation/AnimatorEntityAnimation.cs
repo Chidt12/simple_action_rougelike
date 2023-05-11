@@ -13,24 +13,13 @@ namespace Runtime.Gameplay.EntitySystem
         public Transform[] vfxSpawnPoints;
     }
 
-    public interface IEntityAnimation
-    {
-        bool IsMainPart(AnimationType animationType);
-        void Init(IEntityControlData controlData);
-        void Play(AnimationType animationType);
-        void Continue();
-        void Pause();
-        void SetTriggeredEvent(AnimationType animationType, Action<SetStateData> stateAction, Action<SetStateData> endAction);
-        void Dispose();
-        Transform[] GetVFXSpawnPoints(AnimationType animationType);
-    }
-
     [RequireComponent(typeof(Animator))]
     public class AnimatorEntityAnimation : MonoBehaviour, IEntityAnimation
     {
         [SerializeField] protected Animator animator;
         [SerializeField] protected AnimatorAnimation[] animations;
         [SerializeField] protected string defaultState;
+        [SerializeField] protected SpriteRenderer changeColorSprite;
 
         protected AnimationType currentAnimationType;
 
@@ -104,6 +93,12 @@ namespace Runtime.Gameplay.EntitySystem
                 return null;
             else
                 return animation.vfxSpawnPoints;
+        }
+
+        public void ChangeColor(Color changedColor)
+        {
+            if(changeColorSprite)
+                changeColorSprite.material.SetColor("_FillColor_Color_1", changedColor);
         }
 
         #region Unity Animation Callback Event Methods

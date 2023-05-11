@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         [SerializeField]
         private Transform _displayWarningTransform;
+        [SerializeField]
+        private float _delayBeforeExecuteSkillTime = 3f;
+        private bool _finishedDelay;
 
         private IEntityControlData _controlData;
         private IEntityStatusData _statusData;
@@ -30,6 +34,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData, IEntityStatusData statusData)
         {
+            _finishedDelay = false;
             _controlData = data;
             _skillData = skillData;
             if(skillData != null && data != null && statData != null)
@@ -55,17 +60,30 @@ namespace Runtime.Gameplay.EntitySystem
                     _currentlyUsedSkillIndex = 0;
                     _cancellationTokenSource = new CancellationTokenSource();
                     FinishSkill();
+
+                    if (statusData != null)
+                    {
+                        _statusData = statusData;
+                        _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
+                    }
+
+                    if (_delayBeforeExecuteSkillTime > 0)
+                    {
+                        StartCountimeDelayAsync().Forget();
+                    }
+                    else _finishedDelay = true;
+
                     return UniTask.FromResult(true);
                 }
             }
 
-            if (statusData != null)
-            {
-                _statusData = statusData;
-                _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
-            }
-
             return UniTask.FromResult(false);
+        }
+
+        private async UniTaskVoid StartCountimeDelayAsync()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeExecuteSkillTime), cancellationToken: _cancellationTokenSource.Token);
+            _finishedDelay = true;
         }
 
         private void OnUpdateCurrentStatus()
@@ -82,6 +100,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnActionTriggered(ActionInputType actionInputType)
         {
+            if (!_finishedDelay)
+                return;
+
             if (actionInputType == ActionInputType.UseSkill1 ||
                 actionInputType == ActionInputType.UseSkill2 ||
                 actionInputType == ActionInputType.UseSkill3)
