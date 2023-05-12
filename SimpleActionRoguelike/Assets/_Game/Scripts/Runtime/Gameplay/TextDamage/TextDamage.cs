@@ -12,10 +12,10 @@ namespace Runtime.Gameplay.TextDamage
 
         public int Index { get; set; }
 
-        public void Init(float value, Vector2 spawnPosition)
+        public void Init(float value, bool isPlus, Vector2 spawnPosition)
         {
             transform.localPosition = spawnPosition;
-            _damageText.text = value > 0 ? $"+{Mathf.Floor(value)}" : Mathf.Floor(value).ToString();
+            _damageText.text = isPlus ? $"+{Mathf.Floor(value)}" : $"-{Mathf.Floor(value)}";
         }
 
         protected override void OnComplete()

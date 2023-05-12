@@ -20,7 +20,7 @@ namespace Runtime.Gameplay.TextDamage
             _damageFloatingTexts = new();
         }
 
-        public async UniTask Spawn(string assetName, float value, Vector2 spawnPosition, CancellationToken token)
+        public async UniTask Spawn(string assetName, float value, bool isPlus, Vector2 spawnPosition, CancellationToken token)
         {
             while (_damageFloatingTexts.Count >= _maxDamageTextNumber)
             {
@@ -32,7 +32,7 @@ namespace Runtime.Gameplay.TextDamage
 
             var damageTextObject = await PoolManager.Instance.Rent(assetName, token: token);
             var damageText = damageTextObject.GetOrAddComponent<TextDamage>();
-            damageText.Init(value, spawnPosition);
+            damageText.Init(value, isPlus, spawnPosition);
             _damageFloatingTexts.Add(damageText);
         }
 
