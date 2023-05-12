@@ -9,27 +9,52 @@ namespace Runtime.Gameplay.TextDamage
     public class FloatingText : MonoBehaviour
     {
         [SerializeField] private float _lifeTime = 0.5f;
-        [SerializeField] private float _minX = -0.5f;
-        [SerializeField] private float _minY = 0.2f;
-        [SerializeField] private float _maxX = 0.5f;
-        [SerializeField] private float _maxY = 1.5f;
+        [SerializeField] private float _speed = 2f;
+        [SerializeField] private float _delayFade;
+        [SerializeField] private float _fadeSpeed;
 
-        private TweenerCore<Vector3, Vector3, VectorOptions> _tweenMove;
-        private TweenerCore<float, float, FloatOptions> _tweenFade;
+        private float _currentLifeTime;
+        private float _currentFadeAmount;
 
         private void OnEnable()
         {
-            var movePosition = new Vector2(Random.Range(_minX, _maxX), Random.Range(_minY, _maxY));
-
-            _tweenMove = transform.DOLocalMove(movePosition, _lifeTime).SetEase(Ease.Linear).SetRelative(true).OnComplete(OnComplete);
+            _currentLifeTime = 0;
+            _currentFadeAmount = 100;
+            EnableOpacity();
         }
 
-        private void OnDisable()
+        private void Update()
         {
-            _tweenFade?.Kill();
-            _tweenMove?.Kill();
+            if(_currentLifeTime < _lifeTime)
+            {
+                if(_currentLifeTime >= _delayFade)
+                {
+                    _currentFadeAmount -= Time.deltaTime * _fadeSpeed;
+                    UpdateFade(_currentFadeAmount / 100f);
+                }
+
+                _currentLifeTime += Time.deltaTime;
+                transform.position = new Vector2(transform.position.x, transform.position.y + _speed * Time.deltaTime);
+            }
+            else
+            {
+                OnComplete();
+            }
         }
 
-        protected virtual void OnComplete() => PoolManager.Instance.Return(gameObject);
+        protected virtual void EnableOpacity()
+        {
+
+        }
+
+        protected virtual void UpdateFade(float value)
+        {
+
+        }
+
+        protected virtual void OnComplete()
+        {
+            PoolManager.Instance.Return(gameObject);
+        }
     }
 }

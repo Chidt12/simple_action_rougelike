@@ -170,11 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 0.75
-  _minX: 0
-  _minY: 2
-  _maxX: 0
-  _maxY: 2
-  _canvasGroup: {fileID: 0}
+  _speed: 3
+  _delayFade: 0.3
+  _fadeSpeed: 150
   _damageText: {fileID: 9020509126857869894}
 --- !u!1 &9020509126857869892
 GameObject:
