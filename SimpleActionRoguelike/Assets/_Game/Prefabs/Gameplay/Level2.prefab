@@ -2088,6 +2088,7 @@ GameObject:
   - component: {fileID: 1868612336715770745}
   - component: {fileID: 1868612336715770744}
   - component: {fileID: 1868612336715770747}
+  - component: {fileID: 5264773798642188276}
   m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
@@ -2885,7 +2886,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868612336715770743}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2897,7 +2898,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!66 &1868612336715770747
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -2970,6 +2971,19 @@ CompositeCollider2D:
       - {x: -3, y: -4.000029}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!114 &5264773798642188276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868612336715770743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebbddb299dc4491499ff75d4f379b830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 1868612336715770747}
 --- !u!1001 &8271731405143877046
 PrefabInstance:
   m_ObjectHideFlags: 0
