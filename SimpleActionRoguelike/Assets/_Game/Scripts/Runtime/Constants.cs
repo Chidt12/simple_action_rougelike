@@ -10,12 +10,15 @@ namespace Runtime.Constants
         public const string NONE = "NONE";
         public const string VICTORY = "prefab_modal_victory";
         public const string LOSE = "prefab_modal_lose";
+
+        public const string SELECT_INGAME_BUFF = "prefab_modal_select_ingame_buff";
     }
 
     public class ScreenIds
     {
         public const string START_GAME = "prefab_screen_start_game";
         public const string HOME = "prefab_screen_home";
+
     }
 
     public class AddressableKeys

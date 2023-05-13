@@ -1,7 +1,5 @@
 using Runtime.Core.Singleton;
 using Runtime.Definition;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Runtime.Manager
@@ -10,7 +8,21 @@ namespace Runtime.Manager
     {
         private GameStateType _currentGameStateType;
         private GameStateType _previousGameStateType;
-        public GameStateType CurrentGameStateType { get;}
+        public GameStateType CurrentGameStateType
+        {
+            get => _currentGameStateType;
+
+            set
+            {
+                _previousGameStateType = _currentGameStateType;
+                _currentGameStateType = value;
+
+                if (_currentGameStateType == GameStateType.GameplayPausing)
+                    Time.timeScale = 0;
+                else
+                    Time.timeScale = 1;
+            }
+        }
 
         protected override void Awake()
         {
@@ -21,8 +33,16 @@ namespace Runtime.Manager
 
         public bool SetGameStateType(GameStateType gameStateType)
         {
-            _previousGameStateType = _currentGameStateType;
-            _currentGameStateType = gameStateType;
+            var currentGameState = CurrentGameStateType;
+            CurrentGameStateType = gameStateType;
+            return currentGameState != gameStateType;
+        }
+
+        public bool ReturnPreviousGameStateType() 
+        {
+            var currentGameState = CurrentGameStateType;
+            CurrentGameStateType = _previousGameStateType;
+            _previousGameStateType = currentGameState;
             return true;
         }
     }

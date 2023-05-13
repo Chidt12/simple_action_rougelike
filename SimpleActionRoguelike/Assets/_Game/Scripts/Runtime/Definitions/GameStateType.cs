@@ -8,7 +8,8 @@ namespace Runtime.Definition
     {
         None,
         Loading,
-        Gameplay,
+        GameplayRunning,
+        GameplayPausing,
         WinGameplay,
         LoseGameplay
     }

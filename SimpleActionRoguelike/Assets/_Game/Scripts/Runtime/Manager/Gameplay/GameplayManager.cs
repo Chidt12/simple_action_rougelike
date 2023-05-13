@@ -155,13 +155,13 @@ namespace Runtime.Manager.Gameplay
             {
                 if (isClearWave)
                 {
-                    HandleWinStage();
+                    HandleWinLevel();
                 }
                 else
                 {
                     var hasNoEnemiesLeft = EntitiesManager.Instance.HaveNoEnemiesLeft;
                     if (hasNoEnemiesLeft)
-                        HandleWinStage();
+                        HandleWinLevel();
                     else
                         HandleLoseStage();
                 }
@@ -184,10 +184,20 @@ namespace Runtime.Manager.Gameplay
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.LOSE)).Forget();
         }
 
-        private void HandleWinStage()
+        private void HandleWinLevel()
         {
-            //ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.VICTORY)).Forget();
             _isWinCurrentLevel = true;
+            // Pause for select buff
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
+
+            var modalData = new ModalSelectIngameBuffData(OnSelectBuffItem);
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
+        }
+
+        private void OnSelectBuffItem()
+        {
+            GameManager.Instance.ReturnPreviousGameStateType();
+            ScreenNavigator.Instance.PopModal(true).Forget();
         }
 
         private void HandleLoseStage()
