@@ -15,6 +15,7 @@ using Runtime.Message;
 using Runtime.SceneLoading;
 using Runtime.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
@@ -157,13 +158,13 @@ namespace Runtime.Manager.Gameplay
             {
                 if (isClearWave)
                 {
-                    HandleWinLevel();
+                    HandleWinLevelAsync().Forget();
                 }
                 else
                 {
                     var hasNoEnemiesLeft = EntitiesManager.Instance.HaveNoEnemiesLeft;
                     if (hasNoEnemiesLeft)
-                        HandleWinLevel();
+                        HandleWinLevelAsync().Forget();
                     else
                         HandleLoseStage();
                 }
@@ -186,22 +187,30 @@ namespace Runtime.Manager.Gameplay
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.LOSE)).Forget();
         }
 
-        private void HandleWinLevel()
+        private async UniTask HandleWinLevelAsync()
         {
             _isWinCurrentLevel = true;
             // Pause for select buff
             GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
 
-            var modalData = new ModalSelectIngameBuffData(OnSelectBuffItem);
+            var heroEntityData = EntitiesManager.Instance.HeroData;
+            var currentBuffs = MechanicSystemManager.Instance.GetCurrentBuffsInGame();
+
+            var suitableItems = await ConfigDataManager.Instance.LoadCurrentSuitableBuffInGameItems(currentBuffs);
+
+            var modalData = new ModalSelectIngameBuffData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
         }
 
-        private void OnSelectBuffItem() => OnSelectBuffItemAsync().Forget();
+        private void OnSelectBuffItem(BuffInGameIdentity dataIdentity)
+        {
+            OnSelectBuffItemAsync(dataIdentity).Forget();
+        }
 
-        private async UniTaskVoid OnSelectBuffItemAsync()
+        private async UniTaskVoid OnSelectBuffItemAsync(BuffInGameIdentity dataIdentity)
         {
             var heroData = EntitiesManager.Instance.HeroData;
-            await MechanicSystemManager.Instance.AddBuffInGameSystem(heroData, BuffsInGameType.FirstOrDefault());
+            await MechanicSystemManager.Instance.AddBuffInGameSystem(heroData, dataIdentity.buffInGameType);
             GameManager.Instance.ReturnPreviousGameStateType();
             await ScreenNavigator.Instance.PopModal(true);
         }

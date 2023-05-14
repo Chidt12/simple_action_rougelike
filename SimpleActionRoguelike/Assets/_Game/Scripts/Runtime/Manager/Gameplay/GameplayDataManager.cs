@@ -41,14 +41,14 @@ namespace Runtime.Gameplay
             var statusTypes = Enum.GetValues(typeof(StatusType)).Cast<StatusType>();
             foreach (var statusType in statusTypes)
             {
-                if(HasConifg(statusType))
+                if(HasConfig(statusType))
                 {
                     await ConfigDataManager.Instance.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
                 }
             }
         }
 
-        private bool HasConifg(StatusType statusType)
+        private bool HasConfig(StatusType statusType)
         {
             switch (statusType)
             {
@@ -69,7 +69,7 @@ namespace Runtime.Gameplay
 
             var equipmentEquip = GameplayDataDispatcher.Instance.SelectedEquipments[EquipmentType.Weapon];
             var weaponType = (WeaponType)equipmentEquip.EquipmentId;
-            var weaponData = await GetWeaponDataAsync(weaponType, equipmentEquip.RarityType, equipmentEquip.Level);
+            var weaponData = await GetWeaponDataAsync(weaponType, RarityType.Common, equipmentEquip.Level);
             var weaponModel = WeaponModelFactory.GetWeaponModel(weaponType, weaponData);
             var heroStatsInfo = await GameplayDataDispatcher.Instance.GetHeroStatsInfo(heroLevelConfigItem.CharacterLevelStats);
 
@@ -99,7 +99,7 @@ namespace Runtime.Gameplay
         }
 
 
-        private async UniTask<WeaponData> GetWeaponDataAsync(WeaponType weaponType, RarityType weaponEquipmentRarityType, int weaponLevel)
+        public async UniTask<WeaponData> GetWeaponDataAsync(WeaponType weaponType, RarityType weaponEquipmentRarityType, int weaponLevel)
         {
             var weaponDataConfig = await ConfigDataManager.Instance.LoadWeaponDataConfigItem(weaponType);
             var weaponMechanicConfig = await ConfigDataManager.Instance.LoadWeaponMechanicConfigItem(weaponType, weaponEquipmentRarityType);

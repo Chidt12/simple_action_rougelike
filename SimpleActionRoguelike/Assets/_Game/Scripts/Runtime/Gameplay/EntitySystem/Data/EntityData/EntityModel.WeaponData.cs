@@ -1,4 +1,5 @@
 using Runtime.Definition;
+using System;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -8,6 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
         public WeaponModel WeaponModel => _weaponModel;
 
         public bool IsAttacking { get; set; }
+        public Action UpdateWeaponModel { get; set; }
 
         public bool CheckCanAttack()
         {
@@ -17,6 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
         public void InitWeapon(WeaponModel weaponModel)
         {
             _weaponModel = weaponModel;
+            UpdateWeaponModel?.Invoke();
         }
     }
 

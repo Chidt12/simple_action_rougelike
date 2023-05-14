@@ -8,6 +8,6 @@ namespace Runtime.Definition
         Epic = 3,
         Unique = 4,
         Legendary = 5,
-        Ultimate = 6
+        Ultimate = 6,
     }
 }

@@ -8,7 +8,6 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class FlyForwardProjectileStrategyData : FlyProjectileStrategyData
     {
-
         public FlyForwardProjectileStrategyData(float moveDistance, float moveSpeed, Action<ProjectileCallbackData> callbackAction)
             : base(moveDistance, moveSpeed, callbackAction) { }
     }

@@ -7,8 +7,8 @@ namespace Runtime.ConfigModel
     [Serializable]
     public class ShortGunEquipmentMechanicDataConfigItem : EquipmentMechanicDataConfigItem 
     {
-        public int numberOfProjectileVertical;
-        public int numberOfProjectileHorizontal;
+        public int bonusProjectileVertical;
+        public int bonusProjectileHorizontal;
         public bool goThrough;
     }
 
@@ -26,8 +26,8 @@ namespace Runtime.ConfigModel
 
         protected override ShortGunEquipmentMechanicDataConfigItem Add(ShortGunEquipmentMechanicDataConfigItem item1, ShortGunEquipmentMechanicDataConfigItem item2)
         {
-            item1.numberOfProjectileHorizontal += item2.numberOfProjectileHorizontal;
-            item1.numberOfProjectileVertical += item2.numberOfProjectileHorizontal;
+            item1.bonusProjectileHorizontal += item2.bonusProjectileHorizontal;
+            item1.bonusProjectileVertical += item2.bonusProjectileVertical;
             item1.goThrough = item1.goThrough || item2.goThrough;
             return item1;
         }    
@@ -40,17 +40,17 @@ namespace Runtime.ConfigModel
             switch (mechanicData.triggerRarityType)
             {
                 case RarityType.Common:
-                    return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.numberOfProjectileVertical)); // + 1;
+                    return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.bonusProjectileVertical)); // + 1;
                 case RarityType.Rare:
-                    return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.numberOfProjectileVertical)); // + 1;
+                    return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.bonusProjectileVertical)); // + 1;
                 case RarityType.Epic:
-                    return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.numberOfProjectileVertical)); // + 1;
+                    return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.bonusProjectileVertical)); // + 1;
                 case RarityType.Unique:
                     return UniTask.FromResult(goThroughFormat);
                 case RarityType.Legendary:
-                    return UniTask.FromResult(string.Format(increaseProjectilesEachWaveFormat, mechanicData.numberOfProjectileHorizontal)); // + 2;
+                    return UniTask.FromResult(string.Format(increaseProjectilesEachWaveFormat, mechanicData.bonusProjectileHorizontal)); // + 2;
                 case RarityType.Ultimate:
-                    return UniTask.FromResult(string.Format(increaseProjectilesEachWaveFormat, mechanicData.numberOfProjectileHorizontal)); // + 2;
+                    return UniTask.FromResult(string.Format(increaseProjectilesEachWaveFormat, mechanicData.bonusProjectileHorizontal)); // + 2;
                 default:
                     return UniTask.FromResult(string.Empty);
             }

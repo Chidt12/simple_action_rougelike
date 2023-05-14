@@ -6,6 +6,7 @@ using System.Linq;
 using Runtime.Definition;
 using Runtime.Core.Message;
 using Runtime.Message;
+using System;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -21,7 +22,7 @@ namespace Runtime.Gameplay.EntitySystem
             _isShooting = true;
             triggerActionEventProxy.TriggerEvent(AnimationType.Attack1,
                     stateAction: data => {
-                        FireProjectiles(data.spawnVFXPoints, cancellationToken);
+                        FireProjectiles(ownerWeaponModel.NumberOfProjectilesInHorizontal, 30, data.spawnVFXPoints, cancellationToken);
                     },
                     endAction: data => {
                         _isShooting = false;
@@ -29,32 +30,56 @@ namespace Runtime.Gameplay.EntitySystem
             await UniTask.WaitUntil(() => !_isShooting, cancellationToken: cancellationToken);
         }
 
-        private void FireProjectiles(Transform[] spawnPoints, CancellationToken cancellationToken)
+        private void FireProjectiles(int numberOfProjectiles, float angleBetweenTwoProjectiles, Transform[] spawnPoints, CancellationToken cancellationToken)
         {
-            var controlData = (IEntityControlData)creatorData;
-            Vector2 direction = Vector2.zero;
-            if (controlData != null)
-                direction = (controlData.FaceDirection).normalized;
+            var suitableFirePosition = spawnPoints == null ? (Vector3)creatorData.Position : spawnPoints.Select(x => x.position).ToList().GetSuitableValue(creatorData.Position);
 
-            SpawnProjectileAsync(direction, spawnPoints, cancellationToken).Forget();
+            var bigAngle = (numberOfProjectiles - 1) * angleBetweenTwoProjectiles;
+            var firstDegree = -bigAngle / 2;
+
+            var controlData = (IEntityControlData)creatorData;
+            Vector2 faceDirection = Vector2.zero;
+            if (controlData != null)
+                faceDirection = (controlData.FaceDirection).normalized;
+
+            for (int i = 0; i < numberOfProjectiles; i++)
+            {
+                var projectileDirection = (Quaternion.AngleAxis(firstDegree + angleBetweenTwoProjectiles * i, Vector3.forward) * faceDirection).normalized;
+                SpawnProjectileAsync(projectileDirection, suitableFirePosition, cancellationToken).Forget();
+            }
         }
 
-        private async UniTaskVoid SpawnProjectileAsync(Vector2 direction, Transform[] spawnPoints, CancellationToken cancellationToken)
+        private async UniTaskVoid SpawnProjectileAsync(Vector2 direction, Vector2 spawnPoint, CancellationToken cancellationToken)
         {
-            var positionData = (IEntityData)creatorData;
-            if (positionData != null)
+            for (int i = 0; i < ownerWeaponModel.NumberOfProjectilesInVertical; i++)
             {
-                FlyForwardProjectileStrategyData flyForwardProjectileStrategyData = null;
-                flyForwardProjectileStrategyData = new FlyForwardProjectileStrategyData(ownerWeaponModel.AttackRange,
-                                                                                        ownerWeaponModel.ProjectileSpeed,
-                                                                                        ProjectileCallback);
+                IProjectileStrategy projectileStrategy = null;
+                ProjectileStrategyData projectileStrategyData = null;
 
-                var suitablePosition = spawnPoints == null ? (Vector3)positionData.Position : spawnPoints.Select(x => x.position).ToList().GetSuitableValue(positionData.Position);
-                var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerWeaponModel.ProjectileId, positionData, suitablePosition, cancellationToken);
+                if (ownerWeaponModel.GoThrough)
+                {
+                    projectileStrategyData = new FlyForwardThroughProjecitleStrategyData( true,
+                                                                                            ownerWeaponModel.AttackRange,
+                                                                                            ownerWeaponModel.ProjectileSpeed,
+                                                                                            ProjectileCallback);
+                    projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyForwardThrough);
+                }
+                else
+                {
+                    projectileStrategyData = new FlyForwardProjectileStrategyData(ownerWeaponModel.AttackRange,
+                                                                                            ownerWeaponModel.ProjectileSpeed,
+                                                                                            ProjectileCallback);
+                    projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyForward);
+                }
+
+
+
+                var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerWeaponModel.ProjectileId, creatorData, spawnPoint, cancellationToken);
                 var projectile = projectileGameObject.GetOrAddComponent<Projectile>();
-                var projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyForward);
-                projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, suitablePosition, positionData);
+                projectileStrategy.Init(projectileStrategyData, projectile, direction, spawnPoint, creatorData);
                 projectile.InitStrategy(projectileStrategy);
+
+                await UniTask.Delay(TimeSpan.FromSeconds(0.15f), cancellationToken: cancellationToken);
             }
         }
 

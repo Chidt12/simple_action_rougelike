@@ -49,6 +49,10 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.RotateOrbsBuffInGameDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 10c4b3d3f1d3f6f489b5c92e12b90e45
+    m_Address: Runtime.ConfigModel.BuffInGameStageLoadConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

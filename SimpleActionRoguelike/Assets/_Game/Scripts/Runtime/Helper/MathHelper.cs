@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Helper
 {
@@ -646,6 +648,27 @@ namespace Runtime.Helper
             direction.y = Mathf.Sin(angle * Mathf.Deg2Rad);
             direction.z = 0f;
             return direction;
+        }
+
+        public static int RandomChoiceFollowingDistribution(List<float> probabilities)
+        {
+            // Sum to create CDF.
+            float[] cdf = new float[probabilities.Count];
+            float sum = 0;
+            for (int i = 0; i < probabilities.Count; ++i)
+            {
+                cdf[i] = sum + probabilities[i];
+                sum = cdf[i];
+            }
+
+            // Choose from CDF.
+            float cdf_value = Random.Range(0.0f, cdf[probabilities.Count - 1]);
+            int index = Array.BinarySearch(cdf, cdf_value);
+
+            if (index < 0)
+                index = ~index; // if not found (probably won't be) BinarySearch returns bitwise complement of next-highest index.
+
+            return index;
         }
     }
 

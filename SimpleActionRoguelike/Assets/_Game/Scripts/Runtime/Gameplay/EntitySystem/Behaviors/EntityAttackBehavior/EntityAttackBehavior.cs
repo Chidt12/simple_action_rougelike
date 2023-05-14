@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
+using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -8,18 +9,24 @@ namespace Runtime.Gameplay.EntitySystem
     public class EntityAttackBehavior : EntityBehavior<IEntityControlData, IEntityWeaponData, IEntityStatData, IEntityStatusData>
     {
         private IAttackStrategy _attackStrategy;
-        private IEntityControlData controlData;
+        private IEntityControlData _controlData;
         private IEntityStatusData _statusData;
         private IEntityWeaponData _weaponData;
+        private IEntityStatData _statData;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityWeaponData weaponData, IEntityStatData statData, IEntityStatusData statusData)
+        protected async override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityWeaponData weaponData, IEntityStatData statData, IEntityStatusData statusData)
         {
-            controlData = data;
+            if(data == null || weaponData == null || statData == null)
+                return false;
+
+            _statData = statData;
+            _controlData = data;
+            _controlData.PlayActionEvent += OnTriggerAttack;
+
             _weaponData = weaponData;
-            controlData.PlayActionEvent += OnTriggerAttack;
-            _attackStrategy = AttackStrategyFactory.GetAttackStrategy(_weaponData.WeaponModel.WeaponType);
-            _attackStrategy.Init(weaponData.WeaponModel, statData, transform);
-            _attackStrategy.InitEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
+            _weaponData.UpdateWeaponModel += OnUpdateWeapon;
+
+            await UpdateWeapon();
 
             if (statusData != null)
             {
@@ -27,7 +34,20 @@ namespace Runtime.Gameplay.EntitySystem
                 _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
             }
 
-            return UniTask.FromResult(true);
+            return true;
+        }
+
+        private void OnUpdateWeapon() => UpdateWeapon();
+
+        private UniTask UpdateWeapon()
+        {
+            _attackStrategy?.Cancel();
+            _attackStrategy = AttackStrategyFactory.GetAttackStrategy(_weaponData.WeaponModel.WeaponType);
+            _attackStrategy.Init(_weaponData.WeaponModel, _statData, transform);
+            _attackStrategy.InitEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
+            _weaponData.IsAttacking = false;
+
+            return UniTask.CompletedTask;
         }
 
         private void OnUpdateCurrentStatus()
@@ -60,23 +80,23 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTaskVoid RunAttackAsync()
         {
             _weaponData.IsAttacking = true;
-            controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlayAttack);
+            _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlayAttack);
 
             await _attackStrategy.OperateAttack();
 
             _weaponData.IsAttacking = false;
-            controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedAttack);
+            _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedAttack);
         }
 
         private async UniTaskVoid RunSpecialAttackAsync()
         {
             _weaponData.IsAttacking = true;
-            controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlayAttack);
+            _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlayAttack);
 
             await _attackStrategy.OperateSpecialAttack();
 
             _weaponData.IsAttacking = true;
-            controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedAttack);
+            _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedAttack);
         }
 
         public void Disable()

@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Runtime.ConfigModel;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Manager.Data;
@@ -17,13 +18,29 @@ namespace Runtime.Gameplay.EntitySystem
             _mechanics = new();
         }
 
+        public List<BuffInGameIdentity> GetCurrentBuffsInGame()
+        {
+            var buffsInGame = new List<BuffInGameIdentity>();
+            foreach (var item in _mechanics)
+            {
+                var mechanicItem = (IBuffInGameSystem)item;
+                if (mechanicItem != null)
+                {
+                    var buffIdentity = new BuffInGameIdentity(mechanicItem.BuffInGameType, mechanicItem.Level);
+                    buffsInGame.Add(buffIdentity);
+                }
+            }
+
+            return buffsInGame;
+        }
+
         public async UniTask AddBuffInGameSystem(IEntityData entityData, BuffInGameType buffInGameType)
         {
             // Add level 1 or increase after time.
             var mechanic = _mechanics.FirstOrDefault(x => x is IBuffInGameSystem && ((IBuffInGameSystem)x).BuffInGameType == buffInGameType);
             if (mechanic == null)
             {
-                var dataConfigItem = await ConfigDataManager.Instance.LoadBuffInGameDataConfigItem(buffInGameType, 1);
+                var dataConfigItem = await ConfigDataManager.Instance.LoadBuffInGameDataConfigItem(buffInGameType, 0);
                 var buffInGame = BuffInGameSystemFactory.GetBuffInGameSystem(buffInGameType);
 
                 buffInGame.SetData(dataConfigItem);
