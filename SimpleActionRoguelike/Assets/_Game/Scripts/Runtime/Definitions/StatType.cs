@@ -48,6 +48,11 @@ namespace Runtime.Definition
         AttackDamage = 14,
         DetectRange = 15,
         CollideDamage = 16,
-        Shield = 17
+        Shield = 17,
+
+
+        // Stat use for mechanics
+        OrbBonusRotateSpeed = 100,
+
     }
 }

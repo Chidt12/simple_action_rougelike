@@ -10,34 +10,23 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class MechanicSystemManager : MonoSingleton<MechanicSystemManager>
     {
-        private List<IMechanicSystem> _mechanics;
+        private List<IBuffInGameSystem> _buffItems;
 
         protected override void Awake()
         {
             base.Awake();
-            _mechanics = new();
+            _buffItems = new();
         }
 
         public List<BuffInGameIdentity> GetCurrentBuffsInGame()
         {
-            var buffsInGame = new List<BuffInGameIdentity>();
-            foreach (var item in _mechanics)
-            {
-                var mechanicItem = (IBuffInGameSystem)item;
-                if (mechanicItem != null)
-                {
-                    var buffIdentity = new BuffInGameIdentity(mechanicItem.BuffInGameType, mechanicItem.Level);
-                    buffsInGame.Add(buffIdentity);
-                }
-            }
-
-            return buffsInGame;
+            return _buffItems.Select(x => new BuffInGameIdentity(x.BuffInGameType, x.Level)).ToList();
         }
 
         public async UniTask AddBuffInGameSystem(IEntityData entityData, BuffInGameType buffInGameType)
         {
             // Add level 1 or increase after time.
-            var mechanic = _mechanics.FirstOrDefault(x => x is IBuffInGameSystem && ((IBuffInGameSystem)x).BuffInGameType == buffInGameType);
+            var mechanic = _buffItems.FirstOrDefault(x => x.BuffInGameType == buffInGameType);
             if (mechanic == null)
             {
                 var dataConfigItem = await ConfigDataManager.Instance.LoadBuffInGameDataConfigItem(buffInGameType, 0);
@@ -45,14 +34,14 @@ namespace Runtime.Gameplay.EntitySystem
 
                 buffInGame.SetData(dataConfigItem);
                 await buffInGame.Init(entityData);
-                _mechanics.Add(buffInGame);
+                _buffItems.Add(buffInGame);
             }
             else
             {
                 var currentLevel = mechanic.Level;
                 var dataConfigItem = await ConfigDataManager.Instance.LoadBuffInGameDataConfigItem(buffInGameType, currentLevel + 1);
 
-                ((IBuffInGameSystem)mechanic).SetData(dataConfigItem);
+                mechanic.SetData(dataConfigItem);
                 await mechanic.Init(entityData);
             }
         }
@@ -60,24 +49,22 @@ namespace Runtime.Gameplay.EntitySystem
         public void RemoveBuffInGameSystem(IEntityData entityData, BuffInGameType buffInGameType)
         {
             // Remove
-            var mechanic = _mechanics.FirstOrDefault(x => x.EntityData.EntityUID == entityData.EntityUID &&  
-                                                            x is IBuffInGameSystem && 
-                                                            ((IBuffInGameSystem)x).BuffInGameType == buffInGameType);
+            var mechanic = _buffItems.FirstOrDefault(x => x.EntityData.EntityUID == entityData.EntityUID &&
+                                                            x.BuffInGameType == buffInGameType);
             if(mechanic != null)
             {
                 mechanic.Dispose();
-                _mechanics.Remove(mechanic);
+                _buffItems.Remove(mechanic);
             }
         }
 
         public void Dispose()
         {
-            if(_mechanics != null)
+            if(_buffItems != null)
             {
-                foreach (var mechanic in _mechanics)
-                    mechanic.Dispose();
-
-                _mechanics.Clear();
+                foreach (var buffItem in _buffItems)
+                    buffItem.Dispose();
+                _buffItems.Clear();
             }
         }
     }
