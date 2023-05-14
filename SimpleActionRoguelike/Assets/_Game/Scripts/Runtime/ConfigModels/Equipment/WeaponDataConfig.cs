@@ -1,7 +1,7 @@
+using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 using System.Linq;
-using UnityEngine;
 
 namespace Runtime.ConfigModel
 {
@@ -71,7 +71,7 @@ namespace Runtime.ConfigModel
 
         public override IWeaponDataConfigItem GetWeaponDataConfigItem() => items.FirstOrDefault();
 
-        public override EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType)
+        public override EquipmentMechanicDataConfigItem GetEquipmentMechanicDataConfigItem(RarityType rarityType)
         {
             var weaponConfig = GetWeaponDataConfigItem();
             if (weaponConfig != null && weaponConfig.Mechanics != null)
@@ -89,6 +89,15 @@ namespace Runtime.ConfigModel
         }
 
         protected abstract TMechanic Add(TMechanic item1, TMechanic item2);
+
+        public override UniTask<string> GetDescription(RarityType rarityType)
+        {
+            var mechanicData = GetEquipmentMechanicDataConfigItem(rarityType) as TMechanic;
+            var itemData = GetWeaponDataConfigItem() as T;
+            return GetDescription(itemData, mechanicData);
+        }
+
+        protected abstract UniTask<string> GetDescription(T itemData, TMechanic mechanicData);
 
         #endregion Interface Methods
     }

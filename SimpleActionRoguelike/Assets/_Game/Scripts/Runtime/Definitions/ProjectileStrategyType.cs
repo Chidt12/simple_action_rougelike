@@ -5,6 +5,7 @@ namespace Runtime.Definition
         FlyForward,
         FlyForwardThrough,
         FlyFollow,
-        FlyFollowThrough
+        FlyFollowThrough,
+        IdleThrough,
     }
 }

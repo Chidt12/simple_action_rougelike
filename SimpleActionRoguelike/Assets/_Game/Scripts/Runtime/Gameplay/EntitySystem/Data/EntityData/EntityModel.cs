@@ -23,6 +23,7 @@ namespace Runtime.Gameplay.EntitySystem
         public Action DeathEvent { get; set; }
         public Action<EntityReactionType> ReactionChangedEvent { get; set; }
         public Action<Vector2> ForceUpdatePosition { get; set; }
+        public Transform EntityTransform { get; set; }
 
         public virtual void Init(EntityType entityType, int uid, int entityId)
         {

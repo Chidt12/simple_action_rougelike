@@ -27,11 +27,10 @@ namespace Runtime.Constants
 
         public const string WEAPON_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}WeaponDataConfig";
         public const string SKILL_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}SkillDataConfig";
+        public const string BUFF_INGAME_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}BuffInGameDataConfig";
                                                    
         public const string STATUS_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}StatusDataConfig";
         public const string EQUIPMENT_MECHANIC_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}EquipmentMechanicDataConfig";
-        public const string SKILL_TREE_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}SkillTreeDataConfig";
-        public const string QUEST_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}QuestDataConfig";
 
         #endregion Members
     }

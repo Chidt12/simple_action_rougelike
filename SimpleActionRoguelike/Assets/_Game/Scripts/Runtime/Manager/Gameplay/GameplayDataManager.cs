@@ -101,12 +101,9 @@ namespace Runtime.Gameplay
 
         private async UniTask<WeaponData> GetWeaponDataAsync(WeaponType weaponType, RarityType weaponEquipmentRarityType, int weaponLevel)
         {
-            string weaponDataConfigAssetName = string.Format(AddressableKeys.WEAPON_DATA_CONFIG_ASSET_FORMAT, weaponType);
-            var weaponDataConfig = await ConfigDataManager.Instance.Load<WeaponDataConfig>(weaponDataConfigAssetName);
-            var weaponDataConfigItem = weaponDataConfig.GetWeaponDataConfigItem();
-            EquipmentMechanicDataConfigItem mechanicDataConfigItem = null;
-            mechanicDataConfigItem = weaponDataConfig.GetEquipmentDataConfigItem(RarityType.Ultimate);
-            return new WeaponData(weaponDataConfigItem, mechanicDataConfigItem);
+            var weaponDataConfig = await ConfigDataManager.Instance.LoadWeaponDataConfigItem(weaponType);
+            var weaponMechanicConfig = await ConfigDataManager.Instance.LoadWeaponMechanicConfigItem(weaponType, weaponEquipmentRarityType);
+            return new WeaponData(weaponDataConfig, weaponMechanicConfig);
         }
 
         private string GetConfigAssetName<T>(string id = "")

@@ -17,6 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsPausedControl { get; set; }
         int EntityUID { get; }
         public Vector2 Position { get; set; }
+        public Transform EntityTransform { get; set; }
         Action DeathEvent { get; set; }
         Action<EntityReactionType> ReactionChangedEvent { get; set; }
         Action<Vector2> ForceUpdatePosition { get; set; }

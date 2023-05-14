@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using System;
 using UnityEngine;
@@ -7,20 +8,14 @@ namespace Runtime.ConfigModel
     [Serializable]
     public abstract class EquipmentMechanicDataConfigItem
     {
-        #region Members
-
         public RarityType triggerRarityType;
-
-        #endregion Members
     }
 
     public abstract class EquipmentMechanicDataConfig : ScriptableObject
     {
-        #region Interface Methods
 
-        public abstract EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType);
-
-        #endregion Interface Methods
+        public abstract EquipmentMechanicDataConfigItem GetEquipmentMechanicDataConfigItem(RarityType rarityType);
+        public abstract UniTask<string> GetDescription(RarityType rarityType);
     }
 
     public abstract class EquipmentMechanicDataConfig<T> : EquipmentMechanicDataConfig where T : EquipmentMechanicDataConfigItem, new()
@@ -39,7 +34,7 @@ namespace Runtime.ConfigModel
 
         #region Class Methods
 
-        public override EquipmentMechanicDataConfigItem GetEquipmentDataConfigItem(RarityType rarityType)
+        public override EquipmentMechanicDataConfigItem GetEquipmentMechanicDataConfigItem(RarityType rarityType)
         {
             var equipmentDataConfigItem = new T();
             foreach (var item in items)
@@ -51,6 +46,14 @@ namespace Runtime.ConfigModel
         }
 
         protected abstract T Add(T item1, T item2);
+
+        public override UniTask<string> GetDescription(RarityType rarityType)
+        {
+            var configItem = GetEquipmentMechanicDataConfigItem(rarityType) as T;
+            return GetDescription(configItem);
+        }
+
+        protected abstract UniTask<string> GetDescription(T itemData);
 
         #endregion Class Methods
     }

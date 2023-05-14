@@ -8,7 +8,7 @@ namespace Runtime.Manager.Data
 {
     public partial class ConfigDataManager
     {
-        public  StageLoadConfigItem GetStageConfigData(int stageId)
+        public StageLoadConfigItem GetStageConfigData(int stageId)
         {
             var stageLoadConfigs = GetData<StageLoadConfig>();
             return stageLoadConfigs.items.FirstOrDefault(x => x.stageId == stageId);

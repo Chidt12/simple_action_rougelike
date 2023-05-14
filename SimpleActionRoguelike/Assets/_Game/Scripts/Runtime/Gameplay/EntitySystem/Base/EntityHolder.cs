@@ -22,6 +22,7 @@ namespace Runtime.Gameplay.EntitySystem
             _built = false;
             HasDisposed = false;
             this.entityData = entityData;
+            this.entityData.EntityTransform = transform;
 
             UpdateBehaviors = new();
             DisposableBehaviors = new();

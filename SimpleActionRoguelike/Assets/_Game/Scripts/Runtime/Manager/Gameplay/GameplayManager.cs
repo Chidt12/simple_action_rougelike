@@ -26,7 +26,9 @@ namespace Runtime.Manager.Gameplay
 {
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
-        protected string[] Levels = new[] { "Level1", "Level2" }; 
+        protected string[] Levels = new[] { "Level1", "Level2" };
+        protected BuffInGameType[] BuffsInGameType = new[] { BuffInGameType.RotateOrbs };
+
         protected WaveTimer waveTimer;
         protected bool hasFinishedSpawnWave;
         protected int maxWaveIndex;
@@ -194,10 +196,14 @@ namespace Runtime.Manager.Gameplay
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
         }
 
-        private void OnSelectBuffItem()
+        private void OnSelectBuffItem() => OnSelectBuffItemAsync().Forget();
+
+        private async UniTaskVoid OnSelectBuffItemAsync()
         {
+            var heroData = EntitiesManager.Instance.HeroData;
+            await MechanicSystemManager.Instance.AddBuffInGameSystem(heroData, BuffsInGameType.FirstOrDefault());
             GameManager.Instance.ReturnPreviousGameStateType();
-            ScreenNavigator.Instance.PopModal(true).Forget();
+            await ScreenNavigator.Instance.PopModal(true);
         }
 
         private void HandleLoseStage()
@@ -215,6 +221,7 @@ namespace Runtime.Manager.Gameplay
             foreach (var dispose in disposables)
                 dispose.Dispose();
 
+            MechanicSystemManager.Instance.Dispose();
             CollisionSystem.Instance.Dispose();
             EntitiesManager.Instance.Dipose();
             MapManager.Instance.Dispose();
