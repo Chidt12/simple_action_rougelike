@@ -29,7 +29,7 @@ namespace Runtime.Gameplay.EntitySystem
             var mechanic = _buffItems.FirstOrDefault(x => x.BuffInGameType == buffInGameType);
             if (mechanic == null)
             {
-                var dataConfigItem = await ConfigDataManager.Instance.LoadBuffInGameDataConfigItem(buffInGameType, 0);
+                var dataConfigItem = await DataManager.Config.LoadBuffInGameDataConfigItem(buffInGameType, 0);
                 var buffInGame = BuffInGameSystemFactory.GetBuffInGameSystem(buffInGameType);
 
                 buffInGame.SetData(dataConfigItem);
@@ -39,7 +39,7 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 var currentLevel = mechanic.Level;
-                var dataConfigItem = await ConfigDataManager.Instance.LoadBuffInGameDataConfigItem(buffInGameType, currentLevel + 1);
+                var dataConfigItem = await DataManager.Config.LoadBuffInGameDataConfigItem(buffInGameType, currentLevel + 1);
 
                 mechanic.SetData(dataConfigItem);
                 await mechanic.Init(entityData);

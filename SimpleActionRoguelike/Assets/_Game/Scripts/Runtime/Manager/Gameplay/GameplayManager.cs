@@ -15,7 +15,6 @@ using Runtime.Message;
 using Runtime.SceneLoading;
 using Runtime.UI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
@@ -27,6 +26,8 @@ namespace Runtime.Manager.Gameplay
 {
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
+        
+
         protected string[] Levels = new[] { "Level1", "Level2" };
         protected BuffInGameType[] BuffsInGameType = new[] { BuffInGameType.RotateOrbs };
 
@@ -41,7 +42,7 @@ namespace Runtime.Manager.Gameplay
 
         private bool _isWinCurrentLevel;
 
-        private StageLoadConfigItem StageInfo => ConfigDataManager.Instance.GetStageConfigData(GameplayDataDispatcher.Instance.StageId);
+        private StageLoadConfigItem StageInfo => DataManager.Config.GetStageConfigData(GameplayDataDispatcher.Instance.StageId);
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
         public int CurrentWaveIndex { get; protected set; }
 
@@ -196,7 +197,7 @@ namespace Runtime.Manager.Gameplay
             var heroEntityData = EntitiesManager.Instance.HeroData;
             var currentBuffs = MechanicSystemManager.Instance.GetCurrentBuffsInGame();
 
-            var suitableItems = await ConfigDataManager.Instance.LoadCurrentSuitableBuffInGameItems(currentBuffs);
+            var suitableItems = await DataManager.Config.LoadCurrentSuitableBuffInGameItems(currentBuffs);
 
             var modalData = new ModalSelectIngameBuffData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();

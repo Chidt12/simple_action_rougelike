@@ -21,7 +21,7 @@ namespace Runtime.ConfigModel
             var weaponData = entityData as IEntityWeaponData;
             if (weaponData != null)
             {
-                var weaponDataConfigItem = await ConfigDataManager.Instance.LoadWeaponConfigItem(weaponData.WeaponModel.WeaponType);
+                var weaponDataConfigItem = await DataManager.Config.LoadWeaponConfigItem(weaponData.WeaponModel.WeaponType);
                 var description = await weaponDataConfigItem.GetDescription(itemData.rarityType);
                 return description;
             }

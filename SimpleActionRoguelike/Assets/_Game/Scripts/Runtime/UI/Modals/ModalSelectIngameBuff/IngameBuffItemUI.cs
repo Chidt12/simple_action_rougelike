@@ -18,7 +18,7 @@ namespace Runtime.UI
 
         public async UniTask Init(IEntityData entityData, BuffInGameIdentity identity, Action<BuffInGameIdentity> selectAction)
         {
-            var buffInGameDataConfig = await ConfigDataManager.Instance.LoadBuffInGameDataConfig(identity.buffInGameType);
+            var buffInGameDataConfig = await DataManager.Config.LoadBuffInGameDataConfig(identity.buffInGameType);
             var description = await buffInGameDataConfig.GetDescription(entityData, identity.level);
 
             _level.text = $"Level {identity.level}";

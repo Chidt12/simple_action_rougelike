@@ -15,7 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
                 return;
 
             // Data should be preloaded somewhere (ex: GameplayDataManager)
-            var statusDataConfigItem = ConfigDataManager.Instance.GetStatusDataConfig(message.StatusType, message.StatusDataId);
+            var statusDataConfigItem = DataManager.Config.GetStatusDataConfig(message.StatusType, message.StatusDataId);
             var newStatusModel = StatusModelFactory.GetStatusModel(message.StatusType, statusDataConfigItem);
             if (newStatusModel.IsAffectable)
             {

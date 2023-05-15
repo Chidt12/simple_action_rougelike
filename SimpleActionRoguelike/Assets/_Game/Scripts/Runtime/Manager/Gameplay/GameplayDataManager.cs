@@ -34,7 +34,7 @@ namespace Runtime.Gameplay
             SimpleMessenger.Publish(new GameplayDataLoadedMessage());
         }
 
-        private async UniTask LoadStageLoadConfig() => await ConfigDataManager.Instance.Load<StageLoadConfig>();
+        private async UniTask LoadStageLoadConfig() => await DataManager.Config.Load<StageLoadConfig>();
 
         private async UniTask LoadStatusConfig()
         {
@@ -43,7 +43,7 @@ namespace Runtime.Gameplay
             {
                 if(HasConfig(statusType))
                 {
-                    await ConfigDataManager.Instance.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
+                    await DataManager.Config.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace Runtime.Gameplay
 
         public async UniTask<(HeroStatsInfo, WeaponModel)> GetHeroDataAsync(int heroId)
         {
-            var heroConfig = await ConfigDataManager.Instance.Load<HeroConfig>();
+            var heroConfig = await DataManager.Config.Load<HeroConfig>();
             var heroConfigItem = heroConfig.items.FirstOrDefault(x => x.id == heroId);
             var heroLevel = GameplayDataDispatcher.Instance.HeroLevel;
             var heroLevelConfigItem = heroConfigItem.levels.FirstOrDefault(x => x.level == heroLevel);
@@ -78,7 +78,7 @@ namespace Runtime.Gameplay
 
         public async UniTask<(EnemyStatsInfo, List<SkillModel>, int)> GetEnemyDataAsync(int enemyId, int level)
         {
-            var zombieConfig = await ConfigDataManager.Instance.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(enemyId.ToString()));
+            var zombieConfig = await DataManager.Config.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(enemyId.ToString()));
             var zombieConfigItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
 
             var zombieLevelConfigItem = zombieConfigItem.levels.FirstOrDefault(x => x.level == level);
@@ -88,7 +88,7 @@ namespace Runtime.Gameplay
 
             if (skillIdentity.skillType != SkillType.None)
             {
-                skillDataConfigItem = await ConfigDataManager.Instance.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
+                skillDataConfigItem = await DataManager.Config.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
                 var skillData = new SkillData(skillDataConfigItem);
                 var skillModel = SkillModelFactory.GetSkillModel(skillIdentity.skillType, skillData);
                 skillModels.Add(skillModel);
@@ -101,8 +101,8 @@ namespace Runtime.Gameplay
 
         public async UniTask<WeaponData> GetWeaponDataAsync(WeaponType weaponType, RarityType weaponEquipmentRarityType, int weaponLevel)
         {
-            var weaponDataConfig = await ConfigDataManager.Instance.LoadWeaponDataConfigItem(weaponType);
-            var weaponMechanicConfig = await ConfigDataManager.Instance.LoadWeaponMechanicConfigItem(weaponType, weaponEquipmentRarityType);
+            var weaponDataConfig = await DataManager.Config.LoadWeaponDataConfigItem(weaponType);
+            var weaponMechanicConfig = await DataManager.Config.LoadWeaponMechanicConfigItem(weaponType, weaponEquipmentRarityType);
             return new WeaponData(weaponDataConfig, weaponMechanicConfig);
         }
 
