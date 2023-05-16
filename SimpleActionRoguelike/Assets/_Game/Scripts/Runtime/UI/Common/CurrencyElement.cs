@@ -4,9 +4,6 @@ using Runtime.Helper;
 using Runtime.Manager.Data;
 using Runtime.Message;
 using Sirenix.OdinInspector;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,10 +17,7 @@ namespace Runtime.UI
         [SerializeField] private Image _icon;
         [SerializeField] private bool _inGameMoney;
 
-        [ShowIf(nameof(_inGameMoney), optionalValue: false)]
         [SerializeField] private MoneyType _moneyType;
-
-        [ShowIf(nameof(_inGameMoney))]
         [SerializeField] private InGameMoneyType _inGameMoneyType;
 
         private ISubscription _subScription;
@@ -33,7 +27,7 @@ namespace Runtime.UI
             if (_inGameMoney)
             {
                 _subScription = SimpleMessenger.Subscribe<MoneyInGameUpdatedMessage>(OnInGameMoneyUpdated);
-                UpdateInGameMoneyUI();
+                UpdateInGameUI();
             }
             else
             {

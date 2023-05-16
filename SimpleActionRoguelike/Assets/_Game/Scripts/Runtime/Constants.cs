@@ -12,12 +12,14 @@ namespace Runtime.Constants
         public const string LOSE = "prefab_modal_lose";
 
         public const string SELECT_INGAME_BUFF = "prefab_modal_select_ingame_buff";
+        public const string SELECT_INGAME_SHOP = "prefab_modal_select_ingame_shop";
     }
 
     public class ScreenIds
     {
         public const string START_GAME = "prefab_screen_start_game";
         public const string HOME = "prefab_screen_home";
+        public const string GAMEPLAY = "prefab_screen_gameplay";
 
     }
 

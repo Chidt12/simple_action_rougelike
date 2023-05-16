@@ -7,10 +7,11 @@ using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
 using Runtime.Message;
+using Runtime.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ZBase.UnityScreenNavigator.Core.Views;
 
 namespace Runtime.Gameplay
 {
@@ -22,10 +23,16 @@ namespace Runtime.Gameplay
             LoadConfig().Forget();
         }
 
+        private void OnDestroy()
+        {
+            DataManager.Transient.ClearInGameMoney();
+        }
+
         private async UniTask LoadConfig()
         {
             await LoadStageLoadConfig();
             await LoadStatusConfig();
+            await ScreenNavigator.Instance.LoadScreen(new WindowOptions(ScreenIds.GAMEPLAY));
             FinishedLoading();
         }
 

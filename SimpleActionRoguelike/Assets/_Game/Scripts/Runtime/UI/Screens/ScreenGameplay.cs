@@ -1,9 +1,10 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Constants;
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ZBase.Foundation.PubSub;
+using ZBase.UnityScreenNavigator.Core.Views;
 using Screen = ZBase.UnityScreenNavigator.Core.Screens.Screen;
 
 namespace Runtime.UI
@@ -11,9 +12,6 @@ namespace Runtime.UI
     public class ScreenGameplay : Screen
     {
         [SerializeField] private Button _shopButton;
-        [SerializeField] private TextMeshProUGUI _currentGold;
-
-        private ISubscription _subScriptions;
 
         public override UniTask Initialize(Memory<object> args)
         {
@@ -23,13 +21,12 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-
             return base.Cleanup();
         }
 
         private void OnClickShop()
         {
-
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_SHOP)).Forget();
         }
     }
 }

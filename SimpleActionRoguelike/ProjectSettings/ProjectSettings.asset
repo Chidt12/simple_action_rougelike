@@ -663,11 +663,26 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Android: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1
-    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1
+    Android: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ACTK_WALLHACK_LINK_XML
+    CloudRendering: ACTK_WALLHACK_LINK_XML
+    EmbeddedLinux: ACTK_WALLHACK_LINK_XML
+    GameCoreScarlett: ACTK_WALLHACK_LINK_XML
+    GameCoreXboxOne: ACTK_WALLHACK_LINK_XML
+    Lumin: ACTK_WALLHACK_LINK_XML
+    Nintendo Switch: ACTK_WALLHACK_LINK_XML
+    PS4: ACTK_WALLHACK_LINK_XML
+    PS5: ACTK_WALLHACK_LINK_XML
+    Stadia: ACTK_WALLHACK_LINK_XML
+    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ACTK_WALLHACK_LINK_XML
+    WebGL: ACTK_WALLHACK_LINK_XML
+    Windows Store Apps: ACTK_WALLHACK_LINK_XML
+    XboxOne: ACTK_WALLHACK_LINK_XML
+    iPhone: ACTK_WALLHACK_LINK_XML
+    tvOS: ACTK_WALLHACK_LINK_XML
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}

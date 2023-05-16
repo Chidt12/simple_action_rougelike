@@ -29,6 +29,7 @@ namespace Runtime.Manager.Gameplay
         
 
         protected string[] Levels = new[] { "Level1", "Level2" };
+        protected int RewardCoins = 2;
         protected BuffInGameType[] BuffsInGameType = new[] { BuffInGameType.RotateOrbs };
 
         protected WaveTimer waveTimer;
