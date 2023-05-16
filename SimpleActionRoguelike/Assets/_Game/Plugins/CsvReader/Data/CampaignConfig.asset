@@ -47,3 +47,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.ShopInGameStageLoadConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.ShopInGameStageLoadConfig
+      csvFile: {fileID: 4900000, guid: ec347b7b08ad6344987e741d9261c0a6, type: 3}
+      csvPath: Assets/_Game/Csv/campaign/stage_load_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

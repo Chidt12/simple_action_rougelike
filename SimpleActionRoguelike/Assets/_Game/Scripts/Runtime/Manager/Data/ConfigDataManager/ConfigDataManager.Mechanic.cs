@@ -9,6 +9,13 @@ namespace Runtime.Manager.Data
 {
     public partial class ConfigDataManager
     {
+        public async UniTask<List<ShopInGameStageLoadConfigItem>> LoadCurrentSuitableShopInGameItems()
+        {
+            var config = await Load<ShopInGameStageLoadConfig>();
+            var suitableItems = config.items;
+            return suitableItems.ToList();
+        }
+
         public async UniTask<ShopInGameDataConfigItem> LoadShopInGameDataConfigItem(ShopInGameItemType shopInGameItemType, int dataId)
         {
             var config = await LoadShopInGameDataConfig(shopInGameItemType);

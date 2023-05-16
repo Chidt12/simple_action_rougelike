@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using Runtime.Definition;
+using System;
 using UnityEngine;
 
-public class ShopInGameStageLoadConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public struct ShopInGameIdentity
     {
-        
+        public ShopInGameItemType shopInGameItemType;
+        public int dataId;
+
+        public ShopInGameIdentity(ShopInGameItemType shopInGameItemType, int dataId)
+        {
+            this.dataId = dataId;
+            this.shopInGameItemType = shopInGameItemType;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    [Serializable]
+    public struct ShopInGameStageLoadConfigItem
     {
-        
+        public ShopInGameIdentity identity;
+        public ResourceData cost;
+        public float weight;
+    } 
+
+    public class ShopInGameStageLoadConfig : ScriptableObject
+    {
+        public ShopInGameStageLoadConfigItem[] items;
     }
 }

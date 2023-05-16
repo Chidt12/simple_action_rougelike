@@ -27,6 +27,7 @@ namespace Runtime.Manager.Gameplay
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
         protected string[] Levels = new[] { "Level1", "Level2" };
+
         protected int RewardCoins = 2;
         protected BuffInGameType[] BuffsInGameType = new[] { BuffInGameType.RotateOrbs };
 
@@ -61,6 +62,38 @@ namespace Runtime.Manager.Gameplay
         #endregion API Methods
 
         #region Class Methods
+
+        public async UniTaskVoid ShowShop()
+        {
+            var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
+            var selectInGameShopData = new ModalSelectIngameShopData(shopItems.ToArray(), OnBuyShopItem);
+            await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_SHOP), selectInGameShopData);
+        }
+
+        private void OnBuyShopItem(ShopInGameStageLoadConfigItem item)
+        {
+            if(item.cost.resourceType == ResourceType.MoneyInGame)
+            {
+                var value = DataManager.Transient.GetGameMoneyType((InGameMoneyType)item.cost.resourceId);
+                if(value < item.cost.resourceNumber)
+                {
+                    ToastController.Instance.Show("Not Enough Resource!");
+                    return;
+                }
+
+                DataManager.Transient.RemoveMoney((InGameMoneyType)item.cost.resourceId, item.cost.resourceNumber);
+
+                AddShopItemAsync(item.identity).Forget();
+            }
+        }
+
+        private async UniTask AddShopItemAsync(ShopInGameIdentity identity)
+        {
+            await ShopInGameManager.Instance.AddShopInGameItem(EntitiesManager.Instance.HeroData, identity.shopInGameItemType, identity.dataId);
+            var dataConfig = await ConfigDataManager.Instance.LoadShopInGameDataConfig(identity.shopInGameItemType);
+            var description = await dataConfig.GetDescription(identity.dataId);
+            ToastController.Instance.Show(description);
+        }
 
         private void OnGameplayDataLoaded(GameplayDataLoadedMessage gameplayDataLoadedMessage)
         {

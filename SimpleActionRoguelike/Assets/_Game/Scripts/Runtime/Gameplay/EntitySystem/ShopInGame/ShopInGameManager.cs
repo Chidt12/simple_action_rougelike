@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class ShopInGameManager : MonoSingleton<MonoBehaviour>
+    public class ShopInGameManager : MonoSingleton<ShopInGameManager>
     {
         private List<ShopInGameItem> _shopInGameItems;
 

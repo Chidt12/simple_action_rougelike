@@ -60,7 +60,7 @@ namespace Runtime.Gameplay.EntitySystem
                     break;
             }
 
-            OnValueChanged.Invoke(TotalValue);
+            OnValueChanged?.Invoke(TotalValue);
         }
 
         public virtual void DebuffValue(float value, StatModifyType statModifyType)
@@ -86,7 +86,7 @@ namespace Runtime.Gameplay.EntitySystem
                     break;
             }
 
-            OnValueChanged.Invoke(TotalValue);
+            OnValueChanged?.Invoke(TotalValue);
         }
 
         public void Reset()

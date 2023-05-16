@@ -6,12 +6,12 @@ namespace Runtime.Definition
 {
     public enum InGameMoneyType
     {
-        Gold
+        Gold = 0,
     }
 
     public enum MoneyType
     {
-        Gold,
-        Gem
+        Gold = 0,
+        Gem = 1,
     }
 }
