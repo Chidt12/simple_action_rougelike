@@ -1,4 +1,6 @@
+using Runtime.Core.Message;
 using Runtime.Definition;
+using Runtime.Message;
 using System.Collections.Generic;
 
 namespace Runtime.Manager.Data
@@ -25,12 +27,17 @@ namespace Runtime.Manager.Data
                 _inGameMoneyCollection[moneyType] += value;
             else
                 _inGameMoneyCollection.Add(moneyType, value);
+
+            SimpleMessenger.Publish(new MoneyInGameUpdatedMessage(moneyType, value));
         }
 
         public void RemoveMoney(InGameMoneyType moneyType, long value)
         {
             if (_inGameMoneyCollection.ContainsKey(moneyType))
+            {
                 _inGameMoneyCollection[moneyType] -= value;
+                SimpleMessenger.Publish(new MoneyInGameUpdatedMessage(moneyType, -value));
+            }
         }
 
         public void ClearInGameMoney() => _inGameMoneyCollection.Clear();

@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Runtime.ConfigModel;
+using Runtime.Definition;
 
-public class ShopInGameItem : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class ShopInGameItem
     {
-        
+        public abstract ShopInGameItemType ShopInGameItemType { get; }
+        public abstract void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem);
+        public abstract void Remove();
     }
 
-    // Update is called once per frame
-    void Update()
+    public abstract class ShopInGameItem<T> : ShopInGameItem where T : ShopInGameDataConfigItem
     {
-        
+        protected T dataConfigItem;
+        protected IEntityData owner;
+
+        public override void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem)
+        {
+            this.dataConfigItem = dataConfigItem as T;
+            this.owner = entityData;
+            Apply();
+        }
+
+        protected abstract void Apply();
     }
 }

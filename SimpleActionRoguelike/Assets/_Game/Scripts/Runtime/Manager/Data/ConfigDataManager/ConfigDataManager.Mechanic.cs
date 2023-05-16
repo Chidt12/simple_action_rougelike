@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Constants;
 using Runtime.Definition;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +9,19 @@ namespace Runtime.Manager.Data
 {
     public partial class ConfigDataManager
     {
+        public async UniTask<ShopInGameDataConfigItem> LoadShopInGameDataConfigItem(ShopInGameItemType shopInGameItemType, int dataId)
+        {
+            var config = await LoadShopInGameDataConfig(shopInGameItemType);
+            var configItem = config.GetItem(dataId);
+            return configItem;
+        }
+
+        public async UniTask<ShopInGameDataConfig> LoadShopInGameDataConfig(ShopInGameItemType shopInGameItemType)
+        {
+            var config = await Load<ShopInGameDataConfig>(string.Format(AddressableKeys.SHOP_INGAME_DATA_CONFIG_ASSET_FORMAT, shopInGameItemType));
+            return config;
+        }
+
 
         public async UniTask<List<BuffInGameStageLoadConfigItem>> LoadCurrentSuitableBuffInGameItems(List<BuffInGameIdentity> currentBuffedItems)
         {
@@ -35,8 +47,7 @@ namespace Runtime.Manager.Data
 
         public async UniTask<BuffInGameDataConfigItem> LoadBuffInGameDataConfigItem(BuffInGameType buffInGameType, int level)
         {
-            var assetName = string.Format(AddressableKeys.BUFF_INGAME_DATA_CONFIG_ASSET_FORMAT, buffInGameType);
-            var config = await Load<BuffInGameDataConfig>(assetName);
+            var config = await LoadBuffInGameDataConfig(buffInGameType);
             var configItem = config.GetBuffItem(level);
             return configItem;
         }

@@ -20,6 +20,7 @@ namespace Runtime.UI
             if (canvasGroup)
                 canvasGroup.alpha = 1;
             transform.SetParent(positionTransform);
+            transform.SetAsLastSibling();
             transform.position = positionTransform.position;
             gameObject.SetActive(true);
             _displayText.text = content;

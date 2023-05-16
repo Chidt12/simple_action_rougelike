@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27ec50f6833e4142bbe66af491a62fc, type: 3}
+  m_Name: Runtime.ConfigModel.BuffStatShopInGameDataConfig
+  m_EditorClassIdentifier: 
+  items:
+  - dataId: 0
+    statType: 7
+    statValue: 5
+    statModifyType: 0
+  - dataId: 1
+    statType: 14
+    statValue: 20
+    statModifyType: 0
+  - dataId: 2
+    statType: 14
+    statValue: 60
+    statModifyType: 0

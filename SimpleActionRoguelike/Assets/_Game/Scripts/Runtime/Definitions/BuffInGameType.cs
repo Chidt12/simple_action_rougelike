@@ -16,6 +16,8 @@ namespace Runtime.Definition
 
     public enum ShopInGameItemType
     {
+        None = 0,
+        BuffStat = 1,
 
     }
 }

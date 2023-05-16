@@ -26,8 +26,6 @@ namespace Runtime.Manager.Gameplay
 {
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
-        
-
         protected string[] Levels = new[] { "Level1", "Level2" };
         protected int RewardCoins = 2;
         protected BuffInGameType[] BuffsInGameType = new[] { BuffInGameType.RotateOrbs };
@@ -192,6 +190,10 @@ namespace Runtime.Manager.Gameplay
         private async UniTask HandleWinLevelAsync()
         {
             _isWinCurrentLevel = true;
+
+            ToastController.Instance.Show($"Add + {RewardCoins}");
+            DataManager.Transient.AddMoney(InGameMoneyType.Gold, RewardCoins);
+
             // Pause for select buff
             GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
 

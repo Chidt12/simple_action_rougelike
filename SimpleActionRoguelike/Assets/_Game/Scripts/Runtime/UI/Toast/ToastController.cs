@@ -18,7 +18,7 @@ namespace Runtime.UI
         Bottom = 2,
     }
 
-    public class ToastController : MonoSingleton<MonoBehaviour>
+    public class ToastController : MonoSingleton<ToastController>
     {
         [SerializeField] private Transform _bottomPosition;
         [SerializeField] private Transform _topPosition;
@@ -32,7 +32,7 @@ namespace Runtime.UI
             _toastQueueDictionary = new();
         }
 
-        public void Show(string content, PositionToastType positionToastType = PositionToastType.Middle, VisualToastType visualToastType = VisualToastType.Normal)
+        public void Show(string content, PositionToastType positionToastType = PositionToastType.Top, VisualToastType visualToastType = VisualToastType.Normal)
            => LoadToastAsync(content, positionToastType, visualToastType).Forget();
 
         private async UniTask LoadToastAsync(string content, PositionToastType positionToastType = PositionToastType.Middle, VisualToastType visualToastType = VisualToastType.Normal)
