@@ -32,12 +32,12 @@ namespace Runtime.ConfigModel
             return item1;
         }    
 
-        protected override UniTask<string> GetDescription(ShortGunWeaponDataConfigItem itemData, ShortGunEquipmentMechanicDataConfigItem mechanicData)
+        protected override UniTask<string> GetDescription(RarityType rarityType, ShortGunWeaponDataConfigItem itemData, ShortGunEquipmentMechanicDataConfigItem mechanicData)
         {
             string increaseWaveFormat = "The shortgun fire {0} more wave each shot";
             string increaseProjectilesEachWaveFormat = "The shortgun fire {0} more each wave";
             string goThroughFormat = "The shortgun's projectiles go through obstacles";
-            switch (mechanicData.triggerRarityType)
+            switch (rarityType)
             {
                 case RarityType.Common:
                     return UniTask.FromResult(string.Format(increaseWaveFormat, mechanicData.bonusProjectileVertical)); // + 1;

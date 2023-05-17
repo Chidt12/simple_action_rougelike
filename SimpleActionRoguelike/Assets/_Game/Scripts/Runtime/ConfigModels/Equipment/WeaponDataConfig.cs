@@ -94,10 +94,10 @@ namespace Runtime.ConfigModel
         {
             var mechanicData = GetEquipmentMechanicDataConfigItem(rarityType) as TMechanic;
             var itemData = GetWeaponDataConfigItem() as T;
-            return GetDescription(itemData, mechanicData);
+            return GetDescription(rarityType, itemData, mechanicData);
         }
 
-        protected abstract UniTask<string> GetDescription(T itemData, TMechanic mechanicData);
+        protected abstract UniTask<string> GetDescription(RarityType rarityType, T itemData, TMechanic mechanicData);
 
         #endregion Interface Methods
     }
