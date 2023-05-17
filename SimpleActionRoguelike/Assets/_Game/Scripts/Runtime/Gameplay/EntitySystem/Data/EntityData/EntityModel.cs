@@ -15,7 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
         public int EntityUID => uid;
         public bool IsDead => healthStat.CurrentValue <= 0;
         public bool IsDamagable => !(IsDead || IsDashing);
-        public bool IsMovable => !(IsPlayingSkill || IsDead || IsDashing || IsPausedControl || currentState.IsInHardCCStatus());
+        public bool IsMovable => !(IsAttacking || IsPlayingSkill || IsDead || IsDashing || IsPausedControl || currentState.IsInHardCCStatus());
         public bool IsControllable => !(IsPlayingSkill || IsDead || IsPausedControl || currentState.IsInMovementLockedStatus());
         public bool IsDashing { get; set; }
         public bool IsPausedControl { get; set; }

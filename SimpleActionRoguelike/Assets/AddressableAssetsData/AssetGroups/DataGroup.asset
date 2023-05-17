@@ -61,6 +61,10 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.ShopInGameStageLoadConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 16a2604626d82ab4e8c535211b469828
+    m_Address: Runtime.ConfigModel.EnemyConfig_2002.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

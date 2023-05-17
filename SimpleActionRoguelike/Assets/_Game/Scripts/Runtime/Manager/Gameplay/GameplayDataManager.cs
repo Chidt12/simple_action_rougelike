@@ -83,7 +83,7 @@ namespace Runtime.Gameplay
             return (heroStatsInfo, weaponModel);
         }
 
-        public async UniTask<(EnemyStatsInfo, List<SkillModel>, int)> GetEnemyDataAsync(int enemyId, int level)
+        public async UniTask<(EnemyStatsInfo, List<SkillModel>, EnemyLevelConfigItem)> GetEnemyDataAsync(int enemyId, int level)
         {
             var zombieConfig = await DataManager.Config.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(enemyId.ToString()));
             var zombieConfigItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
@@ -102,7 +102,7 @@ namespace Runtime.Gameplay
             }
 
             var enemyStatsInfo = new EnemyStatsInfo(zombieLevelConfigItem.CharacterLevelStats);
-            return (enemyStatsInfo, skillModels, zombieLevelConfigItem.detectedPriority);
+            return (enemyStatsInfo, skillModels, zombieLevelConfigItem);
         }
 
 

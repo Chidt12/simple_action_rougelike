@@ -321,6 +321,7 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
             enemyModel.InitStatus();
+            enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategy);
             var enemyGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
             enemyGameObject.transform.position = spawnPosition;
             await enemyGameObject.GetComponent<IEntityHolder>().BuildAsync(enemyModel);
@@ -338,6 +339,7 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
             enemyModel.InitStatus();
+            enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategy);
             entityGameObject.SetActive(true);
             entityGameObject.transform.position = entityGameObject.transform.position;
             await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(enemyModel);

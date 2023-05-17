@@ -12,10 +12,6 @@ namespace Runtime.Gameplay.EntitySystem
     public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData, IEntityStatusData>, 
         IDisposeEntityBehavior, IEntityControlCastRangeProxy
     {
-        private static string s_warningSkillVFX = "warning_execute_skill_vfx";
-
-        [SerializeField]
-        private Transform _displayWarningTransform;
         [SerializeField]
         private float _delayBeforeExecuteSkillTime = 3f;
         private bool _finishedDelay;
@@ -131,15 +127,10 @@ namespace Runtime.Gameplay.EntitySystem
             FinishSkill();
         }
 
-        private async UniTask FinishedPrecheck()
+        private UniTask FinishedPrecheck()
         {
             _controlData.SetMoveDirection(Vector2.zero);
-            if (_controlData.EntityType.IsDisplayWarningExecuteSkill())
-            {
-                var warningVFX = await PoolManager.Instance.Rent(s_warningSkillVFX, token: _cancellationTokenSource.Token);
-                warningVFX.transform.SetParent(_displayWarningTransform);
-                warningVFX.transform.localPosition = Vector2.zero;
-            }
+            return UniTask.CompletedTask;
         }
 
         private void FinishSkill()

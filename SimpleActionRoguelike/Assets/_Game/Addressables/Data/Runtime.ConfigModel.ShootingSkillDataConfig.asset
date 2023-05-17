@@ -16,9 +16,9 @@ MonoBehaviour:
   - dataId: 1
     targetType: 3
     castRange: 4
-    cooldown: 300
+    cooldown: 1.5
     dependTarget: 1
-    projectileId: short_gun_projectile
+    projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
     projectileMoveSpeed: 10

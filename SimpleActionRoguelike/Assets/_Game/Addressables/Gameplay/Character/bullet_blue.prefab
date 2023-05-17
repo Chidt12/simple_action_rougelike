@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8994906110151787281}
   - component: {fileID: 8994906110151787280}
   m_Layer: 10
-  m_Name: short_gun_projectile
+  m_Name: bullet_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 985976483
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34b09159d192b17408c7a3d19ea405f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dc0a4137e70e3aa48bedf353217302b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,4 +114,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660439c39d8746f4cbb5fd0fe69121ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactPrefabName: impact_red
+  impactPrefabName: impact_blue

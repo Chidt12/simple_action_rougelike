@@ -44,5 +44,5 @@ MonoBehaviour:
       bonusProjectileVertical: 0
       bonusProjectileHorizontal: 2
       goThrough: 0
-    projectileId: short_gun_projectile
+    projectileId: bullet_blue
     projectileSpeed: 10
