@@ -42,6 +42,7 @@ namespace Runtime.ConfigModel
                 if (item.triggerRarityType <= rarityType)
                     Add(equipmentDataConfigItem, item);
             }
+
             return equipmentDataConfigItem;
         }
 
