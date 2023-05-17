@@ -8,6 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
         Target,
         MoveDirection,
         Pointer,
+        FourDirection,
     }
 
     [DisallowMultipleComponent]
@@ -47,6 +48,16 @@ namespace Runtime.Gameplay.EntitySystem
                     var currentPointerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector2 centerToPointer = currentPointerPosition - transform.position;
                     _controlData.SetFaceDirection(centerToPointer);
+                    break;
+                case FaceDirectionType.FourDirection:
+                    if (Input.GetKey(KeyCode.RightArrow))
+                        _controlData.SetFaceDirection(Vector2.right);
+                    else if (Input.GetKey(KeyCode.LeftArrow))
+                        _controlData.SetFaceDirection(Vector2.left);
+                    else if (Input.GetKey(KeyCode.UpArrow))
+                        _controlData.SetFaceDirection(Vector2.up);
+                    else if (Input.GetKey(KeyCode.DownArrow))
+                        _controlData.SetFaceDirection(Vector2.down);
                     break;
                 default:
                     break;

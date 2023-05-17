@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] private Transform _flipPivotTransform;
         [SerializeField] private Transform _rotateTransform;
 
-        private const float ROTATE_SPEED = 1080;
+        private const float ROTATE_SPEED = 1200;
         private IEntityControlData _controlData;
         private bool _inited;
         private bool _isPaused;

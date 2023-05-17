@@ -28,13 +28,9 @@ namespace Runtime.Gameplay.EntitySystem
             var controlDirection = (new Vector2(horizontalValue, verticalValue)).normalized;
             _controlData.SetMoveDirection(controlDirection);
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
             {
                 _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack);
-            }
-            if (Input.GetMouseButton(1))
-            {
-                _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack1);
             }
         }
     }
