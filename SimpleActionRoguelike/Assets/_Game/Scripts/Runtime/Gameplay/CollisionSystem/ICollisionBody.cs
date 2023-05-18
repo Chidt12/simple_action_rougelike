@@ -62,7 +62,7 @@ namespace Runtime.Gameplay.CollisionDetection
                 if (collider is BoxCollider2D)
                     return new RectangleCollisionShape(collisionBody, collider.bounds.extents.x * 2, collider.bounds.extents.y * 2);
                 else if (collider is CircleCollider2D)
-                    return new CircleCollisionShape(collisionBody, collider.bounds.extents.x);
+                    return new CircleCollisionShape(collisionBody, ((CircleCollider2D)collider).radius);
                 else
                     return new ColliderCollisionShape(collisionBody);
             }

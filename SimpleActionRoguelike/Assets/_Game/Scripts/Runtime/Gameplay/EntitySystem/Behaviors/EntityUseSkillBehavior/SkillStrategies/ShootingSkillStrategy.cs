@@ -6,6 +6,7 @@ using Runtime.Helper;
 using Runtime.Core.Message;
 using Runtime.Message;
 using Runtime.Definition;
+using Runtime.ConfigModel;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -77,8 +78,7 @@ namespace Runtime.Gameplay.EntitySystem
                 SimpleMessenger.Publish(MessageScope.EntityMessage, new SentStatusEffectMessage(
                     creatorData,
                     targetStatusData,
-                    StatusType.Stun,
-                    0
+                    new StatusIdentity(0, StatusType.Stun)
                 ));
             }
         }

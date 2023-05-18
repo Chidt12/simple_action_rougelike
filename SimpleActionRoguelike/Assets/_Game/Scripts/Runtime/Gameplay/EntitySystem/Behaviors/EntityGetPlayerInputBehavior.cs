@@ -28,6 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
             var controlDirection = (new Vector2(horizontalValue, verticalValue)).normalized;
             _controlData.SetMoveDirection(controlDirection);
 
+            // Fight for just 4 direction.
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
             {
                 _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack);

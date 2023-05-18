@@ -13,8 +13,6 @@ namespace Runtime.Gameplay.EntitySystem
         protected float adjustSpeedFactor;
         protected CancellationTokenSource cancellationTokenSource;
 
-        public string ImpactPrefabName => impactPrefabName;
-        public bool GeneratedImpact { get; set; }
         public IEntityData Creator { get; private set; }
         public Vector2 CreatorPosition => Creator.Position;
         public Vector2 CenterPosition => transform.position;
@@ -24,7 +22,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         public virtual UniTask BuildAsync(IEntityData creatorData, Vector3 position)
         {
-            GeneratedImpact = false;
             transform.position = position;
             Creator = creatorData;
             currentStrategy = null;
@@ -45,7 +42,7 @@ namespace Runtime.Gameplay.EntitySystem
             cancellationTokenSource?.Cancel();
         }
 
-        public void InitStrategy(IProjectileStrategy projectileStrategy)
+        public virtual void InitStrategy(IProjectileStrategy projectileStrategy)
         {
             if (projectileStrategy == null)
                 CompleteStrategy(true);
@@ -69,12 +66,10 @@ namespace Runtime.Gameplay.EntitySystem
             PoolManager.Instance.Return(gameObject);
         }
 
-        protected async UniTaskVoid GenerateImpact(Vector3 position)
+        public async UniTaskVoid GenerateImpact(Vector3 position)
         {
-            if (string.IsNullOrEmpty(impactPrefabName) || GeneratedImpact)
+            if (string.IsNullOrEmpty(impactPrefabName))
                 return;
-
-            GeneratedImpact = true;
             var impact = await PoolManager.Instance.Rent(impactPrefabName, token: cancellationTokenSource.Token);
             impact.transform.position = position;
         }

@@ -32,15 +32,12 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void FireProjectiles(int numberOfProjectiles, float angleBetweenTwoProjectiles, Transform[] spawnPoints, CancellationToken cancellationToken)
         {
-            var suitableFirePosition = spawnPoints == null ? (Vector3)creatorData.Position : spawnPoints.Select(x => x.position).ToList().GetSuitableValue(creatorData.Position);
+            var suitableFirePosition = GetSuitableSpawnPosition(spawnPoints);
 
             var bigAngle = (numberOfProjectiles - 1) * angleBetweenTwoProjectiles;
             var firstDegree = -bigAngle / 2;
 
-            var controlData = (IEntityControlData)creatorData;
-            Vector2 faceDirection = Vector2.zero;
-            if (controlData != null)
-                faceDirection = (controlData.FaceDirection).normalized;
+            var faceDirection = GetFaceDirection();
 
             for (int i = 0; i < numberOfProjectiles; i++)
             {

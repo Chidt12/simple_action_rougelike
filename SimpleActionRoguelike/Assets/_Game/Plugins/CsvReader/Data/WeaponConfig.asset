@@ -25,3 +25,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.BoomerangWeaponDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.BoomerangWeaponDataConfig
+      csvFile: {fileID: 4900000, guid: e7400d3e8cdd1dc49aed69589164c29c, type: 3}
+      csvPath: Assets/_Game/Csv/weapons/boomerang_weapon.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

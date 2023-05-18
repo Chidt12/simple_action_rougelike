@@ -85,7 +85,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
             else
             {
-                var statusType = statuses.Min(x => x.StatusType);
+                var statusType = statuses.Max(x => x.StatusType);
                 if(currentState != statusType)
                 {
                     currentState = statusType;

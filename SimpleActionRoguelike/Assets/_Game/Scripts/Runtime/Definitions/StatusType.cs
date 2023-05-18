@@ -2,28 +2,27 @@ namespace Runtime.Definition
 {
     public enum StatusType
     {
-        Knockback = 0,
-        Pull = 1,
+        None = 0,
+        Knockback = 1000,
+        Pull = 1001,
 
-        Stun = 100,
-        Freeze = 101,
-        Root = 102,
+        Stun = 900,
+        Freeze = 901,
+        Root = 902,
 
-        Taunt = 201,
-        Terror = 202,
+        Taunt = 801,
+        Terror = 802,
 
-        Bleed = 301,
-        Regen = 302,
-        Dread = 303,
-        Haste = 304,
-        Quick = 305,
-        Tough = 306,
-        Hardened = 307,
-        Chill = 308,
-        Poison = 309,
-        Fire = 310,
-
-        None = 10000,
+        Bleed = 701,
+        Regen = 702,
+        Dread = 703,
+        Haste = 704,
+        Quick = 705,
+        Tough = 706,
+        Hardened = 707,
+        Chill = 708,
+        Poison = 709,
+        Fire = 710,
     }
 
     public static class EntityStatusStateExtensions

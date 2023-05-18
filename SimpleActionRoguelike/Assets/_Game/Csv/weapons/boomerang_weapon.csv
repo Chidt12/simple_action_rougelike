@@ -1,0 +1,7 @@
+﻿attack_speed_percent,attack_range,damage_bonus,damage_factor_stat_type,damage_factor_value,projectile_id,projectile_speed,trigger_rarity_type,bonus_projectiles,status_data_id,status_type,buff_fly_speed,go_through
+10,6,0,AttackDamage,1,bullet_blue_boomerang,10,1,,,,,
+,,,,,,,2,1,,,,
+,,,,,,,3,,,,,TRUE
+,,,,,,,4,1,,,,
+,,,,,,,5,,1,Stun,,
+,,,,,,,6,,,,5,

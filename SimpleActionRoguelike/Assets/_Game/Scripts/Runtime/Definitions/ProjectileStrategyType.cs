@@ -7,5 +7,6 @@ namespace Runtime.Definition
         FlyFollow,
         FlyFollowThrough,
         IdleThrough,
+        FlyBoomerang,
     }
 }

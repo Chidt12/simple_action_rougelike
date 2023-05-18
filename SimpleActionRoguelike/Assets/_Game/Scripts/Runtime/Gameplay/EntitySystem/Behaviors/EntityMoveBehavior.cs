@@ -51,7 +51,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (_controlData.IsMovable)
             {
                 var moveSpeed = _moveSpeed;
-                if (_moveWithRandomSpeed)
+                if (_moveWithRandomSpeed && _moveSpeed != 0)
                 {
                     moveSpeed = Random.Range(_moveSpeed, _moveSpeed + _moveRandomOffset);
                 }

@@ -1,4 +1,4 @@
-using Runtime.Definition;
+using Runtime.ConfigModel;
 using Runtime.Gameplay.EntitySystem;
 using ZBase.Foundation.PubSub;
 
@@ -8,16 +8,14 @@ namespace Runtime.Message
     {
         public readonly IEntityData Creator;
         public readonly IEntityStatusData Target;
-        public readonly StatusType StatusType;
-        public readonly int StatusDataId;
+        public readonly StatusIdentity StatusIdentity;
         public readonly StatusMetaData StatusMetaData;
 
-        public SentStatusEffectMessage(IEntityData creator, IEntityStatusData target, StatusType statusType, int dataId, StatusMetaData statusMetaData = default)
+        public SentStatusEffectMessage(IEntityData creator, IEntityStatusData target, StatusIdentity statusIdentity, StatusMetaData statusMetaData = default)
         {
             Creator = creator;
             Target = target;
-            StatusType = statusType;
-            StatusDataId = dataId;
+            StatusIdentity = statusIdentity;
             StatusMetaData = statusMetaData;
         }
     }

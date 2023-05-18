@@ -49,7 +49,7 @@ namespace Runtime.Gameplay.EntitySystem
         public override void Update()
         {
             if (Vector2.SqrMagnitude(originalPosition - controllerProjectile.CenterPosition) > strategyData.moveDistance * strategyData.moveDistance)
-                controllerProjectile.CompleteStrategy(true);
+                ReachedTheLifeDistance();
         }
 
         public override void Collide(Collider2D collider)
@@ -66,12 +66,17 @@ namespace Runtime.Gameplay.EntitySystem
                         HitTarget(entityHolder.EntityData, hitPoint, hitDirection);
                     }
                 }
-                else controllerProjectile.CompleteStrategy(true);
+                else CollidedDeathTarget();
             }
-            else controllerProjectile.CompleteStrategy(true);
+            else CollidedObstacle();
         }
 
-       protected virtual void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection) { }
+        protected abstract void ReachedTheLifeDistance();
+
+        protected abstract void CollidedObstacle();
+        protected abstract void CollidedDeathTarget();
+
+        protected virtual void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection) { }
 
         #endregion Class Methods
     }

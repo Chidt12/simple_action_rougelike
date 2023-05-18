@@ -1,8 +1,23 @@
+using Runtime.Definition;
+using System;
 using System.Linq;
 using UnityEngine;
 
 namespace Runtime.ConfigModel
 {
+    [Serializable]
+    public struct StatusIdentity
+    {
+        public int statusDataId;
+        public StatusType statusType;
+
+        public StatusIdentity(int dataId, StatusType statusType)
+        {
+            this.statusDataId = dataId;
+            this.statusType = statusType;
+        }
+    }
+
     public abstract class StatusDataConfigItem
     {
         public int dataId;

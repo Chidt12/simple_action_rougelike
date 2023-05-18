@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
-using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -42,7 +41,7 @@ namespace Runtime.Gameplay.EntitySystem
         private UniTask UpdateWeapon()
         {
             _attackStrategy?.Cancel();
-            _attackStrategy = AttackStrategyFactory.GetAttackStrategy(_weaponData.WeaponModel.WeaponType);
+            _attackStrategy = GetComponentInChildren<IAttackStrategy>();
             _attackStrategy.Init(_weaponData.WeaponModel, _statData, transform);
             _attackStrategy.InitEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
             _weaponData.IsAttacking = false;

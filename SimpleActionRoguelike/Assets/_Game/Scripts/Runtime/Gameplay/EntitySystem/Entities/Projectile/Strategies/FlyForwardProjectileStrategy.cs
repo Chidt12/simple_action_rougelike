@@ -10,7 +10,9 @@ namespace Runtime.Gameplay.EntitySystem
             : base(moveDistance, moveSpeed, callbackAction) { }
     }
 
-    public class FlyForwardProjectileStrategy : FlyForwardProjectileStrategy<FlyForwardProjectileStrategyData> { }
+    public class FlyForwardProjectileStrategy : FlyForwardProjectileStrategy<FlyForwardProjectileStrategyData>
+    {
+    }
 
     public abstract class FlyForwardProjectileStrategy<T> : FlyProjectileStrategy<T> where T : FlyProjectileStrategyData
     {
@@ -31,6 +33,21 @@ namespace Runtime.Gameplay.EntitySystem
         protected override void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection)
         {
             strategyData.callbackAction?.Invoke(new ProjectileCallbackData(hitDirection, hitDirection, target));
+            controllerProjectile.CompleteStrategy(true);
+        }
+
+        protected override void CollidedDeathTarget()
+        {
+            controllerProjectile.CompleteStrategy(true);
+        }
+
+        protected override void CollidedObstacle()
+        {
+            controllerProjectile.CompleteStrategy(true);
+        }
+
+        protected override void ReachedTheLifeDistance()
+        {
             controllerProjectile.CompleteStrategy(true);
         }
 

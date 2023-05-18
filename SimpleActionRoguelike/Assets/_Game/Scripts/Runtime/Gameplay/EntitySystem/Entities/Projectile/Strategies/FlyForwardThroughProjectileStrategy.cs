@@ -16,27 +16,14 @@ namespace Runtime.Gameplay.EntitySystem
 
     public class FlyForwardThroughProjectileStrategy : FlyForwardProjectileStrategy<FlyForwardThroughProjecitleStrategyData>
     {
-        public override void Collide(Collider2D collider)
+        protected override void CollidedDeathTarget()
         {
-            var entityHolder = collider.GetComponent<EntityHolder>();
-            if (entityHolder != null)
-            {
-                if (!entityHolder.EntityData.IsDead)
-                {
-                    if (controllerProjectile.Creator.EntityType.CanCauseDamage(entityHolder.EntityData.EntityType))
-                    {
-                        var hitPoint = collider.ClosestPoint(controllerProjectile.CenterPosition);
-                        var hitDirection = controllerProjectile.Direction;
-                        HitTarget(entityHolder.EntityData, hitPoint, hitDirection);
-                    }
-                }
-                else
-                {
-                    if (strategyData.obstacleOnly)
-                        controllerProjectile.CompleteStrategy(true);
-                }
-            }
+            if (strategyData.obstacleOnly)
+                controllerProjectile.CompleteStrategy(true);
         }
+
+        protected override void CollidedObstacle()
+        {}
 
         protected override void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection)
         {

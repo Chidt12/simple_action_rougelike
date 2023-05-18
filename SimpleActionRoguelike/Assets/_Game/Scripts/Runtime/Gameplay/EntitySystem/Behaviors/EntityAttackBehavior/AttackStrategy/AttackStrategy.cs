@@ -3,10 +3,12 @@ using Runtime.Definition;
 using System;
 using System.Threading;
 using UnityEngine;
+using System.Linq;
+using Runtime.Helper;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public abstract class AttackStrategy<T> : IAttackStrategy where T : WeaponModel
+    public abstract class AttackStrategy<T> : MonoBehaviour, IAttackStrategy where T : WeaponModel
     {
         protected IEntityTriggerActionEventProxy triggerActionEventProxy;
         protected T ownerWeaponModel;
@@ -26,7 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public virtual void Dispose() => Cancel();
 
-        public void Init(WeaponModel weaponModel, IEntityStatData entityData, Transform creatorTransform)
+        public virtual void Init(WeaponModel weaponModel, IEntityStatData entityData, Transform creatorTransform)
         {
             triggerActionEventProxy = new DummyEntityTriggerActionEventProxy();
             creatorData = entityData;
@@ -92,6 +94,21 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected abstract UniTask TriggerAttack(CancellationToken cancellationToken);
         protected abstract UniTask TriggerSpecialAttack(CancellationToken cancellationToken);
+
+        protected Vector2 GetSuitableSpawnPosition(Transform[] spawnPoints)
+        {
+            return spawnPoints == null ? (Vector3)creatorData.Position : spawnPoints.Select(x => x.position).ToList().GetSuitableValue(creatorData.Position);
+        }
+
+        protected Vector2 GetFaceDirection()
+        {
+            var controlData = (IEntityControlData)creatorData;
+            Vector2 faceDirection = Vector2.zero;
+            if (controlData != null)
+                faceDirection = (controlData.FaceDirection).normalized;
+
+            return faceDirection;
+        }
 
         public virtual void Cancel()
         {
