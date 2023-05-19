@@ -53,7 +53,7 @@ namespace Runtime.Gameplay.EntitySystem
             IProjectileStrategy projectileStrategy = null;
             ProjectileStrategyData projectileStrategyData = null;
 
-            projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyBoomerang);
+            projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyBoomerang);
             projectileStrategyData = new FlyBoomerangProjectileStrategyData(ProjectileCameback, ownerWeaponModel.GoThrough, ownerWeaponModel.AttackRange, ownerWeaponModel.ProjectileSpeed, ProjectileCallback);
 
             var spawnPoint = GetSuitableSpawnPosition(spawnVFXPoints);

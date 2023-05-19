@@ -15,7 +15,7 @@ MonoBehaviour:
   items:
   - id: 1001
     levels:
-    - point: 3
+    - point: 2
       level: 1
       detectedPriority: 1000
       heroLevelStats:

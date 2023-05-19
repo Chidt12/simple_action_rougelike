@@ -9,6 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
     { 
         public EntityType EntityType { get; }
         public int EntityId { get; }
+        public int Level { get; }
         public bool IsDead { get; }
         public bool IsDamagable { get; }
         public bool IsControllable { get; }

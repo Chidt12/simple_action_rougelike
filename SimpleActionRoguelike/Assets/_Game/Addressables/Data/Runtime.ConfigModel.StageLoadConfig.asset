@@ -25,6 +25,64 @@ MonoBehaviour:
       followHero: 1
       distanceFromHero: 1
       spawnPointIndex: 0
+    - entityConfigItem:
+        entityId: 2001
+        entityType: 1
+        entityNumber: 1
+        entityLevel: 1
+      waveIndex: 1
+      delaySpawnTime: 1
+      followHero: 0
+      distanceFromHero: 1
+      spawnPointIndex: 0
+    - entityConfigItem:
+        entityId: 2001
+        entityType: 1
+        entityNumber: 1
+        entityLevel: 1
+      waveIndex: 1
+      delaySpawnTime: 1.2
+      followHero: 0
+      distanceFromHero: 1
+      spawnPointIndex: 0
+    - entityConfigItem:
+        entityId: 2001
+        entityType: 1
+        entityNumber: 1
+        entityLevel: 1
+      waveIndex: 2
+      delaySpawnTime: 1.4
+      followHero: 0
+      distanceFromHero: 1
+      spawnPointIndex: 0
+    - entityConfigItem:
+        entityId: 2001
+        entityType: 1
+        entityNumber: 2
+        entityLevel: 1
+      waveIndex: 3
+      delaySpawnTime: 2
+      followHero: 1
+      distanceFromHero: 1
+      spawnPointIndex: 0
+    - entityConfigItem:
+        entityId: 2001
+        entityType: 1
+        entityNumber: 1
+        entityLevel: 1
+      waveIndex: 4
+      delaySpawnTime: 2
+      followHero: 1
+      distanceFromHero: 1
+      spawnPointIndex: 0
     waveConfigs:
     - waveIndex: 0
       duration: 0
+    - waveIndex: 1
+      duration: -1
+    - waveIndex: 2
+      duration: -1
+    - waveIndex: 3
+      duration: -1
+    - waveIndex: 4
+      duration: -1

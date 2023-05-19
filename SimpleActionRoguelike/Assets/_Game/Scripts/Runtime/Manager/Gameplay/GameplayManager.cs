@@ -146,9 +146,8 @@ namespace Runtime.Manager.Gameplay
             // Load Level
             await LoadLevelAsync();
             // Load Hero.
-            await EntitiesManager.Instance.CreateEntityAsync("1001", 
-                GameplayDataDispatcher.Instance.HeroLevel, 
-                EntityType.Hero, 
+            await EntitiesManager.Instance.CreateEntityAsync(
+                new SpawnedEntityInfo("1001", EntityType.Hero, GameplayDataDispatcher.Instance.HeroLevel), 
                 MapManager.Instance.SpawnPoints[0].transform.position,
                 cancellationToken: _cancellationTokenSource.Token);
 

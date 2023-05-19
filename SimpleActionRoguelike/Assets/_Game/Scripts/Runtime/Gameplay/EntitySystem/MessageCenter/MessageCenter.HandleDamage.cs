@@ -1,3 +1,4 @@
+using Runtime.ConfigModel;
 using Runtime.Core.Message;
 using Runtime.Definition;
 using Runtime.Message;
@@ -82,7 +83,13 @@ namespace Runtime.Gameplay.EntitySystem
 
                 // TODO: Apply lifesteal and spawn sthing after death.
                 if (message.Target.IsDead)
-                    SimpleMessenger.Publish(new EntityDiedMessage(message.Target, false));
+                {
+                    var deathEntityData = message.Target as IEntityDeathData;
+                    if (deathEntityData != null)
+                        SimpleMessenger.Publish(new EntityDiedMessage(message.Target, deathEntityData.DeathDataIdentity, false));
+                    else
+                        SimpleMessenger.Publish(new EntityDiedMessage(message.Target, new DeathDataIdentity(0, DeathType.None), false));
+                }
             }
             else
             {

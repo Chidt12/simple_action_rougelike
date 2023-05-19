@@ -5,7 +5,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public static class ProjectileStrategyFactory
     {
-        public static IProjectileStrategy GetProjectilStrategy(ProjectileStrategyType projectileStrategyType)
+        public static IProjectileStrategy GetProjectileStrategy(ProjectileStrategyType projectileStrategyType)
         {
             Type elementType = Type.GetType($"Runtime.Gameplay.EntitySystem.{projectileStrategyType}ProjectileStrategy");
             IProjectileStrategy projectileStrategy = Activator.CreateInstance(elementType) as IProjectileStrategy;

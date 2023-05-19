@@ -1,3 +1,4 @@
+using Runtime.ConfigModel;
 using Runtime.Gameplay.EntitySystem;
 using ZBase.Foundation.PubSub;
 
@@ -9,6 +10,7 @@ namespace Runtime.Message
 
         public readonly IEntityData EntityData;
         public readonly bool SpawnedEnemyAfterDeath;
+        public readonly DeathDataIdentity DeathIdentity;
 
         #endregion Members
 
@@ -21,10 +23,11 @@ namespace Runtime.Message
 
         #region Struct Methods
 
-        public EntityDiedMessage(IEntityData entityData, bool spawnedEnemyAfterDeath)
+        public EntityDiedMessage(IEntityData entityData, DeathDataIdentity deathDataIdentity, bool spawnedEnemyAfterDeath)
         {
             EntityData = entityData;
             SpawnedEnemyAfterDeath = spawnedEnemyAfterDeath;
+            DeathIdentity = deathDataIdentity;
         }
 
         #endregion Struct Methods

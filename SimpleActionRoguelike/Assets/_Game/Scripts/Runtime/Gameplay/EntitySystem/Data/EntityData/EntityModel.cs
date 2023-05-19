@@ -8,11 +8,13 @@ namespace Runtime.Gameplay.EntitySystem
     {
         protected int uid;
         protected int entityId;
+        protected int level;
         protected EntityType entityType;
 
         public EntityType EntityType => entityType;
         public int EntityId => entityId;
         public int EntityUID => uid;
+        public int Level => level;
         public bool IsDead => healthStat.CurrentValue <= 0;
         public bool IsDamagable => !(IsDead || IsDashing);
         public bool IsMovable => !(IsPlayingSkill || IsDead || IsDashing || IsPausedControl || currentState.IsInHardCCStatus());
@@ -25,8 +27,9 @@ namespace Runtime.Gameplay.EntitySystem
         public Action<Vector2> ForceUpdatePosition { get; set; }
         public Transform EntityTransform { get; set; }
 
-        public virtual void Init(EntityType entityType, int uid, int entityId)
+        public virtual void Init(EntityType entityType, int uid, int entityId, int level)
         {
+            this.level = level;
             this.entityType = entityType;
             this.uid = uid;
             this.entityId = entityId;

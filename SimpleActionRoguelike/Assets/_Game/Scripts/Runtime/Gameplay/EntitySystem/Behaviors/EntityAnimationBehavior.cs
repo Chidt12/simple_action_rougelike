@@ -88,7 +88,7 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     var tween = DOTween.Sequence();
                     tween.Append(_playDotweenTransform.DOScale(1.3f,  0f));
-                    tween.Append(_playDotweenTransform.DOScale(1f, 0.2f).SetEase(Ease.InOutSine));
+                    tween.Append(_playDotweenTransform.DOScale(1f, 0.3f).SetEase(Ease.InOutSine));
                     tween.Play();
                 }
 

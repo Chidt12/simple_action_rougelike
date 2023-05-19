@@ -8,6 +8,13 @@ namespace Runtime.Manager.Data
 {
     public partial class ConfigDataManager
     {
+        public async UniTask<DeathDataConfigItem> LoadDeathDataConfigItem(DeathDataIdentity identity)
+        {
+            var dataConfig = await Load<DeathDataConfig>(string.Format(AddressableKeys.DEATH_DATA_CONFIG_ASSET_FORMAT, identity.deathType));
+            var dataConfigItem = dataConfig.Items.FirstOrDefault(x => x.dataId == identity.deathDataId);
+            return dataConfigItem;
+        }
+
         public StageLoadConfigItem GetStageConfigData(int stageId)
         {
             var stageLoadConfigs = GetData<StageLoadConfig>();

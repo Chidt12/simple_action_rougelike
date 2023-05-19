@@ -24,7 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
         HeroDied,
     }
 
-    public class EntitiesManager : MonoSingleton<EntitiesManager>
+    public partial class EntitiesManager : MonoSingleton<EntitiesManager>
     {
         private const string SPAWN_ENEMY_VFX_NAME = "spawn_enemy_vfx";
         private const float DISPLAY_SPAWN_WARNING_TIME = 0.5f;
@@ -37,6 +37,8 @@ namespace Runtime.Gameplay.EntitySystem
         private int _defeatedEnemiesCount;
         private List<IEntityData> _enemiesData;
         private int _currentWarningSpawnedEnemyCount;
+        private int _currentSpawningEnemyCount;
+
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationTokenSource _spawnWaveCancellationTokenSource;
         private bool _finishedSpawnInConfig = false;
@@ -44,8 +46,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         public IEntityData HeroData { get; private set; }
         public List<IEntityData> EnemiesData => _enemiesData;
-        public bool HaveNoEnemiesLeft => EnemiesData.Count <= 0 && _currentWarningSpawnedEnemyCount <= 0;
+        public bool HaveNoEnemiesLeft => EnemiesData.Count <= 0 && _currentWarningSpawnedEnemyCount <= 0 && _currentSpawningEnemyCount <= 0 && CurrentActionContainEnemySpawn <= 0;
         public int DefeatedEnemiesCount => _defeatedEnemiesCount;
+        public int CurrentActionContainEnemySpawn { get; set; }
 
         #region Class Methods
 
@@ -54,9 +57,13 @@ namespace Runtime.Gameplay.EntitySystem
             _cancellationTokenSource = new();
             _defeatedEnemiesCount = 0;
             _entityUId = 0;
-            HeroData = null;
+            _currentSpawningEnemyCount = 0;
+            _currentWarningSpawnedEnemyCount = 0;
             _enemiesData = new();
             _mapEditorEntities = FindObjectsOfType<MapEditorEntity>(true);
+
+            CurrentActionContainEnemySpawn = 0;
+            HeroData = null;
         }
 
         public void Dipose()
@@ -126,14 +133,14 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTask SpawnStageWaveByStageDataItemAsync(MapEditorEntity stageMapEditorEntity)
         {
             if (stageMapEditorEntity.EntityType.IsEnemy())
-                SpawnStageWaveByStageDataItemWithWarningAsync(stageMapEditorEntity).Forget();
-            await LoadDataNotCreateEntityAsync(stageMapEditorEntity.gameObject, stageMapEditorEntity.EntityType, stageMapEditorEntity.EntityId, stageMapEditorEntity.Level);
+                LoadEntityOnMapWithWarningAsync(stageMapEditorEntity).Forget();
+            await LoadEntityOnMapAsync(stageMapEditorEntity.gameObject, stageMapEditorEntity.EntityType, stageMapEditorEntity.EntityId, stageMapEditorEntity.Level);
         }
 
-        private async UniTaskVoid SpawnStageWaveByStageDataItemWithWarningAsync(MapEditorEntity stageMapEditorEntity)
+        private async UniTaskVoid LoadEntityOnMapWithWarningAsync(MapEditorEntity stageMapEditorEntity)
         {
             var warningVFX = await CreateSpawnWarningVFXAsync(stageMapEditorEntity.EntityType, DISPLAY_SPAWN_WARNING_TIME, stageMapEditorEntity.transform.position, _spawnWaveCancellationTokenSource.Token);
-            await LoadDataNotCreateEntityAsync(stageMapEditorEntity.gameObject, stageMapEditorEntity.EntityType, stageMapEditorEntity.EntityId, stageMapEditorEntity.Level);
+            await LoadEntityOnMapAsync(stageMapEditorEntity.gameObject, stageMapEditorEntity.EntityType, stageMapEditorEntity.EntityId, stageMapEditorEntity.Level);
             RemoveSpawnVFX(warningVFX);
         }
 
@@ -144,8 +151,7 @@ namespace Runtime.Gameplay.EntitySystem
                 var spawnedCenterPosition = HeroData.Position;
                 var spawnedCenterOffsetDistance = entityConfig.distanceFromHero;
                 var spawnedEntityInfo = entityConfig.entityConfigItem;
-                await CreateEntitiesAsync(spawnedCenterPosition, spawnedCenterOffsetDistance, true,
-                                                                   _spawnWaveCancellationTokenSource.Token, spawnedEntityInfo);
+                await CreateEntitiesAsync(spawnedCenterPosition, spawnedCenterOffsetDistance, true, _spawnWaveCancellationTokenSource.Token, spawnedEntityInfo);
             }
             else
             {
@@ -154,20 +160,11 @@ namespace Runtime.Gameplay.EntitySystem
                     spawnPointIndex = 0;
 
                 var spawnPosition = MapManager.Instance.SpawnPoints[spawnPointIndex].Position;
-                await CreateEntitiesAsync(spawnPosition, true, _spawnWaveCancellationTokenSource.Token, entityConfig.entityConfigItem);
+                await CreateEntitiesAsync(spawnPosition, 0.3f, true, _spawnWaveCancellationTokenSource.Token, entityConfig.entityConfigItem);
             }
         }
 
         #region Create Entities
-
-        public async UniTask CreateEntitiesAsync(Vector3 spawnPosition, bool displayWarning, CancellationToken cancellationToken, SpawnedEntityInfo spawnedEntityInfo)
-        {
-            for (int i = 0; i < spawnedEntityInfo.entityNumber; i++)
-            {
-                await CreateEntityWithWarning(spawnedEntityInfo, spawnPosition, displayWarning, cancellationToken);
-                await UniTask.Yield(cancellationToken);
-            }
-        }
 
         public async UniTask CreateEntitiesAsync(Vector3 spawnedCenterPosition, float spawnedCenterDistancedOffset, bool displayWarning, CancellationToken cancellationToken, params SpawnedEntityInfo[] spawnedEntitiesInfo)
         {
@@ -201,7 +198,7 @@ namespace Runtime.Gameplay.EntitySystem
                         }
 
                         var spawnPosition = validPositions[index++];
-                        await CreateEntityWithWarning(spawnedEntityInfo, spawnPosition, displayWarning, cancellationToken);
+                        await LoadEntity(spawnedEntityInfo, spawnPosition, displayWarning, cancellationToken);
                         await UniTask.Yield(cancellationToken);
                     }
                 }
@@ -213,42 +210,49 @@ namespace Runtime.Gameplay.EntitySystem
                     for (int i = 0; i < spawnedEntityInfo.entityNumber; i++)
                     {
                         var spawnPosition = spawnedCenterPosition;
-                        var entityGameObject = await CreateEntityAsync(spawnedEntityInfo.entityId,
-                                                                       spawnedEntityInfo.entityLevel,
-                                                                       spawnedEntityInfo.entityType,
-                                                                       spawnPosition);
-                        entityGameObject.transform.SetParent(transform);
+                        await LoadEntity(spawnedEntityInfo, spawnPosition, displayWarning, cancellationToken);
                         await UniTask.Yield(cancellationToken);
                     }
                 }
             }
         }
 
-        public async UniTask<GameObject> CreateEntityAsync(string entityId, int entityLevel, EntityType entityType, Vector2 spawnPosition, CancellationToken cancellationToken = default)
+        public async UniTask<GameObject> CreateEntityAsync(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, CancellationToken cancellationToken = default)
         {
-            switch (entityType)
+            _currentSpawningEnemyCount++;
+            GameObject entity = null;
+            switch (spawnedEntityInfo.entityType)
             {
                 case EntityType.Hero:
-                    return await CreateHeroAsync(int.Parse(entityId), entityLevel, spawnPosition, cancellationToken);
+                    entity = await CreateHeroAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
+                    break;
                 case EntityType.Enemy:
-                    return await CreateEnemyAsync(int.Parse(entityId), entityLevel, spawnPosition, cancellationToken);
+                    entity = await CreateEnemyAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
+                    break;
                 default:
-                    return null;
+                    break;
             }
+            _currentSpawningEnemyCount--;
+            return entity;
         }
 
-        public async UniTask<GameObject> LoadDataNotCreateEntityAsync(GameObject entityGameObject, EntityType entityType, int entityId, int entityLevel)
+        public async UniTask<GameObject> LoadEntityOnMapAsync(GameObject entityGameObject, EntityType entityType, int entityId, int entityLevel)
         {
+            _currentSpawningEnemyCount++;
+            GameObject entity = null;
             switch (entityType)
             {
                 case EntityType.Hero:
-                    return await LoadDataNotCreateHeroAsync(entityGameObject, entityId, entityLevel);
-
+                    entity = await LoadHeroOnMapAsync(entityGameObject, entityId, entityLevel);
+                    break;
                 case EntityType.Enemy:
-                    return await LoadDataNotCreateEnemyAsync(entityGameObject, entityId, entityLevel);
+                    entity = await LoadEnemyOnMapAsync(entityGameObject, entityId, entityLevel);
+                    break;
                 default:
-                    return null;
+                    break;
             }
+            _currentSpawningEnemyCount--;
+            return entity;
         }
 
         public async UniTask<GameObject> CreateProjectileAsync(string projectileId, IEntityData creatorData, Vector2 spawnPosition, CancellationToken cancellationToken = default)
@@ -278,75 +282,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             CreateEntityDestroyVfxAsync(entityDiedMessage.EntityData.EntityType, entityDiedMessage.EntityData.Position, this.GetCancellationTokenOnDestroy()).Forget();
             return HandleCharacterDiedResultType.None;
-        }
-
-        private async UniTask<GameObject> CreateHeroAsync(int entityId, int entityLevel, Vector2 spawnPosition, CancellationToken cancellationToken = default)
-        {
-            var heroData = await GameplayDataManager.Instance.GetHeroDataAsync(entityId);
-            var heroModel = new HeroModel();
-            heroModel.Init(EntityType.Hero, _entityUId++, entityId);
-            heroModel.InitStats(heroData.Item1);
-            heroModel.InitWeapon(heroData.Item2);
-            heroModel.InitStatus();
-            var heroGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
-            heroGameObject.transform.position = spawnPosition;
-            await heroGameObject.GetComponent<IEntityHolder>().BuildAsync(heroModel);
-            SimpleMessenger.Publish(new HeroSpawnedMessage(heroModel, heroGameObject.transform));
-            CreateEntitySpawnVfxAsync(heroModel.EntityType, spawnPosition, cancellationToken).Forget();
-            HeroData = heroModel;
-            return heroGameObject;
-        }
-
-        private async UniTask<GameObject> LoadDataNotCreateHeroAsync(GameObject entityGameObject, int entityId, int entityLevel, CancellationToken cancellationToken = default)
-        {
-            var heroData = await GameplayDataManager.Instance.GetHeroDataAsync(entityId);
-            var heroModel = new HeroModel();
-            heroModel.Init(EntityType.Hero, _entityUId++, entityId);
-            heroModel.InitStats(heroData.Item1);
-            heroModel.InitWeapon(heroData.Item2);
-            heroModel.InitStatus();
-            entityGameObject.SetActive(true);
-            entityGameObject.transform.position = entityGameObject.transform.position;
-            await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(heroModel);
-            SimpleMessenger.Publish(new HeroSpawnedMessage(heroModel, entityGameObject.transform));
-            HeroData = heroModel;
-            return entityGameObject;
-        }
-
-        private async UniTask<GameObject> CreateEnemyAsync(int entityId, int entityLevel, Vector2 spawnPosition, CancellationToken cancellationToken = default)
-        {
-            var enemyData = await GameplayDataManager.Instance.GetEnemyDataAsync(entityId, entityLevel);
-            var enemyModel = new EnemyModel();
-            enemyModel.Init(EntityType.Enemy, _entityUId++, entityId);
-            enemyModel.InitStats(enemyData.Item1);
-            enemyModel.InitSkills(enemyData.Item2);
-            enemyModel.InitStatus();
-            enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategy);
-            var enemyGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
-            enemyGameObject.transform.position = spawnPosition;
-            await enemyGameObject.GetComponent<IEntityHolder>().BuildAsync(enemyModel);
-            SimpleMessenger.Publish(new EntitySpawnedMessage(enemyModel, enemyGameObject.transform));
-            CreateEntitySpawnVfxAsync(enemyModel.EntityType, spawnPosition, cancellationToken).Forget();
-            EnemiesData.Add(enemyModel);
-            return enemyGameObject;
-        }
-
-        private async UniTask<GameObject> LoadDataNotCreateEnemyAsync(GameObject entityGameObject, int entityId, int entityLevel, CancellationToken cancellationToken = default)
-        {
-            var enemyData = await GameplayDataManager.Instance.GetEnemyDataAsync(entityId, entityLevel);
-            var enemyModel = new EnemyModel();
-            enemyModel.Init(EntityType.Enemy, _entityUId++, entityId);
-            enemyModel.InitStats(enemyData.Item1);
-            enemyModel.InitSkills(enemyData.Item2);
-            enemyModel.InitStatus();
-            enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategy);
-            entityGameObject.SetActive(true);
-            entityGameObject.transform.position = entityGameObject.transform.position;
-            await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(enemyModel);
-            SimpleMessenger.Publish(new EntitySpawnedMessage(enemyModel, entityGameObject.transform));
-            EnemiesData.Add(enemyModel);
-            return entityGameObject;
-        }
+        }  
 
         protected async UniTask CreateEntitySpawnVfxAsync(EntityType entityType, Vector2 vfxPosition, CancellationToken cancellationToken)
         {
@@ -358,27 +294,18 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Create Entity With warning
 
-        private async UniTask CreateEntityWithWarning(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, bool displayWarning, CancellationToken cancellationToken)
+        private async UniTask LoadEntity(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, bool displayWarning, CancellationToken cancellationToken)
         {
             if (displayWarning && spawnedEntityInfo.entityType.IsEnemy())
-                CreateEntityWithWarning(spawnedEntityInfo, spawnPosition, cancellationToken).Forget();
+                CreateEntityWithWarningAsync(spawnedEntityInfo, spawnPosition, cancellationToken).Forget();
             else
-                await CreateEntityAsync(spawnedEntityInfo.entityId,
-                                        spawnedEntityInfo.entityLevel,
-                                        spawnedEntityInfo.entityType,
-                                        spawnPosition,
-                                        cancellationToken);
+                await CreateEntityAsync(spawnedEntityInfo, spawnPosition, cancellationToken);
         }
 
-        private async UniTaskVoid CreateEntityWithWarning(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, CancellationToken cancellationToken)
+        private async UniTaskVoid CreateEntityWithWarningAsync(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, CancellationToken cancellationToken)
         {
             var warningVFX = await CreateSpawnWarningVFXAsync(spawnedEntityInfo.entityType, DISPLAY_SPAWN_WARNING_TIME, spawnPosition, cancellationToken);
-
-            var entityGameObject = await CreateEntityAsync(spawnedEntityInfo.entityId,
-                                                            spawnedEntityInfo.entityLevel,
-                                                            spawnedEntityInfo.entityType,
-                                                            spawnPosition,
-                                                            cancellationToken);
+            var entityGameObject = await CreateEntityAsync(spawnedEntityInfo, spawnPosition, cancellationToken);
             RemoveSpawnVFX(warningVFX);
             entityGameObject.transform.SetParent(transform);
         }
@@ -399,6 +326,7 @@ namespace Runtime.Gameplay.EntitySystem
             _currentWarningSpawnedEnemyCount--;
             PoolManager.Instance.Return(spawnVFX);
         }
+
         #endregion Create Entities
 
         #endregion Create Entities

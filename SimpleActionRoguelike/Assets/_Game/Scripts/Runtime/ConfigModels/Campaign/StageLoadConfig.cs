@@ -12,6 +12,14 @@ namespace Runtime.ConfigModel
         public EntityType entityType;
         public int entityNumber;
         public int entityLevel;
+
+        public SpawnedEntityInfo(string entityId, EntityType entityType, int entityLevel = 1, int entityNumber = 1)
+        {
+            this.entityId = entityId;
+            this.entityType = entityType;
+            this.entityNumber = entityNumber;
+            this.entityLevel = entityLevel;
+        }
     }
 
     [Serializable]

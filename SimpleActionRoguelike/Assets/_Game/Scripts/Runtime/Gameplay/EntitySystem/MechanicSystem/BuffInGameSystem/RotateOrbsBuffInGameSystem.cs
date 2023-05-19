@@ -62,7 +62,7 @@ namespace Runtime.Gameplay.EntitySystem
                 IdleThroughProjectileStrategyData idleThroughProjectileStrategyData;
                 idleThroughProjectileStrategyData = new IdleThroughProjectileStrategyData(false, OnGetHit);
 
-                var projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.IdleThrough);
+                var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.IdleThrough);
                 projectileStrategy.Init(idleThroughProjectileStrategyData, projectile, _middleTransform.position, _middleTransform.position);
                 projectile.InitStrategy(projectileStrategy);
                 _orbs.Add(projectile);

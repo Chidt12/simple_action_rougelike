@@ -59,14 +59,14 @@ namespace Runtime.Gameplay.EntitySystem
                                                                                             ownerWeaponModel.AttackRange,
                                                                                             ownerWeaponModel.ProjectileSpeed,
                                                                                             ProjectileCallback);
-                    projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyForwardThrough);
+                    projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyForwardThrough);
                 }
                 else
                 {
                     projectileStrategyData = new FlyForwardProjectileStrategyData(ownerWeaponModel.AttackRange,
                                                                                             ownerWeaponModel.ProjectileSpeed,
                                                                                             ProjectileCallback);
-                    projectileStrategy = ProjectileStrategyFactory.GetProjectilStrategy(ProjectileStrategyType.FlyForward);
+                    projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyForward);
                 }
 
 

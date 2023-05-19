@@ -32,4 +32,4 @@ MonoBehaviour:
       skillIdentity:
         skillType: 1
         skillDataId: 1
-      autoInputStrategy: 1
+      autoInputStrategy: 0

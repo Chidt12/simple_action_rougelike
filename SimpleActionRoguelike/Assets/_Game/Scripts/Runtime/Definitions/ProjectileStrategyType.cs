@@ -4,6 +4,8 @@ namespace Runtime.Definition
     {
         FlyForward,
         FlyForwardThrough,
+        FlyForwardSpawnEntities,
+
         FlyFollow,
         FlyFollowThrough,
         IdleThrough,
