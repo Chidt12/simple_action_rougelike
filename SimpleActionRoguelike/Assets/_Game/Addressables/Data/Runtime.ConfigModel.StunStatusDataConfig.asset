@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - dataId: 0
-    chance: 0
+    chance: 1
     duration: 2
   - dataId: 1
     chance: 0.2
