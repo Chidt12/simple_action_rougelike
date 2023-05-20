@@ -7,6 +7,7 @@ namespace Runtime.ConfigModel
 {
     public interface IWeaponDataConfigItem
     {
+        string WeaponPrefabName { get; }
         WeaponType WeaponType { get; }
         float AttackSpeedPercent { get; }
         float AttackRange { get; }
@@ -17,30 +18,20 @@ namespace Runtime.ConfigModel
 
     public abstract class WeaponDataConfigItem<T> : IWeaponDataConfigItem where T : EquipmentMechanicDataConfigItem, new()
     {
-        #region Members
-
+        public string weaponPrefabName;
         public float attackSpeedPercent;
         public float attackRange;
         public float damageBonus;
         public DamageFactor[] damageFactors;
         public T[] mechanics;
 
-        #endregion Members
-
-        #region Properties
+        public string WeaponPrefabName => weaponPrefabName;
         public float AttackSpeedPercent => attackSpeedPercent;
-
         public float AttackRange => attackRange;
-
         public float DamageBonus => damageBonus;
-
         public DamageFactor[] DamageFactors => damageFactors;
-
         public EquipmentMechanicDataConfigItem[] Mechanics => mechanics;
-
         public abstract WeaponType WeaponType { get; }
-
-        #endregion Properties
     }
 
     public abstract class WeaponDataConfig : EquipmentMechanicDataConfig

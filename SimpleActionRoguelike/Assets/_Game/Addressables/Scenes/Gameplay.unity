@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _heroLevel: 1
-  _weaponType: 1
+  _weaponType: 0
   _weaponRarity: 1
   _weaponLevel: 30
   _weaponStar: 3

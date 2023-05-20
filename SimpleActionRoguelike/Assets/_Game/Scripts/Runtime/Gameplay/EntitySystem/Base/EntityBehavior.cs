@@ -7,7 +7,6 @@ namespace Runtime.Gameplay.EntitySystem
     public abstract class EntityBehavior : MonoBehaviour, IEntityBehavior
     {
         protected CancellationToken disposeCancellationToken;
-
         public virtual UniTask<bool> BuildAsync(IEntityData data, CancellationToken cancellationToken)
         {
             disposeCancellationToken = cancellationToken;

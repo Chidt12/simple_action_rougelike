@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Runtime.ConfigModel.ShortGunWeaponDataConfig
   m_EditorClassIdentifier: 
   items:
-  - attackSpeedPercent: 1
+  - weaponPrefabName: weapon_1
+    attackSpeedPercent: 1
     attackRange: 6
     damageBonus: 0
     damageFactors:

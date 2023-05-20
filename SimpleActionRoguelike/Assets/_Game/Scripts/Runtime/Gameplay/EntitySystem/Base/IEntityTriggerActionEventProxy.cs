@@ -15,6 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
 
     public interface IEntityTriggerActionEventProxy
     {
+        void UpdateEntityTriggerAction();
         void TriggerEvent(AnimationType animationType, Action<SetStateData> stateAction = null, Action<SetStateData> endAction = null, bool isRefresh = false);
     }
 
@@ -25,5 +26,8 @@ namespace Runtime.Gameplay.EntitySystem
             stateAction?.Invoke(new SetStateData());
             endAction?.Invoke(new SetStateData());
         }
+
+        public void UpdateEntityTriggerAction()
+        {}
     }
 }

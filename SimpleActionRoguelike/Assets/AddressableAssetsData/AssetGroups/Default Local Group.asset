@@ -85,6 +85,14 @@ MonoBehaviour:
     m_Address: bullet_red_small
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f5f8657302f2dbe4f9f7b9f6f50095fd
+    m_Address: weapon_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 655aebb96fd01314bbdec14a9ff9d94b
+    m_Address: weapon_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

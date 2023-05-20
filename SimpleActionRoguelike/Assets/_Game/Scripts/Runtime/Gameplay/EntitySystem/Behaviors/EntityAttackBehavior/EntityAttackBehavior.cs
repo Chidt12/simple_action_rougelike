@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Core.Pool;
 using Runtime.Definition;
+using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -7,17 +9,20 @@ namespace Runtime.Gameplay.EntitySystem
     [DisallowMultipleComponent]
     public class EntityAttackBehavior : EntityBehavior<IEntityControlData, IEntityWeaponData, IEntityStatData, IEntityStatusData>
     {
+        [SerializeField] private Transform _weaponHolderTransform;
         private IAttackStrategy _attackStrategy;
         private IEntityControlData _controlData;
         private IEntityStatusData _statusData;
         private IEntityWeaponData _weaponData;
         private IEntityStatData _statData;
+        private CancellationTokenSource _cancellationTokenSource;
 
         protected async override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityWeaponData weaponData, IEntityStatData statData, IEntityStatusData statusData)
         {
             if(data == null || weaponData == null || statData == null)
                 return false;
 
+            _cancellationTokenSource = new();
             _statData = statData;
             _controlData = data;
             _controlData.PlayActionEvent += OnTriggerAttack;
@@ -36,17 +41,25 @@ namespace Runtime.Gameplay.EntitySystem
             return true;
         }
 
-        private void OnUpdateWeapon() => UpdateWeapon();
+        private void OnUpdateWeapon() => UpdateWeapon().Forget();
 
-        private UniTask UpdateWeapon()
+        private async UniTask UpdateWeapon()
         {
             _attackStrategy?.Cancel();
-            _attackStrategy = GetComponentInChildren<IAttackStrategy>();
-            _attackStrategy.Init(_weaponData.WeaponModel, _statData, transform);
-            _attackStrategy.InitEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
-            _weaponData.IsAttacking = false;
+            foreach (Transform weaponTransform in _weaponHolderTransform)
+                PoolManager.Instance.Return(weaponTransform.gameObject);
 
-            return UniTask.CompletedTask;
+            var weaponGameObject = await PoolManager.Instance.Rent(_weaponData.WeaponModel.WeaponPrefabName, token: _cancellationTokenSource.Token);
+            weaponGameObject.transform.SetParent(_weaponHolderTransform);
+            weaponGameObject.transform.localPosition = Vector2.zero;
+
+            _attackStrategy = weaponGameObject.GetComponent<IAttackStrategy>();
+            _attackStrategy.Init(_weaponData.WeaponModel, _statData, transform);
+
+            var triggerEventProxy = GetComponent<IEntityTriggerActionEventProxy>();
+            _attackStrategy.InitEventProxy(triggerEventProxy);
+            _weaponData.IsAttacking = false;
+            triggerEventProxy.UpdateEntityTriggerAction();
         }
 
         private void OnUpdateCurrentStatus()
@@ -100,6 +113,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void Disable()
         {
+            _cancellationTokenSource?.Cancel();
             _attackStrategy.Dispose();
         }
     }

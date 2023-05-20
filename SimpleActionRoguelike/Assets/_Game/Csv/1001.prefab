@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2b3303a3fe71a4d97d8b484cb72c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponHolderTransform: {fileID: 6856910067375946744}
 --- !u!114 &2295363477677041631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,7 +416,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &6875883244934980054
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -432,7 +433,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7688296006220167275
 MonoBehaviour:
   m_ObjectHideFlags: 0

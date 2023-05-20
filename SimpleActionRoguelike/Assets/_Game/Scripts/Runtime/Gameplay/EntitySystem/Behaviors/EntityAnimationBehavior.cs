@@ -46,9 +46,6 @@ namespace Runtime.Gameplay.EntitySystem
             _isPaused = false;
 
             _entityAnimations = GetComponentsInChildren<IEntityAnimation>(true);
-            if (_entityAnimations.Length == 0)
-                return UniTask.FromResult(false);
-
             _controlData = data;
             _controlData.MovementChangedEvent += UpdateCurrentAnimation;
 
@@ -79,6 +76,8 @@ namespace Runtime.Gameplay.EntitySystem
 
             return UniTask.FromResult(true);
         }
+
+        public void UpdateEntityTriggerAction() => _entityAnimations = GetComponentsInChildren<IEntityAnimation>(true);
 
         private void OnDamaged(float damagedValue, EffectSource effectSource, EffectProperty effectProperty)
         {
