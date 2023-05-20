@@ -32,6 +32,7 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.InitSkills(enemyData.Item2);
             enemyModel.InitStatus();
             enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategy);
+            enemyModel.InitDeathData(enemyData.Item3.deathDataIdentity);
 
             enemyGameObject.SetActive(true);
             enemyGameObject.transform.position = spawnPosition;

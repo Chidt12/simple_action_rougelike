@@ -77,6 +77,14 @@ MonoBehaviour:
     m_Address: bullet_blue_boomerang
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 61da6a6b65e05f94cbbc9d114a6bfdae
+    m_Address: bullet_circle_red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 31c4fa85e37d6a449adb8fff7978447c
+    m_Address: bullet_red_small
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

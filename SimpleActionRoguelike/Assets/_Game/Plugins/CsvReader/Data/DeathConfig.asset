@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f48964f8dfc931343af9c4058de12db4, type: 3}
+  m_Name: DeathConfig
+  m_EditorClassIdentifier: 
+  classInfomations:
+  - className: Runtime.ConfigModel.SpawnEntitiesDeathDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.SpawnEntitiesDeathDataConfig
+      csvFile: {fileID: 4900000, guid: a1b7bc07618ad3744adaf01ba10395f4, type: 3}
+      csvPath: Assets/_Game/Csv/entities/death_config/spawn_entities_death_config.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 
+  - className: Runtime.ConfigModel.SpawnForwardProjectilesDeathDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.SpawnForwardProjectilesDeathDataConfig
+      csvFile: {fileID: 4900000, guid: d970b85c7c31f9f4bbf8dfe812f77f96, type: 3}
+      csvPath: Assets/_Game/Csv/entities/death_config/spawn_forward_projectiles_death_config.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 
+  - className: Runtime.ConfigModel.SpawnContainEntitiesProjectilesDeathDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.SpawnContainEntitiesProjectilesDeathDataConfig
+      csvFile: {fileID: 4900000, guid: 717434c79b9e40e47a356acd51727d01, type: 3}
+      csvPath: Assets/_Game/Csv/entities/death_config/spawn_contain_entities_projectiles_death_config.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

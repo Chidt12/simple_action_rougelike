@@ -17,9 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
             var bigAngle = 360;
             var projectileCenterAngleOffset = (float)bigAngle / numberOfProjectiles;
             var firstDegree = 0;
-            var firstDirection = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
-            if (firstDirection == Vector2.zero)
-                firstDirection = Vector2.one;
+            var firstDirection = Vector2.up;
 
             Vector2 projectilePosition = entityData.Position;
             float offset = 0.3f; // avoid collide obstacle immediately when spawn

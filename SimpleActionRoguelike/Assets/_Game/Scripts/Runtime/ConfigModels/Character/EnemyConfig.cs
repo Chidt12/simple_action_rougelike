@@ -17,6 +17,7 @@ namespace Runtime.ConfigModel
         public EnemyLevelStats enemyLevelStats;
         public SkillIdentity skillIdentity;
         public AutoInputStrategyType autoInputStrategy;
+        public DeathDataIdentity deathDataIdentity;
 
         #endregion Members
 

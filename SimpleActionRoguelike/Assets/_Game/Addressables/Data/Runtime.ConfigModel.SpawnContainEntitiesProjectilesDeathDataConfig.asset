@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94ed88d0944e3744a548343013d43f7, type: 3}
+  m_Name: Runtime.ConfigModel.SpawnContainEntitiesProjectilesDeathDataConfig
+  m_EditorClassIdentifier: 
+  items:
+  - dataId: 1
+    projectileNumber: 5
+    projectileId: bullet_red_small
+    projectileMoveSpeed: 7
+    projectileMoveDistance: 16
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.8
+    spawnEntities:
+    - entityId: 2001
+      entityType: 1
+      entityNumber: 1
+      entityLevel: 1
+    useOwnerLevel: 1

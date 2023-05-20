@@ -269,7 +269,11 @@ namespace Runtime.Gameplay.EntitySystem
                 _defeatedEnemiesCount++;
                 var enemyData = entityDiedMessage.EntityData;
                 EnemiesData.Remove(enemyData);
-                if (HaveNoEnemiesLeft && !entityDiedMessage.SpawnedEnemyAfterDeath)
+
+                if (entityDiedMessage.DeathIdentity.deathType != DeathType.None)
+                    ExecuteDeathStrategyAsync(entityDiedMessage.EntityData, entityDiedMessage.DeathIdentity, this.GetCancellationTokenOnDestroy()).Forget();
+
+                if (HaveNoEnemiesLeft && !entityDiedMessage.DeathIdentity.deathType.IsSpawnedEnemy())
                 {
                     CreateEntityDestroyVfxAsync(entityDiedMessage.EntityData.EntityType, entityDiedMessage.EntityData.Position, this.GetCancellationTokenOnDestroy()).Forget();
                     return HandleCharacterDiedResultType.DeletedAllEnemyOnMap;
@@ -282,7 +286,13 @@ namespace Runtime.Gameplay.EntitySystem
 
             CreateEntityDestroyVfxAsync(entityDiedMessage.EntityData.EntityType, entityDiedMessage.EntityData.Position, this.GetCancellationTokenOnDestroy()).Forget();
             return HandleCharacterDiedResultType.None;
-        }  
+        }
+
+        private async UniTaskVoid ExecuteDeathStrategyAsync(IEntityData deathEntityData, DeathDataIdentity deathDataIdentity, CancellationToken cancellationToken)
+        {
+            var deathStrategy = DeathStrategyFactory.GetDeathStrategy(deathDataIdentity.deathType);
+            await deathStrategy.Execute(deathEntityData, deathDataIdentity, cancellationToken);
+        }
 
         protected async UniTask CreateEntitySpawnVfxAsync(EntityType entityType, Vector2 vfxPosition, CancellationToken cancellationToken)
         {
