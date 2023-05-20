@@ -93,6 +93,14 @@ MonoBehaviour:
     m_Address: weapon_2
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f36b4ed31f911da4ab722fb6d5845a0c
+    m_Address: 2003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9a92e1e0c23e03c44b8358cea9a9825b
+    m_Address: 2004
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:
