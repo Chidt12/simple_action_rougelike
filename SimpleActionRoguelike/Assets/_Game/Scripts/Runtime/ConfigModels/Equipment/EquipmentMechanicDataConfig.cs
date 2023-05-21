@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Runtime.ConfigModel
 {
     [Serializable]
-    public abstract class EquipmentMechanicDataConfigItem
+    public abstract class EquipmentMechanicDataConfigItem : BaseWithPointConfigItem
     {
         public RarityType triggerRarityType;
     }

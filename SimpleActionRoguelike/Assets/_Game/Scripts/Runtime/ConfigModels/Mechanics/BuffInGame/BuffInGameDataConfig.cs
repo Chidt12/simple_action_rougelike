@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Runtime.ConfigModel
 {
-    public abstract class BuffInGameDataConfigItem
+    public abstract class BuffInGameDataConfigItem : BaseWithPointConfigItem
     {
         public int level;
         public abstract BuffInGameType BuffInGameType { get; }
