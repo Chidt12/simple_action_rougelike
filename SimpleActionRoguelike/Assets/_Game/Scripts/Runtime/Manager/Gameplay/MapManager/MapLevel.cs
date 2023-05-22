@@ -11,6 +11,18 @@ namespace Runtime.Manager.Gameplay
         [SerializeField]
         public PolygonCollider2D confinder;
 
+        /// <summary>
+        /// use this second for check enemy;
+        /// </summary>
+        [SerializeField]
+        public string[] exceptEnemyIds;
+
+        /// <summary>
+        /// use this first for check enemy.
+        /// </summary>
+        [SerializeField]
+        public string[] includedEnemyIds;
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
