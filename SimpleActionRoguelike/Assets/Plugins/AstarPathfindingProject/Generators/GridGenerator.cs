@@ -900,8 +900,8 @@ namespace Pathfinding {
 			position = transform.InverseTransform(position);
 			float xf = position.x;
 			float zf = position.z;
-			int x = Mathf.Clamp((int)xf, 0, width - 1);
-			int z = Mathf.Clamp((int)zf, 0, depth - 1);
+			int x = (int)xf;
+			int z = (int)zf;
 			return IsValidNodeIndex(x, z);
 		}
 
