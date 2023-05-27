@@ -26,6 +26,7 @@ namespace Runtime.Gameplay.Balancing
 
         [HideIf(nameof(cheat))]
         [Header("=== Wave Config ===")]
+        [HideIf(nameof(cheat))] public int stageIntervalToFaceBoss = 15;
         [HideIf(nameof(cheat))] public int waveTimeInSeconds = 60;
 
         [HideIf(nameof(cheat))]

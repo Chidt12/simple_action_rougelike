@@ -26,6 +26,7 @@ using TweenType = Runtime.Helper.TweenType;
 
 namespace Runtime.Manager.Gameplay
 {
+
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
         protected int RewardCoins = 2;

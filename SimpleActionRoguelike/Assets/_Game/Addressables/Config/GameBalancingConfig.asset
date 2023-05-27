@@ -22,7 +22,7 @@ MonoBehaviour:
   allBossIds: []
   waveTimeInSeconds: 60
   lobbyMap: {fileID: 7775422072145440681, guid: 8cf891cf5eece20468d4824ef6a35487, type: 3}
-  shopMap: {fileID: 0}
+  shopMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
   maps:
   - {fileID: 7775422072145440681, guid: df7c9e76b828302418686d8b06d05542, type: 3}
   - {fileID: 7775422072145440681, guid: 71780f6ddee57104199fd0de2e775bc7, type: 3}
@@ -35,7 +35,7 @@ MonoBehaviour:
   t: 1
   n: 1.1
   z: 0
-  cheat: 1
+  cheat: 0
   cheatMap: {fileID: 7775422072145440681, guid: 3182e95df6681334dbcf5616b1530c48, type: 3}
   stageLoadConfigItem:
     waveConfigs:
