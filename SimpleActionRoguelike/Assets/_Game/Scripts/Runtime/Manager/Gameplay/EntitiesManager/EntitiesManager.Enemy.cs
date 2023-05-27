@@ -27,7 +27,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTask<GameObject> LoadEnemyAsync(GameObject enemyGameObject, int entityId, int entityLevel, Vector2 spawnPosition, CancellationToken cancellationToken = default)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(3));
             var enemyData = await GameplayDataManager.Instance.GetEnemyDataAsync(entityId, entityLevel);
             var enemyModel = new EnemyModel();
             enemyModel.Init(EntityType.Enemy, _entityUId++, entityId, entityLevel);

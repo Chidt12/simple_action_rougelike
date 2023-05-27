@@ -218,7 +218,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         public async UniTask<GameObject> CreateEntityAsync(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, CancellationToken cancellationToken = default)
         {
-            _currentSpawningEnemyCount++;
             GameObject entity = null;
             switch (spawnedEntityInfo.entityType)
             {
@@ -226,18 +225,18 @@ namespace Runtime.Gameplay.EntitySystem
                     entity = await CreateHeroAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
                     break;
                 case EntityType.Enemy:
+                    _currentSpawningEnemyCount++;
                     entity = await CreateEnemyAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
+                    _currentSpawningEnemyCount--;
                     break;
                 default:
                     break;
             }
-            _currentSpawningEnemyCount--;
             return entity;
         }
 
         public async UniTask<GameObject> LoadEntityOnMapAsync(GameObject entityGameObject, EntityType entityType, int entityId, int entityLevel)
         {
-            _currentSpawningEnemyCount++;
             GameObject entity = null;
             switch (entityType)
             {
@@ -245,12 +244,13 @@ namespace Runtime.Gameplay.EntitySystem
                     entity = await LoadHeroOnMapAsync(entityGameObject, entityId, entityLevel);
                     break;
                 case EntityType.Enemy:
+                    _currentSpawningEnemyCount++;
                     entity = await LoadEnemyOnMapAsync(entityGameObject, entityId, entityLevel);
+                    _currentSpawningEnemyCount--;
                     break;
                 default:
                     break;
             }
-            _currentSpawningEnemyCount--;
             return entity;
         }
 

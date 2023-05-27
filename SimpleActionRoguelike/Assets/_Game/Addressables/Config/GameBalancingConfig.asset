@@ -36,7 +36,7 @@ MonoBehaviour:
   n: 1.1
   z: 0
   cheat: 1
-  cheatMap: {fileID: 7775422072145440681, guid: 0aec31518caac4641a03750b8f0a8931, type: 3}
+  cheatMap: {fileID: 7775422072145440681, guid: 3182e95df6681334dbcf5616b1530c48, type: 3}
   stageLoadConfigItem:
     waveConfigs:
     - waveIndex: 0

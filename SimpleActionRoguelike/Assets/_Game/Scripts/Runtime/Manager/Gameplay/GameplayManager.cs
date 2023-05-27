@@ -123,9 +123,11 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTaskVoid LoadNextLevelAsync()
         {
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
+
             // Fade In
             var fadeTween = new TweenType(TweenHelper.TweenCurve.EaseInSinusoidal);
-            SimpleMessenger.Publish(new FadeOutMessage(0.75f, fadeTween, false, EntitiesManager.Instance.HeroData.Position, false));
+            SimpleMessenger.Publish(new FadeOutMessage(0.75f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, false));
             await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
             // Load Level.
@@ -136,7 +138,8 @@ namespace Runtime.Manager.Gameplay
             // Delay to wait for camera move to hero.
             await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Fade Out
-            SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, false, EntitiesManager.Instance.HeroData.Position, true));
+            GameManager.Instance.ReturnPreviousGameStateType();
+            SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, true));
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
             SetUpNewStage();
@@ -177,6 +180,7 @@ namespace Runtime.Manager.Gameplay
         private async UniTask LoadLevelAsync()
         {
             // Destroy current level
+
             if (_currentMapLevel)
                 Destroy(_currentMapLevel.gameObject);
 

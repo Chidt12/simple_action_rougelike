@@ -12,7 +12,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private async UniTask<GameObject> CreateHeroAsync(int entityId, int entityLevel, Vector2 spawnPosition, CancellationToken cancellationToken = default)
         {
-            var heroGameObject = await PoolManager.Instance.Rent(entityId.ToString(), token: cancellationToken);
+            var heroGameObject = await PoolManager.Instance.Rent(entityId.ToString(), false, token: cancellationToken);
             heroGameObject = await LoadHeroAsync(heroGameObject, entityId, entityLevel, spawnPosition, cancellationToken);
             return heroGameObject;
         }

@@ -15,7 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
         private bool _isShooting;
 
         public override bool CheckCanAttack()
-            => base.CheckCanAttack() && !_isShooting;
+            => base.CheckCanAttack();
 
         protected override async UniTask TriggerAttack(CancellationToken cancellationToken)
         {
