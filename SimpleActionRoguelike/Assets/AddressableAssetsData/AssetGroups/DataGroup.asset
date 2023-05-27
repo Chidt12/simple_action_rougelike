@@ -25,10 +25,6 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.EnemyConfig_2001.csv
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 58d946832bcb54a448f54804f677f9be
-    m_Address: Runtime.ConfigModel.StageLoadConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: ab14ce9861f47134289536651affd9e9
     m_Address: Runtime.ConfigModel.ShortGunWeaponDataConfig
     m_ReadOnly: 0

@@ -5,6 +5,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public abstract class ShopInGameItem
     {
+        public int BalancingPoint { get; protected set; }
         public abstract ShopInGameItemType ShopInGameItemType { get; }
         public abstract void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem);
         public abstract void Remove();
@@ -18,6 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
         public override void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem)
         {
             this.dataConfigItem = dataConfigItem as T;
+            BalancingPoint = dataConfigItem.point;
             this.owner = entityData;
             Apply();
         }

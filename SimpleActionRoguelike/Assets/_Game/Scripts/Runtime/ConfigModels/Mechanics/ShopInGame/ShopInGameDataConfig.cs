@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Runtime.ConfigModel
 {
-    public abstract class ShopInGameDataConfigItem
+    public abstract class ShopInGameDataConfigItem : BaseWithPointConfigItem
     {
         public int dataId;
         public abstract ShopInGameItemType ShopInGameType { get; }

@@ -10,6 +10,10 @@ namespace Runtime.Manager.Gameplay
         public MapSpawnPoint[] mapSpawnPoints;
         [SerializeField]
         public PolygonCollider2D confinder;
+        [SerializeField]
+        public int point;
+        [SerializeField]
+        public float limitDistanceToHero;
 
         /// <summary>
         /// use this second for check enemy;

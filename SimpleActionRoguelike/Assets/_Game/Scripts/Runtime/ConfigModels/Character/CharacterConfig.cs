@@ -5,7 +5,7 @@ namespace Runtime.ConfigModel
     [Serializable]
     public abstract class CharacterLevelConfigItem : BaseWithPointConfigItem
     {
-        public uint level;
+        public int level;
         public int detectedPriority;
         public abstract CharacterLevelStats CharacterLevelStats { get; }
     }

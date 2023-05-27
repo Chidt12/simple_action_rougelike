@@ -86,14 +86,13 @@ namespace Runtime.Gameplay.EntitySystem
                 SpawnStageWaveByStageDataAsync(stageMapEditorEntities, finishSpawnCallback).Forget();
             }
 
-            if (stageLoadConfigItem.entites != null && stageLoadConfigItem.entites.Length > 0)
+            var waveConfigItem = stageLoadConfigItem.waveConfigs.FirstOrDefault(x => x.waveIndex == waveIndex);
+
+            if (waveConfigItem.entites != null && waveConfigItem.entites.Length > 0)
             {
-                var spawnEntityConfigItems = stageLoadConfigItem.entites.Where(x => x.waveIndex == waveIndex).OrderBy(x => x.delaySpawnTime).ToList();
-                if (spawnEntityConfigItems.Count > 0)
-                {
-                    _finishedSpawnInConfig = false;
-                    SpawnStageWaveByConfigAsync(spawnEntityConfigItems, finishSpawnCallback).Forget();
-                }
+                var spawnEntityConfigItems = waveConfigItem.entites.OrderBy(x => x.delaySpawnTime).ToList();
+                _finishedSpawnInConfig = false;
+                SpawnStageWaveByConfigAsync(spawnEntityConfigItems, finishSpawnCallback).Forget();
             }
         }
 

@@ -11,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         public float AttackSpeedPercent { get; protected set; }
         public float AttackRange { get; protected set; }
         public string WeaponPrefabName { get; protected set; }
+        public int BalancingPoint { get; protected set; }
 
         public WeaponModel(WeaponData weaponData)
         {
@@ -19,6 +20,7 @@ namespace Runtime.Gameplay.EntitySystem
             AttackRange = weaponData.weaponConfigItem.AttackRange;
             DamageBonus = weaponData.weaponConfigItem.DamageBonus;
             DamageFactors = weaponData.weaponConfigItem.DamageFactors;
+            BalancingPoint = weaponData.mechanicDataConfigItem.point;
         }
     }
 

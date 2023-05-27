@@ -1,8 +1,10 @@
 namespace Runtime.Constants
 {
-    public class Constants
+    public class Constant
     {
+        public const string HERO_ID = "1001";
         public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
+        
     }
 
     public class ModalIds
@@ -35,6 +37,8 @@ namespace Runtime.Constants
                                                    
         public const string STATUS_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}StatusDataConfig";
         public const string EQUIPMENT_MECHANIC_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}EquipmentMechanicDataConfig";
+
+        public const string GAME_BALANCING_CONFIG = "GameBalancingConfig";
 
         #endregion Members
     }

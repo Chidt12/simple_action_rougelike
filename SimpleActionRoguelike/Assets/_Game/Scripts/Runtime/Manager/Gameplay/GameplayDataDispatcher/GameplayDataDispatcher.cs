@@ -38,7 +38,6 @@ namespace Runtime.Gameplay
     public abstract class GameplayDataDispatcher : MonoSingleton<GameplayDataDispatcher>
     {
         public abstract int HeroLevel { get; }
-        public abstract int StageId { get; }
 
         public abstract Dictionary<EquipmentType, EquipmentEquippedData> SelectedEquipments { get; }
 

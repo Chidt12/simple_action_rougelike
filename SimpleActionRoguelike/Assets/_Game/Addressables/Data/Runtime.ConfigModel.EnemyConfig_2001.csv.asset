@@ -15,11 +15,11 @@ MonoBehaviour:
   items:
   - id: 2001
     levels:
-    - point: 2
+    - point: 5
       level: 1
       detectedPriority: 0
       enemyLevelStats:
-        detectRange: 1000
+        detectRange: 4
         hp: 234
         armor: 0
         armorPenetration: 0

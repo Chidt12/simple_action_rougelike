@@ -63,7 +63,7 @@ namespace Runtime.SceneLoading
             while (!sceneLoadingAsyncOperation.IsDone)
             {
                 var status = sceneLoadingAsyncOperation.GetDownloadStatus();
-                float completeProgress = Mathf.Clamp01(status.Percent + (1 - Constants.Constants.SCENE_LOADING_STOP_PROGRESS_VALUE));
+                float completeProgress = Mathf.Clamp01(status.Percent + (1 - Constants.Constant.SCENE_LOADING_STOP_PROGRESS_VALUE));
                 _sceneLoadingProgressSmoothValue = Mathf.Lerp(_sceneLoadingProgressSmoothValue, completeProgress, DeltaTime * _sceneLoadingProgressSmoothSpeed);
                 float progressBarValue = _progressBarRoundValue > 0 ? (Mathf.Round(_sceneLoadingProgressSmoothValue / _progressBarRoundValue) * _progressBarRoundValue)
                                                                     : _sceneLoadingProgressSmoothValue;
@@ -71,7 +71,7 @@ namespace Runtime.SceneLoading
                 _sceneLoaderScreen.UpdateLoadProgress(progressBarValue, _sceneLoadingProgressSmoothValue * _mainLoadScale);
 
                 currentLoadingTime += DeltaTime;
-                if (completeProgress >= Constants.Constants.SCENE_LOADING_STOP_PROGRESS_VALUE)
+                if (completeProgress >= Constants.Constant.SCENE_LOADING_STOP_PROGRESS_VALUE)
                 {
                     if (currentLoadingTime > _sceneLoadingInfo.sceneLoadingMinTime)
                     {

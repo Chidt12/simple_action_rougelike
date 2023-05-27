@@ -67,8 +67,9 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 HasDisposed = true;
                 disposeCancellationTokenSource?.Cancel();
-                foreach (var item in DisposableBehaviors)
-                    item.Dispose();
+                if(DisposableBehaviors != null)
+                    foreach (var item in DisposableBehaviors)
+                        item.Dispose();
             }
         }
     }

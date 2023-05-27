@@ -1,7 +1,5 @@
-using CsvReader;
 using Runtime.Definition;
 using System;
-using System.Linq;
 
 namespace Runtime.ConfigModel
 {
@@ -26,7 +24,6 @@ namespace Runtime.ConfigModel
     public struct EntityStageLoadConfigItem
     {
         public SpawnedEntityInfo entityConfigItem;
-        public int waveIndex;
         public float delaySpawnTime;
         public bool followHero;
         public float distanceFromHero;
@@ -34,42 +31,29 @@ namespace Runtime.ConfigModel
     }
 
     [Serializable]
-    public struct WaveConfigItem
-    {
-        public uint stageId;
-        public WaveStageLoadConfigItem[] items;
-    }
-
-    [Serializable]
     public struct WaveStageLoadConfigItem
     {
         public int waveIndex;
         public int duration;
+        public EntityStageLoadConfigItem[] entites;
         public bool IsInfiniteDuration => duration == -1;
+
+        public WaveStageLoadConfigItem(int waveIndex, int duration, EntityStageLoadConfigItem[] entities)
+        {
+            this.waveIndex = waveIndex;
+            this.duration = duration;
+            this.entites = entities;
+        }
     }
 
     [Serializable]
     public struct StageLoadConfigItem
     {
-        public uint stageId;
-        public EntityStageLoadConfigItem[] entites;
-
-        [CsvColumnIgnore]
         public WaveStageLoadConfigItem[] waveConfigs;
-    }
 
-    public class StageLoadConfig : BaseConfig<StageLoadConfigItem>
-    {
-        private WaveConfigItem[] _tempWaveConfigs;
-
-        public void Convert()
+        public StageLoadConfigItem(WaveStageLoadConfigItem[] waveConfigs)
         {
-            for (int i = 0; i < items.Length; i++)
-            {
-                var waveConfig = _tempWaveConfigs.FirstOrDefault(x => x.stageId == items[i].stageId);
-                items[i].waveConfigs = waveConfig.items;
-            }
-            _tempWaveConfigs = null;
+            this.waveConfigs = waveConfigs;
         }
     }
 }

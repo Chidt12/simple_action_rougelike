@@ -7,6 +7,7 @@ using Runtime.Core.Pool;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Gameplay;
+using Runtime.Gameplay.Balancing;
 using Runtime.Gameplay.CollisionDetection;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Helper;
@@ -20,16 +21,14 @@ using System.Threading;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
 using ZBase.UnityScreenNavigator.Core.Views;
+using Random = UnityEngine.Random;
 using TweenType = Runtime.Helper.TweenType;
 
 namespace Runtime.Manager.Gameplay
 {
     public class GameplayManager : MonoSingleton<GameplayManager>
     {
-        protected string[] Levels = new[] { "Level1", "Level2" };
-
         protected int RewardCoins = 2;
-        protected BuffInGameType[] BuffsInGameType = new[] { BuffInGameType.RotateOrbs };
 
         protected WaveTimer waveTimer;
         protected bool hasFinishedSpawnWave;
@@ -37,12 +36,14 @@ namespace Runtime.Manager.Gameplay
         private ISubscription _gameplayDataLoadedRegistry;
         private ISubscription _entityDiedRegistry;
         private ISubscription _goToNextLevelMapRegistry;
-        private MapLevel _currentMapLevel;
         private CancellationTokenSource _cancellationTokenSource;
-
         private bool _isWinCurrentLevel;
 
-        private StageLoadConfigItem StageInfo => DataManager.Config.GetStageConfigData(GameplayDataDispatcher.Instance.StageId);
+        private MapLevel _currentMapLevel;
+        private StageLoadConfigItem _currentStageLoadConfigItem;
+        private int _stageNumber;
+
+        public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
         public int CurrentWaveIndex { get; protected set; }
 
@@ -125,63 +126,105 @@ namespace Runtime.Manager.Gameplay
             // Fade In
             var fadeTween = new TweenType(TweenHelper.TweenCurve.EaseInSinusoidal);
             SimpleMessenger.Publish(new FadeOutMessage(0.75f, fadeTween, false, EntitiesManager.Instance.HeroData.Position, false));
-            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
+            // Load Level.
+            _stageNumber++;
             await LoadLevelAsync();
             EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position);
 
             // Delay to wait for camera move to hero.
-            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Fade Out
             SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, false, EntitiesManager.Instance.HeroData.Position, true));
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token);
-            // TODO JUST FOR TEST LOAD MAP
-            CurrentWaveIndex = 0;
-            waveTimer.SetUp();
-            StartWave();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
+
+            SetUpNewStage();
         }
 
         private async UniTaskVoid StartGameplay()
         {
             // Load Level
+            _stageNumber = 0;
             await LoadLevelAsync();
+
             // Load Hero.
             await EntitiesManager.Instance.CreateEntityAsync(
-                new SpawnedEntityInfo("1001", EntityType.Hero, GameplayDataDispatcher.Instance.HeroLevel), 
+                new SpawnedEntityInfo(Constant.HERO_ID, EntityType.Hero, GameplayDataDispatcher.Instance.HeroLevel), 
                 MapManager.Instance.SpawnPoints[0].transform.position,
                 cancellationToken: _cancellationTokenSource.Token);
 
-            var stageInfo = StageInfo;
-            waveTimer.SetUp();
-            maxWaveIndex = stageInfo.waveConfigs.Max(x => x.waveIndex);
-            StartWave();
+            SetUpNewStage();
+        }
+
+        private void SetUpNewStage()
+        {
+            var stageInfo = _currentStageLoadConfigItem;
+            if (stageInfo.waveConfigs != null && stageInfo.waveConfigs.Length > 0)
+            {
+                _isWinCurrentLevel = false;
+                CurrentWaveIndex = 0;
+                waveTimer.SetUp();
+                maxWaveIndex = stageInfo.waveConfigs.Max(x => x.waveIndex);
+                StartWave();
+            }
+            else
+            {
+                _isWinCurrentLevel = true;
+            }
         }
 
         private async UniTask LoadLevelAsync()
         {
-            // Load Level Graphic
-            var newLevel = await PoolManager.Instance.Rent(Levels[UnityEngine.Random.Range(0, Levels.Length)], token: _cancellationTokenSource.Token);
+            // Destroy current level
             if (_currentMapLevel)
-                PoolManager.Instance.Return(_currentMapLevel.gameObject);
+                Destroy(_currentMapLevel.gameObject);
 
-            _currentMapLevel = null;
-            _currentMapLevel = newLevel.GetOrAddComponent<MapLevel>();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
+
+            // Load Level Graphic
+            var gameBalancingConfig = GameBalancingConfig;
+            var heroPoint = CalculateHeroPoint();
+            var (newLevel, stageLoadConfig, result) = await gameBalancingConfig.GetNextStage(heroPoint, _stageNumber);
+
+            _currentStageLoadConfigItem = stageLoadConfig;
+            _currentMapLevel = Instantiate(newLevel);
             CameraManager.Instance.SetConfinder(_currentMapLevel.confinder);
             MapManager.Instance.LoadLevelMap(_currentMapLevel);
+        }
+
+        private int CalculateHeroPoint()
+        {
+            var heroPoint = 0;
+
+            var heroData = EntitiesManager.Instance.HeroData;
+            // Hero Stats;
+            heroPoint += 10; // Dummy;
+
+            // Bonus weapon point
+            var weaponData = heroData as IEntityWeaponData;
+            if(weaponData != null)
+                heroPoint += weaponData.WeaponModel.BalancingPoint;
+
+            // Bonus shop point
+            var allShopItems = ShopInGameManager.Instance.CurrentShopInGameItems;
+            foreach (var shopItem in allShopItems)
+                heroPoint += shopItem.BalancingPoint;
+
+            return heroPoint;
         }
 
         private void StartWave()
         {
             hasFinishedSpawnWave = false;
-            var stageInfo = StageInfo;
-            EntitiesManager.Instance.SpawnStageWave(stageInfo, CurrentWaveIndex, OnFinishSpawnWave);
-            var waveConfig = stageInfo.waveConfigs.FirstOrDefault(x => x.waveIndex == CurrentWaveIndex);
+            EntitiesManager.Instance.SpawnStageWave(_currentStageLoadConfigItem, CurrentWaveIndex, OnFinishSpawnWave);
+            var waveConfig = _currentStageLoadConfigItem.waveConfigs.FirstOrDefault(x => x.waveIndex == CurrentWaveIndex);
             waveTimer.Start(waveConfig, onFinish: () => FinishWave(false));
             SimpleMessenger.Publish(new WaveTimeUpdatedMessage(true, CurrentGameplayTimeInSecond, CurrentWaveIndex, maxWaveIndex));
         }
 
         private void OnFinishSpawnWave()
-        => hasFinishedSpawnWave = true;
+            => hasFinishedSpawnWave = true;
 
         protected virtual void FinishWave(bool isClearWave)
         {

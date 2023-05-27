@@ -20,14 +20,9 @@ namespace Runtime.Gameplay.Manager
         [SerializeField]
         private int _weaponStar = 3;
         [SerializeField]
-        private int _stageId;
-        [SerializeField]
         private EquipmentEquippedData[] _equipments;
 
-
         public override int HeroLevel => _heroLevel;
-
-        public override int StageId => _stageId;
 
         public override Dictionary<EquipmentType, EquipmentEquippedData> SelectedEquipments
         {

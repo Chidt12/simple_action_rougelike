@@ -4,6 +4,7 @@ using Runtime.Constants;
 using Runtime.Core.Message;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
+using Runtime.Gameplay.Balancing;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
 using Runtime.Message;
@@ -28,10 +29,12 @@ namespace Runtime.Gameplay
             DataManager.Transient.ClearInGameMoney();
         }
 
+        public GameBalancingConfig GetGameBalancingConfig() => ConfigDataManager.Instance.GetData<GameBalancingConfig>(AddressableKeys.GAME_BALANCING_CONFIG);
+
         private async UniTask LoadConfig()
         {
-            await LoadStageLoadConfig();
             await LoadStatusConfig();
+            await LoadGameBalancingConfig();
             await ScreenNavigator.Instance.LoadScreen(new WindowOptions(ScreenIds.GAMEPLAY));
             FinishedLoading();
         }
@@ -40,8 +43,6 @@ namespace Runtime.Gameplay
         {
             SimpleMessenger.Publish(new GameplayDataLoadedMessage());
         }
-
-        private async UniTask LoadStageLoadConfig() => await DataManager.Config.Load<StageLoadConfig>();
 
         private async UniTask LoadStatusConfig()
         {
@@ -53,6 +54,11 @@ namespace Runtime.Gameplay
                     await DataManager.Config.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
                 }
             }
+        }
+
+        private async UniTask LoadGameBalancingConfig()
+        {
+            await DataManager.Config.Load<GameBalancingConfig>(AddressableKeys.GAME_BALANCING_CONFIG);
         }
 
         private bool HasConfig(StatusType statusType)

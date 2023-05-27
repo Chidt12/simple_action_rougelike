@@ -12,6 +12,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private List<ShopInGameItem> _shopInGameItems;
 
+        public List<ShopInGameItem> CurrentShopInGameItems => _shopInGameItems;
+
         protected override void Awake()
         {
             base.Awake();

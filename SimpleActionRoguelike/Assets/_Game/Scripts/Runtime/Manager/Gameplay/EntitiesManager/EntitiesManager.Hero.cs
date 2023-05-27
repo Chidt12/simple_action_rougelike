@@ -19,6 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTask<GameObject> LoadHeroOnMapAsync(GameObject entityGameObject, int entityId, int entityLevel, CancellationToken cancellationToken = default)
         {
+            entityGameObject.SetActive(false);
             entityGameObject = await LoadHeroAsync(entityGameObject, entityId, entityLevel, entityGameObject.transform.position, cancellationToken);
             return entityGameObject;
         }
@@ -31,6 +32,7 @@ namespace Runtime.Gameplay.EntitySystem
             heroModel.InitStats(heroData.Item1);
             heroModel.InitWeapon(heroData.Item2);
             heroModel.InitStatus();
+
             entityGameObject.SetActive(true);
             entityGameObject.transform.position = spawnPosition;
             await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(heroModel);
