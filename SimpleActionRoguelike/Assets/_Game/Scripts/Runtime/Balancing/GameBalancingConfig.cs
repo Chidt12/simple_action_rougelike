@@ -2,41 +2,64 @@ using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Constants;
 using Runtime.Definition;
-using Runtime.Manager.Data;
+using Runtime.Gameplay.Manager;
 using Runtime.Manager.Gameplay;
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using UnityEngine;
 
 namespace Runtime.Gameplay.Balancing
 {
+    [Serializable]
+    public class GameBalancingConfigRoomType
+    {
+        public int stageNumber;
+        public GameplayRoomType roomType;
+        public GameplayGateSetupType setupGateType;
+    }
+
     [CreateAssetMenu(fileName = AddressableKeys.GAME_BALANCING_CONFIG, menuName = "Balancing/GameBalancingConfig")]
-    public class GameBalancingConfig : ScriptableObject
+    public partial class GameBalancingConfig : ScriptableObject
     {
         [HideIf(nameof(cheat))]
         [Header("=== Gen Enemies Config ===")]
-        [HideIf(nameof(cheat))] public int minWave = 2; // boss only have 1 wave.
-        [HideIf(nameof(cheat))] public int maxWave = 5;
+        [HideIf(nameof(cheat))] public int minWave = 1; // boss only have 1 wave.
+        [HideIf(nameof(cheat))] public int maxWave = 3;
         [HideIf(nameof(cheat))] public int minEnemyTypes = 1;
         [HideIf(nameof(cheat))] public int maxEnemyTypes = 4;
         [HideIf(nameof(cheat))] public int heroLevelConvert = 10;
         [HideIf(nameof(cheat))] public string[] allEnemyIds;
+        [HideIf(nameof(cheat))] public string[] allEliteEnemyIds;
         [HideIf(nameof(cheat))] public string[] allBossIds;
 
         [HideIf(nameof(cheat))]
         [Header("=== Wave Config ===")]
-        [HideIf(nameof(cheat))] public int stageIntervalToFaceBoss = 15;
         [HideIf(nameof(cheat))] public int waveTimeInSeconds = 60;
 
         [HideIf(nameof(cheat))]
         [Header("=== Map Config ===")]
         [HideIf(nameof(cheat))] public MapLevel lobbyMap;
         [HideIf(nameof(cheat))] public MapLevel shopMap;
+        [HideIf(nameof(cheat))] public MapLevel[] bossMaps;
         [HideIf(nameof(cheat))] public MapLevel[] maps;
 
         [HideIf(nameof(cheat))]
-        [Header("=== Formula Balancing ===[ t*(heroPoint^n)+z ]")]
+        [Header("=== Room Config ===")]
+        [HideIf(nameof(cheat))] public GameBalancingConfigRoomType[] setupRoomTypes;
+        [HideIf(nameof(cheat))] public int stageIntervalToFaceBoss = 15;
+        [HideIf(nameof(cheat))] public int stageEndGame = 90;
+        [HideIf(nameof(cheat))] public int numberOfShopStageBeforeBoss = 2; // 1 randomly , 1 before boss stage
+        [HideIf(nameof(cheat))] public int numberOfGivingShopItemBeforeBoss = 5;
+        [HideIf(nameof(cheat))] public int numberOfGivingArtifactBeforeBoss = 5;
+
+        [HideIf(nameof(cheat))]
+        [Header("=== Artifact Config ===")]
+
+        [Header("=== Shop Item Config ===")]
+
+        [HideIf(nameof(cheat))]
+        [Header("=== Formula Balancing [ T*(heroPoint^N)+Z ] ===")]
         [HideIf(nameof(cheat))] public float t;
         [HideIf(nameof(cheat))] public float n;
         [HideIf(nameof(cheat))] public float z;
@@ -44,92 +67,88 @@ namespace Runtime.Gameplay.Balancing
         [Header("==== Cheat ====")]
         public bool cheat;
         [ShowIf(nameof(cheat))] public MapLevel cheatMap;
+        [ShowIf(nameof(cheat))] public GameplayRoomType roomType;
         [ShowIf(nameof(cheat))] public StageLoadConfigItem stageLoadConfigItem;
 
         #region Calculate
 
-        public async UniTask<(MapLevel, StageLoadConfigItem, bool)> GetNextStage(int heroPoint, int stageNumber)
+        public async UniTask<(MapLevel, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> GetNextStage(int heroPoint, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
+            // Calculate for current stage and predict the next stage too.
+            // Order: load map => load current room type => load waves of current map => setup gate type.
+
             if (cheat)
             {
-                return (cheatMap, stageLoadConfigItem, true);
+                return (cheatMap, stageLoadConfigItem, roomType, GameplayGateSetupType.None);
             }
             else
             {
-                var heroLevel = heroPoint / heroLevelConvert;
-                var stagePoint = t * Mathf.Pow(heroPoint, n) + z;
-
-                // random map.
-                var randomMapIndex = Random.Range(0, maps.Length);
-                var randomMap = maps[randomMapIndex];
-                stagePoint -= randomMap.point;
-
-                // random enemies types.
-                var possibleRandomEnemies = randomMap.includedEnemyIds != null && randomMap.includedEnemyIds.Length > 0
-                                                ? randomMap.includedEnemyIds : allEnemyIds.Where(x => !randomMap.exceptEnemyIds.Contains(x)).ToArray();
-
-                var numberOfTypes = Random.Range(minEnemyTypes, Mathf.Min(maxEnemyTypes + 1, possibleRandomEnemies.Length));
-
-                if (possibleRandomEnemies.Length <= 0)
-                    return (randomMap, default, false);
-
-                List<string> selectedEnemyTypes = new List<string>();
-                for (int i = 0; i < numberOfTypes; i++)
+                var havePresetUpRoom = false;
+                var gateSetUpType = GameplayGateSetupType.None;
+                var preSetUpRoom = setupRoomTypes.FirstOrDefault(x => x.stageNumber == currentStageData.StageNumber);
+                if (preSetUpRoom != null)
                 {
-                    var randomList = possibleRandomEnemies.Where(x => !selectedEnemyTypes.Contains(x)).ToArray();
-                    var selectedIndex = Random.Range(0, randomList.Length);
-                    selectedEnemyTypes.Add(randomList[selectedIndex]);
+                    havePresetUpRoom = true;
+                    roomType = preSetUpRoom.roomType;
+                    gateSetUpType = preSetUpRoom.setupGateType;
                 }
 
-                // Load enemies config
-                List<EnemyLevelConfigItem> selectedEnemyConfigs = new();
-                foreach (var enemyId in selectedEnemyTypes)
+                if (roomType == GameplayRoomType.Lobby)
                 {
-                    var config = await DataManager.Config.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(enemyId.ToString()));
-                    var enemyConfigItem = config.items.FirstOrDefault(x => x.id == uint.Parse(enemyId));
-                    var maxEnemyLevel = enemyConfigItem.levels.Max(x => x.level);
-                    var enemyLevel = Mathf.Min(heroLevel, maxEnemyLevel);
-                    var enemyLevelConfigItem = enemyConfigItem.levels.FirstOrDefault(x => x.level == enemyLevel);
-                    selectedEnemyConfigs.Add(enemyLevelConfigItem);
+                    // Load Lobby Stage.
+                    if (!havePresetUpRoom)
+                        gateSetUpType = GameplayGateSetupType.Normal;
+                    return (lobbyMap, default, GameplayRoomType.Lobby, gateSetUpType);
                 }
-
-                // Create waves.
-                var waveNumber = Random.Range(minWave, maxWave + 1);
-                var waves = new List<WaveStageLoadConfigItem>();
-                for (int i = 0; i < waveNumber; i++)
+                else if (roomType == GameplayRoomType.Shop)
                 {
-                    // Calculate entities for waves;
-                    var entities = new List<EntityStageLoadConfigItem>();
-                    var wavePoint = stagePoint;
-                    while (wavePoint > 0)
+                    // Load Shop Stage.
+                    if (!havePresetUpRoom)
+                        gateSetUpType = CalculateForGateSetUp(roomType);
+                    return (shopMap, default, GameplayRoomType.Shop, gateSetUpType);
+                }
+                else
+                {
+                    // Set up room and gate types.
+                    if (!havePresetUpRoom)
                     {
-                        var selectedIndex = Random.Range(0, selectedEnemyConfigs.Count);
-                        var selectedEnemy = selectedEnemyConfigs[selectedIndex];
-                        var spawnedEnemyInfo = new SpawnedEntityInfo(selectedEnemyTypes[selectedIndex], EntityType.Enemy, selectedEnemy.level, 1);
-
-                        var entityStageLoadConfigItem = new EntityStageLoadConfigItem();
-                        entityStageLoadConfigItem.entityConfigItem = spawnedEnemyInfo;
-                        entityStageLoadConfigItem.delaySpawnTime = i == 0 ? 0.5f : 0;
-                        entityStageLoadConfigItem.followHero = true;
-                        entityStageLoadConfigItem.distanceFromHero = randomMap.limitDistanceToHero > 0 ?
-                                Mathf.Min(randomMap.limitDistanceToHero, selectedEnemy.enemyLevelStats.detectRange + 2) :
-                                selectedEnemy.enemyLevelStats.detectRange + 2;
-
-                        entityStageLoadConfigItem.spawnPointIndex = 0;
-                        entities.Add(entityStageLoadConfigItem);
-
-                        if (selectedEnemy.point <= 0)
-                            break;
-                        wavePoint -= selectedEnemy.point;
+                        roomType = CalculateForGameplayRoomType(roomType);
+                        gateSetUpType = CalculateForGateSetUp(roomType);
                     }
 
-                    var newWaveTime = i == waveNumber - 1 ? -1 : waveTimeInSeconds;
-                    var newWave = new WaveStageLoadConfigItem(i, newWaveTime, entities.ToArray());
-                    waves.Add(newWave);
-                }
+                    // calculate stage point.
+                    var heroLevel = heroPoint / heroLevelConvert;
+                    var stagePoint = t * Mathf.Pow(heroPoint, n) + z;
 
-                return (randomMap, new StageLoadConfigItem(waves.ToArray()), true);
+                    if (roomType == GameplayRoomType.Elite || roomType == GameplayRoomType.EliteHaveArtifact)
+                    {
+                        // Set up for the room of elite.
+                        return await SetUpForEliteRoomAsync(stagePoint, heroLevel, gateSetUpType, roomType, currentStageData);
+                    }
+                    else if (roomType == GameplayRoomType.Boss)
+                    {
+                        // Set up for the room of boss.
+                        return await SetUpForBossRoomAsync(stagePoint, heroLevel, gateSetUpType, roomType, currentStageData);
+                    }
+                    else
+                    {
+                        // Set up for the normal room
+                        return await SetUpForNormalRoomAsync(stagePoint, heroLevel, gateSetUpType, roomType, currentStageData);
+                    }
+                }
             }
+        }
+
+        private GameplayGateSetupType CalculateForGateSetUp(GameplayRoomType roomType)
+        {
+            // Setup gate type for get shop item, go to shop, boss room reason | not related to artifact.
+            return GameplayGateSetupType.None;
+        }
+
+        private GameplayRoomType CalculateForGameplayRoomType(GameplayRoomType roomType)
+        {
+            // Set up room type for get artifact reason.
+            return GameplayRoomType.Normal;
         }
 
         private string GetConfigAssetName<T>(string id = "")

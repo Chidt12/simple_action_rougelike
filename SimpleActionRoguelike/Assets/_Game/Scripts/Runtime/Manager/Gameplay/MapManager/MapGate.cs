@@ -15,7 +15,7 @@ namespace Runtime.Manager.Gameplay
         [Serializable]
         public class MapGateGraphic
         {
-            public GateType gateType;
+            public GameplayRoomType gateType;
             public GameObject graphic;
             public Animator animator;
         }
@@ -33,7 +33,7 @@ namespace Runtime.Manager.Gameplay
             }
         }
 
-        public void SetUp(GateType gateType)
+        public void SetUp(GameplayRoomType gateType)
         {
             _currentGraphic = _graphics.FirstOrDefault(x => x.gateType == gateType);
         }

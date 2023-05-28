@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3954f38c0cd187409829aab009cf942, type: 3}
   m_Name: GameBalancingConfig
   m_EditorClassIdentifier: 
-  minWave: 2
-  maxWave: 5
+  minWave: 1
+  maxWave: 3
   minEnemyTypes: 1
   maxEnemyTypes: 4
   heroLevelConvert: 10
   allEnemyIds:
   - 2001
-  allBossIds: []
-  stageIntervalToFaceBoss: 15
+  allEliteEnemyIds:
+  - 2001
+  allBossIds:
+  - 2001
   waveTimeInSeconds: 60
   lobbyMap: {fileID: 7775422072145440681, guid: 8cf891cf5eece20468d4824ef6a35487, type: 3}
   shopMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
+  bossMaps:
+  - {fileID: 7775422072145440681, guid: 71780f6ddee57104199fd0de2e775bc7, type: 3}
   maps:
   - {fileID: 7775422072145440681, guid: df7c9e76b828302418686d8b06d05542, type: 3}
   - {fileID: 7775422072145440681, guid: 71780f6ddee57104199fd0de2e775bc7, type: 3}
@@ -33,11 +37,30 @@ MonoBehaviour:
   - {fileID: 7775422072145440681, guid: 89ab12a842a6e79458f77d28c422b22b, type: 3}
   - {fileID: 7775422072145440681, guid: 3182e95df6681334dbcf5616b1530c48, type: 3}
   - {fileID: 7775422072145440681, guid: c361748a93dbdb44fbf18f877c0b3f73, type: 3}
+  setupRoomTypes:
+  - stageNumber: 0
+    roomType: 1000
+    setupGateType: 1
+  - stageNumber: 1
+    roomType: 5
+    setupGateType: 1
+  - stageNumber: 2
+    roomType: 0
+    setupGateType: 1
+  - stageNumber: 3
+    roomType: 5
+    setupGateType: 0
+  stageIntervalToFaceBoss: 15
+  stageEndGame: 90
+  numberOfShopStageBeforeBoss: 2
+  numberOfGivingShopItemBeforeBoss: 5
+  numberOfGivingArtifactBeforeBoss: 5
   t: 1
   n: 1.1
   z: 0
-  cheat: 1
+  cheat: 0
   cheatMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
+  roomType: 0
   stageLoadConfigItem:
     waveConfigs:
     - waveIndex: 0

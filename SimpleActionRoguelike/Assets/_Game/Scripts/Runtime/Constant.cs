@@ -4,7 +4,7 @@ namespace Runtime.Constants
     {
         public const string HERO_ID = "1001";
         public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
-        
+        public const float DELAY_TIME_FOR_FIRST_WAVE = 0.5f;
     }
 
     public class ModalIds

@@ -10,6 +10,7 @@ using Runtime.Gameplay;
 using Runtime.Gameplay.Balancing;
 using Runtime.Gameplay.CollisionDetection;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Gameplay.Manager;
 using Runtime.Helper;
 using Runtime.Manager.Data;
 using Runtime.Message;
@@ -39,9 +40,9 @@ namespace Runtime.Manager.Gameplay
         private CancellationTokenSource _cancellationTokenSource;
         private bool _isWinCurrentLevel;
 
-        private MapLevel _currentMapLevel;
+        private MapLevel _currentLevelMap;
         private StageLoadConfigItem _currentStageLoadConfigItem;
-        private int _stageNumber;
+        private CurrentLoadedStageData _currentStageData;
 
         public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
@@ -85,8 +86,8 @@ namespace Runtime.Manager.Gameplay
             {
                 if (_isWinCurrentLevel)
                 {
-                    _isWinCurrentLevel = false;
-                    LoadNextLevelAsync().Forget();
+                    var roomType = (GameplayRoomType)message.Data;
+                    LoadNextLevelAsync(roomType).Forget();
                 }
             }
             else if (message.SendToGameplayType == SendToGameplayType.BuyShop)
@@ -154,7 +155,7 @@ namespace Runtime.Manager.Gameplay
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
         }
 
-        private async UniTaskVoid LoadNextLevelAsync()
+        private async UniTaskVoid LoadNextLevelAsync(GameplayRoomType roomType)
         {
             GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
 
@@ -164,8 +165,7 @@ namespace Runtime.Manager.Gameplay
             await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
             // Load Level.
-            _stageNumber++;
-            await LoadLevelAsync();
+            await LoadLevelAsync(roomType);
             EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position);
 
             // Delay to wait for camera move to hero.
@@ -175,14 +175,15 @@ namespace Runtime.Manager.Gameplay
             SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, true));
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
+            // Update current Stage info.
             SetUpNewStage();
         }
 
         private async UniTaskVoid StartGameplay()
         {
             // Load Level
-            _stageNumber = 0;
-            await LoadLevelAsync();
+            _currentStageData = new();
+            await LoadLevelAsync(GameplayRoomType.Lobby);
 
             // Load Hero.
             await EntitiesManager.Instance.CreateEntityAsync(
@@ -195,39 +196,74 @@ namespace Runtime.Manager.Gameplay
 
         private void SetUpNewStage()
         {
-            var stageInfo = _currentStageLoadConfigItem;
-            if (stageInfo.waveConfigs != null && stageInfo.waveConfigs.Length > 0)
+            if (_currentStageLoadConfigItem.waveConfigs != null && _currentStageLoadConfigItem.waveConfigs.Length > 0)
             {
-                _isWinCurrentLevel = false;
-                CurrentWaveIndex = 0;
-                waveTimer.SetUp();
-                maxWaveIndex = stageInfo.waveConfigs.Max(x => x.waveIndex);
-                StartWave();
+                StartCurrentLevel();
             }
             else
             {
-                _isWinCurrentLevel = true;
+                WonCurrentLevel();
             }
         }
 
-        private async UniTask LoadLevelAsync()
+        private async UniTask LoadLevelAsync(GameplayRoomType roomType)
         {
             // Destroy current level
 
-            if (_currentMapLevel)
-                Destroy(_currentMapLevel.gameObject);
+            if (_currentLevelMap)
+                Destroy(_currentLevelMap.gameObject);
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
             // Load Level Graphic
             var gameBalancingConfig = GameBalancingConfig;
             var heroPoint = CalculateHeroPoint();
-            var (newLevel, stageLoadConfig, result) = await gameBalancingConfig.GetNextStage(heroPoint, _stageNumber);
+            var (newLevelMap, stageLoadConfig, updatedRoomType, gateSetupType) = await gameBalancingConfig.GetNextStage(heroPoint, roomType, _currentStageData);
 
+            _currentStageData.UpdateCurrentStage(updatedRoomType);
             _currentStageLoadConfigItem = stageLoadConfig;
-            _currentMapLevel = Instantiate(newLevel);
-            CameraManager.Instance.SetConfinder(_currentMapLevel.confinder);
-            MapManager.Instance.LoadLevelMap(_currentMapLevel);
+            _currentLevelMap = Instantiate(newLevelMap);
+
+            SetUpRoomGates(_currentLevelMap, gateSetupType);
+            CameraManager.Instance.SetConfinder(_currentLevelMap.confinder);
+            MapManager.Instance.LoadLevelMap(_currentLevelMap);
+        }
+
+        private void SetUpRoomGates(MapLevel mapLevel, GameplayGateSetupType gameplayGateSetupType)
+        {
+            switch (gameplayGateSetupType)
+            {
+                case GameplayGateSetupType.None:
+                case GameplayGateSetupType.Normal:
+                    mapLevel.gates[0].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
+                    mapLevel.gates[1].gameObject.SetActive(false);
+                    break;
+                case GameplayGateSetupType.NormalAndElite:
+                    mapLevel.gates[0].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
+                    mapLevel.gates[1].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Elite);
+                    break;
+                case GameplayGateSetupType.NormalAndShop:
+                    mapLevel.gates[0].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
+                    mapLevel.gates[1].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Shop);
+                    break;
+                case GameplayGateSetupType.Shop:
+                    mapLevel.gates[0].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Shop);
+                    mapLevel.gates[1].gameObject.SetActive(false);
+                    break;
+                case GameplayGateSetupType.Boss:
+                    mapLevel.gates[0].gameObject.SetActive(true);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.Boss);
+                    mapLevel.gates[1].gameObject.SetActive(false);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private int CalculateHeroPoint()
@@ -299,11 +335,36 @@ namespace Runtime.Manager.Gameplay
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.LOSE)).Forget();
         }
 
-        private async UniTask HandleWinLevelAsync()
+        private void HandleLoseStage()
         {
-            _isWinCurrentLevel = true;
+            Debug.LogError("LOSE GAME");
+        }
+
+        private UniTask HandleWinLevelAsync()
+        {
+            WonCurrentLevel();
             ToastController.Instance.Show($"Add + {RewardCoins}");
             DataManager.Transient.AddMoney(InGameMoneyType.Gold, RewardCoins);
+            return UniTask.CompletedTask;
+        }
+
+        private void WonCurrentLevel()
+        {
+            _isWinCurrentLevel = true;
+            foreach (var gate in _currentLevelMap.gates)
+                gate.OpenGate();
+        }
+
+        private void StartCurrentLevel()
+        {
+            _isWinCurrentLevel = false;
+            foreach (var gate in _currentLevelMap.gates)
+                gate.CloseGate();
+
+            CurrentWaveIndex = 0;
+            waveTimer.SetUp();
+            maxWaveIndex = _currentStageLoadConfigItem.waveConfigs.Max(x => x.waveIndex);
+            StartWave();
         }
 
         private void OnSelectBuffItem(BuffInGameIdentity dataIdentity)
@@ -317,11 +378,6 @@ namespace Runtime.Manager.Gameplay
             await MechanicSystemManager.Instance.AddBuffInGameSystem(heroData, dataIdentity.buffInGameType);
             GameManager.Instance.ReturnPreviousGameStateType();
             await ScreenNavigator.Instance.PopModal(true);
-        }
-
-        private void HandleLoseStage()
-        {
-            Debug.LogError("LOSE GAME");
         }
 
         public void Dispose()
