@@ -6,14 +6,11 @@ namespace Runtime.Manager.Gameplay
     [SerializeField]
     public class MapLevel : MonoBehaviour
     {
-        [SerializeField]
-        public MapSpawnPoint[] mapSpawnPoints;
-        [SerializeField]
-        public PolygonCollider2D confinder;
-        [SerializeField]
-        public int point;
-        [SerializeField]
-        public float limitDistanceToHero;
+        [SerializeField] public MapSpawnPoint[] mapSpawnPoints;
+        [SerializeField] public PolygonCollider2D confinder;
+        [SerializeField] public MapGate[] gates;
+        [SerializeField] public int point;
+        [SerializeField] public float limitDistanceToHero;
 
         /// <summary>
         /// use this second for check enemy;
@@ -31,6 +28,7 @@ namespace Runtime.Manager.Gameplay
         private void OnValidate()
         {
             mapSpawnPoints = GetComponentsInChildren<MapSpawnPoint>();
+            gates = GetComponentsInChildren<MapGate>();
         }
 #endif 
     }

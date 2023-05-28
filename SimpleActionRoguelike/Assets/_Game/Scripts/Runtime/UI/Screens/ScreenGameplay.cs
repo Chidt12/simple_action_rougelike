@@ -25,7 +25,7 @@ namespace Runtime.UI
 
         private void OnClickShop()
         {
-            GameplayManager.Instance.ShowShop();
+            GameplayManager.Instance.LoadShopInGameAsync().Forget();
         }
     }
 }

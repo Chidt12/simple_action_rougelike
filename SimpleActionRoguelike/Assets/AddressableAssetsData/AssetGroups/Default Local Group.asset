@@ -33,14 +33,6 @@ MonoBehaviour:
     m_Address: bullet_red
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 3ec7dae159d6d414eaf7e0a5782a11c4
-    m_Address: Level2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 332f4f54ea167914a96710a984ce3262
-    m_Address: Level1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 5b699dc458e05364a8ebe6569becf4f8
     m_Address: warning_execute_skill_vfx
     m_ReadOnly: 0

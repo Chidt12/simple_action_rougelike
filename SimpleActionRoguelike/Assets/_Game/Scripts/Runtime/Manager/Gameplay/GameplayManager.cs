@@ -21,7 +21,6 @@ using System.Threading;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
 using ZBase.UnityScreenNavigator.Core.Views;
-using Random = UnityEngine.Random;
 using TweenType = Runtime.Helper.TweenType;
 
 namespace Runtime.Manager.Gameplay
@@ -57,7 +56,7 @@ namespace Runtime.Manager.Gameplay
             _cancellationTokenSource = new CancellationTokenSource();
             _gameplayDataLoadedRegistry = SimpleMessenger.Subscribe<GameplayDataLoadedMessage>(OnGameplayDataLoaded);
             _entityDiedRegistry = SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied);
-            _goToNextLevelMapRegistry = SimpleMessenger.Subscribe<GoToNextLevelMapMessage>(OnGoToNextLevelMap);
+            _goToNextLevelMapRegistry = SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage);
             SceneLoaderManager.RegisterScenePreloadedAction(Dispose);
         }
 
@@ -65,7 +64,51 @@ namespace Runtime.Manager.Gameplay
 
         #region Class Methods
 
-        public async UniTaskVoid ShowShop()
+        private void OnGameplayDataLoaded(GameplayDataLoadedMessage gameplayDataLoadedMessage)
+        {
+            EntitiesManager.Instance.Initialize();
+            StartGameplay().Forget();
+        }
+
+        private void OnEntityDied(EntityDiedMessage entityDiedMessage)
+        {
+            var handleCharacterDiedResult = EntitiesManager.Instance.HandleCharacterDied(entityDiedMessage);
+            if (handleCharacterDiedResult == HandleCharacterDiedResultType.DeletedAllEnemyOnMap)
+                DeletedAllEnemyOnMap();
+            else if (handleCharacterDiedResult == HandleCharacterDiedResultType.HeroDied)
+                KillHero();
+        }
+
+        private void OnReceiveMessage(SendToGameplayMessage message)
+        {
+            if(message.SendToGameplayType == SendToGameplayType.GoNextStage)
+            {
+                if (_isWinCurrentLevel)
+                {
+                    _isWinCurrentLevel = false;
+                    LoadNextLevelAsync().Forget();
+                }
+            }
+            else if (message.SendToGameplayType == SendToGameplayType.BuyShop)
+            {
+                LoadShopInGameAsync().Forget();
+            }
+            else if (message.SendToGameplayType == SendToGameplayType.GiveArtifact)
+            {
+                LoadGiveArtifactAsync().Forget();
+            }
+            else if (message.SendToGameplayType == SendToGameplayType.GiveShopItem)
+            {
+                LoadGiveShopAsync().Forget();
+            }
+        }
+
+        private async UniTaskVoid LoadGiveShopAsync()
+        {
+
+        }
+
+        public async UniTaskVoid LoadShopInGameAsync()
         {
             var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
             var selectInGameShopData = new ModalSelectIngameShopData(shopItems.ToArray(), OnBuyShopItem);
@@ -74,10 +117,10 @@ namespace Runtime.Manager.Gameplay
 
         private void OnBuyShopItem(ShopInGameStageLoadConfigItem item)
         {
-            if(item.cost.resourceType == ResourceType.MoneyInGame)
+            if (item.cost.resourceType == ResourceType.MoneyInGame)
             {
                 var value = DataManager.Transient.GetGameMoneyType((InGameMoneyType)item.cost.resourceId);
-                if(value < item.cost.resourceNumber)
+                if (value < item.cost.resourceNumber)
                 {
                     ToastController.Instance.Show("Not Enough Resource!");
                     return;
@@ -97,29 +140,18 @@ namespace Runtime.Manager.Gameplay
             ToastController.Instance.Show(description);
         }
 
-        private void OnGameplayDataLoaded(GameplayDataLoadedMessage gameplayDataLoadedMessage)
+        private async UniTaskVoid LoadGiveArtifactAsync()
         {
-            EntitiesManager.Instance.Initialize();
-            StartGameplay().Forget();
-        }
+            // Pause for select buff
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
 
-        private void OnEntityDied(EntityDiedMessage entityDiedMessage)
-        {
-            var handleCharacterDiedResult = EntitiesManager.Instance.HandleCharacterDied(entityDiedMessage);
-            if (handleCharacterDiedResult == HandleCharacterDiedResultType.DeletedAllEnemyOnMap)
-                DeletedAllEnemyOnMap();
-            else if (handleCharacterDiedResult == HandleCharacterDiedResultType.HeroDied)
-                KillHero();
-        }
+            var heroEntityData = EntitiesManager.Instance.HeroData;
+            var currentBuffs = MechanicSystemManager.Instance.GetCurrentBuffsInGame();
 
-        private void OnGoToNextLevelMap(GoToNextLevelMapMessage message)
-        {
-            if (_isWinCurrentLevel)
-            {
-                _isWinCurrentLevel = false;
-                //Load Next Level
-                LoadNextLevelAsync().Forget();
-            }
+            var suitableItems = await DataManager.Config.LoadCurrentSuitableBuffInGameItems(currentBuffs);
+
+            var modalData = new ModalSelectIngameBuffData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
         }
 
         private async UniTaskVoid LoadNextLevelAsync()
@@ -270,20 +302,8 @@ namespace Runtime.Manager.Gameplay
         private async UniTask HandleWinLevelAsync()
         {
             _isWinCurrentLevel = true;
-
             ToastController.Instance.Show($"Add + {RewardCoins}");
             DataManager.Transient.AddMoney(InGameMoneyType.Gold, RewardCoins);
-
-            // Pause for select buff
-            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
-
-            var heroEntityData = EntitiesManager.Instance.HeroData;
-            var currentBuffs = MechanicSystemManager.Instance.GetCurrentBuffsInGame();
-
-            var suitableItems = await DataManager.Config.LoadCurrentSuitableBuffInGameItems(currentBuffs);
-
-            var modalData = new ModalSelectIngameBuffData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
-            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
         }
 
         private void OnSelectBuffItem(BuffInGameIdentity dataIdentity)

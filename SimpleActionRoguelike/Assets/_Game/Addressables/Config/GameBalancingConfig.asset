@@ -20,6 +20,7 @@ MonoBehaviour:
   allEnemyIds:
   - 2001
   allBossIds: []
+  stageIntervalToFaceBoss: 15
   waveTimeInSeconds: 60
   lobbyMap: {fileID: 7775422072145440681, guid: 8cf891cf5eece20468d4824ef6a35487, type: 3}
   shopMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
@@ -35,8 +36,8 @@ MonoBehaviour:
   t: 1
   n: 1.1
   z: 0
-  cheat: 0
-  cheatMap: {fileID: 7775422072145440681, guid: 3182e95df6681334dbcf5616b1530c48, type: 3}
+  cheat: 1
+  cheatMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
   stageLoadConfigItem:
     waveConfigs:
     - waveIndex: 0

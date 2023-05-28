@@ -7,8 +7,9 @@ namespace Runtime.Gameplay.Manager
         private int _ownedShopItemNumber;
         private int _ownedArtifactNumber;
 
+        public int EnteredShopRoom => _enteredShopRoom;
 
-        public int Owned
+        public int OwnedArtifactNumber => _ownedArtifactNumber;
         public int OwnedShopItemNumber => _ownedShopItemNumber;
         public int StageNumber => _stageNumber;
     }
