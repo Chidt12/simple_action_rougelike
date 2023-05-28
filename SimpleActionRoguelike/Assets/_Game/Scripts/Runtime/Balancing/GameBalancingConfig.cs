@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Gameplay.Balancing
 {
@@ -49,9 +50,10 @@ namespace Runtime.Gameplay.Balancing
         [HideIf(nameof(cheat))] public GameBalancingConfigRoomType[] setupRoomTypes;
         [HideIf(nameof(cheat))] public int stageIntervalToFaceBoss = 15;
         [HideIf(nameof(cheat))] public int stageEndGame = 90;
-        [HideIf(nameof(cheat))] public int numberOfShopStageBeforeBoss = 2; // 1 randomly , 1 before boss stage
         [HideIf(nameof(cheat))] public int numberOfGivingShopItemBeforeBoss = 5;
         [HideIf(nameof(cheat))] public int numberOfGivingArtifactBeforeBoss = 5;
+        [HideIf(nameof(cheat))] public float eliteFactor = 1.5f;
+        [HideIf(nameof(cheat))] public float bossFactor = 2f;
 
         [HideIf(nameof(cheat))]
         [Header("=== Artifact Config ===")]
@@ -104,7 +106,7 @@ namespace Runtime.Gameplay.Balancing
                 {
                     // Load Shop Stage.
                     if (!havePresetUpRoom)
-                        gateSetUpType = CalculateForGateSetUp(roomType);
+                        gateSetUpType = CalculateForGateSetUp(roomType, currentStageData);
                     return (shopMap, default, GameplayRoomType.Shop, gateSetUpType);
                 }
                 else
@@ -112,8 +114,8 @@ namespace Runtime.Gameplay.Balancing
                     // Set up room and gate types.
                     if (!havePresetUpRoom)
                     {
-                        roomType = CalculateForGameplayRoomType(roomType);
-                        gateSetUpType = CalculateForGateSetUp(roomType);
+                        roomType = CalculateForGameplayRoomType(roomType, currentStageData);
+                        gateSetUpType = CalculateForGateSetUp(roomType, currentStageData);
                     }
 
                     // calculate stage point.
@@ -139,16 +141,74 @@ namespace Runtime.Gameplay.Balancing
             }
         }
 
-        private GameplayGateSetupType CalculateForGateSetUp(GameplayRoomType roomType)
+        private GameplayGateSetupType CalculateForGateSetUp(GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // Setup gate type for get shop item, go to shop, boss room reason | not related to artifact.
-            return GameplayGateSetupType.None;
+            var countToBossStage = currentStageData.CountToBossStage;
+
+            // Check boss stage.
+            if(countToBossStage >= stageIntervalToFaceBoss)
+            {
+                if (roomType == GameplayRoomType.Shop)
+                    return GameplayGateSetupType.Boss;
+                else
+                    return GameplayGateSetupType.Shop;
+            }
+            else
+            {
+                var numberOfEnteredTheShop = currentStageData.GetNumberOfGateSetUpPassed(GameplayGateSetupType.NormalAndShop);
+                if(numberOfEnteredTheShop == 0 && countToBossStage >= stageIntervalToFaceBoss / 2)
+                {
+                    // Load Shop In the middle of the boss interval
+                    return GameplayGateSetupType.NormalAndShop;
+                }
+
+                var numberOfEnteredElite = currentStageData.GetNumberOfGateSetUpPassed(GameplayGateSetupType.NormalAndElite);
+
+                // Giving shop chance => dont have to be enough limit.
+                if(numberOfEnteredElite < numberOfGivingShopItemBeforeBoss)
+                {
+                    var random = Random.Range(0, 2);
+                    if(random > 0)
+                        return GameplayGateSetupType.NormalAndElite;
+                    else
+                        return GameplayGateSetupType.Normal;
+                }
+
+                return GameplayGateSetupType.Normal;
+            }
         }
 
-        private GameplayRoomType CalculateForGameplayRoomType(GameplayRoomType roomType)
+        private GameplayRoomType CalculateForGameplayRoomType(GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // Set up room type for get artifact reason.
-            return GameplayRoomType.Normal;
+
+            var numberOfEnteredElite = currentStageData.GetNumberRoomPassed(GameplayRoomType.NormalHaveArtifact) + currentStageData.GetNumberRoomPassed(GameplayRoomType.EliteHaveArtifact);
+            if (numberOfEnteredElite < numberOfGivingArtifactBeforeBoss)
+            {
+                // Giving shop chance => must have to be enough limit.
+                var lackNumber = numberOfGivingArtifactBeforeBoss - numberOfEnteredElite;
+                if(currentStageData.StageNumber + lackNumber >= stageIntervalToFaceBoss)
+                {
+                    if (roomType == GameplayRoomType.Normal)
+                        return GameplayRoomType.NormalHaveArtifact;
+                    else if (roomType == GameplayRoomType.Elite)
+                        return GameplayRoomType.EliteHaveArtifact;
+                }
+                else
+                {
+                    var random = Random.Range(0, 2);
+                    if (random > 0)
+                    {
+                        if (roomType == GameplayRoomType.Normal)
+                            return GameplayRoomType.NormalHaveArtifact;
+                        else if (roomType == GameplayRoomType.Elite)
+                            return GameplayRoomType.EliteHaveArtifact;
+                    }
+                }
+            }
+
+            return roomType;
         }
 
         private string GetConfigAssetName<T>(string id = "")

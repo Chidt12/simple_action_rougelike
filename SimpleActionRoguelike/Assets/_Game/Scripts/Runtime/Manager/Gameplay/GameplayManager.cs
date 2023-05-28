@@ -220,7 +220,7 @@ namespace Runtime.Manager.Gameplay
             var heroPoint = CalculateHeroPoint();
             var (newLevelMap, stageLoadConfig, updatedRoomType, gateSetupType) = await gameBalancingConfig.GetNextStage(heroPoint, roomType, _currentStageData);
 
-            _currentStageData.UpdateCurrentStage(updatedRoomType);
+            _currentStageData.UpdateCurrentStage(updatedRoomType, gateSetupType);
             _currentStageLoadConfigItem = stageLoadConfig;
             _currentLevelMap = Instantiate(newLevelMap);
 

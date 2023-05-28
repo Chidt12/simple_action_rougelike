@@ -16,6 +16,9 @@ namespace Runtime.Gameplay.Balancing
         // Elite only have 1 wave to spawn.
         private async UniTask<(MapLevel, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForEliteRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
+            // Scale point.
+            stagePoint = stagePoint * eliteFactor;
+
             // random map.
             var randomMapIndex = Random.Range(0, maps.Length);
             var randomMap = maps[randomMapIndex];
@@ -23,7 +26,7 @@ namespace Runtime.Gameplay.Balancing
 
             // random enemies types.
             var possibleRandomEnemies = randomMap.includedEnemyIds != null && randomMap.includedEnemyIds.Length > 0
-                                            ? randomMap.includedEnemyIds : allEnemyIds.Where(x => !randomMap.exceptEnemyIds.Contains(x)).ToArray();
+                                            ? randomMap.includedEnemyIds : allEliteEnemyIds.Where(x => !randomMap.exceptEnemyIds.Contains(x)).ToArray();
 
             var numberOfTypes = Random.Range(minEnemyTypes, Mathf.Min(maxEnemyTypes + 1, possibleRandomEnemies.Length));
 

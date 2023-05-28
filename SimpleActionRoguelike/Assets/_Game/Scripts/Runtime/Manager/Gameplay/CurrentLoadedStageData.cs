@@ -8,7 +8,8 @@ namespace Runtime.Gameplay.Manager
     {
         private int _stageNumber;
         private int _countToBossStage;
-        private List<GameplayRoomType> _gameplayRoomTypes;
+        private List<GameplayGateSetupType> _gameplayGateSetupTypesBeforeBoss;
+        private List<GameplayRoomType> _gameplayRoomTypesBeforeBoss;
         private GameplayRoomType _currentRoomType;
 
         public int StageNumber => _stageNumber;
@@ -19,24 +20,37 @@ namespace Runtime.Gameplay.Manager
         {
             _stageNumber = 0;
             _countToBossStage = 0;
-            _gameplayRoomTypes = new();
+            _gameplayGateSetupTypesBeforeBoss = new();
+            _gameplayRoomTypesBeforeBoss = new();
         }
 
-        public void UpdateCurrentStage(GameplayRoomType roomType)
+        public void UpdateCurrentStage(GameplayRoomType roomType, GameplayGateSetupType gateSetUpType)
         {
             if(roomType == GameplayRoomType.Boss)
+            {
                 _countToBossStage = 0;
+                _gameplayGateSetupTypesBeforeBoss.Clear();
+                _gameplayRoomTypesBeforeBoss.Clear();
+            }
             else
+            {
                 _countToBossStage++;
+                _gameplayRoomTypesBeforeBoss.Add(roomType);
+            }
 
+            _gameplayGateSetupTypesBeforeBoss.Add(gateSetUpType);
             _stageNumber++;
             _currentRoomType = roomType;
-            _gameplayRoomTypes.Add(roomType);
         }
 
         public int GetNumberRoomPassed(GameplayRoomType roomType)
         {
-            return _gameplayRoomTypes.Count(x => x == roomType);
+            return _gameplayRoomTypesBeforeBoss.Count(x => x == roomType);
+        }
+
+        public int GetNumberOfGateSetUpPassed(GameplayGateSetupType gateSetUpType)
+        {
+            return _gameplayGateSetupTypesBeforeBoss.Count(x => x == gateSetUpType);
         }
     }
 }
