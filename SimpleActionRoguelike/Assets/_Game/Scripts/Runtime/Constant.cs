@@ -15,6 +15,7 @@ namespace Runtime.Constants
 
         public const string SELECT_INGAME_BUFF = "prefab_modal_select_ingame_buff";
         public const string SELECT_INGAME_SHOP = "prefab_modal_select_ingame_shop";
+        public const string GIVE_INGAME_SHOP = "prefab_modal_give_ingame_shop";
     }
 
     public class ScreenIds

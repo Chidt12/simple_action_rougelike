@@ -12,6 +12,7 @@ using Runtime.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using ZBase.UnityScreenNavigator.Core.Views;
 
 namespace Runtime.Gameplay

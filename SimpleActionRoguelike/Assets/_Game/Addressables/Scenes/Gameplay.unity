@@ -303,6 +303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838601bcef7285b44b0e3ba7d1d97338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _artifactChest: {fileID: 8008112546618274198, guid: 9a37596cff0b49a41bc7e87e5e75adb8, type: 3}
+  _shopChest: {fileID: 4954397665454446004, guid: d10d10b01c240d74e945c838d9ac1847, type: 3}
 --- !u!4 &594825100
 Transform:
   m_ObjectHideFlags: 0
