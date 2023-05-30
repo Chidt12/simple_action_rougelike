@@ -293,7 +293,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &7386596438361353219
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -310,7 +310,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6006725794663495102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,6 +536,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f47807c13eeb87428ce59471ee10275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hideWarning: 0
+  _warningSkillVFX: warning_execute_skill_vfx
+  _warningDisplayPosition: {fileID: 62285047295108349}
+  _timeDisplayWarning: 0.3
   _delayBeforeExecuteSkillTime: 3
 --- !u!114 &3836183063686295378
 MonoBehaviour:

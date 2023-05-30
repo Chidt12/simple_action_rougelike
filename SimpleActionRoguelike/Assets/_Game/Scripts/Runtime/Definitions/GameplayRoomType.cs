@@ -2,10 +2,11 @@ namespace Runtime.Definition
 {
     public enum GameplayRoomType
     {
-        Normal = 0,
-        Elite = 1,
-        Shop = 2,
-        Boss = 3,
+        None = 0,
+        Normal = 1,
+        Elite = 2,
+        Shop = 3,
+        Boss = 4,
 
         EliteHaveArtifact = 4,
         NormalHaveArtifact = 5,

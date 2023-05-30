@@ -35,4 +35,4 @@ MonoBehaviour:
       autoInputStrategy: 0
       deathDataIdentity:
         deathDataId: 1
-        deathType: 2
+        deathType: 0

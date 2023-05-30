@@ -98,16 +98,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _graphics:
-  - gateType: 0
+  - gateType: 1
     graphic: {fileID: 7715352605002322827}
     animator: {fileID: 4601063259597360384}
-  - gateType: 1
+  - gateType: 2
     graphic: {fileID: 6391045396228979937}
     animator: {fileID: 3926101969799985308}
-  - gateType: 2
+  - gateType: 3
     graphic: {fileID: 4161069454196849161}
     animator: {fileID: 5893565197853438}
-  - gateType: 3
+  - gateType: 4
     graphic: {fileID: 5152395292029220227}
     animator: {fileID: 6335132748821096087}
 --- !u!1 &4161069454196849161

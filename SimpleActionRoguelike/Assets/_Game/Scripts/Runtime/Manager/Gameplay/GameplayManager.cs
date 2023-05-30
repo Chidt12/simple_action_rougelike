@@ -64,6 +64,7 @@ namespace Runtime.Manager.Gameplay
         {
             base.Awake();
             waveTimer = new WaveTimer();
+            _checkEndStageConditions = new();
             _cancellationTokenSource = new CancellationTokenSource();
             _gameplayDataLoadedRegistry = SimpleMessenger.Subscribe<GameplayDataLoadedMessage>(OnGameplayDataLoaded);
             _entityDiedRegistry = SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied);
@@ -92,7 +93,7 @@ namespace Runtime.Manager.Gameplay
 
         private void OnReceiveMessage(SendToGameplayMessage message)
         {
-            if(message.SendToGameplayType == SendToGameplayType.GoNextStage)
+            if (message.SendToGameplayType == SendToGameplayType.GoNextStage)
             {
                 if (_isWinCurrentLevel)
                 {
@@ -105,15 +106,17 @@ namespace Runtime.Manager.Gameplay
                 var availableToEndStage = true;
                 foreach (var checkEndStage in _checkEndStageConditions)
                 {
-                    if(!checkEndStage.IsAvailableForEndStage)
+                    if (!checkEndStage.IsAvailableForEndStage)
                     {
                         availableToEndStage = false;
                         break;
-                    }    
+                    }
                 }
 
                 if (availableToEndStage)
-                    _isWinCurrentLevel = true;
+                {
+                    OpenNextLevel();
+                }
 
                 if (message.SendToGameplayType == SendToGameplayType.BuyShop)
                 {
@@ -133,7 +136,7 @@ namespace Runtime.Manager.Gameplay
         private async UniTaskVoid LoadGiveShopAsync()
         {
             var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
-            var selectInGameShopData = new ModalSelectIngameShopData(shopItems.ToArray(), OnGiveShopItem);
+            var selectInGameShopData = new ModalGiveInGameShopData(shopItems.ToArray(), OnGiveShopItem);
             await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_INGAME_SHOP), selectInGameShopData);
         }
 
@@ -258,6 +261,7 @@ namespace Runtime.Manager.Gameplay
             var heroPoint = CalculateHeroPoint();
             var (newLevelMap, stageLoadConfig, updatedRoomType, gateSetupType) = await gameBalancingConfig.GetNextStage(heroPoint, roomType, _currentStageData);
 
+            Debug.LogWarning($"room current: {updatedRoomType} - {gateSetupType}");
             _currentStageData.UpdateCurrentStage(updatedRoomType, gateSetupType);
             _currentStageLoadConfigItem = stageLoadConfig;
             _currentLevelMap = Instantiate(newLevelMap);
@@ -281,13 +285,13 @@ namespace Runtime.Manager.Gameplay
                     mapLevel.gates[0].gameObject.SetActive(true);
                     mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
                     mapLevel.gates[1].gameObject.SetActive(true);
-                    mapLevel.gates[0].SetUp(GameplayRoomType.Elite);
+                    mapLevel.gates[1].SetUp(GameplayRoomType.Elite);
                     break;
                 case GameplayGateSetupType.NormalAndShop:
                     mapLevel.gates[0].gameObject.SetActive(true);
                     mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
                     mapLevel.gates[1].gameObject.SetActive(true);
-                    mapLevel.gates[0].SetUp(GameplayRoomType.Shop);
+                    mapLevel.gates[1].SetUp(GameplayRoomType.Shop);
                     break;
                 case GameplayGateSetupType.Shop:
                     mapLevel.gates[0].gameObject.SetActive(true);
@@ -416,10 +420,15 @@ namespace Runtime.Manager.Gameplay
             }
             else
             {
-                _isWinCurrentLevel = true;
-                foreach (var gate in _currentLevelMap.gates)
-                    gate.OpenGate();
+                OpenNextLevel();
             }
+        }
+
+        private void OpenNextLevel()
+        {
+            _isWinCurrentLevel = true;
+            foreach (var gate in _currentLevelMap.gates)
+                gate.OpenGate();
         }
 
         private void StartCurrentLevel()

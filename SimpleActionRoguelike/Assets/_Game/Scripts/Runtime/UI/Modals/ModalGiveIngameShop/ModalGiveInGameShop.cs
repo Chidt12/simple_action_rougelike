@@ -24,6 +24,8 @@ namespace Runtime.UI
         [SerializeField] private Button _closeButton;
         [SerializeField] private GiveShopInGameUI[] _itemUIs;
 
+        private bool _isSelected;
+
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
@@ -33,12 +35,21 @@ namespace Runtime.UI
 
         public override async UniTask Initialize(ModalGiveInGameShopData data)
         {
+            _isSelected = false;
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayPausing);
             _closeButton.onClick.AddListener(() => ScreenNavigator.Instance.PopModal(true).Forget());
 
             for (int i = 0; i < data.Items.Length; i++)
             {
-                await _itemUIs[i].Init(data.Items[i], data.OnSelectShopInGameItem);
+                await _itemUIs[i].Init(data.Items[i], (input) => 
+                {
+                    if (!_isSelected)
+                    {
+                        _isSelected = true;
+                        data.OnSelectShopInGameItem?.Invoke(input);
+                        ScreenNavigator.Instance.PopModal(true).Forget();
+                    }
+                });
             }
 
             for (int i = 0; i < _itemUIs.Length; i++)
