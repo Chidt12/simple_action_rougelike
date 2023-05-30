@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,8 +13,14 @@ namespace Runtime.Gameplay.EntitySystem
     public class EntityUseSkillBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData, IEntityStatusData>, 
         IDisposeEntityBehavior, IEntityControlCastRangeProxy
     {
-        [SerializeField]
-        private float _delayBeforeExecuteSkillTime = 3f;
+        [SerializeField] private bool _hideWarning;
+        [HideIf(nameof(_hideWarning))]
+        [SerializeField] private string _warningSkillVFX = "warning_execute_skill_vfx";
+        [HideIf(nameof(_hideWarning))]
+        [SerializeField] private Transform _warningDisplayPosition;
+        [HideIf(nameof(_hideWarning))]
+        [SerializeField] private float _timeDisplayWarning = 0.3f;
+        [SerializeField] private float _delayBeforeExecuteSkillTime = 3f;
         private bool _finishedDelay;
 
         private IEntityControlData _controlData;
@@ -25,6 +32,7 @@ namespace Runtime.Gameplay.EntitySystem
         private List<SkillModel> _skillModels;
         private CancellationTokenSource[] _skillCooldownCancellationTokenSources;
         private CancellationTokenSource _cancellationTokenSource;
+        private GameObject _warningGameObject;
 
         public float CastRange => _skillModels[_currentlyUsedSkillIndex].CastRange;
 
@@ -127,10 +135,18 @@ namespace Runtime.Gameplay.EntitySystem
             FinishSkill();
         }
 
-        private UniTask FinishedPrecheck()
+        private async UniTask FinishedPrecheck()
         {
             _controlData.SetMoveDirection(Vector2.zero);
-            return UniTask.CompletedTask;
+            if (!_hideWarning)
+            {
+                _warningGameObject = await PoolManager.Instance.Rent(_warningSkillVFX, token: _cancellationTokenSource.Token);
+                _warningGameObject.transform.SetParent(_warningDisplayPosition);
+                _warningGameObject.transform.localPosition = Vector2.zero;
+                await UniTask.Delay(TimeSpan.FromSeconds(_timeDisplayWarning), cancellationToken: _cancellationTokenSource.Token);
+                PoolManager.Instance.Return(_warningGameObject);
+                _warningGameObject = null;
+            }
         }
 
         private void FinishSkill()
@@ -170,6 +186,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void Dispose()
         {
+            if (_warningGameObject)
+                PoolManager.Instance.Return(_warningGameObject);
+
             _cancellationTokenSource?.Cancel();
             foreach (var skillStrategy in _skillStrategies)
                 skillStrategy.Dispose();

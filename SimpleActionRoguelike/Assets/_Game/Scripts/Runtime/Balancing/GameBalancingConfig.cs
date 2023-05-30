@@ -98,14 +98,14 @@ namespace Runtime.Gameplay.Balancing
                 if (roomType == GameplayRoomType.Lobby)
                 {
                     // Load Lobby Stage.
-                    if (!havePresetUpRoom)
+                    if (gateSetUpType == GameplayGateSetupType.None)
                         gateSetUpType = GameplayGateSetupType.Normal;
                     return (lobbyMap, default, GameplayRoomType.Lobby, gateSetUpType);
                 }
                 else if (roomType == GameplayRoomType.Shop)
                 {
                     // Load Shop Stage.
-                    if (!havePresetUpRoom)
+                    if (gateSetUpType == GameplayGateSetupType.None)
                         gateSetUpType = CalculateForGateSetUp(roomType, currentStageData);
                     return (shopMap, default, GameplayRoomType.Shop, gateSetUpType);
                 }
@@ -115,8 +115,10 @@ namespace Runtime.Gameplay.Balancing
                     if (!havePresetUpRoom)
                     {
                         roomType = CalculateForGameplayRoomType(roomType, currentStageData);
-                        gateSetUpType = CalculateForGateSetUp(roomType, currentStageData);
                     }
+
+                    if(gateSetUpType == GameplayGateSetupType.None)
+                        gateSetUpType = CalculateForGateSetUp(roomType, currentStageData);
 
                     // calculate stage point.
                     var heroLevel = heroPoint / heroLevelConvert;
