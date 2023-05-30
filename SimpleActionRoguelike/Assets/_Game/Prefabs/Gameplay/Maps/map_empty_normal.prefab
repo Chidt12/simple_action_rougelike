@@ -145,10 +145,7 @@ MonoBehaviour:
   gates:
   - {fileID: 620499804081302775}
   - {fileID: 7088836742048638991}
-  point: 1
-  limitDistanceToHero: 0
-  exceptEnemyIds: []
-  includedEnemyIds: []
+  scriptableObject: {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
 --- !u!1 &3122137437529538061
 GameObject:
   m_ObjectHideFlags: 0

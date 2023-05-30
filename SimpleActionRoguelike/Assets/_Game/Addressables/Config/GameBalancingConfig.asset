@@ -24,19 +24,19 @@ MonoBehaviour:
   allBossIds:
   - 2001
   waveTimeInSeconds: 30
-  lobbyMap: {fileID: 7775422072145440681, guid: 8cf891cf5eece20468d4824ef6a35487, type: 3}
-  shopMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
+  lobbyMap: {fileID: 11400000, guid: c8bea8ce066c86c488c4a09b85a4150a, type: 2}
+  shopMap: {fileID: 11400000, guid: 4dee7c48a61cbb8408760ccffba6a041, type: 2}
   bossMaps:
-  - {fileID: 7775422072145440681, guid: 71780f6ddee57104199fd0de2e775bc7, type: 3}
+  - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
   maps:
-  - {fileID: 7775422072145440681, guid: df7c9e76b828302418686d8b06d05542, type: 3}
-  - {fileID: 7775422072145440681, guid: 71780f6ddee57104199fd0de2e775bc7, type: 3}
-  - {fileID: 7775422072145440681, guid: 0aec31518caac4641a03750b8f0a8931, type: 3}
-  - {fileID: 7775422072145440681, guid: 7bf67a0fc2ee006429239811d6ed616e, type: 3}
-  - {fileID: 7775422072145440681, guid: 02d5e01ec8493b24486d6b6072fc61b4, type: 3}
-  - {fileID: 7775422072145440681, guid: 89ab12a842a6e79458f77d28c422b22b, type: 3}
-  - {fileID: 7775422072145440681, guid: 3182e95df6681334dbcf5616b1530c48, type: 3}
-  - {fileID: 7775422072145440681, guid: c361748a93dbdb44fbf18f877c0b3f73, type: 3}
+  - {fileID: 11400000, guid: b278e1e83e2564c41bb1c5ecc41c2020, type: 2}
+  - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
+  - {fileID: 11400000, guid: 096e757202de9b14aab7858f8cccfd31, type: 2}
+  - {fileID: 11400000, guid: 0c9f3a81b86535146bbb849924d1ad63, type: 2}
+  - {fileID: 11400000, guid: 241c89f6b6910814c829951e54d20d6d, type: 2}
+  - {fileID: 11400000, guid: 1adc8ffbdf47e144e9e4baf0d822af0a, type: 2}
+  - {fileID: 11400000, guid: 0e28db917c9288340882de579d0ffd6e, type: 2}
+  - {fileID: 11400000, guid: 3d0b9007dcb03ff4ca4603a2bac611fc, type: 2}
   setupRoomTypes:
   - stageNumber: 0
     roomType: 1000
@@ -60,7 +60,7 @@ MonoBehaviour:
   n: 1.1
   z: 0
   cheat: 0
-  cheatMap: {fileID: 7775422072145440681, guid: c34bf9a9e8907084a982f6e8ee7e2f2d, type: 3}
+  cheatMap: {fileID: 0}
   roomType: 0
   stageLoadConfigItem:
     waveConfigs:

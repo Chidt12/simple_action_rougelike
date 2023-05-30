@@ -14,7 +14,7 @@ namespace Runtime.Gameplay.Balancing
     public partial class GameBalancingConfig
     {
         // Elite only have 1 wave to spawn.
-        private async UniTask<(MapLevel, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForEliteRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
+        private async UniTask<(MapLevelScriptableObject, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForEliteRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // Scale point.
             stagePoint = stagePoint * eliteFactor;

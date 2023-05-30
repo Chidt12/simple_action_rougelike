@@ -14,7 +14,7 @@ namespace Runtime.Gameplay.Balancing
     public partial class GameBalancingConfig
     {
         // Boss Only Have 1 Wave to spawn.
-        private async UniTask<(MapLevel, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForBossRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
+        private async UniTask<(MapLevelScriptableObject, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForBossRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // Update stage points
             stagePoint = stagePoint * bossFactor;

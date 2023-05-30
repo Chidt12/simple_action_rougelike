@@ -13,7 +13,7 @@ namespace Runtime.Gameplay.Balancing
 {
     public partial class GameBalancingConfig
     {
-        private async UniTask<(MapLevel, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForNormalRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
+        private async UniTask<(MapLevelScriptableObject, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> SetUpForNormalRoomAsync(float stagePoint, int heroLevel, GameplayGateSetupType gameplayGateSetupType, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // random map.
             var randomMapIndex = Random.Range(0, maps.Length);

@@ -9,26 +9,16 @@ namespace Runtime.Manager.Gameplay
         [SerializeField] public MapSpawnPoint[] mapSpawnPoints;
         [SerializeField] public PolygonCollider2D confinder;
         [SerializeField] public MapGate[] gates;
-        [SerializeField] public int point;
-        [SerializeField] public float limitDistanceToHero;
-
-        /// <summary>
-        /// use this second for check enemy;
-        /// </summary>
         [SerializeField]
-        public string[] exceptEnemyIds;
-
-        /// <summary>
-        /// use this first for check enemy.
-        /// </summary>
-        [SerializeField]
-        public string[] includedEnemyIds;
+        public MapLevelScriptableObject scriptableObject;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
             mapSpawnPoints = GetComponentsInChildren<MapSpawnPoint>();
             gates = GetComponentsInChildren<MapGate>();
+            if(scriptableObject)
+                scriptableObject.prefabName = this.name;
         }
 #endif 
     }

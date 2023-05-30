@@ -252,7 +252,10 @@ namespace Runtime.Manager.Gameplay
             _checkEndStageConditions = new();
 
             if (_currentLevelMap)
-                Destroy(_currentLevelMap.gameObject);
+            {
+                PoolManager.Instance.Return(_currentLevelMap.gameObject);
+                _currentLevelMap = null;
+            }
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
@@ -264,7 +267,8 @@ namespace Runtime.Manager.Gameplay
             Debug.LogWarning($"room current: {updatedRoomType} - {gateSetupType}");
             _currentStageData.UpdateCurrentStage(updatedRoomType, gateSetupType);
             _currentStageLoadConfigItem = stageLoadConfig;
-            _currentLevelMap = Instantiate(newLevelMap);
+            var mapGameObject = await PoolManager.Instance.Rent(newLevelMap.prefabName, token: _cancellationTokenSource.Token);
+            _currentLevelMap = mapGameObject.GetComponent<MapLevel>();
 
             SetUpRoomGates(_currentLevelMap, gateSetupType);
             CameraManager.Instance.SetConfinder(_currentLevelMap.confinder);

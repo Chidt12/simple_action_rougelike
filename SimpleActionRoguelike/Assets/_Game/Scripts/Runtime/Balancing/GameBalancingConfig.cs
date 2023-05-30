@@ -40,10 +40,10 @@ namespace Runtime.Gameplay.Balancing
 
         [HideIf(nameof(cheat))]
         [Header("=== Map Config ===")]
-        [HideIf(nameof(cheat))] public MapLevel lobbyMap;
-        [HideIf(nameof(cheat))] public MapLevel shopMap;
-        [HideIf(nameof(cheat))] public MapLevel[] bossMaps;
-        [HideIf(nameof(cheat))] public MapLevel[] maps;
+        [HideIf(nameof(cheat))] public MapLevelScriptableObject lobbyMap;
+        [HideIf(nameof(cheat))] public MapLevelScriptableObject shopMap;
+        [HideIf(nameof(cheat))] public MapLevelScriptableObject[] bossMaps;
+        [HideIf(nameof(cheat))] public MapLevelScriptableObject[] maps;
 
         [HideIf(nameof(cheat))]
         [Header("=== Room Config ===")]
@@ -68,13 +68,13 @@ namespace Runtime.Gameplay.Balancing
 
         [Header("==== Cheat ====")]
         public bool cheat;
-        [ShowIf(nameof(cheat))] public MapLevel cheatMap;
+        [ShowIf(nameof(cheat))] public MapLevelScriptableObject cheatMap;
         [ShowIf(nameof(cheat))] public GameplayRoomType roomType;
         [ShowIf(nameof(cheat))] public StageLoadConfigItem stageLoadConfigItem;
 
         #region Calculate
 
-        public async UniTask<(MapLevel, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> GetNextStage(int heroPoint, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
+        public async UniTask<(MapLevelScriptableObject, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> GetNextStage(int heroPoint, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // Calculate for current stage and predict the next stage too.
             // Order: load map => load current room type => load waves of current map => setup gate type.

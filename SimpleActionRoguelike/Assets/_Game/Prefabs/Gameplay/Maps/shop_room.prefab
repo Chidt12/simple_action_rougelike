@@ -348,6 +348,7 @@ MonoBehaviour:
   limitDistanceToHero: 0
   exceptEnemyIds: []
   includedEnemyIds: []
+  scriptableObject: {fileID: 11400000, guid: 4dee7c48a61cbb8408760ccffba6a041, type: 2}
 --- !u!1 &3122137437529538061
 GameObject:
   m_ObjectHideFlags: 0
