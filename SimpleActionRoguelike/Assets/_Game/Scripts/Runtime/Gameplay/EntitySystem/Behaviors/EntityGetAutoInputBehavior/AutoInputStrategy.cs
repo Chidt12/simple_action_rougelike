@@ -18,25 +18,16 @@ namespace Runtime.Gameplay.EntitySystem
         protected const float REACH_END_DISTANCE = 0.2f;
 
         protected static readonly float RefindTargetBonusRange = 2.0f;
-        protected static readonly float RefindTargetMinTime = 1f;
-
-        protected static readonly int RandomMoveSearchSlotsCount = 3;
-        protected static readonly int RandomMoveSearchSpreadSlotsCount = 2;
-
-        protected static readonly float CheckObscurationFragmentDistance = 1 / 5.0f;
-        protected static readonly float CheckSideObscurationCount = 0;
+        protected static readonly float RefindTargetMinTime = 2f;
 
         protected bool reachedEndOfPath;
-        protected bool canFindNewPath;
+        protected bool findingNewPath;
         protected bool hasFoundAPath;
         protected float moveSpeed;
         protected float StopChasingTargetDistance => ControlCastRangeProxy.CastRange;
         protected float RefindTargetThreshold => StopChasingTargetDistance + RefindTargetBonusRange;
+
         protected float currentRefindTargetTime;
-
-        protected int randomMoveSearchLength;
-        protected int randomMoveSearchSpreadLength;
-
         protected List<Vector3> pathPositions;
         protected Vector2 moveToPosition;
         protected int currentPathPositionIndex;
@@ -58,11 +49,9 @@ namespace Runtime.Gameplay.EntitySystem
         {
             ControlData = controlData;
             ControlCastRangeProxy = entityControlCastRangeProxy;
-            canFindNewPath = true;
+            findingNewPath = false;
             hasFoundAPath = false;
-
-            randomMoveSearchLength = Mathf.CeilToInt(RandomMoveSearchSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
-            randomMoveSearchSpreadLength = Mathf.CeilToInt(RandomMoveSearchSpreadSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
+            currentRefindTargetTime = RefindTargetMinTime;
 
             if (statData.TryGetStat(StatType.MoveSpeed, out var statSpeed))
             {
@@ -81,73 +70,36 @@ namespace Runtime.Gameplay.EntitySystem
         public virtual void Update()
         {
             currentRefindTargetTime += Time.deltaTime;
-            CheckFindPath();
-            if (CheckCanMoveOnPath())
-                MoveOnPath();
-        }
 
-        public virtual void Disable()
-        {
-            ClearPath();
-            reachedEndOfPath = false;
-        }
-
-        protected virtual void PathFoundCompleted(Path newPath)
-        {
-            pathPositions = newPath.vectorPath;
-            reachedEndOfPath = false;
-            InitializePath();
-        }
-
-        protected virtual void ClearPath()
-        {
-            currentPathPositionIndex = 1;
-            pathPositions = null;
-            reachedEndOfPath = false;
-        }
-
-        protected virtual void CheckFindPath()
-        {
             if (CanFindPath())
             {
-                canFindNewPath = false;
+                findingNewPath = true;
                 FindNewPath();
             }
+
+            if (hasFoundAPath)
+                MoveOnPath();
         }
 
         protected virtual bool CanFindPath()
         {
-            return canFindNewPath;
+            return !findingNewPath && currentRefindTargetTime > RefindTargetMinTime;
         }
 
         protected abstract void FindNewPath();
         protected abstract void MoveOnPath();
-        protected virtual void FinishedMoving()
+
+        protected virtual void ReachedTheEndOfPath()
         {
-            ClearPath();
             LockMovement();
             ResetToRefindNewPath();
-        }
-
-        protected virtual bool CheckCanMoveOnPath()
-            => hasFoundAPath;
-
-        protected virtual void InitializePath()
-        {
-            reachedEndOfPath = false;
-
-            pathPositions = Helper.Helper.MakeSmoothCurve(pathPositions, 4);
-
-            moveToPosition = pathPositions[pathPositions.Count - 1];
-            currentPathPositionIndex = 0;
-            hasFoundAPath = true;
         }
 
         protected virtual void Move()
         {
             if (reachedEndOfPath)
             {
-                FinishedMoving();
+                ReachedTheEndOfPath();
                 return;
             }
             else
@@ -176,49 +128,22 @@ namespace Runtime.Gameplay.EntitySystem
         protected virtual void ResetToRefindNewPath()
         {
             hasFoundAPath = false;
-            canFindNewPath = true;
+            findingNewPath = false;
         }
 
-        protected virtual bool IsObscured()
+        protected void LockMovement() => ControlData.SetMoveDirection(Vector2.zero);
+
+        protected virtual void PathFoundCompleted(Path newPath)
         {
-            float distanceBetweenSqr = Vector2.SqrMagnitude(ControlData.Position - ControlData.Target.Position);
-            float currentCheckForwardObscureDistance = CheckObscurationFragmentDistance;
-            Vector2 checkForwardDirection = (ControlData.Target.Position - ControlData.Position).normalized;
-            Vector2 checkSideDirection = Vector3.Cross(checkForwardDirection, Vector3.forward);
-
-            while (distanceBetweenSqr > currentCheckForwardObscureDistance * currentCheckForwardObscureDistance)
-            {
-                Vector2 checkForwardObscurePosition = ControlData.Position + checkForwardDirection * currentCheckForwardObscureDistance;
-                if (!MapManager.Instance.IsWalkable(checkForwardObscurePosition))
-                    return true;
-
-                for (int i = 1; i <= CheckSideObscurationCount; i++)
-                {
-                    Vector2 checkSideObscurePosition = checkForwardObscurePosition - checkSideDirection * i * CheckObscurationFragmentDistance;
-                    if (!MapManager.Instance.IsWalkable(checkSideObscurePosition))
-                        return true;
-                }
-
-                for (int i = 1; i <= CheckSideObscurationCount; i++)
-                {
-                    Vector2 checkSideObscurePosition = checkForwardObscurePosition + checkSideDirection * i * CheckObscurationFragmentDistance;
-                    if (!MapManager.Instance.IsWalkable(checkSideObscurePosition))
-                        return true;
-                }
-
-                currentCheckForwardObscureDistance += CheckObscurationFragmentDistance;
-            }
-
-            return false;
+            reachedEndOfPath = false;
+            pathPositions = newPath.vectorPath;
+            pathPositions = Helper.Helper.MakeSmoothCurve(pathPositions, 4);
+            moveToPosition = pathPositions[pathPositions.Count - 1];
+            currentPathPositionIndex = 0;
+            hasFoundAPath = true;
         }
 
-        protected virtual void LockMovement()
-        {
-            ControlData.SetMoveDirection(Vector2.zero);
-        }
-
-        protected virtual void OnStatChanged(float updatedValue) => moveSpeed = updatedValue;
-
+        protected void OnStatChanged(float updatedValue) => moveSpeed = updatedValue;
         public virtual void Dispose() { }
 
         #endregion Class Methods

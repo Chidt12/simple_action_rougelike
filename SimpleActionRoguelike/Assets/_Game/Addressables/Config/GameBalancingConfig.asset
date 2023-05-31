@@ -16,6 +16,8 @@ MonoBehaviour:
   maxWave: 3
   minEnemyTypes: 1
   maxEnemyTypes: 4
+  maxSpawnAwayFromHero: 8
+  minSpawnAwayFromHero: 3.5
   heroLevelConvert: 10
   allEnemyIds:
   - 2001
@@ -59,9 +61,9 @@ MonoBehaviour:
   t: 1
   n: 1.1
   z: 0
-  cheat: 0
-  cheatMap: {fileID: 0}
-  roomType: 0
+  cheat: 1
+  cheatMap: {fileID: 11400000, guid: 0e28db917c9288340882de579d0ffd6e, type: 2}
+  roomType: 1
   stageLoadConfigItem:
     waveConfigs:
     - waveIndex: 0
@@ -70,7 +72,7 @@ MonoBehaviour:
       - entityConfigItem:
           entityId: 2001
           entityType: 1
-          entityNumber: 1
+          entityNumber: 4
           entityLevel: 1
         delaySpawnTime: 2
         followHero: 1

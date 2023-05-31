@@ -167,15 +167,18 @@ namespace Runtime.Gameplay.EntitySystem
 
         public async UniTask CreateEntitiesAsync(Vector3 spawnedCenterPosition, float spawnedCenterDistancedOffset, bool displayWarning, CancellationToken cancellationToken, params SpawnedEntityInfo[] spawnedEntitiesInfo)
         {
-            var numberOfDirectionsAwayCenterPosition = 16;
+            var numberOfDirectionsAwayCenterPosition = 32;
             var numberOfSpawnedEntities = spawnedEntitiesInfo.Sum(x => x.entityNumber);
             var validPositions = new List<Vector2>();
             var spreadNodesCount = Mathf.FloorToInt(numberOfSpawnedEntities / numberOfDirectionsAwayCenterPosition);
             var checkedPositions = MapManager.Instance.GetWalkablePositionsAroundPosition(spawnedCenterPosition, spawnedCenterDistancedOffset, spreadNodesCount, numberOfDirectionsAwayCenterPosition);
-            var overlapCircleCheckRadius = MapManager.Instance.SlotSize + MapManager.Instance.SlotHalfSize;
+            var overlapCircleCheckRadius = MapManager.Instance.SlotSize;
 
             foreach (var checkedPosition in checkedPositions)
             {
+                var go = new GameObject();
+                go.name = "checkposition";
+                go.transform.position = checkedPosition;
                 var collider = Physics2D.OverlapCircle(checkedPosition, overlapCircleCheckRadius, Layers.OBSTACLE_LAYER_MASK);
                 if (collider == null)
                     validPositions.Add(checkedPosition);
