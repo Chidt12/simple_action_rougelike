@@ -62,7 +62,7 @@ namespace Runtime.Gameplay.Balancing
             bossStageLoadConfigItem.entityConfigItem = spawnedBossInfo;
             bossStageLoadConfigItem.delaySpawnTime = Constant.DELAY_TIME_FOR_FIRST_WAVE;
             bossStageLoadConfigItem.followHero = false;
-            bossStageLoadConfigItem.spawnPointIndex = 1;
+            bossStageLoadConfigItem.spawnPointIndex = 3;
 
             entities.Add(bossStageLoadConfigItem);
             wavePoint -= bossLevelConfigItem.point;
@@ -110,9 +110,8 @@ namespace Runtime.Gameplay.Balancing
                     entityStageLoadConfigItem.entityConfigItem = spawnedEnemyInfo;
                     entityStageLoadConfigItem.delaySpawnTime = Constant.DELAY_TIME_FOR_FIRST_WAVE;
                     entityStageLoadConfigItem.followHero = true;
-                    entityStageLoadConfigItem.distanceFromHero = randomMap.limitDistanceToHero > 0 ?
-                            Mathf.Min(randomMap.limitDistanceToHero, selectedEnemy.enemyLevelStats.detectRange + 2) :
-                            selectedEnemy.enemyLevelStats.detectRange + 2;
+                    var maxDistance = randomMap.limitDistanceToHero > 0 ? Mathf.Min(randomMap.limitDistanceToHero, maxSpawnAwayFromHero) : maxSpawnAwayFromHero;
+                    entityStageLoadConfigItem.distanceFromHero = Random.Range(minSpawnAwayFromHero, maxDistance);
 
                     entityStageLoadConfigItem.spawnPointIndex = 0;
                     entities.Add(entityStageLoadConfigItem);

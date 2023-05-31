@@ -15,14 +15,14 @@ MonoBehaviour:
   items:
   - dataId: 1
     targetType: 3
-    castRange: 4
+    castRange: 6
     cooldown: 2
     dependTarget: 1
     projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
     projectileMoveSpeed: 10
-    projectileMoveDistance: 6
+    projectileMoveDistance: 8
     projectileStrategyType: 0
     projectileDamageBonus: 0
     projectileDamageFactors:

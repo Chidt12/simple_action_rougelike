@@ -17,8 +17,6 @@ namespace Runtime.Manager.Gameplay
         {
             mapSpawnPoints = GetComponentsInChildren<MapSpawnPoint>();
             gates = GetComponentsInChildren<MapGate>();
-            if(scriptableObject)
-                scriptableObject.prefabName = this.name;
         }
 #endif 
     }

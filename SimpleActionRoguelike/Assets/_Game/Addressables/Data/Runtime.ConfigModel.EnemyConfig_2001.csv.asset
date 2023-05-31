@@ -19,7 +19,7 @@ MonoBehaviour:
       level: 1
       detectedPriority: 0
       enemyLevelStats:
-        detectRange: 4
+        detectRange: 6
         hp: 234
         armor: 0
         armorPenetration: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
         critDamage: 0
         moveSpeed: 2.5
         lifeSteal: 0
-        attackDamage: 100
+        attackDamage: 1
         collideDamage: 47
       skillIdentity:
         skillType: 1

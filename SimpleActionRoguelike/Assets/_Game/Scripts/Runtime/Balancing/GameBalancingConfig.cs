@@ -29,6 +29,8 @@ namespace Runtime.Gameplay.Balancing
         [HideIf(nameof(cheat))] public int maxWave = 3;
         [HideIf(nameof(cheat))] public int minEnemyTypes = 1;
         [HideIf(nameof(cheat))] public int maxEnemyTypes = 4;
+        [HideIf(nameof(cheat))] public float maxSpawnAwayFromHero = 8;
+        [HideIf(nameof(cheat))] public float minSpawnAwayFromHero = 3.5f;
         [HideIf(nameof(cheat))] public int heroLevelConvert = 10;
         [HideIf(nameof(cheat))] public string[] allEnemyIds;
         [HideIf(nameof(cheat))] public string[] allEliteEnemyIds;

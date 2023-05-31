@@ -1,9 +1,11 @@
 using Pathfinding;
 using Runtime.Core.Singleton;
 using Runtime.Gameplay.Manager;
+using Runtime.Helper;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Runtime.Manager.Gameplay
@@ -46,6 +48,30 @@ namespace Runtime.Manager.Gameplay
         public void FindPath(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
         {
             Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
+            AstarPath.StartPath(path);
+        }
+
+        public void FindMoveAwayTargetReal(Vector2 startPosition, Vector2 targetPosition, float distanceToKeep, int spreadLength, OnPathDelegate onPathCompleteCallback)
+        {
+            var allPositions = GetWalkablePositionsAroundPosition(targetPosition, distanceToKeep, spreadLength);
+
+            float minAngle = 360;
+            var selectedPosition = allPositions.FirstOrDefault();
+
+            foreach (var position in allPositions)
+            {
+                var vector1 = position - startPosition;
+                var vector2 = targetPosition - startPosition;
+                var angle = MathHelper.AngleBetween(vector1, vector2);
+                var compareAngle = Mathf.Abs(angle - 180);
+                if(minAngle > compareAngle)
+                {
+                    minAngle = compareAngle;
+                    selectedPosition = position;
+                }
+            }
+
+            Path path = ABPath.Construct(startPosition, selectedPosition, onPathCompleteCallback);
             AstarPath.StartPath(path);
         }
 
