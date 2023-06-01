@@ -7,11 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityRandom = UnityEngine.Random;
 
 namespace Runtime.Manager.Gameplay
 {
     public class MapManager : MonoSingleton<MapManager>, IDisposable
     {
+        #region Members
+
+        private int _randomOffsetPathThresholdSlotsCount = 2;
+        private int _randomMoveSearchMinSlotsCount = 3;
+        private int _randomMoveSearchMaxSlotsCount = 10;
+        private float _randomMoveSearchMinOffsetDegrees = 20;
+        private float _randomMoveSearchMaxOffsetDegrees = 30;
+
+        #endregion Members
+
         #region Properties
 
         private MapSpawnPoint[] _spawnPoints;
@@ -45,7 +56,35 @@ namespace Runtime.Manager.Gameplay
             ActiveGraph.active.Scan();
         }
 
-        public void FindPath(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
+        public void FindPathWithRandomness(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
+        {
+            var startEndSqrDistance = (endPosition - startPosition).sqrMagnitude;
+            var randomOffsetPathThresholdSqrDistance = (_randomOffsetPathThresholdSlotsCount * SlotSize) * (_randomOffsetPathThresholdSlotsCount * SlotSize);
+            if (startEndSqrDistance > randomOffsetPathThresholdSqrDistance)
+            {
+                var randomMoveSearchSlotsCount = UnityRandom.Range(_randomMoveSearchMinSlotsCount, _randomMoveSearchMaxSlotsCount + 1);
+                var randomMoveSearchSqrDistance = (randomMoveSearchSlotsCount * SlotSize) * (randomMoveSearchSlotsCount * SlotSize);
+                if (randomMoveSearchSqrDistance > startEndSqrDistance)
+                {
+                    var startEndSlotsCount = Mathf.FloorToInt((endPosition - startPosition).magnitude / SlotSize);
+                    randomMoveSearchSlotsCount = startEndSlotsCount;
+                }
+                var randomMoveSearchLength = randomMoveSearchSlotsCount * SlotSize;
+                var randomMoveSearchOffsetDegrees = UnityRandom.Range(_randomMoveSearchMinOffsetDegrees, _randomMoveSearchMaxOffsetDegrees);
+                var angleOffset = UnityRandom.Range(-randomMoveSearchOffsetDegrees, randomMoveSearchOffsetDegrees);
+                Vector2 offset = Quaternion.Euler(0, 0, angleOffset) * (endPosition - startPosition).normalized * randomMoveSearchLength;
+                endPosition = startPosition + offset;
+                Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
+                AstarPath.StartPath(path);
+            }
+            else
+            {
+                Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
+                AstarPath.StartPath(path);
+            }
+        }
+
+        public void FindStraightPath(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
         {
             Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
             AstarPath.StartPath(path);
@@ -84,7 +123,7 @@ namespace Runtime.Manager.Gameplay
         }
 
         public void FindNeighbourTargetPath(Vector2 fromPosition, Vector2 targetPosition, OnPathDelegate onPathCompleteCallback)
-            => FindPath(fromPosition, targetPosition, onPathCompleteCallback);
+            => FindStraightPath(fromPosition, targetPosition, onPathCompleteCallback);
 
         public void FindNeighbourEmptyPath(Vector2 fromPosition, int searchLength, int spreadLength, OnPathDelegate onPathCompleteCallback)
         {

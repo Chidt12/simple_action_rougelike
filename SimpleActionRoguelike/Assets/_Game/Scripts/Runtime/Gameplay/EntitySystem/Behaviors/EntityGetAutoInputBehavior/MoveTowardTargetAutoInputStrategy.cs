@@ -7,6 +7,7 @@ namespace Runtime.Gameplay.EntitySystem
     public class MoveTowardTargetAutoInputStrategy : AutoInputStrategy
     {
         private static float s_stoppingDistance = 0.5f;
+        protected override float RefindTargetMinTime => 1;
 
         public MoveTowardTargetAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy) 
             : base(controlData, statData, controlCastRangeProxy)
@@ -23,7 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override void FindNewPath()
         {
-            MapManager.Instance.FindPath(ControlData.Position,
+            MapManager.Instance.FindPathWithRandomness(ControlData.Position,
                                          ControlData.Target.Position,
                                          OnRunFindPathToTargetComplete);
         }
