@@ -95,7 +95,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
             else
             {
-                MapManager.Instance.FindPath(ControlData.Position,
+                MapManager.Instance.FindStraightPath(ControlData.Position,
                                          ControlData.Target.Position,
                                          OnRunFindPathTowardsTargetComplete);
             }

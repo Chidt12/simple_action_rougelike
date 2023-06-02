@@ -18,7 +18,6 @@ namespace Runtime.Gameplay.EntitySystem
         protected const float REACH_END_DISTANCE = 0.2f;
 
         protected static readonly float RefindTargetBonusRange = 2.0f;
-        protected static readonly float RefindTargetMinTime = 2f;
 
         protected bool reachedEndOfPath;
         protected bool findingNewPath;
@@ -26,6 +25,8 @@ namespace Runtime.Gameplay.EntitySystem
         protected float moveSpeed;
         protected float StopChasingTargetDistance => ControlCastRangeProxy.CastRange;
         protected float RefindTargetThreshold => StopChasingTargetDistance + RefindTargetBonusRange;
+
+        protected virtual float RefindTargetMinTime => 2f;
 
         protected float currentRefindTargetTime;
         protected List<Vector3> pathPositions;

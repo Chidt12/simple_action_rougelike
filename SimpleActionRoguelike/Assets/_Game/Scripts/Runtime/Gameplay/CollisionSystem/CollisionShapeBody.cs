@@ -26,7 +26,7 @@ namespace Runtime.Gameplay.EntitySystem
         public Collider2D Collider => null;
         public CollisionBodyType CollisionBodyType => _collisionBodyType;
 
-        protected Action<CollisionResult, ICollisionBody> OnCollisionEvent { get; set;}
+        public Action<CollisionResult, ICollisionBody> OnCollisionEvent { get; set;}
 
         #endregion Properties
 
