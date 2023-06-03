@@ -511,7 +511,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flipTransform: {fileID: 7386596438361353228}
   _updateFaceRightType: 1
-  _playDotweenTransform: {fileID: 7386596438361353228}
+  _playDotweenTransform:
+  - {fileID: 7775985078590227464}
+  - {fileID: 4584724534680398067}
 --- !u!114 &4572192897293976343
 MonoBehaviour:
   m_ObjectHideFlags: 0

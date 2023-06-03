@@ -438,9 +438,6 @@ namespace Runtime.Manager.Gameplay
         private void StartCurrentLevel()
         {
             _isWinCurrentLevel = false;
-            foreach (var gate in _currentLevelMap.gates)
-                gate.CloseGate();
-
             CurrentWaveIndex = 0;
             waveTimer.SetUp();
             maxWaveIndex = _currentStageLoadConfigItem.waveConfigs.Max(x => x.waveIndex);

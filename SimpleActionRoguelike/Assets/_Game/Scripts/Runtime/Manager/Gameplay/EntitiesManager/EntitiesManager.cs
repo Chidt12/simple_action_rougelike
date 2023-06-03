@@ -302,6 +302,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected async UniTask CreateEntityDestroyVfxAsync(EntityType entityType, Vector2 vfxPosition, CancellationToken cancellationToken)
         {
+            var prefabName = "enemy_death_small";
+            var vfx = await PoolManager.Instance.Rent(prefabName, true, cancellationToken);
+            vfx.transform.position = vfxPosition;
         }
 
         #region Create Entity With warning

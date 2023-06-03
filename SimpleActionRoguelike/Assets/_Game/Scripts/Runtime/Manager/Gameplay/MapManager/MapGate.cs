@@ -16,10 +16,11 @@ namespace Runtime.Manager.Gameplay
         public class MapGateGraphic
         {
             public GameplayRoomType gateType;
-            public GameObject graphic;
-            public Animator animator;
+            public Sprite icon;
         }
 
+        [SerializeField] private GameObject _mainGraphic;
+        [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private MapGateGraphic[] _graphics;
 
         private MapGateGraphic _currentGraphic;
@@ -49,23 +50,16 @@ namespace Runtime.Manager.Gameplay
                 if(graphic.gateType == gateType)
                 {
                     _currentGraphic = graphic;
-                    graphic.graphic.SetActive(true);
-                }
-                else
-                {
-                    graphic.graphic.SetActive(false);
+                    _renderer.sprite = graphic.icon;
                 }
             }
+
+            _mainGraphic.SetActive(false);
         }
 
         public void OpenGate()
         {
-            _currentGraphic?.animator?.Play("gate_open");
-        }
-
-        public void CloseGate()
-        {
-            _currentGraphic?.animator?.Play("gate_close");
+            _mainGraphic.SetActive(true);
         }
     }
 

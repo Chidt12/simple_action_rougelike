@@ -19,11 +19,11 @@ namespace Runtime.Gameplay.EntitySystem
         private static readonly Color s_appearanceHitEffectColor = new Color(1.0f, 1.0f, 1.0f, 0.85f);
         private static readonly Color s_appearanceNormalColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         private static readonly int s_showHitEffectColorTimes = 1;
-        private static readonly float s_showHitEffectColorDuration = 0.2f;
+        private static readonly float s_showHitEffectColorDuration = 0.4f;
 
         [SerializeField] private Transform _flipTransform;
         [SerializeField] private UpdateFaceRightType _updateFaceRightType;
-        [SerializeField] private Transform _playDotweenTransform;
+        [SerializeField] private Transform[] _playDotweenTransform;
         private IEntityControlData _controlData;
         private IEntityStatusData _statusData;
         private IEntityAnimation[] _entityAnimations;
@@ -83,12 +83,16 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if(damagedValue > 0)
             {
-                if (_playDotweenTransform)
+                if (_playDotweenTransform != null && _playDotweenTransform.Length > 0)
                 {
-                    var tween = DOTween.Sequence();
-                    tween.Append(_playDotweenTransform.DOScale(1.3f,  0f));
-                    tween.Append(_playDotweenTransform.DOScale(1f, 0.3f).SetEase(Ease.InOutSine));
-                    tween.Play();
+                    foreach (var playDotween in _playDotweenTransform)
+                    {
+                        var tween = DOTween.Sequence();
+                        tween.Append(playDotween.DOScale(1.3f, 0f));
+                        tween.Append(playDotween.DOScale(1f, 0.3f).SetDelay(0.1f).SetEase(Ease.InOutSine));
+                        tween.Play();
+                    }
+
                 }
 
                 _cancellationTokenSource?.Cancel();
