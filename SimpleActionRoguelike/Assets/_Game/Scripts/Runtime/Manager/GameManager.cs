@@ -58,10 +58,17 @@ namespace Runtime.Manager
             if (CurrentGameStateType == GameStateType.Loading)
                 return;
 
+            var loadingLayer = FindObjectOfType<LoadingLayer>();
             SetGameStateType(GameStateType.Loading);
+            if (loadingLayer)
+                await loadingLayer.StartLoading();
+
             await GameplayDataManager.Instance.InitAsync();
             await ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.GAMEPLAY));
             await GameplayManager.Instance.InitAsync();
+
+            if (loadingLayer)
+                await loadingLayer.EndLoading();
             SetGameStateType(GameStateType.GameplayRunning);
         }
 

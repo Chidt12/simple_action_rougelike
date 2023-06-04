@@ -25,8 +25,8 @@ MonoBehaviour:
     m_Address: prefab_screen_start_game
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 75590c7413d37d74b9eb95d2943c31d4
-    m_Address: scene_loader
+  - m_GUID: 4b778aa6b1ec63c4fba51027dd1b1dfb
+    m_Address: loading_layer
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4a2beccc2a22fb94c8afdbf82b5cdbcd
