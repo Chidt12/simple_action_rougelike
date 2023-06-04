@@ -37,6 +37,7 @@ namespace Runtime.Message
         OpenInventory = 1,
         Interact = 2,
         Dash = 3,
+        Confirm = 4,
     }
     public readonly struct InputKeyPressMessage : IMessage
     {

@@ -8,24 +8,20 @@ using Runtime.Gameplay.Balancing;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
 using Runtime.Message;
-using Runtime.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using ZBase.UnityScreenNavigator.Core.Views;
 
 namespace Runtime.Gameplay
 {
     public class GameplayDataManager : MonoSingleton<GameplayDataManager>
     {
-        protected override void Awake()
+        public async UniTask InitAsync()
         {
-            base.Awake();
-            LoadConfig().Forget();
+            await LoadConfig();
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             DataManager.Transient.ClearInGameMoney();
         }
@@ -36,7 +32,6 @@ namespace Runtime.Gameplay
         {
             await LoadStatusConfig();
             await LoadGameBalancingConfig();
-            await ScreenNavigator.Instance.LoadScreen(new WindowOptions(ScreenIds.GAMEPLAY));
             FinishedLoading();
         }
 

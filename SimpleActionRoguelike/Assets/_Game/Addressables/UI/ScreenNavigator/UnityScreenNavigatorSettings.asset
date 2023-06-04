@@ -26,7 +26,7 @@ MonoBehaviour:
   _activityExitAnimation: {fileID: 0}
   _modalBackdropPrefab: {fileID: 0}
   _assetLoader: {fileID: 0}
-  _enablePooling: 0
+  _enablePooling: 1
   _enableInteractionInTransition: 0
   _disableModalBackdrop: 0
   _modalBackdropResourcePath: DefaultModalBackdrop

@@ -1,6 +1,6 @@
 
 using Cysharp.Threading.Tasks;
-using Runtime.SceneLoading;
+using Runtime.Manager;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +20,7 @@ namespace Runtime.UI
 
         private void OnReplay()
         {
-            SceneLoaderManager.LoadSceneAsync("Gameplay").Forget();
+            GameManager.Instance.Replay();
         }
     }
 }

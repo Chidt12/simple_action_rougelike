@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Runtime.Manager.Data
 {
-    public partial class ConfigDataManager : PersistentMonoSingleton<ConfigDataManager>
+    public partial class ConfigDataManager : MonoSingleton<ConfigDataManager>
     {
         private Dictionary<string, ScriptableObject> _cachedData;
 

@@ -1,26 +1,27 @@
 using Cinemachine;
 using Runtime.Core.Message;
-using Runtime.Core.Singleton;
 using Runtime.Message;
+using System;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
 
 namespace Runtime.Manager.Gameplay
 {
-    public class CameraManager : MonoSingleton<CameraManager>
+    [Serializable]
+    public class CameraManager : MonoBehaviour
     {
         [SerializeField]
         private CinemachineVirtualCamera _virtualCamera;
+
         private ISubscription _heroSpawnedSubScription;
 
-        protected override void Awake()
+        public void Init()
         {
-            base.Awake();
             SimpleMessenger.Publish(new UpdateCameraMessage(Camera.main));
             _heroSpawnedSubScription = SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned);
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             _heroSpawnedSubScription.Dispose();
         }

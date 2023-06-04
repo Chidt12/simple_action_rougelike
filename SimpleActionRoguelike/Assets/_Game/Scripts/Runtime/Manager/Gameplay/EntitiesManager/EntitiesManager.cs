@@ -29,10 +29,7 @@ namespace Runtime.Gameplay.EntitySystem
         private const string SPAWN_ENEMY_VFX_NAME = "spawn_enemy_vfx";
         private const float DISPLAY_SPAWN_WARNING_TIME = 0.5f;
 
-        [ReadOnly]
-        [SerializeField]
         private MapEditorEntity[] _mapEditorEntities;
-
         private int _entityUId;
         private int _defeatedEnemiesCount;
         private List<IEntityData> _enemiesData;

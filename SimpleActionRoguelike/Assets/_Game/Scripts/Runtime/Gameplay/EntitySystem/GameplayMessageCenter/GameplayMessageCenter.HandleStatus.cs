@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public partial class MessageCenter 
+    public partial class GameplayMessageCenter 
     {
         private partial void OnSentStatusEffect(SentStatusEffectMessage message)
         {

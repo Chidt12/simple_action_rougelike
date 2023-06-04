@@ -14,7 +14,6 @@ using Runtime.Gameplay.Manager;
 using Runtime.Helper;
 using Runtime.Manager.Data;
 using Runtime.Message;
-using Runtime.SceneLoading;
 using Runtime.UI;
 using System;
 using System.Collections.Generic;
@@ -37,15 +36,17 @@ namespace Runtime.Manager.Gameplay
     {
         [SerializeField] private ArtifactChestItem _artifactChest;
         [SerializeField] private ShopChestItem _shopChest;
+        [SerializeField] private CameraManager _cameraManager;
+
+        protected MechanicSystemManager mechanicSystemManager;
+        protected GameplayMessageCenter messageCenter;
+        protected WaveTimer waveTimer;
+        private List<ISubscription> subscriptions;
 
         protected int RewardCoins = 2;
 
-        protected WaveTimer waveTimer;
         protected bool hasFinishedSpawnWave;
         protected int maxWaveIndex;
-        private ISubscription _gameplayDataLoadedRegistry;
-        private ISubscription _entityDiedRegistry;
-        private ISubscription _goToNextLevelMapRegistry;
         private CancellationTokenSource _cancellationTokenSource;
         private bool _isWinCurrentLevel;
 
@@ -58,28 +59,82 @@ namespace Runtime.Manager.Gameplay
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
         public int CurrentWaveIndex { get; protected set; }
 
-        #region API Methods
+        #region Class Methods
 
-        protected override void Awake()
+        public async UniTask InitAsync()
         {
-            base.Awake();
+            subscriptions = new();
+            subscriptions.Add(SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied));
+            subscriptions.Add(SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage));
+
+            _cameraManager.Init();
+
+            mechanicSystemManager = new();
+            mechanicSystemManager.Init();
+
+            messageCenter = new();
+            messageCenter.Init();
+
             waveTimer = new WaveTimer();
             _checkEndStageConditions = new();
             _cancellationTokenSource = new CancellationTokenSource();
-            _gameplayDataLoadedRegistry = SimpleMessenger.Subscribe<GameplayDataLoadedMessage>(OnGameplayDataLoaded);
-            _entityDiedRegistry = SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied);
-            _goToNextLevelMapRegistry = SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage);
-            SceneLoaderManager.RegisterScenePreloadedAction(Dispose);
+
+            EntitiesManager.Instance.Initialize();
+            await StartGameplayAsync();
         }
 
-        #endregion API Methods
-
-        #region Class Methods
-
-        private void OnGameplayDataLoaded(GameplayDataLoadedMessage gameplayDataLoadedMessage)
+        public void Dispose()
         {
-            EntitiesManager.Instance.Initialize();
-            StartGameplay().Forget();
+            _cancellationTokenSource?.Cancel();
+
+            foreach (var subscription in subscriptions)
+                subscription.Dispose();
+            subscriptions.Clear();
+
+            var disposables = FindObjectsOfType<Disposable>();
+            foreach (var dispose in disposables)
+                dispose.Dispose();
+
+            mechanicSystemManager.Dispose();
+            messageCenter.Dispose();
+            waveTimer.Dispose();
+            _cameraManager.Dispose();
+
+            CollisionSystem.Instance.Dispose();
+            EntitiesManager.Instance.Dipose();
+            MapManager.Instance.Dispose();
+
+            // Clear Map
+            if (_checkEndStageConditions != null)
+                foreach (var checkEndStage in _checkEndStageConditions)
+                    Destroy(checkEndStage.gameObject);
+
+            if (_currentLevelMap)
+            {
+                PoolManager.Instance.Return(_currentLevelMap.gameObject);
+                _currentLevelMap = null;
+            }
+
+            // Clear Disposables
+            foreach (var disposable in disposables)
+            {
+                if (disposable)
+                    PoolManager.Instance.Return(disposable.gameObject);
+            }
+        }
+
+        private async UniTask StartGameplayAsync()
+        {
+            // Load Level
+            _currentStageData = new();
+            await LoadLevelAsync(GameplayRoomType.Lobby);
+
+            // Load Hero.
+            await EntitiesManager.Instance.CreateEntityAsync(
+                new SpawnedEntityInfo(Constant.HERO_ID, EntityType.Hero, GameplayDataDispatcher.Instance.HeroLevel),
+                MapManager.Instance.SpawnPoints[0].transform.position,
+                cancellationToken: _cancellationTokenSource.Token);
+            SetUpNewStage();
         }
 
         private void OnEntityDied(EntityDiedMessage entityDiedMessage)
@@ -183,7 +238,7 @@ namespace Runtime.Manager.Gameplay
             GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
 
             var heroEntityData = EntitiesManager.Instance.HeroData;
-            var currentBuffs = MechanicSystemManager.Instance.GetCurrentBuffsInGame();
+            var currentBuffs = mechanicSystemManager.GetCurrentBuffsInGame();
 
             var suitableItems = await DataManager.Config.LoadCurrentSuitableBuffInGameItems(currentBuffs);
 
@@ -212,21 +267,6 @@ namespace Runtime.Manager.Gameplay
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
             // Update current Stage info.
-            SetUpNewStage();
-        }
-
-        private async UniTaskVoid StartGameplay()
-        {
-            // Load Level
-            _currentStageData = new();
-            await LoadLevelAsync(GameplayRoomType.Lobby);
-
-            // Load Hero.
-            await EntitiesManager.Instance.CreateEntityAsync(
-                new SpawnedEntityInfo(Constant.HERO_ID, EntityType.Hero, GameplayDataDispatcher.Instance.HeroLevel), 
-                MapManager.Instance.SpawnPoints[0].transform.position,
-                cancellationToken: _cancellationTokenSource.Token);
-
             SetUpNewStage();
         }
 
@@ -271,7 +311,7 @@ namespace Runtime.Manager.Gameplay
             _currentLevelMap = mapGameObject.GetComponent<MapLevel>();
 
             SetUpRoomGates(_currentLevelMap, gateSetupType);
-            CameraManager.Instance.SetConfinder(_currentLevelMap.confinder);
+            _cameraManager.SetConfinder(_currentLevelMap.confinder);
             MapManager.Instance.LoadLevelMap(_currentLevelMap);
         }
 
@@ -452,25 +492,9 @@ namespace Runtime.Manager.Gameplay
         private async UniTaskVoid OnSelectBuffItemAsync(BuffInGameIdentity dataIdentity)
         {
             var heroData = EntitiesManager.Instance.HeroData;
-            await MechanicSystemManager.Instance.AddBuffInGameSystem(heroData, dataIdentity.buffInGameType);
+            await mechanicSystemManager.AddBuffInGameSystem(heroData, dataIdentity.buffInGameType);
             GameManager.Instance.ReturnPreviousGameStateType();
             await ScreenNavigator.Instance.PopModal(true);
-        }
-
-        public void Dispose()
-        {
-            _gameplayDataLoadedRegistry.Dispose();
-            _entityDiedRegistry.Dispose();
-            _goToNextLevelMapRegistry.Dispose();
-
-            var disposables = FindObjectsOfType<Disposable>();
-            foreach (var dispose in disposables)
-                dispose.Dispose();
-
-            MechanicSystemManager.Instance.Dispose();
-            CollisionSystem.Instance.Dispose();
-            EntitiesManager.Instance.Dipose();
-            MapManager.Instance.Dispose();
         }
 
         #endregion Class Methods

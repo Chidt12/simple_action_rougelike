@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public partial class MessageCenter
+    public partial class GameplayMessageCenter
     {
         private partial void OnSentDamage(SentDamageMessage message)
         {

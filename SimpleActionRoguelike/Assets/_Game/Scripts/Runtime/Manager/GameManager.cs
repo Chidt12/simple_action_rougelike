@@ -1,10 +1,16 @@
+using Cysharp.Threading.Tasks;
+using Runtime.Constants;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
+using Runtime.Gameplay;
+using Runtime.Manager.Gameplay;
+using Runtime.UI;
 using UnityEngine;
+using ZBase.UnityScreenNavigator.Core.Views;
 
 namespace Runtime.Manager
 {
-    public class GameManager : PersistentMonoSingleton<GameManager>
+    public class GameManager : MonoSingleton<GameManager>
     {
         private GameStateType _currentGameStateType;
         private GameStateType _previousGameStateType;
@@ -27,6 +33,7 @@ namespace Runtime.Manager
         protected override void Awake()
         {
             base.Awake();
+            Cursor.lockState = CursorLockMode.Locked;
             _currentGameStateType = GameStateType.None;
             _previousGameStateType = GameStateType.None;
         }
@@ -44,6 +51,25 @@ namespace Runtime.Manager
             CurrentGameStateType = _previousGameStateType;
             _previousGameStateType = currentGameState;
             return true;
+        }
+
+        public async UniTaskVoid StartLoadingGameplayAsync()
+        {
+            if (CurrentGameStateType == GameStateType.Loading)
+                return;
+
+            SetGameStateType(GameStateType.Loading);
+            await GameplayDataManager.Instance.InitAsync();
+            await ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.GAMEPLAY));
+            await GameplayManager.Instance.InitAsync();
+            SetGameStateType(GameStateType.GameplayRunning);
+        }
+
+
+
+        public void Replay()
+        {
+            // Replay
         }
     }
 }

@@ -1,37 +1,29 @@
 using Runtime.Core.Message;
-using Runtime.Core.Singleton;
 using Runtime.Message;
 using System.Collections.Generic;
 using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public partial class MessageCenter : MonoSingleton<MessageCenter>
+    public partial class GameplayMessageCenter
     {
         private List<ISubscription> _subscriptions;
 
+        #region Class Methods
 
-
-        #region API Methods
-
-        protected override void Awake()
+        public void Init()
         {
-            base.Awake();
             _subscriptions = new();
             _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentHealMessage>(OnSentHeal));
             _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentDamageMessage>(OnSentDamage));
             _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentStatusEffectMessage>(OnSentStatusEffect));
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             foreach (var item in _subscriptions)
                 item.Dispose();
         }
-
-        #endregion API Methods
-
-        #region Class Methods
 
         private partial void OnSentStatusEffect(SentStatusEffectMessage message);
 

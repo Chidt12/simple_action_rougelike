@@ -44,7 +44,15 @@ namespace Runtime.Core.Pool
         {
             instance.transform.SetParent(transform);
             AddressGameObjectPool pool = GetPool(instance.name);
-            pool.Return(instance);
+
+            if (this._dictionary.TryGetValue(instance.name, out pool))
+            {
+                pool.Return(instance);
+            }
+            else
+            {
+                Destroy(instance);
+            }
         }
 
         public void ReleaseInstances(string source, int keep, Action<GameObject> onReleased = null)

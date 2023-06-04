@@ -1,8 +1,12 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Constants;
+using Runtime.Core.Message;
 using Runtime.Core.Singleton;
+using Runtime.Message;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using ZBase.Foundation.PubSub;
 using ZBase.UnityScreenNavigator.Core;
 using ZBase.UnityScreenNavigator.Core.Activities;
 using ZBase.UnityScreenNavigator.Core.Modals;
@@ -18,14 +22,13 @@ namespace Runtime.UI
         public const string MODAL_CONTAINER_LAYER_NAME = "ModalsContainer";
     }
 
-    public class ScreenNavigator : PersistentMonoSingleton<ScreenNavigator>
+    public class ScreenNavigator : MonoSingleton<ScreenNavigator>
     {
-        [SerializeField]
-        protected ContainerLayerSettings containerLayerSettings;
-        [SerializeField]
-        protected UnityScreenNavigatorSettings unityScreenNavigatorSettings;
+        [SerializeField] protected ContainerLayerSettings containerLayerSettings;
+        [SerializeField] protected UnityScreenNavigatorSettings unityScreenNavigatorSettings;
 
         protected GlobalContainerLayerManager globalContainerLayerManager;
+        protected List<ISubscription> subscriptions;
 
         protected bool isLoading;
         protected bool isBackKeyOperated;
@@ -52,6 +55,9 @@ namespace Runtime.UI
         protected override void Awake()
         {
             base.Awake();
+
+            // Init screen navigators.
+
             if (containerLayerSettings == null)
                 throw new ArgumentNullException(nameof(containerLayerSettings));
             globalContainerLayerManager = this.GetOrAddComponent<GlobalContainerLayerManager>();
@@ -77,7 +83,33 @@ namespace Runtime.UI
                 }
             }
 
+            // Init Listeners
+            subscriptions = new();
+            subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPress));
+
+            // Load First Screen
             LoadScreen(new WindowOptions(ScreenIds.START_GAME)).Forget();
+        }
+
+        private void OnKeyPress(InputKeyPressMessage message)
+        {
+            if(message.KeyPressType == KeyPressType.Back)
+            {
+                ExecuteBackKeyAsync().Forget();
+            }
+        }
+
+        private async UniTaskVoid ExecuteBackKeyAsync()
+        {
+            if (isBackKeyOperated)
+                return;
+
+            isBackKeyOperated = true;
+            if (IsOpeningAModal)
+                await PopModal(true);
+            else if (IsOpeningMoreThanAScreen)
+                await PopScreen(true);
+            isBackKeyOperated = false;
         }
 
         public async UniTask LoadModal(WindowOptions option, params object[] args)
@@ -103,6 +135,25 @@ namespace Runtime.UI
             if (screenContainer.Modals.Count > 0)
                 await screenContainer.PopAsync(playAnimation, args);
             isLoading = false;
+        }
+
+        public async UniTask LoadSingleScreen(WindowOptions option, params object[] args)
+        {
+            if (isLoading)
+                return;
+
+            var screenContainer = globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.SCREEN_CONTAINER_LAYER_NAME);
+            if (screenContainer.Screens.Count == 0 || option.resourcePath != screenContainer.Current.ResourcePath)
+            {
+                isLoading = true;
+                var modalContainer = globalContainerLayerManager.Find<ModalContainer>(ContainerKey.MODAL_CONTAINER_LAYER_NAME);
+                while (modalContainer.Modals.Count > 0)
+                    await modalContainer.PopAsync(false);
+                while (screenContainer.Screens.Count > 0)
+                    await screenContainer.PopAsync(false, args);
+                await screenContainer.PushAsync(option, args);
+                isLoading = false;
+            }
         }
 
         public async UniTask LoadScreen(WindowOptions option, params object[] args)

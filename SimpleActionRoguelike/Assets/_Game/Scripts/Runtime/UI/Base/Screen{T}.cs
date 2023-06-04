@@ -4,11 +4,11 @@ using Runtime.Message;
 using System;
 using System.Collections.Generic;
 using ZBase.Foundation.PubSub;
-using ZBase.UnityScreenNavigator.Core.Modals;
+using Screen = ZBase.UnityScreenNavigator.Core.Screens.Screen;
 
 namespace Runtime.UI
 {
-    public abstract class BaseModal : Modal
+    public class BaseScreen : Screen
     {
         protected List<ISubscription> subscriptions;
 
@@ -21,7 +21,7 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-            if(subscriptions != null)
+            if (subscriptions != null)
             {
                 foreach (var subscription in subscriptions)
                     subscription.Dispose();
@@ -32,7 +32,7 @@ namespace Runtime.UI
         protected virtual void OnKeyPress(InputKeyPressMessage message) { }
     }
 
-    public abstract class Modal<T> : BaseModal where T : class
+    public abstract class Screen<T> : BaseScreen where T : class
     {
         public async override UniTask Initialize(Memory<object> args)
         {

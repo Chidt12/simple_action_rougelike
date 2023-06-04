@@ -8,14 +8,23 @@ using System.Linq;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class MechanicSystemManager : MonoSingleton<MechanicSystemManager>
+    public class MechanicSystemManager
     {
         private List<IBuffInGameSystem> _buffItems;
 
-        protected override void Awake()
+        public void Init()
         {
-            base.Awake();
             _buffItems = new();
+        }
+
+        public void Dispose()
+        {
+            if (_buffItems != null)
+            {
+                foreach (var buffItem in _buffItems)
+                    buffItem.Dispose();
+                _buffItems.Clear();
+            }
         }
 
         public List<BuffInGameIdentity> GetCurrentBuffsInGame()
@@ -55,16 +64,6 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 mechanic.Dispose();
                 _buffItems.Remove(mechanic);
-            }
-        }
-
-        public void Dispose()
-        {
-            if(_buffItems != null)
-            {
-                foreach (var buffItem in _buffItems)
-                    buffItem.Dispose();
-                _buffItems.Clear();
             }
         }
     }
