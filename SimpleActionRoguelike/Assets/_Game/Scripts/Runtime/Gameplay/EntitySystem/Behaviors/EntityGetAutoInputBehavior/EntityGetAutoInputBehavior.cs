@@ -1,6 +1,10 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Core.Message;
 using Runtime.Definition;
+using Runtime.Message;
+using System.Collections.Generic;
 using UnityEngine;
+using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -32,6 +36,7 @@ namespace Runtime.Gameplay.EntitySystem
                 return UniTask.FromResult(false);
 
             _controlData = controlData;
+
             return UniTask.FromResult(true);
         }
 

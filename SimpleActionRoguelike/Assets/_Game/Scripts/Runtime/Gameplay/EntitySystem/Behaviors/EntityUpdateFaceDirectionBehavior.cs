@@ -1,5 +1,9 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Core.Message;
+using Runtime.Message;
+using System.Collections.Generic;
 using UnityEngine;
+using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -12,10 +16,12 @@ namespace Runtime.Gameplay.EntitySystem
     }
 
     [DisallowMultipleComponent]
-    public class EntityUpdateFaceDirectionBehavior : EntityBehavior<IEntityControlData>, IUpdateEntityBehavior
+    public class EntityUpdateFaceDirectionBehavior : EntityBehavior<IEntityControlData>, IUpdateEntityBehavior, IDisposeEntityBehavior
     {
         [SerializeField] private FaceDirectionType _faceDirectionType;
+        
         private IEntityControlData _controlData;
+        private List<ISubscription> _subscriptions;
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
         {
@@ -23,6 +29,13 @@ namespace Runtime.Gameplay.EntitySystem
                 return UniTask.FromResult(false);
 
             _controlData = data;
+            
+            if(_faceDirectionType == FaceDirectionType.FourDirection)
+            {
+                _subscriptions = new();
+                _subscriptions.Add(SimpleMessenger.Subscribe<InputAttackMessage>(OnInputAttack));
+            }
+
             return UniTask.FromResult(true);
         }
 
@@ -44,23 +57,40 @@ namespace Runtime.Gameplay.EntitySystem
                 case FaceDirectionType.MoveDirection:
                     _controlData.SetFaceDirection(_controlData.MoveDirection);
                     break;
-                case FaceDirectionType.Pointer:
-                    var currentPointerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    Vector2 centerToPointer = currentPointerPosition - transform.position;
-                    _controlData.SetFaceDirection(centerToPointer);
+                default:
                     break;
-                case FaceDirectionType.FourDirection:
-                    if (Input.GetKey(KeyCode.RightArrow))
-                        _controlData.SetFaceDirection(Vector2.right);
-                    else if (Input.GetKey(KeyCode.LeftArrow))
-                        _controlData.SetFaceDirection(Vector2.left);
-                    else if (Input.GetKey(KeyCode.UpArrow))
-                        _controlData.SetFaceDirection(Vector2.up);
-                    else if (Input.GetKey(KeyCode.DownArrow))
-                        _controlData.SetFaceDirection(Vector2.down);
+            }
+        }
+
+        private void OnInputAttack(InputAttackMessage message)
+        {
+            switch (message.ArrowType)
+            {
+                case InputAttackType.Right:
+                    _controlData.SetFaceDirection(Vector2.right);
+                    break;
+                case InputAttackType.Left:
+                    _controlData.SetFaceDirection(Vector2.left);
+                    break;
+                case InputAttackType.Up:
+                    _controlData.SetFaceDirection(Vector2.up);
+                    break;
+                case InputAttackType.Down:
+                    _controlData.SetFaceDirection(Vector2.down);
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void Dispose()
+        {
+            if(_subscriptions != null)
+            {
+                foreach (var subscription in _subscriptions)
+                    subscription.Dispose();
+
+                _subscriptions.Clear();
             }
         }
     }
