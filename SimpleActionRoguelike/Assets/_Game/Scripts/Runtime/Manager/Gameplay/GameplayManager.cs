@@ -197,8 +197,8 @@ namespace Runtime.Manager.Gameplay
 
             // Fade In
             var fadeTween = new TweenType(TweenHelper.TweenCurve.EaseInSinusoidal);
-            SimpleMessenger.Publish(new FadeOutMessage(0.75f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, false));
-            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
+            SimpleMessenger.Publish(new FadeOutMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, false));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
 
             // Load Level.
             await LoadLevelAsync(roomType);

@@ -176,9 +176,6 @@ namespace Runtime.Gameplay.EntitySystem
 
             foreach (var checkedPosition in checkedPositions)
             {
-                var go = new GameObject();
-                go.name = "checkposition";
-                go.transform.position = checkedPosition;
                 var collider = Physics2D.OverlapCircle(checkedPosition, overlapCircleCheckRadius, Layers.OBSTACLE_LAYER_MASK);
                 if (collider == null)
                     validPositions.Add(checkedPosition);

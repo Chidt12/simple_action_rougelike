@@ -439,7 +439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flipTransform: {fileID: 6875883244934980057}
   _updateFaceRightType: 1
-  _playDotweenTransform: {fileID: 0}
+  _playDotweenTransform:
+  - {fileID: 6875883244934980057}
 --- !u!1 &6875883244934980058
 GameObject:
   m_ObjectHideFlags: 0
