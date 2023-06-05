@@ -126,7 +126,7 @@ MonoBehaviour:
   loops: 1
   id: 
   isRelative: 0
-  isFrom: 1
+  isFrom: 0
   isIndependentUpdate: 0
   autoKill: 0
   autoGenerate: 1
@@ -138,7 +138,7 @@ MonoBehaviour:
   forcedTargetType: 0
   autoPlay: 1
   useTargetAsV3: 0
-  endValueFloat: 0.1
+  endValueFloat: 0.9
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438d7f9763458394195ee509e0899e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifeTime: 0.75
+  _lifeTime: 0.5
   _speed: 3
   _delayFade: 0.3
   _fadeSpeed: 150
@@ -232,7 +232,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53576b6bd8c4da84eaa9365c513f8ef1, type: 2}
+  - {fileID: 8389666961603400704, guid: 0e51a02ec14a34644b95454147e57346, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_text: -100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0e51a02ec14a34644b95454147e57346, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 53576b6bd8c4da84eaa9365c513f8ef1, type: 2}
+  m_sharedMaterial: {fileID: 8389666961603400704, guid: 0e51a02ec14a34644b95454147e57346, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

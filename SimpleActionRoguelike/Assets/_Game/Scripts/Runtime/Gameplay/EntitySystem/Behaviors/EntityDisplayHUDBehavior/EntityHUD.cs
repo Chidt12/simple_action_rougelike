@@ -1,43 +1,64 @@
+using Cysharp.Threading.Tasks;
+using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
     public class EntityHUD : MonoBehaviour
     {
-        [SerializeField]
-        private Transform _healthBarSliderAnchor;
-        [SerializeField]
-        private Transform _shieldBarSliderAnchor;
-        [SerializeField]
-        private GameObject _shieldContainer;
+        [SerializeField] private Transform _healthBarRunAnchor;
+        [SerializeField] private Transform _healthBarSliderAnchor;
+        [SerializeField] private SpriteRenderer _healthBarContainer;
 
-        public void Init(float currentDefense, float maxDefense)
+        private CancellationTokenSource _cancellationTokenSource;
+
+        public void Init(float currentHp, float maxHp)
         {
-            _shieldBarSliderAnchor.transform.localScale = new Vector2(1, 1);
-            _healthBarSliderAnchor.transform.localScale = new Vector2(1,1);
-
-            UpdateShieldBar(currentDefense, maxDefense);
-            SetVisibility(true);
+            _healthBarSliderAnchor.localScale = new Vector2(1,1);
+            UpdateHealthBar(currentHp, maxHp, false);
         }
 
-        public void UpdateShieldBar(float currentDefense, float maxDefense)
+        public void Dispose()
         {
-            if (maxDefense <= 0 || currentDefense <= 0)
+            _cancellationTokenSource?.Cancel();
+        }
+
+        public void UpdateHealthBar(float currentHP, float maxHP, bool isHurt)
+        {
+            if(currentHP >= maxHP)
             {
-                _shieldContainer.SetActive(false);
+                _healthBarContainer.gameObject.SetActive(false);
                 return;
             }
 
-            _shieldContainer.SetActive(true);
-            _shieldBarSliderAnchor.transform.localScale = new Vector2(currentDefense / maxDefense, 1);
+            if (isHurt)
+            {
+                _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource = new();
+                StartHealthScrollAsync(currentHP, maxHP, _cancellationTokenSource.Token).Forget();
+            }
+
+            _healthBarContainer.gameObject.SetActive(true);
+            _healthBarSliderAnchor.localScale = new Vector2(currentHP / maxHP, 1);
         }
 
-        public void UpdateHealthBar(float currentHP, float maxHP)
+        private async UniTaskVoid StartHealthScrollAsync(float currentHP, float maxHP, CancellationToken token)
         {
-            _healthBarSliderAnchor.transform.localScale = new Vector2(currentHP / maxHP, 1);
-        }
+            var currentRatio = _healthBarSliderAnchor.localScale.x;
+            var targetRatio = currentHP / maxHP;
 
-        public void SetVisibility(bool isVisible)
-            => gameObject.SetActive(isVisible);
+            _healthBarRunAnchor.localScale = new Vector2(currentRatio, 1);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), cancellationToken: token);
+
+            while(currentRatio < targetRatio)
+            {
+                currentRatio = currentRatio + 0.02f;
+                _healthBarRunAnchor.localScale = new Vector2(currentRatio, 1);
+                await UniTask.Yield(cancellationToken: token);
+            }
+
+            _healthBarRunAnchor.localScale = new Vector2(targetRatio, 1);
+        }
     }
 }
