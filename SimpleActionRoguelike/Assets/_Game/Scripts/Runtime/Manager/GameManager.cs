@@ -33,7 +33,6 @@ namespace Runtime.Manager
         protected override void Awake()
         {
             base.Awake();
-            Cursor.lockState = CursorLockMode.Locked;
             _currentGameStateType = GameStateType.None;
             _previousGameStateType = GameStateType.None;
         }
