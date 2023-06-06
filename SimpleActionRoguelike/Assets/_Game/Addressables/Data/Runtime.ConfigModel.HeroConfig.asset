@@ -20,14 +20,14 @@ MonoBehaviour:
       detectedPriority: 1000
       heroLevelStats:
         detectRange: 11
-        hp: 900
+        hp: 30
         armor: 0
         armorPenetration: 0
         critChance: 0
         critDamage: 2
         moveSpeed: 4.1
         lifeSteal: 0
-        attackDamage: 101
+        attackDamage: 30
         attackSpeed: 3
         dodgeChance: 0
         ccReduction: 0

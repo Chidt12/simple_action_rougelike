@@ -1,2 +1,2 @@
 ﻿data_id,projectile_id,projectile_number,projectile_move_speed,projectile_move_distance,projectile_damage_bonus,projectile_damage_factor_stat_type,projectile_damage_factor_value
-1,bullet_red_small,6,7,16,0,AttackDamage,0.7
+1,bullet_red_small,4,7,16,0,AttackDamage,0.7

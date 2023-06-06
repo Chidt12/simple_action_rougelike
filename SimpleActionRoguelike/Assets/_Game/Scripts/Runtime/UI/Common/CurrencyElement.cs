@@ -61,7 +61,7 @@ namespace Runtime.UI
         private void UpdateInGameUI()
         {
             var currentResourceValue = DataManager.Transient.GetGameMoneyType(_inGameMoneyType);
-            _valueText.text = currentResourceValue.ToDisplayString();
+            _valueText.text = "x "+currentResourceValue.ToDisplayString();
         }
 
 

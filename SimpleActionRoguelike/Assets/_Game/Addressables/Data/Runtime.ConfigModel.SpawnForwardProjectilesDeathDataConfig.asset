@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - dataId: 1
-    projectileNumber: 6
+    projectileNumber: 4
     projectileId: bullet_red_small
     projectileMoveSpeed: 7
     projectileMoveDistance: 16
