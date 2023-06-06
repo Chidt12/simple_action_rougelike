@@ -16,7 +16,7 @@ MonoBehaviour:
   - dataId: 1
     targetType: 3
     castRange: 6
-    cooldown: 5
+    cooldown: 1
     dependTarget: 1
     projectileId: bullet_red
     numberOfProjectiles: 1

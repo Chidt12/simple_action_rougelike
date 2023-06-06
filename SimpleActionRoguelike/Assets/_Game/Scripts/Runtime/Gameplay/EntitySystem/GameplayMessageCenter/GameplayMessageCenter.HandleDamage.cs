@@ -2,6 +2,7 @@ using Runtime.ConfigModel;
 using Runtime.Core.Message;
 using Runtime.Definition;
 using Runtime.Message;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -34,26 +35,40 @@ namespace Runtime.Gameplay.EntitySystem
                 lifeSteal = creatorStatData.GetTotalStatValue(StatType.LifeSteal);
             }
 
-            var damageValue = message.DamageBonus;
-            if (creatorStatData != null && message.DamageFactors != null && message.DamageFactors.Length > 0)
+            var prepareDamageModifier = new PrepareDamageModifier(message.DamageProperty, message.DamageBonus, message.DamageFactors, critChance);
+            if(message.Creator.EntityType == EntityType.Hero && preCalculateDamageModifiers != null)
+            {
+                foreach (var item in preCalculateDamageModifiers)
+                    prepareDamageModifier = item.Calculate(message.Target, message.DamageSource, prepareDamageModifier);
+            }
+
+            var damageValue = prepareDamageModifier.damageBonus;
+            if (creatorStatData != null && prepareDamageModifier.damageFactors != null && prepareDamageModifier.damageFactors.Length > 0)
             {
                 float damageConfig = 0;
-                foreach (var damageFactor in message.DamageFactors)
+                foreach (var damageFactor in prepareDamageModifier.damageFactors)
                     damageConfig += (creatorStatData.GetTotalStatValue(damageFactor.damageFactorStatType) * damageFactor.damageFactorValue);
                 damageValue += damageConfig;
             }
 
             if (message.DamageSource != EffectSource.FromNormalAttack)
-                critChance = 0;
-            var isCrit = critChance <= 0 ? false : Random.Range(0, 1f) < critChance;
+                prepareDamageModifier.critChance = 0;
+            var isCrit = prepareDamageModifier.critChance <= 0 ? false : Random.Range(0, 1f) < prepareDamageModifier.critChance;
             if (isCrit)
                 damageValue = damageValue * (1 + critDamage);
 
+
+
 #if UNITY_EDITOR
             Debug.Log($"damage_log|| owner: {message.Creator.EntityId}/{message.Creator.EntityType} | damage source: {message.DamageSource}| attack damage: {attackDamage} | isCrit: {isCrit} | critDamage: {critDamage}" +
-                  $" | armorPenet: {armorPenetration} | damageFactor: {(message.DamageFactors != null && message.DamageFactors.Length > 0 ? GetTextFactorLog(message.DamageFactors) : "1")} | damageBonus: {message.DamageBonus}");
+                  $" | armorPenet: {armorPenetration} | damageFactor: {(prepareDamageModifier.damageFactors != null && prepareDamageModifier.damageFactors.Length > 0 ? GetTextFactorLog(prepareDamageModifier.damageFactors) : "1")} | damageBonus: {prepareDamageModifier.damageBonus}");
 #endif
-
+            var damageInfo = new DamageInfo(message.DamageSource, damageValue, message.Creator, message.Target, prepareDamageModifier.damageProperty);
+            if (message.Creator.EntityType == EntityType.Hero && postCalculateDamageModifiers != null)
+            {
+                foreach (var item in postCalculateDamageModifiers)
+                    damageInfo = item.Calculate(damageInfo);
+            }
 
             // Calculate Damage Received
 
@@ -70,8 +85,14 @@ namespace Runtime.Gameplay.EntitySystem
 
             if (Random.Range(0, 1f) >= dodgeChance)
             {
-                var damageTaken = (damageValue - armor * (1 - armorPenetration)) * (1 - damageReduction);
+                var damageTaken = (damageInfo.damage - armor * (1 - armorPenetration)) * (1 - damageReduction);
                 damageTaken = damageTaken > 0 ? damageTaken : 0;
+
+                if (message.Target.EntityType == EntityType.Hero && damageModifiers != null)
+                {
+                    foreach (var item in damageModifiers)
+                        damageTaken = item.Damage(damageTaken, damageInfo.damageSource, damageInfo.damageProperty, damageInfo.creatorData);
+                }
 
 #if UNITY_EDITOR
                 var log = $"get_damage_log || target: {message.Target.EntityId}/{message.Target.EntityType} | damageReduction: {damageReduction} " +
@@ -79,9 +100,8 @@ namespace Runtime.Gameplay.EntitySystem
                 Debug.Log($"{log}");
 #endif
 
-                var finalCreatedDamage = targetModifiedStatData.GetDamage(damageTaken, message.DamageSource, isCrit ? EffectProperty.Crit : message.DamageProperty);
+                var finalCreatedDamage = targetModifiedStatData.GetDamage(damageTaken, damageInfo.damageSource, isCrit ? EffectProperty.Crit : damageInfo.damageProperty);
 
-                // TODO: Apply lifesteal and spawn sthing after death.
                 if (message.Target.IsDead)
                 {
                     var deathEntityData = message.Target as IEntityDeathData;

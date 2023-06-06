@@ -18,9 +18,9 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private static readonly Color s_appearanceHitEffectColor = new Color(1.0f, 1.0f, 1.0f, 0.85f);
         private static readonly Color s_appearanceNormalColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-        private static readonly int s_showHitEffectColorTimes = 1;
-        private static readonly float s_showHitEffectColorDuration = 0.4f;
 
+        [SerializeField] private float _showHitEffectColorDuration = 0.4f;
+        [SerializeField] private int _showHitEffectColorTimes = 1;
         [SerializeField] private Transform _flipTransform;
         [SerializeField] private UpdateFaceRightType _updateFaceRightType;
         [SerializeField] private Transform[] _playDotweenTransform;
@@ -97,7 +97,7 @@ namespace Runtime.Gameplay.EntitySystem
 
                 _cancellationTokenSource?.Cancel();
                 _cancellationTokenSource = new CancellationTokenSource();
-                ShowHitEffectAsync(s_showHitEffectColorTimes, s_showHitEffectColorDuration, _cancellationTokenSource.Token).Forget();
+                ShowHitEffectAsync(_showHitEffectColorTimes, _showHitEffectColorDuration, _cancellationTokenSource.Token).Forget();
             }
         }
 

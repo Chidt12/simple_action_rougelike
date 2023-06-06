@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
-using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Manager.Data;
 using System.Collections.Generic;

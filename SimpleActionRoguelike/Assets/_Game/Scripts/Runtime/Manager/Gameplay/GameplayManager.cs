@@ -42,6 +42,7 @@ namespace Runtime.Manager.Gameplay
         protected GameplayMessageCenter messageCenter;
         protected WaveTimer waveTimer;
         private List<ISubscription> subscriptions;
+        private List<IDisposable> otherDisposables;
 
         protected int RewardCoins = 2;
 
@@ -55,6 +56,7 @@ namespace Runtime.Manager.Gameplay
         private CurrentLoadedStageData _currentStageData;
         private List<CheckEndStage> _checkEndStageConditions;
 
+        public GameplayMessageCenter MessageCenter => messageCenter;
         public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
         public int CurrentWaveIndex { get; protected set; }
@@ -63,9 +65,11 @@ namespace Runtime.Manager.Gameplay
 
         public async UniTask InitAsync()
         {
+            otherDisposables = new();
             subscriptions = new();
             subscriptions.Add(SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied));
             subscriptions.Add(SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage));
+            subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
 
             _cameraManager.Init();
 
@@ -90,6 +94,10 @@ namespace Runtime.Manager.Gameplay
             foreach (var subscription in subscriptions)
                 subscription.Dispose();
             subscriptions.Clear();
+
+            foreach (var disposable in otherDisposables)
+                disposable.Dispose();
+            otherDisposables.Clear();
 
             var disposables = FindObjectsOfType<Disposable>();
             foreach (var dispose in disposables)
@@ -135,6 +143,12 @@ namespace Runtime.Manager.Gameplay
                 MapManager.Instance.SpawnPoints[0].transform.position,
                 cancellationToken: _cancellationTokenSource.Token);
             SetUpNewStage();
+        }
+
+        private void OnHeroSpawned(HeroSpawnedMessage message)
+        {
+            var invincibleAfterGetHurt = new InvincibleAfterGetHurtBaseModifier();
+            otherDisposables.Add(invincibleAfterGetHurt);
         }
 
         private void OnEntityDied(EntityDiedMessage entityDiedMessage)

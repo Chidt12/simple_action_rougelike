@@ -509,6 +509,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showHitEffectColorDuration: 0.4
+  _showHitEffectColorTimes: 1
   _flipTransform: {fileID: 7386596438361353228}
   _updateFaceRightType: 1
   _playDotweenTransform:

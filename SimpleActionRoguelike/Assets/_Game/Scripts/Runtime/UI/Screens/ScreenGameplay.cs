@@ -15,6 +15,7 @@ namespace Runtime.UI
     {
         [SerializeField] private Image _progress;
         [SerializeField] private TextMeshProUGUI _progressText;
+        [SerializeField] private Animator _hurtAnimator;
 
         private IEntityStatData _heroData;
         private ISubscription _subscription;
@@ -44,6 +45,10 @@ namespace Runtime.UI
 
         private void OnDamage(float value, EffectSource effectSource, EffectProperty effectProperty)
         {
+            if (value > 0)
+            {
+                _hurtAnimator.Play("play", 0, 0);
+            }
             UpdateHud();
         }
 

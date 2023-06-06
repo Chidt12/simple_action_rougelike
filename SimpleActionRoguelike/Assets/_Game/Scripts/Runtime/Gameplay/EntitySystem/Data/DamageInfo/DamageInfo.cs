@@ -25,21 +25,10 @@ namespace Runtime.Gameplay.EntitySystem
     public class DamageInfo
     {
         public float damage;
-        public float armorPenetration;
         public IEntityData creatorData;
         public IEntityData targetData;
         public EffectSource damageSource;
         public EffectProperty damageProperty;
-
-        public DamageInfo(EffectSource damageSource, float damage, float armorPenetration, IEntityData creatorData, IEntityData targetData, EffectProperty damageProperty)
-        {
-            this.damageSource = damageSource;
-            this.damage = damage;
-            this.creatorData = creatorData;
-            this.targetData = targetData;
-            this.damageProperty = damageProperty;
-            this.armorPenetration = armorPenetration;
-        }
 
         public DamageInfo(EffectSource damageSource, float damage, IEntityData creatorData, IEntityData targetData, EffectProperty damageProperty)
         {
@@ -48,7 +37,6 @@ namespace Runtime.Gameplay.EntitySystem
             this.creatorData = creatorData;
             this.targetData = targetData;
             this.damageProperty = damageProperty;
-            armorPenetration = 0.0f;
         }
     }
 

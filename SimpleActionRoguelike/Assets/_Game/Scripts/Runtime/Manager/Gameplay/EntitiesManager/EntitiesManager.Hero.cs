@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Runtime.Core.Message;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System.Threading;
 using UnityEngine;
@@ -32,7 +33,6 @@ namespace Runtime.Gameplay.EntitySystem
             heroModel.InitStats(heroData.Item1);
             heroModel.InitWeapon(heroData.Item2);
             heroModel.InitStatus();
-
             entityGameObject.SetActive(true);
             entityGameObject.transform.position = spawnPosition;
             await entityGameObject.GetComponent<IEntityHolder>().BuildAsync(heroModel);
