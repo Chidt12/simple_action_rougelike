@@ -3,6 +3,8 @@ using Runtime.Core.Message;
 using Runtime.Message;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using ZBase.Foundation.PubSub;
 using Screen = ZBase.UnityScreenNavigator.Core.Screens.Screen;
 
@@ -30,6 +32,33 @@ namespace Runtime.UI
         }
 
         protected virtual void OnKeyPress(InputKeyPressMessage message) { }
+
+        protected virtual void Select(Button button)
+        {
+            if (EventSystem.current != null)
+            {
+                var ped = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.pointerEnterHandler);
+            }
+        }
+
+        protected virtual void DeSelect(Button button)
+        {
+            if (EventSystem.current != null)
+            {
+                var ped = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.pointerExitHandler);
+            }
+        }
+
+        protected virtual void Submit(Button button)
+        {
+            if (EventSystem.current != null)
+            {
+                var ped = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.submitHandler);
+            }
+        }
     }
 
     public abstract class Screen<T> : BaseScreen where T : class

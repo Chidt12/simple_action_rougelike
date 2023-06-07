@@ -41,6 +41,8 @@ namespace Runtime.Manager.Gameplay
             //Drawing our ScriptableObjects inspector
             if(cachedEditor)
                 cachedEditor.DrawDefaultInspector();
+
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

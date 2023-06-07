@@ -3,6 +3,8 @@ using Runtime.Core.Message;
 using Runtime.Message;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using ZBase.Foundation.PubSub;
 using ZBase.UnityScreenNavigator.Core.Modals;
 
@@ -27,6 +29,33 @@ namespace Runtime.UI
                     subscription.Dispose();
             }
             return base.Cleanup();
+        }
+
+        protected virtual void Select(Button button)
+        {
+            if (EventSystem.current != null)
+            {
+                var ped = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.selectHandler);
+            }
+        }
+
+        protected virtual void DeSelect(Button button)
+        {
+            if (EventSystem.current != null)
+            {
+                var ped = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.deselectHandler);
+            }
+        }
+
+        protected virtual void Sumit(Button button)
+        {
+            if (EventSystem.current != null)
+            {
+                var ped = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.submitHandler);
+            }
         }
 
         protected virtual void OnKeyPress(InputKeyPressMessage message) { }

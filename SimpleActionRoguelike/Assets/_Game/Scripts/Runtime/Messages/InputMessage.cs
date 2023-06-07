@@ -38,6 +38,10 @@ namespace Runtime.Message
         Interact = 2,
         Dash = 3,
         Confirm = 4,
+        Up = 5,
+        Down = 6,
+        Left = 7,
+        Right = 8
     }
     public readonly struct InputKeyPressMessage : IMessage
     {

@@ -39,6 +39,25 @@ namespace Runtime.Manager.UserInput
                 if (Input.GetKeyDown(KeyCode.E))
                     SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Interact));
             }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Right));
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Left));
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Down));
+                }
+                else if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Up));
+                }
+            }
 
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
                 SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Confirm));

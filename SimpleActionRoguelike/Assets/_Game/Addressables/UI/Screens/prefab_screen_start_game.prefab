@@ -164,7 +164,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2632727631774346964}
   - {fileID: 7952084639237468116}
@@ -174,7 +174,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 500, y: 190}
+  m_SizeDelta: {x: 500, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2632727632630740658
 CanvasRenderer:
@@ -240,7 +240,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
+    m_ColorMultiplier: 2.96
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
@@ -258,6 +258,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  selectedGameObject: {fileID: 0}
 --- !u!1 &2632727633556674985
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +343,7 @@ MonoBehaviour:
     _pushExitAnimations: []
     _popEnterAnimations: []
     _popExitAnimations: []
+  _startButton: {fileID: 2632727632630740659}
 --- !u!1 &6560520101973310188
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +566,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: focus_arrows
       objectReference: {fileID: 0}
+    - target: {fileID: 703727975578751627, guid: bcb804c9dbc68744b8d396867bbace37, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4027135255262279905, guid: bcb804c9dbc68744b8d396867bbace37, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -599,6 +605,10 @@ PrefabInstance:
     - target: {fileID: 4027135255262279905, guid: bcb804c9dbc68744b8d396867bbace37, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4027135255262279905, guid: bcb804c9dbc68744b8d396867bbace37, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4027135255262279905, guid: bcb804c9dbc68744b8d396867bbace37, type: 3}
       propertyPath: m_LocalPosition.x
