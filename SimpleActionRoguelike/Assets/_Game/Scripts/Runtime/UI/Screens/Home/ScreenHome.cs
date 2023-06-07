@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Constants;
 using Runtime.Message;
 using System;
 using UnityEngine;
+using ZBase.UnityScreenNavigator.Core.Views;
 
 namespace Runtime.UI
 {
@@ -9,13 +11,42 @@ namespace Runtime.UI
     {
         [SerializeField] private CustomButton[] _selectButtons;
 
-        private int _currentButtonIndex;
-
         public override UniTask Initialize(Memory<object> args)
         {
-            Select(_selectButtons[0]);
-            _currentButtonIndex = 0;
+            for (int i = 0; i < _selectButtons.Length; i++)
+            {
+                _selectButtons[i].Index = i;
+                _selectButtons[i].CustomPointEnterAction = OnEnterAnItem;
+            }
+
+            _selectButtons[0].onClick.RemoveAllListeners();
+            _selectButtons[0].onClick.AddListener(() => { });
+
+            _selectButtons[1].onClick.RemoveAllListeners();
+            _selectButtons[1].onClick.AddListener(() => { });
+
+            _selectButtons[2].onClick.RemoveAllListeners();
+            _selectButtons[2].onClick.AddListener(() => { });
+
+            _selectButtons[3].onClick.RemoveAllListeners();
+            _selectButtons[3].onClick.AddListener(OnClickQuit);
+
+            EnterAButton(_selectButtons[0]);
+            currentSelectedIndex = 0;
             return base.Initialize(args);
+        }
+
+        private void OnClickQuit()
+        {
+            var windowOptions = new WindowOptions(ModalIds.QUIT_GAME);
+            ScreenNavigator.Instance.LoadModal(windowOptions).Forget();
+        }
+
+        private void OnEnterAnItem(int index)
+        {
+            _selectButtons[currentSelectedIndex].ToggleSelect(false);
+            currentSelectedIndex = index;
+            _selectButtons[currentSelectedIndex].ToggleSelect(true);
         }
 
         protected override void OnKeyPress(InputKeyPressMessage message)
@@ -23,21 +54,21 @@ namespace Runtime.UI
             base.OnKeyPress(message);
             if (message.KeyPressType == KeyPressType.Up)
             {
-                if(_currentButtonIndex > 0)
+                if (currentSelectedIndex > 0)
                 {
-                    DeSelect(_selectButtons[_currentButtonIndex]);
-                    _currentButtonIndex--;
-                    Select(_selectButtons[_currentButtonIndex]);
+                    EnterAButton(_selectButtons[currentSelectedIndex - 1]);
                 }
             }
             else if (message.KeyPressType == KeyPressType.Down)
             {
-                if (_currentButtonIndex < _selectButtons.Length - 1)
+                if (currentSelectedIndex < _selectButtons.Length - 1)
                 {
-                    DeSelect(_selectButtons[_currentButtonIndex]);
-                    _currentButtonIndex++;
-                    Select(_selectButtons[_currentButtonIndex]);
+                    EnterAButton(_selectButtons[currentSelectedIndex + 1]);
                 }
+            }
+            else if (message.KeyPressType == KeyPressType.Confirm)
+            {
+                Submit(_selectButtons[currentSelectedIndex]);
             }
         }
     }

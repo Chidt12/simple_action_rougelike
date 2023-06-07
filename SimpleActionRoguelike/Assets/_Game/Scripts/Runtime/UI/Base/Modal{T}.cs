@@ -12,18 +12,20 @@ namespace Runtime.UI
 {
     public abstract class BaseModal : Modal
     {
+        protected int currentSelectedIndex;
         protected List<ISubscription> subscriptions;
 
         public override UniTask Initialize(Memory<object> args)
         {
+
             subscriptions = new();
-            subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPress));
+            subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnInputKeyPress));
             return base.Initialize(args);
         }
 
         public override UniTask Cleanup()
         {
-            if(subscriptions != null)
+            if (subscriptions != null)
             {
                 foreach (var subscription in subscriptions)
                     subscription.Dispose();
@@ -31,25 +33,25 @@ namespace Runtime.UI
             return base.Cleanup();
         }
 
-        protected virtual void Select(Button button)
+        protected virtual void EnterAButton(Button button)
         {
             if (EventSystem.current != null)
             {
                 var ped = new PointerEventData(EventSystem.current);
-                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.selectHandler);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.pointerEnterHandler);
             }
         }
 
-        protected virtual void DeSelect(Button button)
+        protected virtual void ExitAButton(Button button)
         {
             if (EventSystem.current != null)
             {
                 var ped = new PointerEventData(EventSystem.current);
-                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.deselectHandler);
+                ExecuteEvents.Execute(button.gameObject, ped, ExecuteEvents.pointerExitHandler);
             }
         }
 
-        protected virtual void Sumit(Button button)
+        protected virtual void Submit(Button button)
         {
             if (EventSystem.current != null)
             {
@@ -58,6 +60,13 @@ namespace Runtime.UI
             }
         }
 
+        protected void OnInputKeyPress(InputKeyPressMessage message)
+        {
+            if (ScreenNavigator.Instance.IsModalCanDetectAction(this))
+            {
+                OnKeyPress(message);
+            }
+        }
         protected virtual void OnKeyPress(InputKeyPressMessage message) { }
     }
 

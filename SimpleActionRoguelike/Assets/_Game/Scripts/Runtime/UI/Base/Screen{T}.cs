@@ -12,12 +12,14 @@ namespace Runtime.UI
 {
     public class BaseScreen : Screen
     {
+        protected int currentSelectedIndex;
         protected List<ISubscription> subscriptions;
 
         public override UniTask Initialize(Memory<object> args)
         {
+
             subscriptions = new();
-            subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPress));
+            subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnInputKeyPress));
             return base.Initialize(args);
         }
 
@@ -31,9 +33,17 @@ namespace Runtime.UI
             return base.Cleanup();
         }
 
+        protected void OnInputKeyPress(InputKeyPressMessage message)
+        {
+            if (ScreenNavigator.Instance.IsScreenCanDetectAction(this))
+            {
+                OnKeyPress(message);
+            }
+        }
+
         protected virtual void OnKeyPress(InputKeyPressMessage message) { }
 
-        protected virtual void Select(Button button)
+        protected virtual void EnterAButton(Button button)
         {
             if (EventSystem.current != null)
             {
@@ -42,7 +52,7 @@ namespace Runtime.UI
             }
         }
 
-        protected virtual void DeSelect(Button button)
+        protected virtual void ExitAButton(Button button)
         {
             if (EventSystem.current != null)
             {

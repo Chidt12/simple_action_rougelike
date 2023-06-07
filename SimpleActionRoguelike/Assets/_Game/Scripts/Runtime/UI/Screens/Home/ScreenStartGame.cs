@@ -16,6 +16,7 @@ namespace Runtime.UI
 
         public override UniTask Initialize(Memory<object> args)
         {
+            _startButton.onClick.RemoveAllListeners();
             _startButton.onClick.AddListener(() => {
                 var windowOptions = new WindowOptions(ScreenIds.HOME);
                 ScreenNavigator.Instance.LoadScreen(windowOptions).Forget();

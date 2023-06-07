@@ -10,7 +10,7 @@ public class CustomButton : Button
     [SerializeField] public GameObject selectedGameObject;
 
     public int Index { get; set; }
-    public Action OnPointEnter { get; set; }
+    public Action<int> CustomPointEnterAction { get; set; }
 
     protected override void Awake()
     {
@@ -22,16 +22,12 @@ public class CustomButton : Button
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
-        if (selectedGameObject)
-            selectedGameObject.SetActive(true);
-
-        OnPointEnter?.Invoke();
+        CustomPointEnterAction?.Invoke(Index);
     }
 
-    public override void OnPointerExit(PointerEventData eventData)
+    public virtual void ToggleSelect(bool value)
     {
-        base.OnPointerExit(eventData);
         if (selectedGameObject)
-            selectedGameObject.SetActive(false);
+            selectedGameObject.SetActive(value);
     }
 }

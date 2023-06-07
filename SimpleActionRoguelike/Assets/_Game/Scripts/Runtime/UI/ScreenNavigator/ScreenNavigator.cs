@@ -5,6 +5,7 @@ using Runtime.Core.Singleton;
 using Runtime.Message;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
 using ZBase.UnityScreenNavigator.Core;
@@ -13,6 +14,7 @@ using ZBase.UnityScreenNavigator.Core.Modals;
 using ZBase.UnityScreenNavigator.Core.Screens;
 using ZBase.UnityScreenNavigator.Core.Views;
 using ZBase.UnityScreenNavigator.Foundation;
+using Screen = ZBase.UnityScreenNavigator.Core.Screens.Screen;
 
 namespace Runtime.UI
 {
@@ -221,6 +223,21 @@ namespace Runtime.UI
         {
             await CloseAllModals();
             await CloseAllScreens();
+        }
+
+        public bool IsScreenCanDetectAction(Screen screen)
+        {
+            if (IsOpeningAModal)
+                return false;
+
+            var screenContainer = globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.SCREEN_CONTAINER_LAYER_NAME);
+            return screenContainer.Current.View.Equals(screen);
+        }
+
+        public bool IsModalCanDetectAction(Modal modal)
+        {
+            var modalContainer = globalContainerLayerManager.Find<ModalContainer>(ContainerKey.MODAL_CONTAINER_LAYER_NAME);
+            return modalContainer.Current.View.Equals(modal);
         }
     }
 }
