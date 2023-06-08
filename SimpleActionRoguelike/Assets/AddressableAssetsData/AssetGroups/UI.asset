@@ -77,6 +77,14 @@ MonoBehaviour:
     m_Address: prefab_modal_quit_game
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: ad063283b55de9349b29e2b6053c278d
+    m_Address: prefab_screen_lobby
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a06ccd11364a5d2449514cd4690c9145
+    m_Address: weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:
