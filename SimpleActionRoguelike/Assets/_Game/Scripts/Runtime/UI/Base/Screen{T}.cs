@@ -17,7 +17,6 @@ namespace Runtime.UI
 
         public override UniTask Initialize(Memory<object> args)
         {
-
             subscriptions = new();
             subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnInputKeyPress));
             return base.Initialize(args);

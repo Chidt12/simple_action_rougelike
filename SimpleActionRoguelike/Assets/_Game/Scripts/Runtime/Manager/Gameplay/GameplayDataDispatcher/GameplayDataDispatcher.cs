@@ -41,6 +41,10 @@ namespace Runtime.Gameplay
 
         public abstract Dictionary<EquipmentType, EquipmentEquippedData> SelectedEquipments { get; }
 
-        public abstract UniTask<HeroStatsInfo> GetHeroStatsInfo(CharacterLevelStats heroLevelStats);
+        public virtual UniTask<HeroStatsInfo> GetHeroStatsInfo(CharacterLevelStats heroLevelStats)
+        {
+            var heroStats = new HeroStatsInfo(heroLevelStats);
+            return UniTask.FromResult(heroStats);
+        }
     }
 }

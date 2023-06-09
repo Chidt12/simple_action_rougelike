@@ -81,7 +81,7 @@ namespace Runtime.Gameplay
             var weaponData = await GetWeaponDataAsync(weaponType, RarityType.Common, equipmentEquip.Level);
             var weaponModel = WeaponModelFactory.GetWeaponModel(weaponType, weaponData);
             var heroStatsInfo = await GameplayDataDispatcher.Instance.GetHeroStatsInfo(heroLevelConfigItem.CharacterLevelStats);
-
+            await heroStatsInfo.UpdateBaseStatByWeapon(weaponData.weaponConfigItem);
             return (heroStatsInfo, weaponModel);
         }
 

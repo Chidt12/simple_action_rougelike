@@ -56,14 +56,14 @@ namespace Runtime.Gameplay.EntitySystem
                 if (ownerWeaponModel.GoThrough)
                 {
                     projectileStrategyData = new FlyForwardThroughProjecitleStrategyData( true,
-                                                                                            ownerWeaponModel.AttackRange,
+                                                                                            creatorData.GetTotalStatValue(StatType.AttackRange),
                                                                                             ownerWeaponModel.ProjectileSpeed,
                                                                                             ProjectileCallback);
                     projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyForwardThrough);
                 }
                 else
                 {
-                    projectileStrategyData = new FlyForwardProjectileStrategyData(ownerWeaponModel.AttackRange,
+                    projectileStrategyData = new FlyForwardProjectileStrategyData(creatorData.GetTotalStatValue(StatType.AttackRange),
                                                                                             ownerWeaponModel.ProjectileSpeed,
                                                                                             ProjectileCallback);
                     projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyForward);
@@ -85,8 +85,8 @@ namespace Runtime.Gameplay.EntitySystem
             SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
                 EffectSource.FromNormalAttack,
                 EffectProperty.Normal,
-                ownerWeaponModel.DamageBonus,
-                ownerWeaponModel.DamageFactors,
+                0,
+                new[] { new DamageFactor(StatType.AttackDamage, 1) },
                 creatorData,
                 callbackData.target
             ));

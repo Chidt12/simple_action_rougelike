@@ -6,6 +6,7 @@ namespace Runtime.Manager.Data
     public sealed class LocalData
     {
         private const string password = "asdf123@";
+        public PlayerBasicLocalData playerBasicLocalData;
 
         public LocalData()
         {
@@ -16,12 +17,21 @@ namespace Runtime.Manager.Data
                 true, false);
 
             ObscuredFilePrefs.Init(settings, true);
+
+            playerBasicLocalData = Load<PlayerBasicLocalData>();
         }
 
-        public T Load<T>()
+        public T Load<T>() where T : new()
         {
             var json = ObscuredFilePrefs.Get(nameof(T), string.Empty);
-            return JsonConvert.DeserializeObject<T>(json);
+            if (string.IsNullOrEmpty(json))
+            {
+                return new T();
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<T>(json);
+            }
         }
 
         public void Set<T>(T value)

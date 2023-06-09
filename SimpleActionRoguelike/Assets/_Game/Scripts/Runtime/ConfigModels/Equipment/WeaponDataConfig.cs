@@ -1,44 +1,33 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
-using Runtime.Gameplay.EntitySystem;
 using System.Linq;
 
 namespace Runtime.ConfigModel
 {
-    public interface IWeaponDataConfigItem
+    public abstract class WeaponDataConfigItem
     {
-        string WeaponPrefabName { get; }
-        WeaponType WeaponType { get; }
-        float AttackSpeedPercent { get; }
-        float AttackRange { get; }
-        float DamageBonus { get; }
-        DamageFactor[] DamageFactors { get; }
-        EquipmentMechanicDataConfigItem[] Mechanics { get; }
+        // For Buff Stat Hero
+        public EquipmentStat[] stats;
+
+        public abstract string WeaponPrefabName { get; }
+        public abstract WeaponType WeaponType { get; }
+        public abstract EquipmentMechanicDataConfigItem[] Mechanics { get; }
     }
 
-    public abstract class WeaponDataConfigItem<T> : IWeaponDataConfigItem where T : EquipmentMechanicDataConfigItem, new()
+    public abstract class WeaponDataConfigItem<T> : WeaponDataConfigItem where T : EquipmentMechanicDataConfigItem, new()
     {
         public string weaponPrefabName;
-        public float attackSpeedPercent;
-        public float attackRange;
-        public float damageBonus;
-        public DamageFactor[] damageFactors;
         public T[] mechanics;
 
-        public string WeaponPrefabName => weaponPrefabName;
-        public float AttackSpeedPercent => attackSpeedPercent;
-        public float AttackRange => attackRange;
-        public float DamageBonus => damageBonus;
-        public DamageFactor[] DamageFactors => damageFactors;
-        public EquipmentMechanicDataConfigItem[] Mechanics => mechanics;
-        public abstract WeaponType WeaponType { get; }
+        public override string WeaponPrefabName => weaponPrefabName;
+        public override EquipmentMechanicDataConfigItem[] Mechanics => mechanics;
     }
 
     public abstract class WeaponDataConfig : EquipmentMechanicDataConfig
     {
         #region Interface Methods
 
-        public abstract IWeaponDataConfigItem GetWeaponDataConfigItem();
+        public abstract WeaponDataConfigItem GetWeaponDataConfigItem();
 
         #endregion Interface Methods
     }
@@ -60,7 +49,7 @@ namespace Runtime.ConfigModel
 
         #region Interface Methods
 
-        public override IWeaponDataConfigItem GetWeaponDataConfigItem() => items.FirstOrDefault();
+        public override WeaponDataConfigItem GetWeaponDataConfigItem() => items.FirstOrDefault();
 
         public override EquipmentMechanicDataConfigItem GetEquipmentMechanicDataConfigItem(RarityType rarityType)
         {

@@ -13,35 +13,57 @@ MonoBehaviour:
   m_Name: Runtime.ConfigModel.ShortGunWeaponDataConfig
   m_EditorClassIdentifier: 
   items:
-  - weaponPrefabName: weapon_1
-    attackSpeedPercent: 1
-    attackRange: 6
-    damageBonus: 0
-    damageFactors:
-    - damageFactorStatType: 14
-      damageFactorValue: 1
+  - stats:
+    - statType: 14
+      value: 10
+      statModifyType: 0
+    - statType: 2
+      value: 40
+      statModifyType: 0
+    - statType: 5
+      value: 0.1
+      statModifyType: 0
+    - statType: 6
+      value: 1
+      statModifyType: 0
+    - statType: 18
+      value: 8
+      statModifyType: 0
+    - statType: 7
+      value: 4.1
+      statModifyType: 0
+    - statType: 9
+      value: 1
+      statModifyType: 0
+    weaponPrefabName: weapon_1
     mechanics:
-    - triggerRarityType: 1
+    - point: 1
+      triggerRarityType: 1
       bonusProjectileVertical: 0
       bonusProjectileHorizontal: 0
       goThrough: 0
-    - triggerRarityType: 2
+    - point: 2
+      triggerRarityType: 2
       bonusProjectileVertical: 1
       bonusProjectileHorizontal: 0
       goThrough: 0
-    - triggerRarityType: 3
+    - point: 3
+      triggerRarityType: 3
       bonusProjectileVertical: 1
       bonusProjectileHorizontal: 0
       goThrough: 0
-    - triggerRarityType: 4
+    - point: 4
+      triggerRarityType: 4
       bonusProjectileVertical: 0
       bonusProjectileHorizontal: 0
       goThrough: 1
-    - triggerRarityType: 5
+    - point: 5
+      triggerRarityType: 5
       bonusProjectileVertical: 0
       bonusProjectileHorizontal: 2
       goThrough: 0
-    - triggerRarityType: 6
+    - point: 6
+      triggerRarityType: 6
       bonusProjectileVertical: 0
       bonusProjectileHorizontal: 2
       goThrough: 0

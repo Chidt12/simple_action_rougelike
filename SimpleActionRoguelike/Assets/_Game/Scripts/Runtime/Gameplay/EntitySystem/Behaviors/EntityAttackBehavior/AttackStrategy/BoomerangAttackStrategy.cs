@@ -54,7 +54,7 @@ namespace Runtime.Gameplay.EntitySystem
             ProjectileStrategyData projectileStrategyData = null;
 
             projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyBoomerang);
-            projectileStrategyData = new FlyBoomerangProjectileStrategyData(ProjectileCameback, ownerWeaponModel.GoThrough, ownerWeaponModel.AttackRange, ownerWeaponModel.ProjectileSpeed, ProjectileCallback);
+            projectileStrategyData = new FlyBoomerangProjectileStrategyData(ProjectileCameback, ownerWeaponModel.GoThrough, creatorData.GetTotalStatValue(StatType.AttackRange), ownerWeaponModel.ProjectileSpeed, ProjectileCallback);
 
             var spawnPoint = GetSuitableSpawnPosition(spawnVFXPoints);
             var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerWeaponModel.ProjectileId, creatorData, spawnPoint, token);
@@ -77,8 +77,8 @@ namespace Runtime.Gameplay.EntitySystem
             SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
                 EffectSource.FromNormalAttack,
                 EffectProperty.Normal,
-                ownerWeaponModel.DamageBonus,
-                ownerWeaponModel.DamageFactors,
+                0,
+                new[] {new DamageFactor(StatType.AttackDamage, 1)},
                 creatorData,
                 callbackData.target
             ));

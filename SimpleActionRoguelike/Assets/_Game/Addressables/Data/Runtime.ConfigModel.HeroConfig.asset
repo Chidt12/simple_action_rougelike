@@ -15,20 +15,20 @@ MonoBehaviour:
   items:
   - id: 1001
     levels:
-    - point: 2
+    - point: 0
       level: 1
       detectedPriority: 1000
       heroLevelStats:
-        detectRange: 11
-        hp: 30
+        detectRange: 0
+        hp: 0
         armor: 0
         armorPenetration: 0
         critChance: 0
-        critDamage: 2
-        moveSpeed: 4.1
+        critDamage: 0
+        moveSpeed: 0
         lifeSteal: 0
-        attackDamage: 30
-        attackSpeed: 3
+        attackDamage: 0
+        attackSpeed: 0
         dodgeChance: 0
         ccReduction: 0
         cooldownReduction: 0

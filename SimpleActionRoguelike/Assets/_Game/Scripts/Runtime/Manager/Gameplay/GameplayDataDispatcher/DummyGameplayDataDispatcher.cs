@@ -37,12 +37,6 @@ namespace Runtime.Gameplay.Manager
                 return selectedEquipments;
             }
         }
-
-        public override UniTask<HeroStatsInfo> GetHeroStatsInfo(CharacterLevelStats heroLevelStats)
-        {
-            var heroStats = new HeroStatsInfo(heroLevelStats);
-            return UniTask.FromResult(heroStats);
-        }
     }
 
 }

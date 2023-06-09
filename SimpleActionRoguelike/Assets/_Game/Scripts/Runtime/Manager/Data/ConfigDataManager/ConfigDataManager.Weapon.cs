@@ -20,7 +20,7 @@ namespace Runtime.Manager.Data
             return weaponConfigItem;
         }
 
-        public async UniTask<IWeaponDataConfigItem> LoadWeaponDataConfigItem(WeaponType weaponType)
+        public async UniTask<WeaponDataConfigItem> LoadWeaponDataConfigItem(WeaponType weaponType)
         {
             var weaponConfig = await Load<WeaponDataConfig>(string.Format(AddressableKeys.WEAPON_DATA_CONFIG_ASSET_FORMAT, weaponType));
             var weaponDataConfigItem = weaponConfig.GetWeaponDataConfigItem();

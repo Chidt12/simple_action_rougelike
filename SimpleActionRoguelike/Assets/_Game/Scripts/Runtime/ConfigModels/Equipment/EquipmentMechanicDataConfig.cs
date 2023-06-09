@@ -6,6 +6,23 @@ using UnityEngine;
 namespace Runtime.ConfigModel
 {
     [Serializable]
+    public struct EquipmentStat
+    {
+        public StatType statType;
+        public float value;
+        public StatModifyType statModifyType;
+
+        public EquipmentStat(StatType statType, float value, StatModifyType statModifyType)
+        {
+            this.statType = statType;
+            this.value = value;
+            this.statModifyType = statModifyType;
+        }
+
+        public static EquipmentStat operator +(EquipmentStat stat, float bonus) => new EquipmentStat(stat.statType, stat.value + bonus, stat.statModifyType);
+    }
+
+    [Serializable]
     public abstract class EquipmentMechanicDataConfigItem : BaseWithPointConfigItem
     {
         public RarityType triggerRarityType;

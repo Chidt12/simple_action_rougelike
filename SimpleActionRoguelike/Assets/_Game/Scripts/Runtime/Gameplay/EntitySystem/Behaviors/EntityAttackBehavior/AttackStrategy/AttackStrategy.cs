@@ -41,7 +41,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
 
             isAttackReady = true;
-            attackCooldownTime = attackSpeed > 0 ? 1 / (weaponModel.AttackSpeedPercent * attackSpeed) : 0;
+            attackCooldownTime = 1 / attackSpeed;
             currentAttackCooldownTime = 0.0f;
         }
 

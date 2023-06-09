@@ -13,50 +13,72 @@ MonoBehaviour:
   m_Name: Runtime.ConfigModel.BoomerangWeaponDataConfig
   m_EditorClassIdentifier: 
   items:
-  - weaponPrefabName: weapon_2
-    attackSpeedPercent: 10
-    attackRange: 6
-    damageBonus: 0
-    damageFactors:
-    - damageFactorStatType: 14
-      damageFactorValue: 1
+  - stats:
+    - statType: 14
+      value: 10
+      statModifyType: 0
+    - statType: 2
+      value: 40
+      statModifyType: 0
+    - statType: 5
+      value: 0.1
+      statModifyType: 0
+    - statType: 6
+      value: 1
+      statModifyType: 0
+    - statType: 18
+      value: 8
+      statModifyType: 0
+    - statType: 7
+      value: 4.1
+      statModifyType: 0
+    - statType: 9
+      value: 1
+      statModifyType: 0
+    weaponPrefabName: weapon_2
     mechanics:
-    - triggerRarityType: 1
+    - point: 1
+      triggerRarityType: 1
       bonusProjectiles: 0
       buffStatusIdentity:
         statusDataId: 0
         statusType: 0
       buffFlySpeed: 0
       goThrough: 0
-    - triggerRarityType: 2
+    - point: 2
+      triggerRarityType: 2
       bonusProjectiles: 1
       buffStatusIdentity:
         statusDataId: 0
         statusType: 0
       buffFlySpeed: 0
       goThrough: 0
-    - triggerRarityType: 3
+    - point: 3
+      triggerRarityType: 3
       bonusProjectiles: 0
       buffStatusIdentity:
         statusDataId: 0
         statusType: 0
       buffFlySpeed: 0
       goThrough: 1
-    - triggerRarityType: 4
+    - point: 4
+      triggerRarityType: 4
       bonusProjectiles: 1
       buffStatusIdentity:
         statusDataId: 0
         statusType: 0
       buffFlySpeed: 0
       goThrough: 0
-    - triggerRarityType: 5
+    - point: 5
+      triggerRarityType: 5
       bonusProjectiles: 0
       buffStatusIdentity:
         statusDataId: 1
         statusType: 900
       buffFlySpeed: 0
       goThrough: 0
-    - triggerRarityType: 6
+    - point: 6
+      triggerRarityType: 6
       bonusProjectiles: 0
       buffStatusIdentity:
         statusDataId: 0
