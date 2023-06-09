@@ -86,4 +86,4 @@ MonoBehaviour:
       buffFlySpeed: 5
       goThrough: 0
     projectileId: bullet_blue_boomerang
-    projectileSpeed: 10
+    projectileSpeed: 20

@@ -1,5 +1,5 @@
 ﻿weapon_prefab_name,stat_type,value,stat_modify_type,projectile_id,projectile_speed,trigger_rarity_type,point,bonus_projectiles,status_data_id,status_type,buff_fly_speed,go_through
-weapon_2,AttackDamage,10,0,bullet_blue_boomerang,10,1,1,,,,,
+weapon_2,AttackDamage,10,0,bullet_blue_boomerang,20,1,1,,,,,
 ,Health,40,0,,,2,2,1,,,,
 ,CritChance,0.1,0,,,3,3,,,,,TRUE
 ,CritDamage,1,0,,,4,4,1,,,,
