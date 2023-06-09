@@ -29,7 +29,7 @@ MonoBehaviour:
     m_Address: loading_layer
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 4a2beccc2a22fb94c8afdbf82b5cdbcd
+  - m_GUID: 284559995610cf04e8d3b76fbcde2570
     m_Address: prefab_modal_victory
     m_ReadOnly: 0
     m_SerializedLabels: []
@@ -37,16 +37,12 @@ MonoBehaviour:
     m_Address: FaderRound
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 77665edc0301db644a5b96bbcc248832
+  - m_GUID: 4c2759301ae046546b802a5f196c9c3e
     m_Address: prefab_modal_lose
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2219045d48c43cc42a162674c4a7552a
-    m_Address: prefab_modal_select_ingame_buff
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 1110c4216164ddb42a2dde10e7c7a4ed
-    m_Address: item_buff
+  - m_GUID: ce64bf9448fea6847b990494d7c87ca0
+    m_Address: prefab_modal_give_ingame_artifact
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 3c2538c2343843e4d9b0de4aadba230e
@@ -57,20 +53,12 @@ MonoBehaviour:
     m_Address: toast_normal
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f9ad2bf6500a25043838b67841951458
-    m_Address: shop_in_game_item
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 1a0b8bb8eb744914c9982b190de1c1a1
-    m_Address: prefab_modal_select_ingame_shop
+  - m_GUID: 509c69407d2461843832d15badeb4089
+    m_Address: prefab_modal_buy_ingame_shop
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 17f9eaa78d31bf7499f63a17692567d2
     m_Address: prefab_modal_give_ingame_shop
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 1629d0ce225b5af4ca3a3a8db45f8d9c
-    m_Address: shop_in_game_item
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 28d0f8f65114de04584f64ccc25820ff
@@ -83,6 +71,30 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: a06ccd11364a5d2449514cd4690c9145
     m_Address: weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1ddbfc2070a6db0499da8e1857350be4
+    m_Address: stat_item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 178573056ec0b124f8a628e900172f1a
+    m_Address: prefab_modal_gameplay_settings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cfe7f5b204f8fda4b8736fb8b06dd936
+    m_Address: prefab_modal_quit_gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e21322bede3314641bf131cdc34e3cd2
+    m_Address: prefab_modal_replay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d7374ccb9cdb2bf458c78acd451ca91a
+    m_Address: prefab_modal_gameplay_inventory
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bb832210aee0ef44c868f88f42fdb6f5
+    m_Address: inventory_panel
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

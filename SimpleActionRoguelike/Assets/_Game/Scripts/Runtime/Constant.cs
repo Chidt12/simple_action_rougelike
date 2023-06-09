@@ -25,6 +25,7 @@ namespace Runtime.Constants
         public const string START_GAME = "prefab_screen_start_game";
         public const string HOME = "prefab_screen_home";
         public const string GAMEPLAY = "prefab_screen_gameplay";
+        public const string LOBBY = "prefab_screen_lobby";
 
     }
 

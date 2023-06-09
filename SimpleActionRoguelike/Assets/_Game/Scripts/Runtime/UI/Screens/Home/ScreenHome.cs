@@ -20,7 +20,7 @@ namespace Runtime.UI
             }
 
             _selectButtons[0].onClick.RemoveAllListeners();
-            _selectButtons[0].onClick.AddListener(() => { });
+            _selectButtons[0].onClick.AddListener(OnClickNewGame);
 
             _selectButtons[1].onClick.RemoveAllListeners();
             _selectButtons[1].onClick.AddListener(() => { });
@@ -34,6 +34,12 @@ namespace Runtime.UI
             EnterAButton(_selectButtons[0]);
             currentSelectedIndex = 0;
             return base.Initialize(args);
+        }
+
+        private void OnClickNewGame()
+        {
+            var windowOptions = new WindowOptions(ScreenIds.LOBBY);
+            ScreenNavigator.Instance.LoadScreen(windowOptions).Forget();
         }
 
         private void OnClickQuit()
