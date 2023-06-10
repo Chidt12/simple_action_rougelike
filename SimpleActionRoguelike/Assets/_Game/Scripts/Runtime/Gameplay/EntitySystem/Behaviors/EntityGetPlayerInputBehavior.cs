@@ -8,15 +8,15 @@ using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    public enum PlayerAttackInputType
+    {
+        FourDirection = 0,
+        PointerClick = 1,
+    }
+
     [DisallowMultipleComponent]
     public class EntityGetPlayerInputBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior
     {
-        public enum PlayerAttackInputType
-        {
-            FourDirection = 0,
-            PointerClick = 1,
-        }
-
         [SerializeField]
         private PlayerAttackInputType _playerAttackInputType;
 

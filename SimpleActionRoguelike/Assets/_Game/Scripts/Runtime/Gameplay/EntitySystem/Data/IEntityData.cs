@@ -16,6 +16,7 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsMovable { get; }
         public bool IsDashing { get; set; }
         public bool IsPausedControl { get; set; }
+        public bool IsPausedMove { get; set; }
         public bool IsInvincible { get; set; }
         int EntityUID { get; }
         public Vector2 Position { get; set; }

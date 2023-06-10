@@ -20,7 +20,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override async UniTask TriggerAttack(CancellationToken cancellationToken)
         {
-            creatorData.IsPausedControl = false;
+            creatorData.IsPausedMove = true;
             _isShooting = true;
             triggerActionEventProxy.TriggerEvent(AnimationType.Attack1,
                     stateAction: data => {
@@ -31,7 +31,7 @@ namespace Runtime.Gameplay.EntitySystem
                         _isShooting = false;
                     });
             await UniTask.WaitUntil(() => !_isShooting, cancellationToken: cancellationToken);
-
+            creatorData.IsPausedMove = false;
         }
 
         private void FireProjectiles(int numberOfProjectiles, float angleBetweenTwoProjectiles, Transform[] spawnPoints, CancellationToken cancellationToken)
@@ -99,6 +99,12 @@ namespace Runtime.Gameplay.EntitySystem
         protected override UniTask TriggerSpecialAttack(CancellationToken cancellationToken)
         {
             return UniTask.CompletedTask;
+        }
+
+        public override void Cancel()
+        {
+            base.Cancel();
+            creatorData.IsPausedMove = false;
         }
     }
 }

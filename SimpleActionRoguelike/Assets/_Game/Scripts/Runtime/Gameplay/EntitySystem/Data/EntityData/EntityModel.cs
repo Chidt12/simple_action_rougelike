@@ -18,10 +18,11 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsDead => healthStat.CurrentValue <= 0;
         public bool CanDash => !(IsDashing);
         public bool IsDamagable => !(IsDead || IsInvincible || IsDashing);
-        public bool IsMovable => !(IsPlayingSkill || IsAttacking || IsDead || IsDashing || IsPausedControl || currentState.IsInHardCCStatus());
+        public bool IsMovable => !(IsPlayingSkill || IsPausedMove || IsDead || IsDashing || IsPausedControl || currentState.IsInHardCCStatus());
         public bool IsControllable => !(IsPlayingSkill || IsDead || IsPausedControl || currentState.IsInMovementLockedStatus());
         public bool IsDashing { get; set; }
         public bool IsPausedControl { get; set; }
+        public bool IsPausedMove { get; set; }
         public bool IsInvincible { get; set; }
         public Vector2 Position { get; set; }
         public Action DeathEvent { get; set; }

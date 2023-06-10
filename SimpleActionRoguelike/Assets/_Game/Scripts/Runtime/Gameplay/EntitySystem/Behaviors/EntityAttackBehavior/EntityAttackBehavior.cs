@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+
+
     [DisallowMultipleComponent]
     public class EntityAttackBehavior : EntityBehavior<IEntityControlData, IEntityWeaponData, IEntityStatData, IEntityStatusData>
     {
