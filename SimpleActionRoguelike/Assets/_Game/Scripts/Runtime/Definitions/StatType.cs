@@ -6,15 +6,6 @@ namespace Runtime.Definition
         {
             switch (statType)
             {
-                case StatType.Health:
-                case StatType.Armor:
-                case StatType.MoveSpeed:
-                case StatType.AttackSpeed:
-                case StatType.AttackDamage:
-                case StatType.DetectRange:
-                case StatType.CollideDamage:
-                    return false;
-
                 case StatType.ArmorPenetration:
                 case StatType.CritChance:
                 case StatType.CritDamage:
@@ -25,6 +16,17 @@ namespace Runtime.Definition
                 case StatType.DamageReduction:
                     return true;
 
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsHaveCurrentValue(this StatType statType)
+        {
+            switch (statType)
+            {
+                case StatType.DashNumber:
+                    return true;
                 default:
                     return false;
             }

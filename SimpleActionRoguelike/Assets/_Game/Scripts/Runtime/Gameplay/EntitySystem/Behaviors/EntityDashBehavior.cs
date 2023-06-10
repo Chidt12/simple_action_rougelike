@@ -1,47 +1,62 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
+using Runtime.Manager.Gameplay;
 using System;
 using System.Threading;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem 
 {
-    public class EntityDashBehavior : EntityBehavior<IEntityControlData>, IDisposable
+    public class EntityDashBehavior : EntityBehavior<IEntityControlData, IEntityStatData>, IDisposable
     {
         [SerializeField] private float _dashTime;
         [SerializeField] private float _speed;
+        [SerializeField] private float _dashCooldown;
         [SerializeField] private ParticleSystem _dashEffect;
 
+        private EntityStatWithCurrentValue _dashStat;
+
         private IEntityControlData _controlData;
-        private CancellationTokenSource _dashCancellationTokenSource;
+        private CancellationTokenSource _dashCooldownCancellationTokenSource;
         private CancellationTokenSource _cancellationTokenSource;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntityStatData statData)
         {
-            if(data != null)
+            if(data != null && statData != null)
             {
                 _controlData = data;
-                _controlData.PlayActionEvent += OnDash;
-                _cancellationTokenSource = new();
-                _dashEffect.Stop();
-                return UniTask.FromResult(true);
+
+                if(statData.TryGetStat(StatType.DashNumber, out var dash))
+                {
+                    _dashStat = dash as EntityStatWithCurrentValue;
+
+                    _controlData.PlayActionEvent += OnDash;
+                    _cancellationTokenSource = new();
+                    _dashCooldownCancellationTokenSource = new();
+                    _dashEffect.Stop();
+                    return UniTask.FromResult(true);
+                }
             }
-            else
-            {
-                return UniTask.FromResult(false);
-            }
+            return UniTask.FromResult(false);
         }
 
         private void OnDash(ActionInputType actionInputType)
         {
             if(actionInputType == ActionInputType.Dash)
             {
-                if(_controlData.CanDash)
+                if(_controlData.CanDash && _dashStat.CurrentValue >= 1)
                 {
-                    _dashCancellationTokenSource = new();
-                    PresentDashAsync(_dashCancellationTokenSource.Token).Forget();
+                    PresentDashAsync(_cancellationTokenSource.Token).Forget();
+                    _dashStat.DecreaseCurrentValue(1);
+                    StartDashCooldownAsync(_dashCooldownCancellationTokenSource.Token).Forget();
                 }
             }
+        }
+
+        private async UniTaskVoid StartDashCooldownAsync(CancellationToken token)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_dashCooldown), cancellationToken: token);
+            _dashStat.IncreaseCurrenValue(1);
         }
 
         private async UniTaskVoid PresentDashAsync(CancellationToken token)
@@ -58,6 +73,10 @@ namespace Runtime.Gameplay.EntitySystem
                 _controlData.ForceUpdatePosition.Invoke(currentFaceDirection.normalized * _speed * Time.deltaTime + _controlData.Position);
                 currentTime -= Time.deltaTime;
                 await UniTask.WaitForFixedUpdate(cancellationToken: token);
+                if (!MapManager.Instance.IsWalkable(_controlData.Position))
+                {
+                    break;
+                }
             }
 
             _controlData.IsDashing = false;
@@ -68,7 +87,7 @@ namespace Runtime.Gameplay.EntitySystem
         public void Dispose()
         {
             _cancellationTokenSource?.Cancel();
-            _dashCancellationTokenSource?.Cancel();
+            _dashCooldownCancellationTokenSource?.Cancel();
         }
     }
 

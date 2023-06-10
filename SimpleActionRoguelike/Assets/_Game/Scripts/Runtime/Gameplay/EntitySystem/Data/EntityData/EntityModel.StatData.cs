@@ -34,8 +34,16 @@ namespace Runtime.Gameplay.EntitySystem
                 }
                 else
                 {
-                    var newStat = new EntityStat(statTotalValue);
-                    statsDictionary.Add(statType, newStat);
+                    if (statType.IsHaveCurrentValue())
+                    {
+                        var newStat = new EntityStatWithCurrentValue(statTotalValue);
+                        statsDictionary.Add(statType, newStat);
+                    }
+                    else
+                    {
+                        var newStat = new EntityStat(statTotalValue);
+                        statsDictionary.Add(statType, newStat);
+                    }
                 }
             }
         }

@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class HealthEntityStat : EntityStat
+    public class EntityStatWithCurrentValue : EntityStat
     {
-        private float currentValue;
-
+        protected float currentValue;
         public float CurrentValue => currentValue;
-        public Action<float, EffectSource, EffectProperty> OnDamaged { get; set; }
-        public Action<float, EffectSource, EffectProperty> OnHealed { get; set; }
 
-        public HealthEntityStat(float baseValue) : base(baseValue)
+        public Action<float> OnIncreaseCurrentValue { get; set; }
+        public Action<float> OnDecreaseCurrentValue { get; set; }
+
+        public EntityStatWithCurrentValue(float baseValue) : base(baseValue)
         {
             currentValue = TotalValue;
-            OnDamaged = (_, _, _) => { };
-            OnHealed = (_, _, _) => { };
+            OnIncreaseCurrentValue = _ => { };
+            OnDecreaseCurrentValue = _ => { };
         }
 
         public override void BuffValue(float value, StatModifyType statModifyType)
@@ -35,20 +35,19 @@ namespace Runtime.Gameplay.EntitySystem
             OnValueChanged?.Invoke(TotalValue);
         }
 
-        public float Heal(float value, EffectSource healSource, EffectProperty healProperty)
+        public void IncreaseCurrenValue(float value)
         {
             var oldValue = currentValue;
             currentValue = Mathf.Min(TotalValue, currentValue + value);
-            OnHealed.Invoke(currentValue - oldValue, healSource, healProperty);
-            return currentValue - oldValue;
+            OnIncreaseCurrentValue.Invoke(currentValue - oldValue);
         }
 
-        public float TakeDamage(float value, EffectSource damageSource, EffectProperty damageProperty)
+        public void DecreaseCurrentValue(float value)
         {
-            var oldValue = currentValue;
+            var oldValue = currentValue; 
             currentValue = Mathf.Max(0, currentValue - value);
-            OnDamaged.Invoke(oldValue - currentValue, damageSource, damageProperty);
-            return oldValue - currentValue;
+            OnDecreaseCurrentValue.Invoke(oldValue - currentValue);
         }
     }
+
 }
