@@ -4,5 +4,5 @@ weapon_1,AttackDamage,10,0,bullet_blue,10,1,1,,,
 ,CritChance,0.1,0,,,3,3,1,,
 ,CritDamage,1,0,,,4,4,,,TRUE
 ,AttackRange,8,0,,,5,5,,2,
-,MoveSpeed,3,0,,,6,6,,2,
+,MoveSpeed,4.1,0,,,6,6,,2,
 ,AttackSpeed,0,,,,,,,,
