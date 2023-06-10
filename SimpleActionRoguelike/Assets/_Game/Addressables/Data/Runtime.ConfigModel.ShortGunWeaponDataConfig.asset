@@ -30,7 +30,7 @@ MonoBehaviour:
       value: 8
       statModifyType: 0
     - statType: 7
-      value: 4.1
+      value: 3
       statModifyType: 0
     - statType: 9
       value: 0

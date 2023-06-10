@@ -21,7 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (!_inited || _isPaused)
                 return;
 
-            if(currentAnimationType == AnimationType.None || currentAnimationType == AnimationType.Idle || currentAnimationType == AnimationType.Run)
+            if(currentAnimationType == AnimationType.Attack1 || currentAnimationType == AnimationType.None || currentAnimationType == AnimationType.Idle || currentAnimationType == AnimationType.Run)
             {
                 if (_rotateTowardFaceDirection)
                 {

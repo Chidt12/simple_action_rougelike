@@ -32,12 +32,9 @@ namespace Runtime.Gameplay.EntitySystem
 
             _subscriptions = new();
             _subscriptions.Add(SimpleMessenger.Subscribe<InputMoveVectorMessage>(OnMoveInput));
+            _subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPressInput));
 
-            if (_playerAttackInputType == PlayerAttackInputType.PointerClick)
-            {
-                _subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPressInput));
-            }
-            else if (_playerAttackInputType == PlayerAttackInputType.FourDirection)
+            if (_playerAttackInputType == PlayerAttackInputType.FourDirection)
             {
                 _subscriptions.Add(SimpleMessenger.Subscribe<InputAttackMessage>(OnArrowInput));
             }
@@ -76,7 +73,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (!_controlData.IsControllable)
                 return;
 
-            if (message.KeyPressType == KeyPressType.LeftMouseButton)
+            if (message.KeyPressType == KeyPressType.LeftMouseButton && _playerAttackInputType == PlayerAttackInputType.PointerClick)
                 _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack);
             else if (message.KeyPressType == KeyPressType.Dash)
                 _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Dash);

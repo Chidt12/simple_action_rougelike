@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6030ef2c8ce1c04a96da70f31968eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAttackInputType: 1
+  _playerAttackInputType: 0
 --- !u!114 &7249555408300571290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0faa5f1f5aafb1e4db0b1443298820df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _faceDirectionType: 2
+  _faceDirectionType: 3
 --- !u!114 &3326386649176865464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dashTime: 0.1
   _speed: 30
-  _delayDashTime: 0.3
+  _delayDashTime: 0.15
   _invincibleTime: 0.1
   _dashEffect: {fileID: 5417580243802009177}
 --- !u!1 &6875883244934980058

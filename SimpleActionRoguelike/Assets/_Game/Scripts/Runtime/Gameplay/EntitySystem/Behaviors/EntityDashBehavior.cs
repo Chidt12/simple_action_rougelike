@@ -10,11 +10,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         [SerializeField] private float _dashTime;
         [SerializeField] private float _speed;
-        [SerializeField] private float _delayDashTime;
-        [SerializeField] private float _invincibleTime;
         [SerializeField] private ParticleSystem _dashEffect;
 
-        private bool _isDelayingDash;
         private IEntityControlData _controlData;
         private CancellationTokenSource _dashCancellationTokenSource;
         private CancellationTokenSource _cancellationTokenSource;
@@ -23,10 +20,8 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if(data != null)
             {
-                _isDelayingDash = false;
                 _controlData = data;
                 _controlData.PlayActionEvent += OnDash;
-                _controlData.ReactionChangedEvent += OnReactionChanged;
                 _cancellationTokenSource = new();
                 _dashEffect.Stop();
                 return UniTask.FromResult(true);
@@ -37,26 +32,11 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        private void OnReactionChanged(EntityReactionType reactionType)
-        {
-            if(reactionType == EntityReactionType.JustPlayAttack || reactionType == EntityReactionType.JustPlaySkill)
-            {
-                if (_controlData.IsDashing)
-                {
-                    _dashCancellationTokenSource?.Cancel();
-                    _controlData.IsDashing = false;
-                    _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishDashing);
-                    _dashEffect.Stop();
-                    StartDelayDashAsync().Forget();
-                }
-            }
-        }
-
         private void OnDash(ActionInputType actionInputType)
         {
             if(actionInputType == ActionInputType.Dash)
             {
-                if(_controlData.CanDash && !_isDelayingDash)
+                if(_controlData.CanDash)
                 {
                     _dashCancellationTokenSource = new();
                     PresentDashAsync(_dashCancellationTokenSource.Token).Forget();
@@ -83,17 +63,6 @@ namespace Runtime.Gameplay.EntitySystem
             _controlData.IsDashing = false;
             _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishDashing);
             _dashEffect.Stop();
-            StartDelayDashAsync().Forget();
-        }
-
-        private async UniTaskVoid StartDelayDashAsync()
-        {
-            _isDelayingDash = true;
-            _controlData.IsInvincible = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(_invincibleTime), cancellationToken: _cancellationTokenSource.Token);
-            _controlData.IsInvincible = false;
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayDashTime), cancellationToken: _cancellationTokenSource.Token);
-            _isDelayingDash = false;
         }
 
         public void Dispose()

@@ -53,6 +53,7 @@ namespace Runtime.Definition
 
         // Stat use for mechanics
         OrbBonusRotateSpeed = 100,
+        DashNumber = 101
 
     }
 }
