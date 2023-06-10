@@ -7,6 +7,8 @@ namespace Runtime.Definition
         JustGetHit,
         JustFinishedAttack,
         JustFinishedUseSkill,
+        JustDashing,
+        JustFinishDashing,
         Dodge,
         BuffDamage,
         BuffMoveSpeed,

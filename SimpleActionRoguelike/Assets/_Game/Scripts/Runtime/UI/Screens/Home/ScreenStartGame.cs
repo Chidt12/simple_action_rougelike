@@ -18,8 +18,15 @@ namespace Runtime.UI
         {
             _startButton.onClick.RemoveAllListeners();
             _startButton.onClick.AddListener(() => {
-                var windowOptions = new WindowOptions(ScreenIds.HOME);
-                ScreenNavigator.Instance.LoadScreen(windowOptions).Forget();
+                if (!GameManager.Instance.IsTest)
+                {
+                    var windowOptions = new WindowOptions(ScreenIds.HOME);
+                    ScreenNavigator.Instance.LoadScreen(windowOptions).Forget();
+                }
+                else
+                {
+                    GameManager.Instance.StartLoadingGameplayAsync().Forget();
+                }
             });
             return base.Initialize(args);
         }

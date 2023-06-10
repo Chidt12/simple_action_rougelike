@@ -13,7 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool CheckCanAttack()
         {
-            return !(IsDead || IsAttacking || IsPlayingSkill || IsDashing || currentState.IsInAttackLockedStatus());
+            return !(IsDead || IsPlayingSkill || IsAttacking || currentState.IsInAttackLockedStatus());
         }
 
         public void InitWeapon(WeaponModel weaponModel)

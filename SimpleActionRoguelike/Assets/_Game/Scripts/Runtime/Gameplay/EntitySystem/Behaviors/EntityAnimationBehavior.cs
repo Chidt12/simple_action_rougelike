@@ -144,7 +144,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnReactionChanged(EntityReactionType reactionType)
         {
-            if(reactionType == EntityReactionType.JustFinishedAttack || reactionType == EntityReactionType.JustFinishedUseSkill)
+            if(reactionType == EntityReactionType.JustFinishedAttack || reactionType == EntityReactionType.JustFinishedUseSkill || reactionType == EntityReactionType.JustFinishDashing)
             {
                 _canUpdateAnimation = true;
                 UpdateCurrentAnimation();
@@ -153,7 +153,7 @@ namespace Runtime.Gameplay.EntitySystem
                 else if (_updateFaceRightType == UpdateFaceRightType.MoveDirection)
                     OnFaceRightUpdateByMoveDirection();
             }
-            else if (reactionType == EntityReactionType.JustPlayAttack || reactionType == EntityReactionType.JustPlaySkill)
+            else if (reactionType == EntityReactionType.JustPlayAttack || reactionType == EntityReactionType.JustPlaySkill || reactionType == EntityReactionType.JustDashing)
             {
                 _canUpdateAnimation = false;
             }

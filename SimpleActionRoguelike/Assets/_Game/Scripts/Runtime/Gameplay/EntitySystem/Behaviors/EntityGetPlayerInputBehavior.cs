@@ -11,8 +11,16 @@ namespace Runtime.Gameplay.EntitySystem
     [DisallowMultipleComponent]
     public class EntityGetPlayerInputBehavior : EntityBehavior<IEntityControlData>, IDisposeEntityBehavior
     {
-        private IEntityControlData _controlData;
+        public enum PlayerAttackInputType
+        {
+            FourDirection = 0,
+            PointerClick = 1,
+        }
 
+        [SerializeField]
+        private PlayerAttackInputType _playerAttackInputType;
+
+        private IEntityControlData _controlData;
         private List<ISubscription> _subscriptions;
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data)
@@ -24,7 +32,16 @@ namespace Runtime.Gameplay.EntitySystem
 
             _subscriptions = new();
             _subscriptions.Add(SimpleMessenger.Subscribe<InputMoveVectorMessage>(OnMoveInput));
-            _subscriptions.Add(SimpleMessenger.Subscribe<InputAttackMessage>(OnArrowInput));
+
+            if (_playerAttackInputType == PlayerAttackInputType.PointerClick)
+            {
+                _subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPressInput));
+            }
+            else if (_playerAttackInputType == PlayerAttackInputType.FourDirection)
+            {
+                _subscriptions.Add(SimpleMessenger.Subscribe<InputAttackMessage>(OnArrowInput));
+            }
+
 
             return UniTask.FromResult(true);
         }
@@ -52,6 +69,17 @@ namespace Runtime.Gameplay.EntitySystem
                 return;
 
             _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack);
+        }
+
+        private void OnKeyPressInput(InputKeyPressMessage message)
+        {
+            if (!_controlData.IsControllable)
+                return;
+
+            if (message.KeyPressType == KeyPressType.LeftMouseButton)
+                _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Attack);
+            else if (message.KeyPressType == KeyPressType.Dash)
+                _controlData.PlayActionEvent.Invoke(Definition.ActionInputType.Dash);
         }
     }
 }

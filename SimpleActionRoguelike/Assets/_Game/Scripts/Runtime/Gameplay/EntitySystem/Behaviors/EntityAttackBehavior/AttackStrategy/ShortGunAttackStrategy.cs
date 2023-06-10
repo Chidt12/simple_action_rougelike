@@ -12,6 +12,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class ShortGunAttackStrategy : AttackStrategy<ShortGunWeaponModel>
     {
+        [SerializeField] private ParticleSystem _muzzle;
         private bool _isShooting;
 
         public override bool CheckCanAttack()
@@ -19,15 +20,18 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override async UniTask TriggerAttack(CancellationToken cancellationToken)
         {
+            creatorData.IsPausedControl = false;
             _isShooting = true;
             triggerActionEventProxy.TriggerEvent(AnimationType.Attack1,
                     stateAction: data => {
                         FireProjectiles(ownerWeaponModel.NumberOfProjectilesInHorizontal, 30, data.spawnVFXPoints, cancellationToken);
+                        _muzzle.Play();
                     },
                     endAction: data => {
                         _isShooting = false;
                     });
             await UniTask.WaitUntil(() => !_isShooting, cancellationToken: cancellationToken);
+
         }
 
         private void FireProjectiles(int numberOfProjectiles, float angleBetweenTwoProjectiles, Transform[] spawnPoints, CancellationToken cancellationToken)

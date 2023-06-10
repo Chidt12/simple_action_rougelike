@@ -41,7 +41,9 @@ namespace Runtime.Message
         Up = 5,
         Down = 6,
         Left = 7,
-        Right = 8
+        Right = 8,
+        LeftMouseButton = 9,
+        RightMouseButton = 10,
     }
     public readonly struct InputKeyPressMessage : IMessage
     {

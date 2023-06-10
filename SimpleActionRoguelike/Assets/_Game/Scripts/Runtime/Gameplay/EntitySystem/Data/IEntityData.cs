@@ -16,12 +16,14 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsMovable { get; }
         public bool IsDashing { get; set; }
         public bool IsPausedControl { get; set; }
+        public bool IsInvincible { get; set; }
         int EntityUID { get; }
         public Vector2 Position { get; set; }
         public Transform EntityTransform { get; set; }
         Action DeathEvent { get; set; }
         Action<EntityReactionType> ReactionChangedEvent { get; set; }
         Action<Vector2> ForceUpdatePosition { get; set; }
+        public bool CanDash { get; }
     }
 
     public static class EntityModelExtensions

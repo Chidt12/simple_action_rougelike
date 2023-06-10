@@ -59,7 +59,7 @@ namespace Runtime.UI
 
         private void UpdateHud()
         {
-            _progressText.text = $"{_heroData.HealthStat.CurrentValue}/{_heroData.HealthStat.TotalValue}";
+            _progressText.text = $"{Mathf.FloorToInt(_heroData.HealthStat.CurrentValue)}/{_heroData.HealthStat.TotalValue}";
             _progress.fillAmount = _heroData.HealthStat.CurrentValue / _heroData.HealthStat.TotalValue;
         }
     }

@@ -11,8 +11,10 @@ namespace Runtime.Gameplay.EntitySystem
         protected Vector2 faceDirection;
         protected Vector2 moveDelta;
         protected IEntityData target;
+        protected Vector2 lastMoveDirection;
 
         public Vector2 MoveDirection => moveDirection;
+        public Vector2 LastMoveDirection => lastMoveDirection;
         public Vector2 FaceDirection => faceDirection;
         public bool IsMoving => isMoving;
         public Action<ActionInputType> PlayActionEvent { get; set; }
@@ -24,6 +26,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected void InitControl()
         {
+            lastMoveDirection = Vector2.right;
             PlayActionEvent = _ => { };
             MovementChangedEvent = () => { };
             DirectionChangedEvent = () => { };
@@ -41,6 +44,9 @@ namespace Runtime.Gameplay.EntitySystem
             if (moveDirection != value)
             {
                 moveDirection = value;
+                if (moveDirection != Vector2.zero)
+                    lastMoveDirection = moveDirection;
+
                 MovementUpdatedValueEvent.Invoke();
                 if (isMoving && moveDirection == Vector2.zero)
                 {

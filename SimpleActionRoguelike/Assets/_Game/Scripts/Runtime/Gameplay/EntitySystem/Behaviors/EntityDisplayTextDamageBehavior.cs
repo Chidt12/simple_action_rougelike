@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Core.Pool;
+using Runtime.Definition;
 using Runtime.Gameplay.TextDamage;
 using System.Threading;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private const string TEXT_DAMAGE = "text_damage";
         private const string HERO_TEXT_DAMAGE = "hero_text_damage";
+        private const string DODGE_TEXT = "dodge_text_damage";
         private const string CRIT_TEXT_DAMAGE = "crit_text_damage";
         private const string POISON_TEXT_DAMAGE = "poison_text_damage";
         private const string HEAL_TEXT = "heal_text";
@@ -27,6 +30,7 @@ namespace Runtime.Gameplay.EntitySystem
                 _cancellationTokenSource = new CancellationTokenSource();
                 data.HealthStat.OnDamaged += OnDamaged;
                 data.HealthStat.OnHealed += OnHealed;
+                data.ReactionChangedEvent += OnReactionChanged;
 
                 return UniTask.FromResult(true);
             }
@@ -49,6 +53,18 @@ namespace Runtime.Gameplay.EntitySystem
 
         }
 
+        private void OnReactionChanged(EntityReactionType reactionType)
+        {
+            if(reactionType == EntityReactionType.Dodge)
+            {
+                DisplayDodgeAsync().Forget();
+            }
+        }
+        private async UniTaskVoid DisplayDodgeAsync()
+        {
+            var dodgeText = await PoolManager.Instance.Rent(DODGE_TEXT, token: _cancellationTokenSource.Token);
+            dodgeText.transform.position = _topTransform.position;
+        }
         public void Dispose()
         {
             _cancellationTokenSource.Cancel();

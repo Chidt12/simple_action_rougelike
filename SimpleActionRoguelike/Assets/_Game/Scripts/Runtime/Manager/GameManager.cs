@@ -12,8 +12,13 @@ namespace Runtime.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        [SerializeField] private bool _isTest;
+
         private GameStateType _currentGameStateType;
         private GameStateType _previousGameStateType;
+
+        public bool IsTest => _isTest;
+
         public GameStateType CurrentGameStateType
         {
             get => _currentGameStateType;

@@ -41,14 +41,15 @@ namespace Runtime.Gameplay.EntitySystem
             }
 
             isAttackReady = true;
-            attackCooldownTime = 1 / attackSpeed;
+            attackCooldownTime = attackSpeed > 0 ? 1 / attackSpeed : 0;
             currentAttackCooldownTime = 0.0f;
         }
 
         protected virtual async UniTaskVoid RunAttackCooldownAsync()
         {
             attackCooldownCancellationTokenSource = new CancellationTokenSource();
-            await UniTask.Delay(TimeSpan.FromSeconds(attackCooldownTime), cancellationToken: attackCooldownCancellationTokenSource.Token);
+            if(attackCooldownTime > 0)
+                await UniTask.Delay(TimeSpan.FromSeconds(attackCooldownTime), cancellationToken: attackCooldownCancellationTokenSource.Token);
             FinishAttackCooldown();
         }
 
@@ -75,7 +76,7 @@ namespace Runtime.Gameplay.EntitySystem
                 this.triggerActionEventProxy = triggerActionEventProxy;
         }
 
-        public virtual async UniTask OperateAttack()
+        public virtual async UniTask OperateAttack(bool isDashing)
         {
             isAttackReady = false;
             attackCooldownCancellationTokenSource?.Cancel();

@@ -92,10 +92,9 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTaskVoid RunAttackAsync()
         {
             _weaponData.IsAttacking = true;
+            var isDashing = _weaponData.IsDashing;
             _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlayAttack);
-
-            await _attackStrategy.OperateAttack();
-
+            await _attackStrategy.OperateAttack(isDashing);
             _weaponData.IsAttacking = false;
             _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedAttack);
         }
@@ -103,6 +102,7 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTaskVoid RunSpecialAttackAsync()
         {
             _weaponData.IsAttacking = true;
+            
             _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlayAttack);
 
             await _attackStrategy.OperateSpecialAttack();

@@ -4,6 +4,7 @@ using Runtime.Core.Message;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Message;
 using System;
+using System.Threading;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
 
@@ -16,11 +17,15 @@ namespace Runtime.Manager.Gameplay
         [SerializeField] private float _shakeAmplitude;
         [SerializeField] private float _shakingTime;
 
+        private CancellationTokenSource _cancellationTokenSource;
         private ISubscription _heroSpawnedSubScription;
         private IEntityStatData _entityStatData;
 
         public void Init()
         {
+            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
+            _cancellationTokenSource = new();
             SimpleMessenger.Publish(new UpdateCameraMessage(Camera.main));
             _heroSpawnedSubScription = SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned);
         }
@@ -28,6 +33,10 @@ namespace Runtime.Manager.Gameplay
         public void Dispose()
         {
             _heroSpawnedSubScription.Dispose();
+            _cancellationTokenSource?.Cancel();
+
+            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
         }
 
         public void SetConfinder(PolygonCollider2D confinder)
@@ -60,7 +69,7 @@ namespace Runtime.Manager.Gameplay
             {
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = _shakeAmplitude;
-                await UniTask.Delay(TimeSpan.FromSeconds(_shakingTime));
+                await UniTask.Delay(TimeSpan.FromSeconds(_shakingTime), cancellationToken: _cancellationTokenSource.Token);
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
             }
         }

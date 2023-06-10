@@ -13,7 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
         void InitEventProxy(IEntityTriggerActionEventProxy triggerActionEventProxy);
         bool CheckCanAttack();
         bool CheckCanSpecialAttack();
-        UniTask OperateAttack();
+        UniTask OperateAttack(bool isDashing);
         UniTask OperateSpecialAttack();
         void Cancel();
 

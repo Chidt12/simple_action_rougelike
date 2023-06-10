@@ -11,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         Action MovementUpdatedValueEvent { get; set; }
         Action DirectionChangedEvent { get; set; }
         public Vector2 MoveDirection { get; }
+        public Vector2 LastMoveDirection { get; }
         public bool IsMoving { get; }
         public Vector2 FaceDirection { get; }
         public IEntityData Target { get; } // TODO: Put here properly ?

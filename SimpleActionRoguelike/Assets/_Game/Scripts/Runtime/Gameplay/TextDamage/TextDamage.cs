@@ -14,7 +14,7 @@ namespace Runtime.Gameplay.TextDamage
 
         public void Init(float value, bool isPlus, Vector2 spawnPosition)
         {
-            transform.localPosition = spawnPosition;
+            transform.position = spawnPosition;
             _damageText.text = isPlus ? $"+{Mathf.Floor(value)}" : $"-{Mathf.Floor(value)}";
         }
 

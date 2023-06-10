@@ -38,6 +38,13 @@ namespace Runtime.Manager.UserInput
                 // Interact
                 if (Input.GetKeyDown(KeyCode.E))
                     SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Interact));
+                else if (Input.GetMouseButtonDown(0))
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.LeftMouseButton));
+                else if (Input.GetMouseButtonDown(1))
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.RightMouseButton));
+                else if (Input.GetKeyDown(KeyCode.Space))
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Dash));
+
             }
             else
             {

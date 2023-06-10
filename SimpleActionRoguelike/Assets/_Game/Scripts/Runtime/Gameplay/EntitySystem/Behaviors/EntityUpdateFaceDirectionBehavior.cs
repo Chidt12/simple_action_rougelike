@@ -57,6 +57,11 @@ namespace Runtime.Gameplay.EntitySystem
                 case FaceDirectionType.MoveDirection:
                     _controlData.SetFaceDirection(_controlData.MoveDirection);
                     break;
+                case FaceDirectionType.Pointer:
+                    var currentPointerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 centerToPointer = currentPointerPosition - transform.position;
+                    _controlData.SetFaceDirection(centerToPointer);
+                    break;
                 default:
                     break;
             }

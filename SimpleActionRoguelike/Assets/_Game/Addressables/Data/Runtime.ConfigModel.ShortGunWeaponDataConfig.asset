@@ -33,7 +33,7 @@ MonoBehaviour:
       value: 4.1
       statModifyType: 0
     - statType: 9
-      value: 1
+      value: 0
       statModifyType: 0
     weaponPrefabName: weapon_1
     mechanics:

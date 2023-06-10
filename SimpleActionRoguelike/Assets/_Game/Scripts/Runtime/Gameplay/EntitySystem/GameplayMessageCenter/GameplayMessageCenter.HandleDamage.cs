@@ -11,6 +11,13 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private partial void OnSentDamage(SentDamageMessage message)
         {
+            if(!message.Target.IsDamagable)
+            {
+                if(!message.Target.IsDead)
+                    message.Target.ReactionChangedEvent.Invoke(EntityReactionType.Dodge);
+                return;
+            }
+
             var targetModifiedStatData = message.Target as IEntityModifiedStatData;
             if (targetModifiedStatData == null)
             {
