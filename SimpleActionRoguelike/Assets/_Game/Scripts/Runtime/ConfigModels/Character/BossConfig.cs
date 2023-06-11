@@ -17,16 +17,25 @@ namespace Runtime.ConfigModel
         public float collideDamage;
     }
 
+    [Serializable]
     public struct CustomFloat
     {
         public float value;
     }
 
+    [Serializable]
     public struct TriggerPhase
     {
         public TriggerPhaseType triggerPhaseType;
         public float triggerPhaseHealth;
         public int triggerPhaseEntityId;
+
+        public TriggerPhase(TriggerPhaseType triggerPhaseType = TriggerPhaseType.Normal, float triggerPhaseHealth = 0, int triggerPhaseEntityId = 0)
+        {
+            this.triggerPhaseType = triggerPhaseType;
+            this.triggerPhaseHealth = triggerPhaseHealth;
+            this.triggerPhaseEntityId = triggerPhaseEntityId;
+        }
     }
 
 

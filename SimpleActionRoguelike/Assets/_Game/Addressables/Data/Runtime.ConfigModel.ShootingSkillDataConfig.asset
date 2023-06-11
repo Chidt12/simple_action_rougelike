@@ -15,14 +15,44 @@ MonoBehaviour:
   items:
   - dataId: 1
     targetType: 3
-    castRange: 6
-    cooldown: 1
+    castRange: 4
+    cooldown: 2
     dependTarget: 1
     projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
     projectileMoveSpeed: 10
-    projectileMoveDistance: 8
+    projectileMoveDistance: 6
+    projectileStrategyType: 0
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+  - dataId: 2
+    targetType: 3
+    castRange: 4
+    cooldown: 2
+    dependTarget: 1
+    projectileId: bullet_red
+    numberOfProjectiles: 2
+    delayBetweenProjectiles: 0.2
+    projectileMoveSpeed: 10
+    projectileMoveDistance: 6
+    projectileStrategyType: 0
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+  - dataId: 3
+    targetType: 3
+    castRange: 4
+    cooldown: 2
+    dependTarget: 1
+    projectileId: bullet_red
+    numberOfProjectiles: 3
+    delayBetweenProjectiles: 0.2
+    projectileMoveSpeed: 10
+    projectileMoveDistance: 6
     projectileStrategyType: 0
     projectileDamageBonus: 0
     projectileDamageFactors:

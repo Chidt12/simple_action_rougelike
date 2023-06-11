@@ -38,7 +38,12 @@ namespace Runtime.Gameplay.EntitySystem
             return allIndexes;
         }
 
-        public TriggerPhase GetNextTriggerPhase(TriggerPhase triggerPhase)
+        /// <summary>
+        /// return isFinal, and trigger phase
+        /// </summary>
+        /// <param name="triggerPhase"></param>
+        /// <returns></returns>
+        public (bool, TriggerPhase) GetNextTriggerPhase(TriggerPhase triggerPhase)
         {
             var allTriggerPhases = TriggerPhases.Distinct().ToList();
             var index = 0;
@@ -50,9 +55,9 @@ namespace Runtime.Gameplay.EntitySystem
 
             if(index < allTriggerPhases.Count - 1)
             {
-                return allTriggerPhases[index + 1];
+                return (false, allTriggerPhases[index + 1]);
             }
-            return triggerPhase;
+            return (true, triggerPhase);
         }
     }
 }

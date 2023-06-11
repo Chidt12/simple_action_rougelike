@@ -35,7 +35,9 @@ namespace Runtime.Gameplay.EntitySystem
             bossModel.InitStats(bossData.Item1);
 
             bossModel.InitSkills(bossData.Item2);
-            bossModel.InitSkillDelayTimes(bossData.Item3.skillDelayTimes.Select(x => x.value).ToList());
+
+            var delayTimes = bossData.Item3.skillDelayTimes.Select(x => x.value).ToList();
+            bossModel.InitSkillDelayTimes(delayTimes);
             bossModel.InitTriggerPhases(bossData.Item3.skillTriggerPhases.ToList());
 
             bossModel.InitStatus();

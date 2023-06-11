@@ -64,4 +64,18 @@ namespace Runtime.Gameplay.EntitySystem
         protected abstract UniTask<bool> BuildDataAsync(T1 data, T2 data2, T3 data3, T4 data4);
     }
 
+    public abstract class EntityBehavior<T1, T2, T3, T4, T5> : EntityBehavior where T1 : IEntityData
+                                                                          where T2 : IEntityData
+                                                                          where T3 : IEntityData
+                                                                          where T4 : IEntityData
+                                                                          where T5 : IEntityData
+    {
+        public async override UniTask<bool> BuildAsync(IEntityData data, CancellationToken cancellationToken)
+        {
+            await base.BuildAsync(data, cancellationToken);
+            return await BuildDataAsync((T1)data, (T2)data, (T3)data, (T4)data, (T5)data);
+        }
+
+        protected abstract UniTask<bool> BuildDataAsync(T1 data, T2 data2, T3 data3, T4 data4, T5 data5);
+    }
 }

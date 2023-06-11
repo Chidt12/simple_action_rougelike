@@ -37,3 +37,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.BossConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.BossConfig
+      csvFile: {fileID: 0}
+      csvPath: 
+      usingFolder: 1
+      csvFolderPath: Assets/_Game/Csv/entities/boss_config
+      separateScriptableObject: 1
+      fileStartWith: boss_config_
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

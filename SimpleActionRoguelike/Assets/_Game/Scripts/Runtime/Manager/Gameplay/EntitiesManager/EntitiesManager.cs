@@ -226,6 +226,11 @@ namespace Runtime.Gameplay.EntitySystem
                     entity = await CreateEnemyAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
                     _currentSpawningEnemyCount--;
                     break;
+                case EntityType.Boss:
+                    _currentSpawningEnemyCount++;
+                    entity = await CreateBossAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
+                    _currentSpawningEnemyCount--;
+                    break;
                 default:
                     break;
             }
@@ -245,6 +250,11 @@ namespace Runtime.Gameplay.EntitySystem
                     entity = await LoadEnemyOnMapAsync(entityGameObject, entityId, entityLevel);
                     _currentSpawningEnemyCount--;
                     break;
+                case EntityType.Boss:
+                    _currentSpawningEnemyCount++;
+                    entity = await LoadBossOnMapAsync(entityGameObject, entityId, entityLevel);
+                    _currentSpawningEnemyCount--;
+                    break;
                 default:
                     break;
             }
@@ -258,16 +268,18 @@ namespace Runtime.Gameplay.EntitySystem
             return projectileGameObject;
         }
 
-        public virtual HandleCharacterDiedResultType HandleCharacterDied(EntityDiedMessage entityDiedMessage)
+        public virtual async UniTask<HandleCharacterDiedResultType> HandleCharacterDied(EntityNotifyDiedMessage entityDiedMessage)
         {
             if (entityDiedMessage.IsEnemyDied)
             {
                 _defeatedEnemiesCount++;
                 var enemyData = entityDiedMessage.EntityData;
-                EnemiesData.Remove(enemyData);
 
                 if (entityDiedMessage.DeathIdentity.deathType != DeathType.None)
-                    ExecuteDeathStrategyAsync(entityDiedMessage.EntityData, entityDiedMessage.DeathIdentity, this.GetCancellationTokenOnDestroy()).Forget();
+                    await ExecuteDeathStrategyAsync(entityDiedMessage.EntityData, entityDiedMessage.DeathIdentity, this.GetCancellationTokenOnDestroy());
+
+                EnemiesData.Remove(enemyData);
+                SimpleMessenger.Publish(new EntityDiedMessage(enemyData));
 
                 if (HaveNoEnemiesLeft && !entityDiedMessage.DeathIdentity.deathType.IsSpawnedEnemy())
                 {
@@ -277,6 +289,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
             else if (entityDiedMessage.IsHeroDied)
             {
+                SimpleMessenger.Publish(new EntityDiedMessage(entityDiedMessage.EntityData));
                 return HandleCharacterDiedResultType.HeroDied;
             }
 
@@ -284,7 +297,7 @@ namespace Runtime.Gameplay.EntitySystem
             return HandleCharacterDiedResultType.None;
         }
 
-        private async UniTaskVoid ExecuteDeathStrategyAsync(IEntityData deathEntityData, DeathDataIdentity deathDataIdentity, CancellationToken cancellationToken)
+        private async UniTask ExecuteDeathStrategyAsync(IEntityData deathEntityData, DeathDataIdentity deathDataIdentity, CancellationToken cancellationToken)
         {
             var deathStrategy = DeathStrategyFactory.GetDeathStrategy(deathDataIdentity.deathType);
             await deathStrategy.Execute(deathEntityData, deathDataIdentity, cancellationToken);

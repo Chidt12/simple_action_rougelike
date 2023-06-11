@@ -12,6 +12,6 @@ namespace Runtime.Gameplay.EntitySystem
         public List<TriggerPhase> TriggerPhases { get; }
 
         public List<int> GetSequenceSkillModelIndexes(TriggerPhase triggerPhase);
-        public TriggerPhase GetNextTriggerPhase(TriggerPhase triggerPhase);
+        public (bool, TriggerPhase) GetNextTriggerPhase(TriggerPhase triggerPhase);
     }
 }

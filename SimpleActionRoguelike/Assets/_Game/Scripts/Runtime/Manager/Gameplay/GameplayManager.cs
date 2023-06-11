@@ -67,7 +67,7 @@ namespace Runtime.Manager.Gameplay
         {
             otherDisposables = new();
             subscriptions = new();
-            subscriptions.Add(SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied));
+            subscriptions.Add(SimpleMessenger.Subscribe<EntityNotifyDiedMessage>(OnEntityDied));
             subscriptions.Add(SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage));
             subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
 
@@ -149,9 +149,14 @@ namespace Runtime.Manager.Gameplay
         {
         }
 
-        private void OnEntityDied(EntityDiedMessage entityDiedMessage)
+        private void OnEntityDied(EntityNotifyDiedMessage entityDiedMessage)
         {
-            var handleCharacterDiedResult = EntitiesManager.Instance.HandleCharacterDied(entityDiedMessage);
+            OnEntityDiedAsync(entityDiedMessage).Forget();
+        }
+
+        private async UniTask OnEntityDiedAsync(EntityNotifyDiedMessage entityDiedMessage)
+        {
+            var handleCharacterDiedResult = await EntitiesManager.Instance.HandleCharacterDied(entityDiedMessage);
             if (handleCharacterDiedResult == HandleCharacterDiedResultType.DeletedAllEnemyOnMap)
                 DeletedAllEnemyOnMap();
             else if (handleCharacterDiedResult == HandleCharacterDiedResultType.HeroDied)

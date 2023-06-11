@@ -21,12 +21,9 @@ namespace Runtime.Gameplay.EntitySystem
             currentAutoInputStrategyType = autoInputStrategyTypes.FirstOrDefault();
         }
 
-        public void SetCurrentAutoInputStrategy(int index)
+        public void SetCurrentAutoInputStrategy(AutoInputStrategyType autoInputStrategyType)
         {
-            if(index <= autoInputStrategyTypes.Count - 1)
-            {
-                currentAutoInputStrategyType = autoInputStrategyTypes[index];
-            }
+            currentAutoInputStrategyType = autoInputStrategyType;
             OnChangedAutoInputStrategy?.Invoke();
         }
     }

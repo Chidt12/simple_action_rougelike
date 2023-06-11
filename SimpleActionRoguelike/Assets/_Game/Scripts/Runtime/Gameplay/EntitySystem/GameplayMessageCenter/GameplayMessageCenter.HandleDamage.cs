@@ -113,9 +113,9 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     var deathEntityData = message.Target as IEntityDeathData;
                     if (deathEntityData != null)
-                        SimpleMessenger.Publish(new EntityDiedMessage(message.Target, deathEntityData.DeathDataIdentity));
+                        SimpleMessenger.Publish(new EntityNotifyDiedMessage(message.Target, deathEntityData.DeathDataIdentity));
                     else
-                        SimpleMessenger.Publish(new EntityDiedMessage(message.Target, new DeathDataIdentity(0, DeathType.None)));
+                        SimpleMessenger.Publish(new EntityNotifyDiedMessage(message.Target, new DeathDataIdentity(0, DeathType.None)));
                 }
             }
             else

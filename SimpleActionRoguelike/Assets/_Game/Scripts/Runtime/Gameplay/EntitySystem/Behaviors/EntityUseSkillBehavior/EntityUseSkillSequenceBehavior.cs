@@ -1,16 +1,19 @@
 using Cysharp.Threading.Tasks;
+using Runtime.ConfigModel;
+using Runtime.Core.Message;
 using Runtime.Core.Pool;
 using Runtime.Definition;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using ZBase.Foundation.PubSub;
+using Runtime.Message;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class EntityUseSkillSequenceBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData, IEntityStatusData>, IDisposeEntityBehavior, IEntityControlCastRangeProxy
+    public class EntityUseSkillSequenceBehavior : EntityBehavior<IEntityControlData, IEntitySkillData, IEntityStatData, IEntityStatusData, IEntityAutoInputData>, IDisposeEntityBehavior, IEntityControlCastRangeProxy
     {
         [SerializeField] private bool _hideWarning;
         [HideIf(nameof(_hideWarning))]
@@ -24,38 +27,43 @@ namespace Runtime.Gameplay.EntitySystem
         private IEntityControlData _controlData;
         private IEntityStatusData _statusData;
         private IEntitySkillData _skillData;
+        private IEntityAutoInputData _autoInputData;
+        private IEntityStatData _statData;
         private ISkillStrategy[] _skillStrategies;
 
-        private bool _finishedDelay;
         private List<SkillModel> _skillModels;
+        private List<float> _skillDelayTimes;
+        private List<AutoInputStrategyType> _autoInputStrategyTypes;
+
+        private bool _finishedDelay;
         private int _currentlyUsedSkillIndex;
         private CancellationTokenSource _cancellationTokenSource;
-        private CancellationTokenSource _delayCancellationTokenSource;
         private GameObject _warningGameObject;
+
+        private TriggerPhase _currentTriggerPhase;
+        private bool _isFinalTriggerPhase;
+        private ISubscription _subscription;
 
         public float CastRange => _skillModels[_currentlyUsedSkillIndex].CastRange;
 
-        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData, IEntityStatusData statusData)
+        protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData, IEntityStatusData statusData, IEntityAutoInputData autoInputData)
         {
             _finishedDelay = false;
 
-            if (skillData != null && data != null && statData != null)
+            if (skillData != null && data != null && statData != null && autoInputData != null)
             {
-                _skillModels = skillData.SkillModels;
-                if (_skillModels != null && _skillModels.Count > 0)
-                {
-
-                    
-                    
-                }
-
-                _controlData = data;
+                _autoInputData = autoInputData;
                 _skillData = skillData;
+                _controlData = data;
                 _controlData.PlayActionEvent += OnActionTriggered;
                 _statusData = statusData;
                 _statusData.UpdateCurrentStatus += OnUpdateCurrentStatus;
+                _statData = statData;
+                _statData.HealthStat.OnDamaged += OnDamaged;
+                _subscription = SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied);
 
-                _cancellationTokenSource = new CancellationTokenSource();
+                (_isFinalTriggerPhase, _currentTriggerPhase) = _skillData.GetNextTriggerPhase(new TriggerPhase());
+                SetUpSkillModels();
 
                 return UniTask.FromResult(true);
             }
@@ -63,8 +71,54 @@ namespace Runtime.Gameplay.EntitySystem
             return UniTask.FromResult(false);
         }
 
+        private void OnDamaged(float arg1, EffectSource arg2, EffectProperty arg3)
+        {
+            if (!_isFinalTriggerPhase)
+            {
+                if(_currentTriggerPhase.triggerPhaseType == TriggerPhaseType.HealthDecrease)
+                {
+                    var currentHealth = _statData.HealthStat.CurrentValue / _statData.HealthStat.TotalValue;
+                    if(currentHealth <= _currentTriggerPhase.triggerPhaseHealth)
+                        ChangePhase();
+                }
+            }
+        }
+
+        private void OnEntityDied(EntityDiedMessage message)
+        {
+            if (!_isFinalTriggerPhase)
+            {
+                if (_currentTriggerPhase.triggerPhaseType == TriggerPhaseType.EntityKilled)
+                {
+                    if (message.EntityData.EntityId == _currentTriggerPhase.triggerPhaseEntityId)
+                        ChangePhase();
+                }
+            }
+        }
+
+        private void ChangePhase()
+        {
+            (_isFinalTriggerPhase, _currentTriggerPhase) = _skillData.GetNextTriggerPhase(new TriggerPhase());
+            ResetData();
+            SetUpSkillModels();
+        }
+
         private void SetUpSkillModels()
         {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+            var indexes = _skillData.GetSequenceSkillModelIndexes(_currentTriggerPhase);
+            _skillModels = new();
+            _skillDelayTimes = new();
+            _autoInputStrategyTypes = new();
+
+            foreach (var index in indexes)
+            {
+                _skillModels.Add(_skillData.SkillModels[index]);
+                _skillDelayTimes.Add(_skillData.SkillDelayTimes[index]);
+                _autoInputStrategyTypes.Add(_autoInputData.AutoInputStrategyTypes[index]);
+            }
+
             _skillStrategies = new ISkillStrategy[_skillModels.Count];
 
             for (int i = 0; i < _skillModels.Count; i++)
@@ -77,6 +131,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
 
             _currentlyUsedSkillIndex = 0;
+            _autoInputData.SetCurrentAutoInputStrategy(_autoInputStrategyTypes[_currentlyUsedSkillIndex]);
             FinishSkill(true);
         }
 
@@ -153,40 +208,50 @@ namespace Runtime.Gameplay.EntitySystem
                 _skillData.IsPlayingSkill = false;
                 _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
                 _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
-                _delayCancellationTokenSource?.Cancel();
-                _delayCancellationTokenSource = new();
 
-                if (init)
+                if (!init)
                 {
-                    RunDelayExecuteSkillAsync(_delayCancellationTokenSource.Token).Forget();
+                    var delayTime = _skillDelayTimes[_currentlyUsedSkillIndex];
+                    if(_currentlyUsedSkillIndex >= _skillModels.Count - 1)
+                        _currentlyUsedSkillIndex = 0;
+                    else
+                        _currentlyUsedSkillIndex++;
+
+                    var autoInputStrategyType = _autoInputStrategyTypes[_currentlyUsedSkillIndex];
+                    _autoInputData.SetCurrentAutoInputStrategy(autoInputStrategyType);
+                    RunDelayExecuteSkillAsync(delayTime, _cancellationTokenSource.Token).Forget();
                 }
                 else
                 {
                     if (_delayBeforeExecuteSkillTime > 0)
-                    {
                         StartCountimeDelayAsync().Forget();
-                    }
                     else _finishedDelay = true;
                 }
             }
         }
 
-        private async UniTaskVoid RunDelayExecuteSkillAsync(CancellationToken cancellationToken)
+        private async UniTaskVoid RunDelayExecuteSkillAsync(float delayTime, CancellationToken cancellationToken)
         {
             _finishedDelay = false;
-
+            await UniTask.Delay(TimeSpan.FromSeconds(delayTime), cancellationToken: cancellationToken);
             _finishedDelay = true;
         }
 
         public void Dispose()
         {
+            ResetData();
+            _subscription?.Dispose();
+        }
+
+        private void ResetData()
+        {
             if (_warningGameObject)
                 PoolManager.Instance.Return(_warningGameObject);
 
             _cancellationTokenSource?.Cancel();
-            _delayCancellationTokenSource?.Cancel();
-            foreach (var skillStrategy in _skillStrategies)
-                skillStrategy.Dispose();
+            if(_skillStrategies != null)
+                foreach (var skillStrategy in _skillStrategies)
+                    skillStrategy.Dispose();
         }
     }
 }
