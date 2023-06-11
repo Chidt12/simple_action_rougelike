@@ -37,6 +37,15 @@ MonoBehaviour:
         skillDataId: 1
       - skillType: 1
         skillDataId: 1
+      - skillType: 1
+        skillDataId: 3
+      - skillType: 1
+        skillDataId: 3
+      skillDelayTimes:
+      - value: 3
+      - value: 3
+      - value: 5
+      - value: 5
       skillTriggerPhases:
       - triggerPhaseType: 0
         triggerPhaseHealth: 0
@@ -44,4 +53,10 @@ MonoBehaviour:
       - triggerPhaseType: 0
         triggerPhaseHealth: 0
         triggerPhaseEntityId: 0
-      autoInputStrategies: 0000000001000000
+      - triggerPhaseType: 1
+        triggerPhaseHealth: 0.5
+        triggerPhaseEntityId: 0
+      - triggerPhaseType: 1
+        triggerPhaseHealth: 0.5
+        triggerPhaseEntityId: 0
+      autoInputStrategies: 00000000000000000100000001000000

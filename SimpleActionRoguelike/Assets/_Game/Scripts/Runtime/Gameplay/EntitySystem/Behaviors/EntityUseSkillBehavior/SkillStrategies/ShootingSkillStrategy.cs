@@ -38,6 +38,8 @@ namespace Runtime.Gameplay.EntitySystem
                     stateAction: callbackData =>
                     {
                         var suitablePosition = callbackData.spawnVFXPoints == null ? (Vector3)creatorData.Position : callbackData.spawnVFXPoints.Select(x => x.position).ToList().GetSuitableValue(creatorData.Position);
+                        if (ownerModel.DependTarget)
+                            direction = creatorData.Target.Position - (Vector2)suitablePosition;
                         FireProjectile(suitablePosition, direction, cancellationToken).Forget();
                     },
                     endAction: callbackData => hasFinishedAnimation = true         

@@ -62,7 +62,6 @@ namespace Runtime.Gameplay.EntitySystem
                 _statData.HealthStat.OnDamaged += OnDamaged;
                 _subscription = SimpleMessenger.Subscribe<EntityDiedMessage>(OnEntityDied);
 
-                (_isFinalTriggerPhase, _currentTriggerPhase) = _skillData.GetNextTriggerPhase(new TriggerPhase());
                 SetUpSkillModels();
 
                 return UniTask.FromResult(true);
@@ -98,7 +97,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void ChangePhase()
         {
-            (_isFinalTriggerPhase, _currentTriggerPhase) = _skillData.GetNextTriggerPhase(new TriggerPhase());
             ResetData();
             SetUpSkillModels();
         }
@@ -108,6 +106,8 @@ namespace Runtime.Gameplay.EntitySystem
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource = new CancellationTokenSource();
             var indexes = _skillData.GetSequenceSkillModelIndexes(_currentTriggerPhase);
+            (_isFinalTriggerPhase, _currentTriggerPhase) = _skillData.GetNextTriggerPhase(new TriggerPhase());
+
             _skillModels = new();
             _skillDelayTimes = new();
             _autoInputStrategyTypes = new();
@@ -132,7 +132,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             _currentlyUsedSkillIndex = 0;
             _autoInputData.SetCurrentAutoInputStrategy(_autoInputStrategyTypes[_currentlyUsedSkillIndex]);
-            FinishSkill(true);
+            SetUpCurrentSkill(true);
         }
 
 
@@ -148,7 +148,7 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 var triggerResult = _skillStrategies[_currentlyUsedSkillIndex].Cancel();
                 if (triggerResult.Result)
-                    FinishSkill(false);
+                    SetUpCurrentSkill(false);
             }
         }
 
@@ -175,7 +175,7 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTaskVoid StartExecutingSkillAsync(ISkillStrategy skillStrategy, int skillIndex)
         {
             await skillStrategy.ExecuteAsync(_cancellationTokenSource.Token, skillIndex, FinishedPrecheck);
-            FinishSkill(false);
+            SetUpCurrentSkill(false);
         }
 
         private async UniTask FinishedPrecheck()
@@ -192,27 +192,36 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        private void FinishSkill(bool init)
+        private void SetUpCurrentSkill(bool init)
         {
-            if (!_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase.IsCast())
+            if (init)
             {
-                if (_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase == SkillPhase.Precheck)
+                _skillData.IsPlayingSkill = false;
+                _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
+
+                if (_delayBeforeExecuteSkillTime > 0)
+                    StartCountimeDelayAsync().Forget();
+                else _finishedDelay = true;
+            }
+            else
+            {
+                if (!_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase.IsCast())
+                {
+                    if (_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase == SkillPhase.Precheck)
+                    {
+                        _skillData.IsPlayingSkill = false;
+                        _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
+                        _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
+                    }
+                }
+                else
                 {
                     _skillData.IsPlayingSkill = false;
                     _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
                     _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
-                }
-            }
-            else
-            {
-                _skillData.IsPlayingSkill = false;
-                _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
-                _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
 
-                if (!init)
-                {
                     var delayTime = _skillDelayTimes[_currentlyUsedSkillIndex];
-                    if(_currentlyUsedSkillIndex >= _skillModels.Count - 1)
+                    if (_currentlyUsedSkillIndex >= _skillModels.Count - 1)
                         _currentlyUsedSkillIndex = 0;
                     else
                         _currentlyUsedSkillIndex++;
@@ -220,12 +229,6 @@ namespace Runtime.Gameplay.EntitySystem
                     var autoInputStrategyType = _autoInputStrategyTypes[_currentlyUsedSkillIndex];
                     _autoInputData.SetCurrentAutoInputStrategy(autoInputStrategyType);
                     RunDelayExecuteSkillAsync(delayTime, _cancellationTokenSource.Token).Forget();
-                }
-                else
-                {
-                    if (_delayBeforeExecuteSkillTime > 0)
-                        StartCountimeDelayAsync().Forget();
-                    else _finishedDelay = true;
                 }
             }
         }
