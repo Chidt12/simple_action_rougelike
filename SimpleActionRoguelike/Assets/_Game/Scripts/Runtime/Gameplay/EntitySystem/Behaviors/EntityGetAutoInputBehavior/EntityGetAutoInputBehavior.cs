@@ -1,10 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Runtime.Core.Message;
 using Runtime.Definition;
-using Runtime.Message;
-using System.Collections.Generic;
 using UnityEngine;
-using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -13,6 +9,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private IAutoInputStrategy _autoInputStrategy;
         private IEntityControlData _controlData;
+        private IEntityAutoInputData _autoInputData;
+        private IEntityStatData _statData;
 
         public void Dispose()
         {
@@ -31,13 +29,29 @@ namespace Runtime.Gameplay.EntitySystem
             if(controlCastRange == null || statData == null || autoInputData == null)
                 return UniTask.FromResult(false);
 
-            _autoInputStrategy = GetAutoInputStrategy(autoInputData.AutoInputStrategyType, controlData, statData, controlCastRange);
+            _controlData = controlData;
+            _statData = statData;
+            _autoInputData = autoInputData;
+
+            _autoInputStrategy = GetAutoInputStrategy(autoInputData.CurrentAutoInputStrategyType, controlData, statData, controlCastRange);
             if(_autoInputStrategy == null)
                 return UniTask.FromResult(false);
 
             _controlData = controlData;
+            _autoInputData.OnChangedAutoInputStrategy += OnChangedAutoInput;
 
             return UniTask.FromResult(true);
+        }
+
+        private void OnChangedAutoInput()
+        {
+            var controlCastRange = GetComponent<IEntityControlCastRangeProxy>();
+            var newInputStrategy = GetAutoInputStrategy(_autoInputData.CurrentAutoInputStrategyType, _controlData, _statData, controlCastRange);
+            if(newInputStrategy != null)
+            {
+                _autoInputStrategy.Dispose();
+                _autoInputStrategy = newInputStrategy;
+            }    
         }
 
         public IAutoInputStrategy GetAutoInputStrategy(AutoInputStrategyType autoInputStrategyType, IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRange)

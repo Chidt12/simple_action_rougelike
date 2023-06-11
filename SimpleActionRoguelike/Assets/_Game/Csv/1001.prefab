@@ -386,6 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2a261b04258684e840d86cb7ab681e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _disableWhenGetHurt: 1
+  _disableWhenGetHurtTime: 0.5
 --- !u!114 &8599281477896062603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dashTime: 0.2
   _speed: 30
-  _dashCooldown: 4.5
+  _dashCooldown: 4
   _dashEffect: {fileID: 5417580243802009177}
 --- !u!1 &6875883244934980058
 GameObject:

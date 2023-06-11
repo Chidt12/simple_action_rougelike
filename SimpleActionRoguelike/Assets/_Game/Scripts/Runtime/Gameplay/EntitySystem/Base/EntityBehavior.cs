@@ -21,7 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
             await base.BuildAsync(data, cancellationToken);
             return await BuildDataAsync((T1)data);
         }
-
+            
         protected abstract UniTask<bool> BuildDataAsync(T1 data);
     }
 

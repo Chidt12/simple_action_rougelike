@@ -45,7 +45,7 @@ namespace Runtime.Gameplay
             var statusTypes = Enum.GetValues(typeof(StatusType)).Cast<StatusType>();
             foreach (var statusType in statusTypes)
             {
-                if(HasConfig(statusType))
+                if (HasConfig(statusType))
                 {
                     await DataManager.Config.Load<StatusDataConfig>(string.Format(AddressableKeys.STATUS_DATA_CONFIG_ASSET_FORMAT, statusType));
                 }
@@ -105,6 +105,27 @@ namespace Runtime.Gameplay
 
             var enemyStatsInfo = new EnemyStatsInfo(zombieLevelConfigItem.CharacterLevelStats);
             return (enemyStatsInfo, skillModels, zombieLevelConfigItem);
+        }
+
+        public async UniTask<(BossStatsInfo, List<SkillModel>, BossLevelConfigItem)> GetBossDataAsync(int bossId, int level)
+        {
+            var bossConfig = await DataManager.Config.Load<BossConfig>(GetConfigAssetName<BossConfig>(bossId.ToString()));
+            var bossConfigItem = bossConfig.items.FirstOrDefault(x => x.id == bossId);
+
+            var bossLevelConfigItem = bossConfigItem.levels.FirstOrDefault(x => x.level == level);
+            var skillIdentities = bossLevelConfigItem.skillIdentities;
+
+            var skillModels = new List<SkillModel>();
+            foreach (var skillIdentity in skillIdentities)
+            {
+                var skillDataConfigItem = await DataManager.Config.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
+                var skillData = new SkillData(skillDataConfigItem);
+                var skillModel = SkillModelFactory.GetSkillModel(skillIdentity.skillType, skillData);
+                skillModels.Add(skillModel);
+            }
+
+            var bossStatsInfo = new BossStatsInfo(bossLevelConfigItem.CharacterLevelStats);
+            return (bossStatsInfo, skillModels, bossLevelConfigItem);
         }
 
 

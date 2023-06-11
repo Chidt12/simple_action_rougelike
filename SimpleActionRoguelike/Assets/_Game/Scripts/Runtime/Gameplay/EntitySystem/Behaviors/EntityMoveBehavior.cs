@@ -52,9 +52,8 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 var moveSpeed = _moveSpeed;
                 if (_moveWithRandomSpeed && _moveSpeed != 0)
-                {
                     moveSpeed = Random.Range(_moveSpeed, _moveSpeed + _moveRandomOffset);
-                }
+
                 Vector3 nextPosition = _controlData.Position + _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
                 transform.position = Vector2.MoveTowards(_controlData.Position, nextPosition, moveSpeed * deltaTime);
                 _controlData.Position = nextPosition;

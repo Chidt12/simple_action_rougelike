@@ -147,8 +147,6 @@ namespace Runtime.Manager.Gameplay
 
         private void OnHeroSpawned(HeroSpawnedMessage message)
         {
-            var invincibleAfterGetHurt = new InvincibleAfterGetHurtBaseModifier();
-            otherDisposables.Add(invincibleAfterGetHurt);
         }
 
         private void OnEntityDied(EntityDiedMessage entityDiedMessage)

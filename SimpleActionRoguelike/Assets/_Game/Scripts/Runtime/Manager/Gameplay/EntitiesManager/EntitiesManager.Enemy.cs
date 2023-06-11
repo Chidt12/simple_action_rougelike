@@ -33,7 +33,7 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
             enemyModel.InitStatus();
-            enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategy);
+            enemyModel.InitAutoInputStrategy(new() { enemyData.Item3.autoInputStrategy });
             enemyModel.InitDeathData(enemyData.Item3.deathDataIdentity);
 
             enemyGameObject.SetActive(true);

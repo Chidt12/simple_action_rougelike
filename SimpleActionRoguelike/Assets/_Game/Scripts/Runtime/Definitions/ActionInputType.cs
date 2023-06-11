@@ -36,6 +36,10 @@ namespace Runtime.Definition
         UseSkill1 = 2,
         UseSkill2 = 3,
         UseSkill3 = 4,
+        UseSkill4 = 5,
+        UseSkill5 = 6,
+        UseSkill6 = 7,
+        UseSkill7 = 7,
         Dash = 100,
         StartUseSkill = 101,
     }
