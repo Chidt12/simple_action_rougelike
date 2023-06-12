@@ -3,12 +3,12 @@ using Runtime.Definition;
 
 namespace Runtime.Manager.Data
 {
-    public class BossStatsInfo : EntityStatsInfo
+    public class BossStatsInfo : CharacterStatsInfo
     {
         public BossStatsInfo(CharacterLevelStats characterLevelStats) : base(characterLevelStats)
         {
             var enemyLevelStats = characterLevelStats as BossLevelStats;
-            statsDictionary.Add(StatType.CollideDamage, new CharacterStat(enemyLevelStats.collideDamage));
+            statsDictionary.Add(StatType.CollideDamage, new EntityStatInfo(enemyLevelStats.collideDamage));
         }
     }
 }

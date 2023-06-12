@@ -81,6 +81,10 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.BossConfig_3002.csv
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 85db4d6fe78dd1e40ab36263e7d706b2
+    m_Address: Runtime.ConfigModel.AssetConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

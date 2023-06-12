@@ -48,7 +48,7 @@ namespace Runtime.Gameplay.CollisionDetection
                 return CollisionBodyType.Enemy;
             else if (entityType == EntityType.Hero)
                 return CollisionBodyType.Hero;
-            else if (entityType == EntityType.Object)
+            else if (entityType == EntityType.Asset)
                 return CollisionBodyType.Object;
             else if (entityType == EntityType.Trap)
                 return CollisionBodyType.Trap;

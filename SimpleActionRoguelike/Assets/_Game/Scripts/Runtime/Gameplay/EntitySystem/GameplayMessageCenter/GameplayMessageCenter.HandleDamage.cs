@@ -11,6 +11,29 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private partial void OnSentDamage(SentDamageMessage message)
         {
+            // Check hero attack object
+            if(message.Target.EntityType == EntityType.Asset)
+            {
+                if(message.Creator.EntityType == EntityType.Hero)
+                {
+                    var assetModifiedStatData = message.Target as IEntityModifiedStatData;
+                    if (assetModifiedStatData == null)
+                        return;
+
+                    var finalCreatedDamage = assetModifiedStatData.GetDamage(1, message.DamageSource, message.DamageProperty);
+                    if (message.Target.IsDead)
+                    {
+                        var deathEntityData = message.Target as IEntityDeathData;
+                        if (deathEntityData != null)
+                            SimpleMessenger.Publish(new EntityNotifyDiedMessage(message.Target, deathEntityData.DeathDataIdentity));
+                        else
+                            SimpleMessenger.Publish(new EntityNotifyDiedMessage(message.Target, new DeathDataIdentity(0, DeathType.None)));
+                    }
+                }
+                return;
+            }
+
+            // check chharacter attack others
             if(!message.Target.IsDamagable)
             {
                 if(!message.Target.IsDead)

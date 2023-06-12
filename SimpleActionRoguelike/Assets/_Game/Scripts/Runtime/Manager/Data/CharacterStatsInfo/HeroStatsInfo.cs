@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Runtime.Manager.Data
 {
-    public class HeroStatsInfo : EntityStatsInfo
+    public class HeroStatsInfo : CharacterStatsInfo
     {
         public HeroStatsInfo(CharacterLevelStats characterLevelStats) : base(characterLevelStats)
         {
-            statsDictionary.Add(StatType.AttackSpeed, new CharacterStat(0));
-            statsDictionary.Add(StatType.AttackRange, new CharacterStat(0));
-            statsDictionary.Add(StatType.DashNumber, new CharacterStat(2));
+            statsDictionary.Add(StatType.AttackSpeed, new EntityStatInfo(0));
+            statsDictionary.Add(StatType.AttackRange, new EntityStatInfo(0));
+            statsDictionary.Add(StatType.DashNumber, new EntityStatInfo(2));
         }
 
         public UniTask UpdateBaseStatByWeapon(WeaponDataConfigItem weapon)

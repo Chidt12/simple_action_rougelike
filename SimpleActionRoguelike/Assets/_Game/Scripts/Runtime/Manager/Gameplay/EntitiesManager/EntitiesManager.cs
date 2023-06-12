@@ -8,7 +8,6 @@ using Runtime.Definition;
 using Runtime.Helper;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
-using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +56,6 @@ namespace Runtime.Gameplay.EntitySystem
             _currentSpawningEnemyCount = 0;
             _currentWarningSpawnedEnemyCount = 0;
             _enemiesData = new();
-            _mapEditorEntities = FindObjectsOfType<MapEditorEntity>(true);
 
             CurrentActionContainEnemySpawn = 0;
             HeroData = null;
@@ -73,6 +71,7 @@ namespace Runtime.Gameplay.EntitySystem
             _finishedSpawnInStageData = true;
             _finishedSpawnInConfig = true;
             _spawnWaveCancellationTokenSource = new CancellationTokenSource();
+            _mapEditorEntities = FindObjectsOfType<MapEditorEntity>(true);
             var stageMapEditorEntities = _mapEditorEntities == null ? new() : _mapEditorEntities.Where(x => x.WaveActive == waveIndex)
                                                            .OrderBy(x => x.DelaySpawnInWave)
                                                            .ToList();
@@ -231,6 +230,9 @@ namespace Runtime.Gameplay.EntitySystem
                     entity = await CreateBossAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
                     _currentSpawningEnemyCount--;
                     break;
+                case EntityType.Asset:
+                    entity = await CreateAssetAsync(int.Parse(spawnedEntityInfo.entityId), spawnedEntityInfo.entityLevel, spawnPosition, cancellationToken);
+                    break;
                 default:
                     break;
             }
@@ -254,6 +256,9 @@ namespace Runtime.Gameplay.EntitySystem
                     _currentSpawningEnemyCount++;
                     entity = await LoadBossOnMapAsync(entityGameObject, entityId, entityLevel);
                     _currentSpawningEnemyCount--;
+                    break;
+                case EntityType.Asset:
+                    entity = await LoadAssetOnMapAsync(entityGameObject, entityId, entityLevel);
                     break;
                 default:
                     break;
@@ -283,7 +288,6 @@ namespace Runtime.Gameplay.EntitySystem
 
                 if (HaveNoEnemiesLeft && !entityDiedMessage.DeathIdentity.deathType.IsSpawnedEnemy())
                 {
-                    CreateEntityDestroyVfxAsync(entityDiedMessage.EntityData.EntityType, entityDiedMessage.EntityData.Position, this.GetCancellationTokenOnDestroy()).Forget();
                     return HandleCharacterDiedResultType.DeletedAllEnemyOnMap;
                 }
             }
@@ -292,8 +296,6 @@ namespace Runtime.Gameplay.EntitySystem
                 SimpleMessenger.Publish(new EntityDiedMessage(entityDiedMessage.EntityData));
                 return HandleCharacterDiedResultType.HeroDied;
             }
-
-            CreateEntityDestroyVfxAsync(entityDiedMessage.EntityData.EntityType, entityDiedMessage.EntityData.Position, this.GetCancellationTokenOnDestroy()).Forget();
             return HandleCharacterDiedResultType.None;
         }
 
@@ -305,13 +307,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected async UniTask CreateEntitySpawnVfxAsync(EntityType entityType, Vector2 vfxPosition, CancellationToken cancellationToken)
         {
-        }
-
-        protected async UniTask CreateEntityDestroyVfxAsync(EntityType entityType, Vector2 vfxPosition, CancellationToken cancellationToken)
-        {
-            var prefabName = "enemy_death_small";
-            var vfx = await PoolManager.Instance.Rent(prefabName, true, cancellationToken);
-            vfx.transform.position = vfxPosition;
         }
 
         #region Create Entity With warning

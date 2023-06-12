@@ -49,3 +49,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.AssetConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.AssetConfig
+      csvFile: {fileID: 4900000, guid: fbfed8a72b1801a4d89db126cc0c34f7, type: 3}
+      csvPath: Assets/_Game/Csv/entities/asset_config/asset_config.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

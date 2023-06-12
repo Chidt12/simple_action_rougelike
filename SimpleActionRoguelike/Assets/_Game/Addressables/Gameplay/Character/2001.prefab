@@ -485,6 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0405a2cf474d04c8a11917a1669462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _diedPrefab: enemy_death_small
+  _spawnVFXPosition: {fileID: 1414573540971670945}
 --- !u!114 &7033757250741559360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2a261b04258684e840d86cb7ab681e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _disableWhenGetHurt: 0
+  _disableWhenGetHurtTime: 0
 --- !u!114 &423702413483919674
 MonoBehaviour:
   m_ObjectHideFlags: 0

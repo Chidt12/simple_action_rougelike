@@ -149,6 +149,40 @@ namespace Runtime.Manager.Gameplay
         public void UpdateMap(int indexX, int indexY)
             => ActiveGraph.UpdateNodeStatus(indexX, indexY);
 
+        public void UpdateMapWithAroundPoints(Vector2 position, float maxBoundSize)
+        {
+            var validNodeIndexes = new List<Vector2Int>();
+            var collisionBoundCenterPosition = position;
+            var centerNodeIndex = GetNodeIndex(collisionBoundCenterPosition);
+            var bonusExtend = SlotSize;
+            var currentMeasuredExtend = 0.0f;
+
+            while (currentMeasuredExtend < maxBoundSize + bonusExtend)
+            {
+                for (int i = -1; i <= 1; i++)
+                {
+                    for (int j = -1; j <= 1; j++)
+                    {
+                        if (!(i == 0 && j == 0))
+                        {
+                            int nodenIdexX = centerNodeIndex.x + i;
+                            int nodeIndexY = centerNodeIndex.y + j;
+                            var isValidNodeIndex = MapManager.Instance.IsValidNodeIndex(nodenIdexX, nodeIndexY);
+                            if (isValidNodeIndex)
+                                validNodeIndexes.Add(new Vector2Int(nodenIdexX, nodeIndexY));
+                        }
+                        else validNodeIndexes.Add(new Vector2Int(centerNodeIndex.x, centerNodeIndex.y));
+                    }
+                }
+
+                currentMeasuredExtend += MapManager.Instance.SlotHalfSize * 0.5f;
+            }
+
+            var noDuplicatedValidNodeIndexes = validNodeIndexes.Distinct().ToList();
+            foreach (var nodeIndex in noDuplicatedValidNodeIndexes)
+                MapManager.Instance.UpdateMap(nodeIndex.x, nodeIndex.y);
+        }
+
         public bool IsValidNodePosition(Vector2 position)
             => ActiveGraph.IsValidNodePosition(position);
 

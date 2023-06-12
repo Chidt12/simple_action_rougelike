@@ -4,7 +4,7 @@ namespace Runtime.Definition
     {
         Hero,
         Enemy,
-        Object,
+        Asset,
         Trap,
         Boss,
         Obstacle

@@ -8,7 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
         #region Members
 
         [SerializeField]
-        private EntityType _entityType = EntityType.Object;
+        private EntityType _entityType = EntityType.Asset;
         [SerializeField]
         private int _level;
         [SerializeField]

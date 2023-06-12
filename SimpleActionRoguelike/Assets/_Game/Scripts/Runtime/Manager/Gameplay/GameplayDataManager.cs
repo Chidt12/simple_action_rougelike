@@ -75,7 +75,6 @@ namespace Runtime.Gameplay
             var heroLevel = GameplayDataDispatcher.Instance.HeroLevel;
             var heroLevelConfigItem = heroConfigItem.levels.FirstOrDefault(x => x.level == heroLevel);
 
-
             var equipmentEquip = GameplayDataDispatcher.Instance.SelectedEquipments[EquipmentType.Weapon];
             var weaponType = (WeaponType)equipmentEquip.EquipmentId;
             var weaponData = await GetWeaponDataAsync(weaponType, RarityType.Common, equipmentEquip.Level);
@@ -128,6 +127,15 @@ namespace Runtime.Gameplay
             return (bossStatsInfo, skillModels, bossLevelConfigItem);
         }
 
+        public async UniTask<(AssetStatsInfo, AssetLevelConfigItem)> GetAssetDataAsync(int assetId, int level)
+        {
+            var assetConfig = await DataManager.Config.Load<AssetConfig>();
+            var assetConfigItem = assetConfig.items.FirstOrDefault(x => x.id == assetId);
+
+            var assetLevelConfigItem = assetConfigItem.levels.FirstOrDefault(x => x.level == level);
+            var assetStatsInfo = new AssetStatsInfo(assetLevelConfigItem);
+            return (assetStatsInfo, assetLevelConfigItem);
+        }
 
         public async UniTask<WeaponData> GetWeaponDataAsync(WeaponType weaponType, RarityType weaponEquipmentRarityType, int weaponLevel)
         {
