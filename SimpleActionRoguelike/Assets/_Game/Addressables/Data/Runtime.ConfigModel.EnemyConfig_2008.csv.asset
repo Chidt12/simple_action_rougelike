@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74ed00ae9b9220846b6297aeff7a2873, type: 3}
-  m_Name: Runtime.ConfigModel.EnemyConfig_2001.csv
+  m_Name: Runtime.ConfigModel.EnemyConfig_2008.csv
   m_EditorClassIdentifier: 
   items:
-  - id: 2001
+  - id: 2008
     levels:
     - point: 5
       level: 1
