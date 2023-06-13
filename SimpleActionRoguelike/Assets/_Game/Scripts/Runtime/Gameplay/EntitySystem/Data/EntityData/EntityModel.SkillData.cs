@@ -1,5 +1,6 @@
 using Runtime.ConfigModel;
 using Runtime.Definition;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
         public List<float> SkillDelayTimes => _skillDelayTimes;
         public List<TriggerPhase> TriggerPhases => _triggerPhases;
         public bool IsPlayingSkill { get; set; }
+        public Action OnTriggeredPhaseEvent { get; set; }
 
         public bool CheckCanUseSkill()
         {

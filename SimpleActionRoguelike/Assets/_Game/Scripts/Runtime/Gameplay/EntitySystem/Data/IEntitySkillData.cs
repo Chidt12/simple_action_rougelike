@@ -1,4 +1,5 @@
 using Runtime.ConfigModel;
+using System;
 using System.Collections.Generic;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -13,5 +14,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public List<int> GetSequenceSkillModelIndexes(TriggerPhase triggerPhase);
         public (bool, TriggerPhase) GetNextTriggerPhase(TriggerPhase triggerPhase);
+
+        public Action OnTriggeredPhaseEvent { get; set; }
     }
 }

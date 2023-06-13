@@ -275,6 +275,7 @@ namespace Runtime.Manager.Gameplay
             // Load Level.
             await LoadLevelAsync(roomType);
             EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position);
+            SimpleMessenger.Publish(new LoadNextLevelMessage());
 
             // Delay to wait for camera move to hero.
             await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
@@ -282,7 +283,6 @@ namespace Runtime.Manager.Gameplay
             GameManager.Instance.ReturnPreviousGameStateType();
             SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, true));
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
-
             // Update current Stage info.
             SetUpNewStage();
         }

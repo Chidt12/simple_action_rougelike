@@ -19,23 +19,62 @@ namespace Runtime.UI
         [SerializeField] private Animator _hurtAnimator;
         [SerializeField] private DashIcon _dashIconPrefab;
         [SerializeField] private Transform _dashContainer;
+        [SerializeField] private BossHealthBar[] _bossHealthBars;
 
         private List<DashIcon> _activeDashIcons;
 
         private IEntityStatData _heroData;
-        private ISubscription _subscription;
+        private List<ISubscription> _subscriptions;
         private EntityStatWithCurrentValue _dashStat;
 
         public override UniTask Initialize(Memory<object> args)
         {
             _activeDashIcons = new();
-            _subscription = SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned);
+            _subscriptions = new();
+            _subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
+            _subscriptions.Add(SimpleMessenger.Subscribe<EntitySpawnedMessage>(OnEntitySpawned));
+            _subscriptions.Add(SimpleMessenger.Subscribe<LoadNextLevelMessage>(OnLoadNextLevel));
+            ResetBossHealthBars();
             return base.Initialize(args);
+        }
+
+        private void OnLoadNextLevel(LoadNextLevelMessage message) => ResetBossHealthBars();
+
+        private void ResetBossHealthBars()
+        {
+            foreach (var bossHealthBar in _bossHealthBars)
+            {
+                bossHealthBar.Dispose();
+                bossHealthBar.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnEntitySpawned(EntitySpawnedMessage message)
+        {
+            if(message.EntityData.EntityType == Definition.EntityType.Boss)
+            {
+                foreach (var bossHealthBar in _bossHealthBars)
+                {
+                    if (bossHealthBar.IsAvailable)
+                    {
+                        bossHealthBar.gameObject.SetActive(true);
+                        bossHealthBar.Init((IEntitySkillData)message.EntityData, (IEntityStatData)message.EntityData);
+                        break;
+                    }
+                }
+            }
         }
 
         public override UniTask Cleanup()
         {
-            _subscription.Dispose();
+            foreach (var subscription in _subscriptions)
+            {
+                subscription.Dispose();
+            }
+            _subscriptions.Clear();
+
+            foreach (var bossHealthBar in _bossHealthBars)
+                bossHealthBar.Dispose();
             return base.Cleanup();
         }
 

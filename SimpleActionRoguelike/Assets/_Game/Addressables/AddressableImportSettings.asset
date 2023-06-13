@@ -25,16 +25,6 @@ MonoBehaviour:
     LabelMode: 0
     simplified: 1
     addressReplacement: 
-  - path: Assets/_Game/Addressables/UI/.*\.prefab
-    matchType: 1
-    groupName: UI
-    groupTemplate: {fileID: 0}
-    groupTemplateApplicationMode: 0
-    labelRefs: []
-    dynamicLabels: []
-    LabelMode: 0
-    simplified: 1
-    addressReplacement: 
   - path: Assets/_Game/Addressables/Scenes/.*\.unity
     matchType: 1
     groupName: Scenes

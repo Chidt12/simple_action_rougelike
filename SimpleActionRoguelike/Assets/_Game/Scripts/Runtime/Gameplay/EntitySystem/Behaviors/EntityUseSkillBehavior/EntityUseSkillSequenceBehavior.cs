@@ -107,6 +107,8 @@ namespace Runtime.Gameplay.EntitySystem
             _cancellationTokenSource = new CancellationTokenSource();
             var indexes = _skillData.GetSequenceSkillModelIndexes(_currentTriggerPhase);
             (_isFinalTriggerPhase, _currentTriggerPhase) = _skillData.GetNextTriggerPhase(new TriggerPhase());
+            if (!_isFinalTriggerPhase)
+                _skillData.OnTriggeredPhaseEvent?.Invoke();
 
             _skillModels = new();
             _skillDelayTimes = new();

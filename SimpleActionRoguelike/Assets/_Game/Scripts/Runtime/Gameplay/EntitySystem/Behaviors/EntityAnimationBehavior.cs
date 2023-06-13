@@ -92,7 +92,6 @@ namespace Runtime.Gameplay.EntitySystem
                         tween.Append(playDotween.DOScale(1f, 0.3f).SetDelay(0.1f).SetEase(Ease.InOutSine));
                         tween.Play();
                     }
-
                 }
 
                 _cancellationTokenSource?.Cancel();

@@ -41,6 +41,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
+            if (!_controlData.IsControllable)
+                return;
+
             switch (_faceDirectionType)
             {
                 case FaceDirectionType.Target:

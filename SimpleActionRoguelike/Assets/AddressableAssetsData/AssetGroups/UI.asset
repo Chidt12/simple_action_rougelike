@@ -25,16 +25,8 @@ MonoBehaviour:
     m_Address: prefab_screen_start_game
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 4b778aa6b1ec63c4fba51027dd1b1dfb
-    m_Address: loading_layer
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 284559995610cf04e8d3b76fbcde2570
     m_Address: prefab_modal_victory
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e557570714c44b746a1fb74511b40285
-    m_Address: FaderRound
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4c2759301ae046546b802a5f196c9c3e
@@ -53,10 +45,6 @@ MonoBehaviour:
     m_Address: toast_normal
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 509c69407d2461843832d15badeb4089
-    m_Address: prefab_modal_buy_ingame_shop
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 17f9eaa78d31bf7499f63a17692567d2
     m_Address: prefab_modal_give_ingame_shop
     m_ReadOnly: 0
@@ -67,14 +55,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: ad063283b55de9349b29e2b6053c278d
     m_Address: prefab_screen_lobby
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a06ccd11364a5d2449514cd4690c9145
-    m_Address: weapon
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 1ddbfc2070a6db0499da8e1857350be4
-    m_Address: stat_item
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 178573056ec0b124f8a628e900172f1a
@@ -91,14 +71,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: d7374ccb9cdb2bf458c78acd451ca91a
     m_Address: prefab_modal_gameplay_inventory
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: bb832210aee0ef44c868f88f42fdb6f5
-    m_Address: inventory_panel
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: d695bea27243ad14cb99149b9094f6c5
-    m_Address: dash
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

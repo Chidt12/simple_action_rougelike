@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 5754628791517296532}
   - component: {fileID: 2160891251272186676}
   m_Layer: 5
-  m_Name: dash
+  m_Name: dash_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
