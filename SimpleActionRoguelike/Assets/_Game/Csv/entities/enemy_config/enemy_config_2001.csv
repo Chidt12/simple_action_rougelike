@@ -1,2 +1,2 @@
-﻿id,point,level,detect_range,detected_priority,hp,armor,armor_penetration,crit_chance,crit_damage,move_speed,life_steal,attack_damage,collide_damage,skill_type,skill_data_id,auto_input_strategy,death_type,death_data_id
-2001,5,1,4,0,100,0,0,0,0,2.5,0,3,1,Shooting,1,KeepDistanceToTarget,SpawnForwardProjectiles,1
+﻿id,point,level,detect_range,detected_priority,hp,armor,armor_penetration,crit_chance,crit_damage,move_speed,life_steal,attack_damage,collide_damage,skill_type,skill_data_id,skill_anim_index,auto_input_strategy,death_type,death_data_id
+2001,5,1,4,0,100,0,0,0,0,2.5,0,3,1,Shooting,1,0,KeepDistanceToTarget,SpawnForwardProjectiles,1

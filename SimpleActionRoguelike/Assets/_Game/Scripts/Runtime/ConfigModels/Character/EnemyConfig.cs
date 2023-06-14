@@ -39,6 +39,7 @@ namespace Runtime.ConfigModel
     {
         public SkillType skillType;
         public int skillDataId;
+        public int skillAnimIndex;
     }
 
 }

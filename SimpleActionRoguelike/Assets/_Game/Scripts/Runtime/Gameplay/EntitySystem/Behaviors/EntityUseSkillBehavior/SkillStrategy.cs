@@ -55,10 +55,13 @@ namespace Runtime.Gameplay.EntitySystem
         protected virtual UniTask PrecheckSkillAsync() => UniTask.CompletedTask;
         protected abstract UniTask PresentSkillAsync(CancellationToken cancellationToken, int index);
 
+        protected virtual void CancelSkill() { }
+
         public SkillCancelResult Cancel()
         {
             if (ownerModel.CanBeCanceled)
             {
+                CancelSkill();
                 cancellationTokenSource?.Cancel();
                 return new SkillCancelResult(true);
             }

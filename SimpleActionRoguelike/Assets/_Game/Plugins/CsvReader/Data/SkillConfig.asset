@@ -37,3 +37,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.JumpAheadSkillDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.JumpAheadSkillDataConfig
+      csvFile: {fileID: 4900000, guid: 9bb16a02056d09745aee707b8365d6f2, type: 3}
+      csvPath: Assets/_Game/Csv/skills/jump_ahead_skill.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

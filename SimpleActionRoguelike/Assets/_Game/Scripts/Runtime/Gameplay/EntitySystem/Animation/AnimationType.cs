@@ -48,9 +48,9 @@ namespace Runtime.Gameplay.EntitySystem
         {
             AnimationType useSkill = AnimationType.UseSkill1;
             if (index == 1)
-                useSkill = AnimationType.UseSkill1;
+                useSkill = AnimationType.UseSkill2;
             else if (index == 2)
-                useSkill = AnimationType.UseSkill1;
+                useSkill = AnimationType.UseSkill3;
 
             return useSkill;
         }

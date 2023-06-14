@@ -35,12 +35,16 @@ MonoBehaviour:
       skillIdentities:
       - skillType: 1
         skillDataId: 1
+        skillAnimIndex: 0
       - skillType: 1
         skillDataId: 1
+        skillAnimIndex: 0
       - skillType: 2
         skillDataId: 3
+        skillAnimIndex: 1
       - skillType: 2
         skillDataId: 3
+        skillAnimIndex: 1
       skillDelayTimes:
       - value: 3
       - value: 3

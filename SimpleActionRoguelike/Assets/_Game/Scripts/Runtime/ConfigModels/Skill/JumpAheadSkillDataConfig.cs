@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using CsvReader;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class JumpAheadSkillDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class JumpAheadSkillDataConfigItem : SkillDataConfigItem
     {
-        
+        public string warningVfx;
+        public float jumpDuration;
+        public float jumpHeight;
+        public float jumpDistance;
+        public int numberOfJump;
+        public float delayBetweenJump;
+        public float jumpDamageBonus;
+        [CsvColumnFormat(ColumnFormat = "jump_{0}")]
+        public DamageFactor[] damageFactors;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class JumpAheadSkillDataConfig : SkillDataConfig<JumpAheadSkillDataConfigItem>
     {
-        
+
     }
 }

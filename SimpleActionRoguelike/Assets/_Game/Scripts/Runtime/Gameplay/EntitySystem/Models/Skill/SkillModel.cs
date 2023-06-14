@@ -14,14 +14,16 @@ namespace Runtime.Gameplay.EntitySystem
         public bool CanBeCanceled { get; protected set; }
         public abstract SkillType SkillType { get; }
         public SkillPhase CurrentSkillPhase {get; set;}
+        public int SkillIndex { get; protected set; }
 
-        public SkillModel(SkillDataConfigItem configItem, bool canBeCanceled = true)
+        public SkillModel(SkillDataConfigItem configItem, int skillIndex, bool canBeCanceled = true)
         {
             TargetType = configItem.targetType;
             CastRange = configItem.castRange;
             Cooldown = configItem.cooldown;
             DependTarget = configItem.dependTarget;
             CanBeCanceled = canBeCanceled;
+            SkillIndex = skillIndex;
         }
     }
 
@@ -30,14 +32,16 @@ namespace Runtime.Gameplay.EntitySystem
         #region Members
 
         public SkillDataConfigItem configItem;
+        public int skillIndex;
 
         #endregion Members
 
         #region Class Methods
 
-        public SkillData(SkillDataConfigItem configItem)
+        public SkillData(SkillDataConfigItem configItem, int skillIndex)
         {
             this.configItem = configItem;
+            this.skillIndex = skillIndex;
         }
 
         #endregion Class Methods

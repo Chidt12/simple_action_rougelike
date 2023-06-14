@@ -27,9 +27,15 @@ namespace Runtime.Gameplay.EntitySystem
             _bossStatData.HealthStat.OnDamaged += OnDamaged;
             _bossStatData.HealthStat.OnHealed += OnHealed;
             _bossSkillData.OnTriggeredPhaseEvent += OnTriggeredPhase;
+            _bossStatData.DeathEvent += OnDeath;
 
             _runHealthBarImage.fillAmount = _bossStatData.HealthStat.CurrentValue / _bossStatData.HealthStat.TotalValue;
             _healthBarImage.fillAmount = _bossStatData.HealthStat.CurrentValue / _bossStatData.HealthStat.TotalValue;
+        }
+
+        private void OnDeath()
+        {
+            gameObject.SetActive(false);
         }
 
         public void Dispose()

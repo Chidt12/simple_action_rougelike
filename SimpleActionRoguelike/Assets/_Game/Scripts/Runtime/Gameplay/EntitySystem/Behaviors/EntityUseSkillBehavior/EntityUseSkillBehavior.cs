@@ -123,7 +123,7 @@ namespace Runtime.Gameplay.EntitySystem
                         _skillData.IsPlayingSkill = true;
                         _currentlyUsedSkillIndex = skillIndex;
                         _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlaySkill);
-                        StartExecutingSkillAsync(_skillStrategies[skillIndex], skillIndex).Forget();
+                        StartExecutingSkillAsync(_skillStrategies[skillIndex], _skillModels[skillIndex].SkillIndex).Forget();
                     }
                 }
             }

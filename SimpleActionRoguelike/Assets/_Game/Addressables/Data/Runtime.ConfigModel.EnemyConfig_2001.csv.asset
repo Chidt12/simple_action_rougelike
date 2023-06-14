@@ -32,6 +32,7 @@ MonoBehaviour:
       skillIdentity:
         skillType: 1
         skillDataId: 1
+        skillAnimIndex: 0
       autoInputStrategy: 0
       deathDataIdentity:
         deathDataId: 1

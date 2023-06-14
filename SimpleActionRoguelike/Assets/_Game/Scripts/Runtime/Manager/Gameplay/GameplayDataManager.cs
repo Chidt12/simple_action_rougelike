@@ -97,7 +97,7 @@ namespace Runtime.Gameplay
             if (skillIdentity.skillType != SkillType.None)
             {
                 skillDataConfigItem = await DataManager.Config.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
-                var skillData = new SkillData(skillDataConfigItem);
+                var skillData = new SkillData(skillDataConfigItem, skillIdentity.skillAnimIndex);
                 var skillModel = SkillModelFactory.GetSkillModel(skillIdentity.skillType, skillData);
                 skillModels.Add(skillModel);
             }
@@ -118,7 +118,7 @@ namespace Runtime.Gameplay
             foreach (var skillIdentity in skillIdentities)
             {
                 var skillDataConfigItem = await DataManager.Config.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
-                var skillData = new SkillData(skillDataConfigItem);
+                var skillData = new SkillData(skillDataConfigItem, skillIdentity.skillAnimIndex);
                 var skillModel = SkillModelFactory.GetSkillModel(skillIdentity.skillType, skillData);
                 skillModels.Add(skillModel);
             }

@@ -18,7 +18,7 @@ namespace Runtime.Gameplay.EntitySystem
         public float DelayBetweenWaves { get; private set; }
         public float RotateBetweenWaves { get; private set;  }
 
-        public FireProjectileAroundSkillModel(SkillDataConfigItem configItem, bool canBeCanceled = true) : base(configItem, canBeCanceled)
+        public FireProjectileAroundSkillModel(SkillDataConfigItem configItem, int skillIndex, bool canBeCanceled = true) : base(configItem, skillIndex, canBeCanceled)
         {
             var dataConfig = configItem as FireProjectileAroundSkillDataConfigItem;
             ProjectileId = dataConfig.projectileId;

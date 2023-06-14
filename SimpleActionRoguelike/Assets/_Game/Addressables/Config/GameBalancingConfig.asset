@@ -70,15 +70,6 @@ MonoBehaviour:
       duration: -1
       entites:
       - entityConfigItem:
-          entityId: 2008
-          entityType: 1
-          entityNumber: 2
-          entityLevel: 1
-        delaySpawnTime: 0
-        followHero: 1
-        distanceFromHero: 3
-        spawnPointIndex: 0
-      - entityConfigItem:
           entityId: 3002
           entityType: 4
           entityNumber: 1

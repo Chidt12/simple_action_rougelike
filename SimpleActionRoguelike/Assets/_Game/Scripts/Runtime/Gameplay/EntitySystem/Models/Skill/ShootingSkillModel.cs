@@ -15,8 +15,8 @@ namespace Runtime.Gameplay.EntitySystem
         public float ProjectileDamageBonus { get; private set; }
         public DamageFactor[] ProjectileDamageFactors { get; private set; }
 
-        public ShootingSkillModel(SkillDataConfigItem skillDataConfigItem, bool canBeCanceled = true) 
-            : base(skillDataConfigItem, canBeCanceled)
+        public ShootingSkillModel(SkillDataConfigItem skillDataConfigItem, int skillIndex, bool canBeCanceled = true) 
+            : base(skillDataConfigItem, skillIndex, canBeCanceled)
         {
             var dataConfig = skillDataConfigItem as ShootingSkillDataConfigItem;
             ProjectileId = dataConfig.projectileId;
