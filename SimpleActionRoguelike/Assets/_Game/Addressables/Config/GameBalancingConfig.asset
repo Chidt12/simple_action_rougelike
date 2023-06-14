@@ -67,7 +67,7 @@ MonoBehaviour:
   stageLoadConfigItem:
     waveConfigs:
     - waveIndex: 0
-      duration: 0
+      duration: -1
       entites:
       - entityConfigItem:
           entityId: 2008
