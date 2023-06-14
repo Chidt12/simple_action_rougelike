@@ -1,37 +1,37 @@
 using Cysharp.Threading.Tasks;
+using Runtime.ConfigModel;
+using Runtime.Core.Message;
+using Runtime.Definition;
+using Runtime.Helper;
+using Runtime.Message;
 using System.Threading;
 using UnityEngine;
 using System.Linq;
-using Runtime.Helper;
-using Runtime.Core.Message;
-using Runtime.Message;
-using Runtime.Definition;
-using Runtime.ConfigModel;
 using System;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class ShootingSkillStrategy : SkillStrategy<ShootingSkillModel>
+    public class FireProjectileAroundSkillStrategy : SkillStrategy<FireProjectileAroundSkillModel>
     {
         public override bool CheckCanUseSkill()
         {
             if (ownerModel.DependTarget)
             {
-                if(creatorData.Target != null && !creatorData.Target.IsDead)
+                if (creatorData.Target != null && !creatorData.Target.IsDead)
                 {
                     var distance = Vector2.Distance(creatorData.Position, creatorData.Target.Position);
-                    return distance <= ownerModel.ProjectileMoveDistance;
+                    return distance < ownerModel.ProjectileMoveDistance;
                 }
                 return false;
             }
             return true;
         }
 
-        protected async override UniTask PresentSkillAsync(CancellationToken cancellationToken, int index)
+        protected override async UniTask PresentSkillAsync(CancellationToken cancellationToken, int index)
         {
             var direction = creatorData.FaceDirection;
 
-            for (int i = 0; i < ownerModel.NumberOfProjectiles; i++)
+            for (int i = 0; i < ownerModel.WaveNumber; i++)
             {
                 var hasFinishedAnimation = false;
                 entityTriggerActionEventProxy.TriggerEvent(
@@ -39,16 +39,27 @@ namespace Runtime.Gameplay.EntitySystem
                     stateAction: callbackData =>
                     {
                         var suitablePosition = callbackData.spawnVFXPoints == null ? (Vector3)creatorData.Position : callbackData.spawnVFXPoints.Select(x => x.position).ToList().GetSuitableValue(creatorData.Position);
-                        if (ownerModel.DependTarget)
-                            direction = creatorData.Target.Position - (Vector2)suitablePosition;
-                        FireProjectile(suitablePosition, direction, cancellationToken).Forget();
+                        var numberOfProjectiles = ownerModel.NumberOfProjectiles;
+                        var bigAngle = 360;
+                        var projectileCenterAngleOffset = (float)bigAngle / numberOfProjectiles;
+                        var firstDegree = 0;
+                        var firstDirection = Vector2.up;
+                        Vector2 projectilePosition = suitablePosition;
+                        float offset = 0.3f; // avoid collide obstacle immediately when spawn
+                        for (int i = 0; i < numberOfProjectiles; i++)
+                        {
+                            var direction = (Quaternion.AngleAxis(firstDegree + projectileCenterAngleOffset * i, Vector3.forward) * firstDirection).normalized;
+                            FireProjectile(projectilePosition + (Vector2)direction * offset, direction, cancellationToken).Forget();
+                        }
                     },
-                    endAction: callbackData => hasFinishedAnimation = true         
+                    endAction: callbackData => hasFinishedAnimation = true
                 );
 
                 await UniTask.WaitUntil(() => hasFinishedAnimation, cancellationToken: cancellationToken);
-                if (ownerModel.DelayBetweenProjectiles > 0)
-                    await UniTask.Delay(TimeSpan.FromSeconds(ownerModel.DelayBetweenProjectiles), cancellationToken: cancellationToken);
+                if(ownerModel.DelayBetweenWaves > 0)
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(ownerModel.DelayBetweenWaves), cancellationToken: cancellationToken);
+                }
             }
         }
 
@@ -78,7 +89,7 @@ namespace Runtime.Gameplay.EntitySystem
             ));
 
             var targetStatusData = (IEntityStatusData)callbackData.target;
-            if(targetStatusData != null)
+            if (targetStatusData != null)
             {
                 SimpleMessenger.Publish(MessageScope.EntityMessage, new SentStatusEffectMessage(
                     creatorData,

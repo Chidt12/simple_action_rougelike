@@ -15,7 +15,7 @@ MonoBehaviour:
   items:
   - stats:
     - statType: 14
-      value: 10
+      value: 20
       statModifyType: 0
     - statType: 2
       value: 40
@@ -27,10 +27,10 @@ MonoBehaviour:
       value: 1
       statModifyType: 0
     - statType: 18
-      value: 8
+      value: 10
       statModifyType: 0
     - statType: 7
-      value: 4.1
+      value: 6
       statModifyType: 0
     - statType: 9
       value: 1

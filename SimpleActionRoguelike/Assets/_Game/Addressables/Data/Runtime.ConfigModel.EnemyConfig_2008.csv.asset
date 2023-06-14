@@ -30,9 +30,9 @@ MonoBehaviour:
         attackDamage: 3
         collideDamage: 1
       skillIdentity:
-        skillType: 1
+        skillType: 2
         skillDataId: 1
       autoInputStrategy: 0
       deathDataIdentity:
-        deathDataId: 1
-        deathType: 2
+        deathDataId: 0
+        deathType: 0

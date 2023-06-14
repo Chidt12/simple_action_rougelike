@@ -49,6 +49,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData, IEntityStatusData statusData, IEntityAutoInputData autoInputData)
         {
             _finishedDelay = false;
+            _currentTriggerPhase = default;
 
             if (skillData != null && data != null && statData != null && autoInputData != null)
             {

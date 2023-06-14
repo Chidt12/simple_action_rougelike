@@ -13,7 +13,6 @@ namespace Runtime.Gameplay.EntitySystem
         protected override UniTask Execute(IEntityData entityData, SpawnForwardProjectilesDeathDataConfigItem deathDataConfig, CancellationToken cancellationToken)
         {
             var numberOfProjectiles = deathDataConfig.projectileNumber;
-
             var bigAngle = 360;
             var projectileCenterAngleOffset = (float)bigAngle / numberOfProjectiles;
             var firstDegree = 0;
