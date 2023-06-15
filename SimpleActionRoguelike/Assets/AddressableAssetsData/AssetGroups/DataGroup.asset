@@ -85,10 +85,6 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.AssetConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 949521fe5f90d264cbad72649d0b7a72
-    m_Address: Runtime.ConfigModel.EnemyConfig_2001 1.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: b287457dd3f17f142ae01e05d156aa11
     m_Address: Runtime.ConfigModel.EnemyConfig_2008.csv
     m_ReadOnly: 0
@@ -99,6 +95,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 8d444898a050ecd478ba9b2aa5442874
     m_Address: Runtime.ConfigModel.JumpAheadSkillDataConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7f4ebddcdb23e7a46892c560b7384f31
+    m_Address: Runtime.ConfigModel.EnemyConfig_2009.csv
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

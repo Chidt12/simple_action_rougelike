@@ -218,14 +218,14 @@ MonoBehaviour:
   animations:
   - isMainPart: 1
     animationType: 2
-    stateName: 2008_run
+    stateName: 2009_run
     vfxSpawnPoints: []
   - isMainPart: 1
     animationType: 9
-    stateName: 2008_jump
+    stateName: 2009_jump
     vfxSpawnPoints:
     - {fileID: 1993963690465067195}
-  defaultState: 2008_idle
+  defaultState: 2009_idle
   changeColorSprite: {fileID: 7386596438361353229}
 --- !u!1 &7386596438375481929
 GameObject:
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0faa5f1f5aafb1e4db0b1443298820df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _faceDirectionType: 0
+  _faceDirectionType: 1
 --- !u!114 &4174411560668395900
 MonoBehaviour:
   m_ObjectHideFlags: 0

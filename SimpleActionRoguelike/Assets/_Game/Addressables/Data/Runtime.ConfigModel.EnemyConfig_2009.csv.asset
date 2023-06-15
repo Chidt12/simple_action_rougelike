@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74ed00ae9b9220846b6297aeff7a2873, type: 3}
-  m_Name: Runtime.ConfigModel.EnemyConfig_2001 1.csv
+  m_Name: Runtime.ConfigModel.EnemyConfig_2009.csv
   m_EditorClassIdentifier: 
   items:
-  - id: 2001
+  - id: 2009
     levels:
     - point: 5
       level: 1
@@ -25,14 +25,15 @@ MonoBehaviour:
         armorPenetration: 0
         critChance: 0
         critDamage: 0
-        moveSpeed: 2.5
+        moveSpeed: 1.5
         lifeSteal: 0
         attackDamage: 3
         collideDamage: 1
       skillIdentity:
-        skillType: 1
+        skillType: 3
         skillDataId: 1
-      autoInputStrategy: 0
+        skillAnimIndex: 0
+      autoInputStrategy: 1
       deathDataIdentity:
-        deathDataId: 1
-        deathType: 2
+        deathDataId: 0
+        deathType: 0

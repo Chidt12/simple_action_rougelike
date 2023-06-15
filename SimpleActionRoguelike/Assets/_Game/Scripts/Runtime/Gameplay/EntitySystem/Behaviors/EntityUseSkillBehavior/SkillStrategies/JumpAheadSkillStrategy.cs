@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Constants;
-using Runtime.Helper;
 using Runtime.Manager.Gameplay;
 using System.Threading;
 using UnityEngine;
@@ -28,6 +27,8 @@ namespace Runtime.Gameplay.EntitySystem
                             if(rayCastCheck.collider.gameObject.layer == Layers.OBJECT_LAYER)
                                 return false;
                         }
+
+                        return true;
                     }
                 }
                 return false;
@@ -56,42 +57,47 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid JumpAhead(Vector2 jumpDirection, CancellationToken token)
         {
-            // trigger the farthest can go.
-            var rayCastChecks = Physics2D.RaycastAll(creatorData.Position, jumpDirection, ownerModel.JumpDistance);
-            var availableDistance = ownerModel.JumpDistance;
+            //creatorData.EntityTransform.GetComponentInChildren<DamageBox>
 
-            foreach (var rayCastCheck in rayCastChecks)
+            var predictJumpPosition = creatorData.Position;
+            if (ownerModel.DependTarget && creatorData.Target != null)
             {
-                var hitPoint = rayCastCheck.collider.ClosestPoint(creatorData.Position);
-                var distance = Vector2.Distance(creatorData.Position, hitPoint);
-                if (distance < availableDistance)
+                predictJumpPosition = creatorData.Target.Position;
+            }
+            else
+            {
+                // trigger the farthest can go.
+                var rayCastChecks = Physics2D.RaycastAll(creatorData.Position, jumpDirection, ownerModel.JumpDistance);
+                var availableDistance = ownerModel.JumpDistance;
+                foreach (var rayCastCheck in rayCastChecks)
                 {
-                    availableDistance = distance;
+                    if (rayCastCheck.collider.gameObject.layer == Layers.OBJECT_LAYER)
+                    {
+                        var hitPoint = rayCastCheck.collider.ClosestPoint(creatorData.Position);
+                        var distance = Vector2.Distance(creatorData.Position, hitPoint);
+                        if (distance < availableDistance)
+                            availableDistance = distance;
+                    }
                 }
+
+                predictJumpPosition = creatorData.Position + jumpDirection * availableDistance;
             }
 
-            var predictJumpPosition = creatorData.Position + jumpDirection * availableDistance;
+            var originPosition = creatorData.Position;
+            var middlePosition = new Vector2((predictJumpPosition.x + originPosition.x) / 2, (predictJumpPosition.y + originPosition.y)/2 + ownerModel.JumpHeight);
 
             float currentTime = 0;
-            var jumpDuration = ownerModel.JumpDuration * availableDistance / ownerModel.JumpDistance;
-            var originPosition = creatorData.Position;
 
-            while(currentTime < jumpDuration)
+            while (currentTime < ownerModel.JumpDuration)
             {
                 currentTime += Time.deltaTime;
-
-                var easeValue = Easing.EaseInQuad(0.0f, 1.0f, Mathf.Clamp01(currentTime / jumpDuration));
-                float interpolationValue = Mathf.Lerp(0, availableDistance, easeValue);
-                Vector2 moveToPosition = originPosition + jumpDirection * interpolationValue;
+                var moveToPosition = Helper.Helper.Bezier(originPosition, middlePosition, predictJumpPosition, Mathf.Clamp01(currentTime / ownerModel.JumpDuration));
 
                 if (MapManager.Instance.IsWalkable(moveToPosition))
-                {
-                    creatorData.ForceUpdatePosition(moveToPosition);
-                }
+                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition);
                 else
-                {
                     break;
-                }
+
                 await UniTask.Yield(token);
             }
 
@@ -101,6 +107,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected override void CancelSkill()
         {
             base.CancelSkill();
+            _isJumping = false;
         }
     }
 }

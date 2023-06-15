@@ -62,11 +62,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnForceUpdatePosition(Vector2 position)
         {
-            if (_controlData.IsMovable)
-            {
-                transform.position = position;
-                _controlData.Position = position;
-            }
+            transform.position = position;
+            _controlData.Position = position;
         }
 
         private void OnStatChanged(float updatedValue)

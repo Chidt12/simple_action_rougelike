@@ -16,15 +16,6 @@ namespace Runtime.Helper
             return defaultValue;
         }
 
-        public static T GetSuitableValue<T>(this T[] values, T defaultValue, int index = 0)
-        {
-            if (values != null && values.Length > index)
-            {
-                return values[index];
-            }
-            return defaultValue;
-        }
-
         public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
         {
             T component = gameObject.GetComponent<T>();
@@ -86,6 +77,21 @@ namespace Runtime.Helper
             }
 
             return curvedPoints;
+        }
+
+        public static Vector2 Bezier(Vector2 a, Vector2 b, float t)
+        {
+            return Vector2.Lerp(a, b, t);
+        }
+
+        public static Vector2 Bezier(Vector2 a, Vector2 b, Vector2 c, float t)
+        {
+            return Vector2.Lerp(Bezier(a, b, t), Bezier(b, c, t), t);
+        }
+
+        public static Vector2 Bezier(Vector2 a, Vector2 b, Vector2 c, Vector2 d, float t)
+        {
+            return Vector2.Lerp(Bezier(a, b, c, t), Bezier(b, c, d, t), t);
         }
     }
 }

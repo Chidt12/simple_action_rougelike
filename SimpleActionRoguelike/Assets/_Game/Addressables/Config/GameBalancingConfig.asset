@@ -70,8 +70,8 @@ MonoBehaviour:
       duration: -1
       entites:
       - entityConfigItem:
-          entityId: 3002
-          entityType: 4
+          entityId: 2009
+          entityType: 1
           entityNumber: 1
           entityLevel: 1
         delaySpawnTime: 0
