@@ -18,6 +18,7 @@ MonoBehaviour:
     castRange: 8
     cooldown: 2
     dependTarget: 1
+    canBeCanceled: 0
     warningVfx: 
     jumpDuration: 0.5
     jumpHeight: 2

@@ -18,6 +18,7 @@ MonoBehaviour:
     castRange: 8
     cooldown: 2
     dependTarget: 0
+    canBeCanceled: 1
     projectileId: orb_red
     numberOfProjectiles: 4
     projectileMoveSpeed: 6
@@ -35,6 +36,7 @@ MonoBehaviour:
     castRange: 6
     cooldown: 2
     dependTarget: 0
+    canBeCanceled: 1
     projectileId: orb_red
     numberOfProjectiles: 6
     projectileMoveSpeed: 6
@@ -52,6 +54,7 @@ MonoBehaviour:
     castRange: 6
     cooldown: 2
     dependTarget: 0
+    canBeCanceled: 1
     projectileId: orb_red
     numberOfProjectiles: 8
     projectileMoveSpeed: 6

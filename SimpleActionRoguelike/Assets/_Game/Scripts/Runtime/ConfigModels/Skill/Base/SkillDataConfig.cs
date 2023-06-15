@@ -15,6 +15,7 @@ namespace Runtime.ConfigModel
         public float castRange;
         public float cooldown;
         public bool dependTarget;
+        public bool canBeCanceled;
 
         #endregion Members
     }

@@ -24,6 +24,34 @@ namespace Runtime.Helper
             return component;
         }
 
+        public static Transform FindChildTransform(this Transform transform, string name)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Transform childTransform = transform.GetChild(i);
+                if (string.Equals(childTransform.name, name))
+                    return childTransform;
+            }
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Transform childTransform = transform.GetChild(i).FindChildTransform(name);
+                if (childTransform != null)
+                    return childTransform;
+            }
+
+            return null;
+        }
+
+        public static GameObject FindChildGameObject(this Transform transform, string name)
+        {
+            Transform childTransform = transform.FindChildTransform(name);
+            if (childTransform != null)
+                return childTransform.gameObject;
+            else
+                return null;
+        }
+
         public static string ToSnakeCase(this string inputString)
         {
             if (string.IsNullOrEmpty(inputString))

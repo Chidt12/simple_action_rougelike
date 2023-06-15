@@ -1,6 +1,9 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Constants;
+using Runtime.Core.Message;
+using Runtime.Helper;
 using Runtime.Manager.Gameplay;
+using Runtime.Message;
 using System.Threading;
 using UnityEngine;
 
@@ -8,7 +11,21 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class JumpAheadSkillStrategy : SkillStrategy<JumpAheadSkillModel>
     {
+        private DamageBox _creatorDamageBox;
         private bool _isJumping;
+        private const string DAMAGE_BOX_NAME = "hit_attack_damage_box";
+
+        protected override void Init(JumpAheadSkillModel skillModel)
+        {
+            base.Init(skillModel);
+
+            var damageBoxGameObject = creatorData.EntityTransform.FindChildTransform(DAMAGE_BOX_NAME);
+            if (damageBoxGameObject)
+            {
+                _creatorDamageBox = damageBoxGameObject.GetComponent<DamageBox>();
+                _creatorDamageBox.gameObject.SetActive(false);
+            }
+        }
 
         public override bool CheckCanUseSkill()
         {
@@ -57,7 +74,11 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid JumpAhead(Vector2 jumpDirection, CancellationToken token)
         {
-            //creatorData.EntityTransform.GetComponentInChildren<DamageBox>
+            if (_creatorDamageBox)
+            {
+                _creatorDamageBox.gameObject.SetActive(true);
+                _creatorDamageBox.Init(OnTriggeredEntered);
+            }
 
             var predictJumpPosition = creatorData.Position;
             if (ownerModel.DependTarget && creatorData.Target != null)
@@ -102,12 +123,25 @@ namespace Runtime.Gameplay.EntitySystem
             }
 
             _isJumping = false;
+            if (_creatorDamageBox)
+                _creatorDamageBox.gameObject.SetActive(false);
+        }
+
+        private void OnTriggeredEntered(IEntityData entity)
+        {
+            if (creatorData.EntityType.CanCauseDamage(entity.EntityType))
+            {
+                SimpleMessenger.Publish(MessageScope.EntityMessage,
+                            new SentDamageMessage(EffectSource.FromSkill, EffectProperty.Normal, ownerModel.JumpDamageBonus, ownerModel.JumDamageFactors, creatorData, entity));
+            }
         }
 
         protected override void CancelSkill()
         {
             base.CancelSkill();
             _isJumping = false;
+            if (_creatorDamageBox)
+                _creatorDamageBox.gameObject.SetActive(false);
         }
     }
 }

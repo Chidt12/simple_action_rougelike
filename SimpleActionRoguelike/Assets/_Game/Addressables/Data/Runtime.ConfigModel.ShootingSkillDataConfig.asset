@@ -18,6 +18,7 @@ MonoBehaviour:
     castRange: 8
     cooldown: 2
     dependTarget: 1
+    canBeCanceled: 1
     projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
@@ -33,6 +34,7 @@ MonoBehaviour:
     castRange: 6
     cooldown: 2
     dependTarget: 1
+    canBeCanceled: 1
     projectileId: bullet_red
     numberOfProjectiles: 2
     delayBetweenProjectiles: 0.2
@@ -48,6 +50,7 @@ MonoBehaviour:
     castRange: 6
     cooldown: 2
     dependTarget: 1
+    canBeCanceled: 1
     projectileId: bullet_red
     numberOfProjectiles: 3
     delayBetweenProjectiles: 0.2

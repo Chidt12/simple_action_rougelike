@@ -459,9 +459,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5852f25d2e33c7d41925d5aca1f80c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashTime: 0.2
+  _dashTime: 0.15
   _speed: 30
-  _dashCooldown: 2.5
+  _dashCooldown: 2
   _dashEffect: {fileID: 5417580243802009177}
 --- !u!1 &6875883244934980058
 GameObject:

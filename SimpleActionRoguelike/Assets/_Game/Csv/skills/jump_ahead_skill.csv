@@ -1,2 +1,2 @@
-﻿data_id,target_type,cast_range,cooldown,depend_target,jump_duration,jump_height,jump_distance,number_of_jump,delay_between_jump,jump_damage_bonus,jump_damage_factor_stat_type,jump_damage_factor_value,warning_vfx
-1,3,8,2,TRUE,0.5,2,3,2,1,0,14,1,
+﻿data_id,target_type,cast_range,cooldown,depend_target,can_be_canceled,jump_duration,jump_height,jump_distance,number_of_jump,delay_between_jump,jump_damage_bonus,jump_damage_factor_stat_type,jump_damage_factor_value,warning_vfx
+1,3,8,2,TRUE,FALSE,0.5,2,3,2,1,0,14,1,
