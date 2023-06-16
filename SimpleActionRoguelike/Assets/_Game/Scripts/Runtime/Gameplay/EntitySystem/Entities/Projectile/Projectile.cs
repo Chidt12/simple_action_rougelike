@@ -44,6 +44,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         public virtual void InitStrategy(IProjectileStrategy projectileStrategy)
         {
+            if (currentStrategy != null)
+                currentStrategy.Complete(true, false);
+
             if (projectileStrategy == null)
                 CompleteStrategy(true);
             else

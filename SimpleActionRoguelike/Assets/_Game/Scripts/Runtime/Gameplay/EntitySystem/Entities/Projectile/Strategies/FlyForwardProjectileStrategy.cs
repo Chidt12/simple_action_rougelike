@@ -33,22 +33,22 @@ namespace Runtime.Gameplay.EntitySystem
         protected override void HitTarget(IEntityData target, Vector2 hitPoint, Vector2 hitDirection)
         {
             strategyData.callbackAction?.Invoke(new ProjectileCallbackData(hitDirection, hitDirection, target));
-            controllerProjectile.CompleteStrategy(true);
+            Complete(false, true);
         }
 
         protected override void CollidedDeathTarget()
         {
-            controllerProjectile.CompleteStrategy(true);
+            Complete(false, true);
         }
 
         protected override void CollidedObstacle()
         {
-            controllerProjectile.CompleteStrategy(true);
+            Complete(false, true);
         }
 
         protected override void ReachedTheLifeDistance()
         {
-            controllerProjectile.CompleteStrategy(true);
+            Complete(false, true);
         }
 
         #endregion Class Methods

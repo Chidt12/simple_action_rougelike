@@ -106,7 +106,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (!path.error && path.hasPath)
             {
                 _moveState = MoveState.MoveAwayFromHero;
-                PathFoundCompleted(path);
+                PathFoundCompleted(path.vectorPath);
             }
             else
             {
@@ -119,7 +119,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (!path.error && path.hasPath)
             {
                 _moveState = MoveState.MoveTowardsHero;
-                PathFoundCompleted(path);
+                PathFoundCompleted(path.vectorPath);
             }
             else
             {

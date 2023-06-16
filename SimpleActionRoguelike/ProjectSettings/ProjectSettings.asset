@@ -673,6 +673,7 @@ PlayerSettings:
     EmbeddedLinux: ACTK_WALLHACK_LINK_XML
     GameCoreScarlett: ACTK_WALLHACK_LINK_XML
     GameCoreXboxOne: ACTK_WALLHACK_LINK_XML
+    LinuxHeadlessSimulation: 
     Lumin: ACTK_WALLHACK_LINK_XML
     Nintendo Switch: ACTK_WALLHACK_LINK_XML
     PS4: ACTK_WALLHACK_LINK_XML

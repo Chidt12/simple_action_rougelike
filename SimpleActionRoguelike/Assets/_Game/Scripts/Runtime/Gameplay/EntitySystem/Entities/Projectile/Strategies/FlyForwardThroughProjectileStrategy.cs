@@ -19,7 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected override void CollidedDeathTarget()
         {
             if (strategyData.obstacleOnly)
-                controllerProjectile.CompleteStrategy(true);
+                Complete(false, true);
         }
 
         protected override void CollidedObstacle()
@@ -29,7 +29,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             strategyData.callbackAction?.Invoke(new ProjectileCallbackData(hitDirection, hitDirection, target));
             if (strategyData.obstacleOnly)
-                controllerProjectile.CompleteStrategy(true);
+                Complete(false, true);
         }
     }
 }

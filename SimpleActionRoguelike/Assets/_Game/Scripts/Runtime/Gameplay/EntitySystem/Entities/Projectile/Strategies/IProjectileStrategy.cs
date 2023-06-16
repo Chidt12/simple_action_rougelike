@@ -10,6 +10,7 @@ namespace Runtime.Gameplay.EntitySystem
         void Start();
         void Update();
         void Collide(Collider2D collider);
+        void Complete(bool forceComplete, bool displayImpact);
     }
 
     public abstract class ProjectileStrategyData 

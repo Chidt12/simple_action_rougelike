@@ -53,7 +53,7 @@ namespace Runtime.Manager.Gameplay
         public void LoadLevelMap(MapLevel mapLevel)
         {
             _spawnPoints = mapLevel.mapSpawnPoints;
-            ActiveGraph.active.Scan();
+            AstarPath.active.Scan();
         }
 
         public void FindPathWithRandomness(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
@@ -110,7 +110,9 @@ namespace Runtime.Manager.Gameplay
                 }
             }
 
+            
             Path path = ABPath.Construct(startPosition, selectedPosition, onPathCompleteCallback);
+            
             AstarPath.StartPath(path);
         }
 
@@ -128,6 +130,7 @@ namespace Runtime.Manager.Gameplay
         public void FindNeighbourEmptyPath(Vector2 fromPosition, int searchLength, int spreadLength, OnPathDelegate onPathCompleteCallback)
         {
             RandomPath path = RandomPath.Construct(fromPosition, searchLength, onPathCompleteCallback);
+            
             path.spread = spreadLength;
             path.aimStrength = 0.0f;
             AstarPath.StartPath(path);
@@ -151,6 +154,9 @@ namespace Runtime.Manager.Gameplay
 
         public void UpdateMapWithAroundPoints(Vector2 position, float maxBoundSize)
         {
+            if (ActiveGraph.nodes == null)
+                return;
+
             var validNodeIndexes = new List<Vector2Int>();
             var collisionBoundCenterPosition = position;
             var centerNodeIndex = GetNodeIndex(collisionBoundCenterPosition);
@@ -180,7 +186,9 @@ namespace Runtime.Manager.Gameplay
 
             var noDuplicatedValidNodeIndexes = validNodeIndexes.Distinct().ToList();
             foreach (var nodeIndex in noDuplicatedValidNodeIndexes)
-                MapManager.Instance.UpdateMap(nodeIndex.x, nodeIndex.y);
+            {
+                UpdateMap(nodeIndex.x, nodeIndex.y);
+            }
         }
 
         public bool IsValidNodePosition(Vector2 position)

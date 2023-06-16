@@ -48,7 +48,7 @@ namespace Runtime.Gameplay.EntitySystem
                 if(currentDirection.magnitude <= _offset)
                 {
                     strategyData.cameBackAction?.Invoke();
-                    controllerProjectile.CompleteStrategy(false);
+                    Complete(false, false);
                 }
             }
         }

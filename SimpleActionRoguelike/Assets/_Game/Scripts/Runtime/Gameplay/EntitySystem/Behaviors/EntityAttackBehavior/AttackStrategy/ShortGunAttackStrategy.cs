@@ -21,6 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected override async UniTask TriggerAttack(CancellationToken cancellationToken)
         {
             _isShooting = true;
+            creatorData.IsPausedMove = true;
             triggerActionEventProxy.TriggerEvent(AnimationType.Attack1,
                     stateAction: data => {
                         FireProjectiles(ownerWeaponModel.NumberOfProjectilesInHorizontal, 30, data.spawnVFXPoints, cancellationToken);
@@ -30,6 +31,7 @@ namespace Runtime.Gameplay.EntitySystem
                         _isShooting = false;
                     });
             await UniTask.WaitUntil(() => !_isShooting, cancellationToken: cancellationToken);
+            creatorData.IsPausedMove = false;
         }
 
         private void FireProjectiles(int numberOfProjectiles, float angleBetweenTwoProjectiles, Transform[] spawnPoints, CancellationToken cancellationToken)

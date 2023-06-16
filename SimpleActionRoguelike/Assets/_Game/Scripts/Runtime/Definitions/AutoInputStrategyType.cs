@@ -4,7 +4,9 @@ namespace Runtime.Definition
     {
         KeepDistanceToTarget = 0,
         MoveTowardTarget = 1,
-        MoveRandom = 2,
-        MoveByWay = 3,
+        MoveRandomAroundTarget = 2,
+        MoveByWay = 3, // Horizontal or vertical
+        Idle = 4,
+        MoveOnPreDefinedPath = 5,
     }
 }

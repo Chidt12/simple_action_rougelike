@@ -28,5 +28,11 @@ namespace Runtime.Gameplay.EntitySystem
         {
             cancellationTokenSource?.Cancel();
         }
+
+        public void Complete(bool forceComplete, bool displayImpact)
+        {
+            if (!forceComplete)
+                controllerProjectile.CompleteStrategy(displayImpact);
+        }
     }
 }

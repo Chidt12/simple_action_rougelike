@@ -32,7 +32,7 @@ namespace Runtime.Gameplay.EntitySystem
                 else
                 {
                     if(strategyData.obstacleOnly)
-                        controllerProjectile.CompleteStrategy(true);
+                        Complete(false, true);
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             strategyData.callbackAction?.Invoke(new ProjectileCallbackData(hitDirection, hitDirection, target));
             if (strategyData.obstacleOnly)
-                controllerProjectile.CompleteStrategy(true);
+                Complete(false, true);
         }
     }
 }

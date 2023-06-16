@@ -16,7 +16,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected const int PATH_FINDING_COST_MULTIPLIER = 1000;
         protected const float REACH_END_DISTANCE = 0.2f;
-
         protected static readonly float RefindTargetBonusRange = 2.0f;
 
         protected bool reachedEndOfPath;
@@ -32,9 +31,6 @@ namespace Runtime.Gameplay.EntitySystem
         protected List<Vector3> pathPositions;
         protected Vector2 moveToPosition;
         protected int currentPathPositionIndex;
-
-        // Custom parameters
-        protected IEntityData target;
 
         #endregion Members
 
@@ -134,10 +130,10 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected void LockMovement() => ControlData.SetMoveDirection(Vector2.zero);
 
-        protected virtual void PathFoundCompleted(Path newPath)
+        protected virtual void PathFoundCompleted(List<Vector3> positions)
         {
             reachedEndOfPath = false;
-            pathPositions = newPath.vectorPath;
+            pathPositions = positions;
             pathPositions = Helper.Helper.MakeSmoothCurve(pathPositions, 4);
             moveToPosition = pathPositions[pathPositions.Count - 1];
             currentPathPositionIndex = 0;

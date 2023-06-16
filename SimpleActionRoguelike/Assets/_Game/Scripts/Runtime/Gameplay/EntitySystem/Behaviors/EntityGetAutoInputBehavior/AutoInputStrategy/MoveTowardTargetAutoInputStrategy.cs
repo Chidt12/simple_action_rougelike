@@ -34,7 +34,7 @@ namespace Runtime.Gameplay.EntitySystem
             currentRefindTargetTime = 0.0f;
             if (!path.error && path.hasPath)
             {
-                PathFoundCompleted(path);
+                PathFoundCompleted(path.vectorPath);
             }
             else
             {
