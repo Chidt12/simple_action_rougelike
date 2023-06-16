@@ -7,6 +7,11 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class MoveByWayAutoInputStrategy : IAutoInputStrategy
     {
+        protected enum MoveAxis
+        {
+            X, Y
+        }
+
         protected const float REACH_END_DISTANCE = 0.2f;
         protected static readonly float RefindTargetBonusRange = 2.0f;
         protected bool reachedEndOfPath;
@@ -19,6 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected List<Vector3> pathPositions;
         protected Vector2 moveToPosition;
         protected int currentPathPositionIndex;
+        protected MoveAxis currentMoveAxis;
 
         public MoveByWayAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy entityControlCastRangeProxy)
         {

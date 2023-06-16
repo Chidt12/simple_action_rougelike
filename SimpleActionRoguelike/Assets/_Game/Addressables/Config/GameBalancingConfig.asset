@@ -70,7 +70,7 @@ MonoBehaviour:
       duration: -1
       entites:
       - entityConfigItem:
-          entityId: 2009
+          entityId: 2003
           entityType: 1
           entityNumber: 1
           entityLevel: 1

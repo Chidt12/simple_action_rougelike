@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveOnPreDefinedPathAutoInputStrategy : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MoveOnPreDefinedPathAutoInputStrategy : IAutoInputStrategy
     {
-        
-    }
+        public void Dispose()
+        {
+            
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Update()
+        {
+            
+        }
     }
 }

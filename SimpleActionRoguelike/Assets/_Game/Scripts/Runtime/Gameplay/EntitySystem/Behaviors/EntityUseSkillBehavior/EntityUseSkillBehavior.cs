@@ -34,7 +34,7 @@ namespace Runtime.Gameplay.EntitySystem
         private CancellationTokenSource _cancellationTokenSource;
         private GameObject _warningGameObject;
 
-        public float CastRange => _skillModels[_currentlyUsedSkillIndex].CastRange;
+        public float CastRange => _skillModels != null && _skillModels.Count > 0 ? _skillModels[_currentlyUsedSkillIndex].CastRange : 0;
 
         protected override UniTask<bool> BuildDataAsync(IEntityControlData data, IEntitySkillData skillData, IEntityStatData statData, IEntityStatusData statusData)
         {
