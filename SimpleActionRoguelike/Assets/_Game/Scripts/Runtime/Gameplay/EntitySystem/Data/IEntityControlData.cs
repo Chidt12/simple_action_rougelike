@@ -15,7 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
         public Vector2 LastMoveDirection { get; }
         public bool IsMoving { get; }
         public Vector2 FaceDirection { get; }
-        public IEntityData Target { get; } // TODO: Put here properly ?
+        public IEntityData Target { get; }
         void SetMoveDirection(Vector2 direction);
         void SetFaceDirection(Vector2 faceDirection);
         void SetTarget(IEntityData taret);

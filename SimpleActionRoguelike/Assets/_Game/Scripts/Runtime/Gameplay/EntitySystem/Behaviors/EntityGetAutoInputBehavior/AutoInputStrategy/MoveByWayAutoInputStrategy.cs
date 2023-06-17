@@ -60,13 +60,6 @@ namespace Runtime.Gameplay.EntitySystem
             // Make a move.
             Move();
 
-            // If the chased target is now near the character by the skill cast range, then stop chasing and send a trigger skill usage.
-            var distanceToTarget = Vector2.Distance(ControlData.Target.Position, ControlData.Position);
-            if (distanceToTarget <= ControlCastRangeProxy.CastRange)
-            {
-                return;
-            }
-
             // If the target has moved far from the destination where the character was supposed to move to, then find another new path.
             if (Vector2.Distance(ControlData.Target.Position, moveToPosition) >= RefindTargetThreshold)
             {

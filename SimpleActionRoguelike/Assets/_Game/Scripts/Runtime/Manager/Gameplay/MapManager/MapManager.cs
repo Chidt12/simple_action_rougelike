@@ -1,3 +1,4 @@
+using PathCreation;
 using Pathfinding;
 using Runtime.Core.Singleton;
 using Runtime.Gameplay.Manager;
@@ -25,7 +26,9 @@ namespace Runtime.Manager.Gameplay
 
         #region Properties
 
+        private PathCreator[] _pathCreators;
         private MapSpawnPoint[] _spawnPoints;
+        public PathCreator[] PathCreators => _pathCreators;
         public MapSpawnPoint[] SpawnPoints => _spawnPoints;
 
         public GridGraph ActiveGraph
@@ -53,6 +56,7 @@ namespace Runtime.Manager.Gameplay
         public void LoadLevelMap(MapLevel mapLevel)
         {
             _spawnPoints = mapLevel.mapSpawnPoints;
+            _pathCreators = mapLevel.pathCreators;
             AstarPath.active.Scan();
         }
 

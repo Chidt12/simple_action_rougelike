@@ -14,20 +14,14 @@ namespace Runtime.Gameplay.EntitySystem
 
         private static readonly float s_stayBeforeAwayTargetBonusRange = 1.0f;
         private static readonly int s_awayMoveSearchMinSlotsCount = 1;
-        private static readonly int s_awayMoveSearchMaxSlotsCount = 3;
-        private static readonly float s_awayMoveAimStrength = 0.5f;
         private float StayBeforeAwayTargetDistance => ControlCastRangeProxy.CastRange - s_stayBeforeAwayTargetBonusRange;
         private bool _isMoveAwayFromTarget;
-        private int _awayMoveSearchLength;
-        private int _awayMoveSearchSpreadLength;
         private MoveState _moveState = MoveState.MoveTowardsHero;
 
         public KeepDistanceToTargetAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy controlCastRangeProxy)
             : base(controlData, statData, controlCastRangeProxy)
         {
             _isMoveAwayFromTarget = false;
-            _awayMoveSearchLength = Mathf.CeilToInt(s_awayMoveSearchMinSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
-            _awayMoveSearchSpreadLength = Mathf.CeilToInt(s_awayMoveSearchMaxSlotsCount * MapManager.Instance.SlotSize) * PATH_FINDING_COST_MULTIPLIER;
         }
 
         protected override bool CanFindPath()
@@ -80,13 +74,6 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if (_isMoveAwayFromTarget)
             {
-                //MapManager.Instance.FindMoveAwayTargetPath(ControlData.Position,
-                //                                       ControlData.Target.Position,
-                //                                       _awayMoveSearchLength,
-                //                                       _awayMoveSearchSpreadLength,
-                //                                       s_awayMoveAimStrength,
-                //                                       OnRunFindPathAwayTargetComplete);
-
                 MapManager.Instance.FindMoveAwayTargetReal(ControlData.Position,
                                                        ControlData.Target.Position,
                                                        ControlCastRangeProxy.CastRange,

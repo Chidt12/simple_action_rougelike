@@ -8,5 +8,6 @@ namespace Runtime.Definition
         MoveByWay = 3, // Horizontal or vertical
         Idle = 4,
         MoveOnPreDefinedPath = 5,
+        MoveOnPreDefinedFollowTarget = 6,
     }
 }
