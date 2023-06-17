@@ -21,6 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
         public Action MovementChangedEvent { get; set; }
         public Action MovementUpdatedValueEvent { get; set; }
         public Action DirectionChangedEvent { get; set; }
+        public Action ForceUpdatePathEvent { get; set; }
 
         public IEntityData Target => target;
 

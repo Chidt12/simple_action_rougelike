@@ -1,11 +1,5 @@
-using Pathfinding;
-using Pathfinding.RVO;
-using Pathfinding.Util;
 using Runtime.Definition;
-using Runtime.Manager.Gameplay;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -50,6 +44,8 @@ namespace Runtime.Gameplay.EntitySystem
             hasFoundAPath = false;
             currentRefindTargetTime = RefindTargetMinTime;
 
+            ControlData.ForceUpdatePathEvent += OnForceUpdatePath;
+
             if (statData.TryGetStat(StatType.MoveSpeed, out var statSpeed))
             {
                 moveSpeed = statSpeed.TotalValue;
@@ -62,6 +58,14 @@ namespace Runtime.Gameplay.EntitySystem
                 return;
             }
 #endif
+        }
+
+        private void OnForceUpdatePath()
+        {
+            currentRefindTargetTime = RefindTargetMinTime;
+            hasFoundAPath = false;
+            findingNewPath = false;
+            LockMovement();
         }
 
         public virtual void Update()
@@ -122,19 +126,21 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        protected virtual void ResetToRefindNewPath()
+        protected virtual void ResetToRefindNewPath(bool keepMovingOnPath = false)
         {
-            hasFoundAPath = false;
+            if(!keepMovingOnPath)
+                hasFoundAPath = false;
             findingNewPath = false;
         }
 
         protected void LockMovement() => ControlData.SetMoveDirection(Vector2.zero);
 
-        protected virtual void PathFoundCompleted(List<Vector3> positions)
+        protected virtual void PathFoundCompleted(List<Vector3> positions, bool makeSmooth = true)
         {
             reachedEndOfPath = false;
             pathPositions = positions;
-            pathPositions = Helper.Helper.MakeSmoothCurve(pathPositions, 4);
+            if(makeSmooth)
+                pathPositions = Helper.Helper.MakeSmoothCurve(pathPositions, 4);
             moveToPosition = pathPositions[pathPositions.Count - 1];
             currentPathPositionIndex = 0;
             hasFoundAPath = true;

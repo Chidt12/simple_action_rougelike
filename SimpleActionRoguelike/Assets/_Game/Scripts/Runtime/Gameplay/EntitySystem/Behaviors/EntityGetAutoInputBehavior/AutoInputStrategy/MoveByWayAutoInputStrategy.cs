@@ -1,60 +1,78 @@
-using Runtime.Definition;
-using System.Collections;
-using System.Collections.Generic;
+using Pathfinding;
+using Runtime.Manager.Gameplay;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class MoveByWayAutoInputStrategy : IAutoInputStrategy
+    public class MoveByWayAutoInputStrategy : AutoInputStrategy
     {
-        protected enum MoveAxis
+        protected override float RefindTargetMinTime => 4;
+
+        public MoveByWayAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy entityControlCastRangeProxy) 
+            : base(controlData, statData, entityControlCastRangeProxy)
         {
-            X, Y
+
         }
 
-        protected const float REACH_END_DISTANCE = 0.2f;
-        protected static readonly float RefindTargetBonusRange = 2.0f;
-        protected bool reachedEndOfPath;
-        protected float moveSpeed;
-
-        protected IEntityControlData ControlData { get; private set; }
-        protected IEntityControlCastRangeProxy ControlCastRangeProxy { get; private set; }
-
-        protected float currentRefindTargetTime;
-        protected List<Vector3> pathPositions;
-        protected Vector2 moveToPosition;
-        protected int currentPathPositionIndex;
-        protected MoveAxis currentMoveAxis;
-
-        public MoveByWayAutoInputStrategy(IEntityControlData controlData, IEntityStatData statData, IEntityControlCastRangeProxy entityControlCastRangeProxy)
+        protected override void ReachedTheEndOfPath()
         {
-            ControlData = controlData;
-            ControlCastRangeProxy = entityControlCastRangeProxy;
+            base.ReachedTheEndOfPath();
+            // Force search path at the end.
+            currentRefindTargetTime = RefindTargetMinTime;
+        }
 
-            if (statData.TryGetStat(StatType.MoveSpeed, out var statSpeed))
+        protected override bool CanFindPath()
+        {
+            return base.CanFindPath()
+                && ControlData.Target != null
+                && !ControlData.Target.IsDead;
+        }
+
+        protected override void FindNewPath()
+        {
+            MapManager.Instance.FindStraightPath(ControlData.Position,
+                                         ControlData.Target.Position,
+                                         OnRunFindPathToTargetComplete);
+        }
+
+        private void OnRunFindPathToTargetComplete(Path path)
+        {
+            currentRefindTargetTime = 0.0f;
+            if (!path.error && path.hasPath)
             {
-                moveSpeed = statSpeed.TotalValue;
-                statSpeed.OnValueChanged += OnStatChanged;
+                PathFoundCompleted(path.vectorPath, false);
             }
-#if DEBUGGING
             else
             {
-                Debug.LogError($"Require {StatType.MoveSpeed} for this behavior to work!");
+                findingNewPath = false;
+            }
+        }
+
+        protected override void MoveOnPath()
+        {
+            // Stand still if the target is dead.
+            if (ControlData.Target != null && ControlData.Target.IsDead)
+            {
+                LockMovement();
                 return;
             }
-#endif
-        }
 
-        public void Update()
-        {
-            // Logic Move horizontal first => then vertical => check by ray cast.
-        }
+            // Make a move.
+            Move();
 
-        public void Dispose()
-        {
-            
-        }
+            // If the chased target is now near the character by the skill cast range, then stop chasing and send a trigger skill usage.
+            var distanceToTarget = Vector2.Distance(ControlData.Target.Position, ControlData.Position);
+            if (distanceToTarget <= ControlCastRangeProxy.CastRange)
+            {
+                return;
+            }
 
-        protected void OnStatChanged(float updatedValue) => moveSpeed = updatedValue;
+            // If the target has moved far from the destination where the character was supposed to move to, then find another new path.
+            if (Vector2.Distance(ControlData.Target.Position, moveToPosition) >= RefindTargetThreshold)
+            {
+                ResetToRefindNewPath(keepMovingOnPath: true);
+                return;
+            }
+        }
     }
 }

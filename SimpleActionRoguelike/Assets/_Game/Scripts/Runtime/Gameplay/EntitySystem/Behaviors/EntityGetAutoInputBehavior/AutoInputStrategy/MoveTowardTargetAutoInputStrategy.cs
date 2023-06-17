@@ -65,6 +65,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (Vector2.Distance(ControlData.Target.Position, moveToPosition) >= RefindTargetThreshold)
             {
                 ResetToRefindNewPath();
+                LockMovement();
                 return;
             }
         }

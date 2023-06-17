@@ -122,6 +122,7 @@ namespace Runtime.Gameplay.EntitySystem
                 await UniTask.Yield(token);
             }
 
+            creatorData.ForceUpdatePathEvent?.Invoke();
             _isJumping = false;
             if (_creatorDamageBox)
                 _creatorDamageBox.gameObject.SetActive(false);

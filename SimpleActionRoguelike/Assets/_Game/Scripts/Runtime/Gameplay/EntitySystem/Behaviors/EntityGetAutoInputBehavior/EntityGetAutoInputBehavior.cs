@@ -62,6 +62,8 @@ namespace Runtime.Gameplay.EntitySystem
                     return new KeepDistanceToTargetAutoInputStrategy(controlData, statData, controlCastRange);
                 case AutoInputStrategyType.MoveTowardTarget:
                     return new MoveTowardTargetAutoInputStrategy(controlData, statData, controlCastRange);
+                case AutoInputStrategyType.MoveByWay:
+                    return new MoveByWayAutoInputStrategy(controlData, statData, controlCastRange);
                 default:
                     return null;
             }

@@ -60,7 +60,7 @@ namespace Runtime.Manager.Gameplay
         {
             var startEndSqrDistance = (endPosition - startPosition).sqrMagnitude;
             var randomOffsetPathThresholdSqrDistance = (_randomOffsetPathThresholdSlotsCount * SlotSize) * (_randomOffsetPathThresholdSlotsCount * SlotSize);
-            if (startEndSqrDistance > randomOffsetPathThresholdSqrDistance)
+            if (startEndSqrDistance > randomOffsetPathThresholdSqrDistance && false)
             {
                 var randomMoveSearchSlotsCount = UnityRandom.Range(_randomMoveSearchMinSlotsCount, _randomMoveSearchMaxSlotsCount + 1);
                 var randomMoveSearchSqrDistance = (randomMoveSearchSlotsCount * SlotSize) * (randomMoveSearchSlotsCount * SlotSize);
@@ -75,11 +75,13 @@ namespace Runtime.Manager.Gameplay
                 Vector2 offset = Quaternion.Euler(0, 0, angleOffset) * (endPosition - startPosition).normalized * randomMoveSearchLength;
                 endPosition = startPosition + offset;
                 Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
+                AstarPath.active.heuristic = Heuristic.None;
                 AstarPath.StartPath(path);
             }
             else
             {
                 Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
+                AstarPath.active.heuristic = Heuristic.None;
                 AstarPath.StartPath(path);
             }
         }
@@ -87,6 +89,7 @@ namespace Runtime.Manager.Gameplay
         public void FindStraightPath(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
         {
             Path path = ABPath.Construct(startPosition, endPosition, onPathCompleteCallback);
+            AstarPath.active.heuristic = Heuristic.Manhattan;
             AstarPath.StartPath(path);
         }
 
@@ -112,7 +115,7 @@ namespace Runtime.Manager.Gameplay
 
             
             Path path = ABPath.Construct(startPosition, selectedPosition, onPathCompleteCallback);
-            
+            AstarPath.active.heuristic = Heuristic.None;
             AstarPath.StartPath(path);
         }
 
@@ -121,6 +124,7 @@ namespace Runtime.Manager.Gameplay
             FleePath path = FleePath.Construct(startPosition, endPosition, searchLength, onPathCompleteCallback);
             path.spread = spreadLength;
             path.aimStrength = aimStrength;
+            AstarPath.active.heuristic = Heuristic.None;
             AstarPath.StartPath(path);
         }
 
@@ -133,6 +137,7 @@ namespace Runtime.Manager.Gameplay
             
             path.spread = spreadLength;
             path.aimStrength = 0.0f;
+            AstarPath.active.heuristic = Heuristic.None;
             AstarPath.StartPath(path);
         }
 
@@ -181,7 +186,7 @@ namespace Runtime.Manager.Gameplay
                     }
                 }
 
-                currentMeasuredExtend += MapManager.Instance.SlotHalfSize * 0.5f;
+                currentMeasuredExtend += SlotHalfSize * 0.5f;
             }
 
             var noDuplicatedValidNodeIndexes = validNodeIndexes.Distinct().ToList();
