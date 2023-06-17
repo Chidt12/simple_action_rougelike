@@ -294,6 +294,39 @@ namespace PathCreation {
             return new TimeOnPathData (prevIndex, nextIndex, abPercent);
         }
 
+        public int GetClosestIndexPointOnLocalPointIndex(Vector3 worldPoint)
+        {
+            float minSqrDst = float.MaxValue;
+            int closestSegmentIndexA = 0;
+
+            for (int i = 0; i < localPoints.Length; i++)
+            {
+                int nextI = i + 1;
+                if (nextI >= localPoints.Length)
+                {
+                    if (isClosedLoop)
+                    {
+                        nextI %= localPoints.Length;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                Vector3 closestPointOnSegment = MathUtility.ClosestPointOnLineSegment(worldPoint, GetPoint(i), GetPoint(nextI));
+                float sqrDst = (worldPoint - closestPointOnSegment).sqrMagnitude;
+                if (sqrDst < minSqrDst)
+                {
+                    minSqrDst = sqrDst;
+                    closestSegmentIndexA = i;
+                }
+
+            }
+
+            return closestSegmentIndexA;
+        }
+
         /// Calculate time data for closest point on the path from given world point
         TimeOnPathData CalculateClosestPointOnPathData (Vector3 worldPoint) {
             float minSqrDst = float.MaxValue;

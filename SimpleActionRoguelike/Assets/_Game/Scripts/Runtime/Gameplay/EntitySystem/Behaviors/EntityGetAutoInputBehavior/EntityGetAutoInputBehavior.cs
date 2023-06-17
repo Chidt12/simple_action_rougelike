@@ -68,6 +68,10 @@ namespace Runtime.Gameplay.EntitySystem
                     return new MoveRandomAroundTargetAutoInputStrategy(controlData, statData, controlCastRange);
                 case AutoInputStrategyType.MoveOnPreDefinedPath:
                     return new MoveOnPreDefinedPathAutoInputStrategy(controlData, statData, controlCastRange);
+                case AutoInputStrategyType.MoveOnPreDefinedPathFollowTarget:
+                    return new MoveOnPreDefinedPathFollowTargetAutoInputStrategy(controlData, statData, controlCastRange);
+                case AutoInputStrategyType.Idle:
+                    return new IdleAutoInputStrategy(controlData, statData, controlCastRange);
                 default:
                     return null;
             }
