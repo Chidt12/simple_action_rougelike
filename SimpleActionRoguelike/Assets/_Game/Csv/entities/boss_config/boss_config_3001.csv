@@ -1,4 +1,4 @@
 ﻿id,point,level,detect_range,detected_priority,hp,armor,armor_penetration,crit_chance,crit_damage,move_speed,life_steal,attack_damage,collide_damage,death_type,death_data_id,skill_type,skill_data_id,skill_anim_index,skill_delay_time,auto_input_strategies,trigger_phase_type,trigger_phase_health,trigger_phase_entity_id
 3001,2,1,20,0,200,0,0,0,0,2.5,0,10,2,,,BigJump,1,3,3,MoveTowardTarget,Normal,,
-,,,,,,,,,,,,,,,,FireProjectileAround,3,1,2,MoveTowardTarget,HealthDecrease,0.5,
-,,,,,,,,,,,,,,,,FireProjectileAround,3,1,2,MoveTowardTarget,HealthDecrease,0.5,
+,,,,,,,,,,,,,,,,FireProjectileAround,3,1,1,MoveTowardTarget,HealthDecrease,0.5,
+,,,,,,,,,,,,,,,,FireProjectileAround,3,1,1,MoveTowardTarget,HealthDecrease,0.5,

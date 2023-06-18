@@ -44,8 +44,8 @@ MonoBehaviour:
         skillAnimIndex: 1
       skillDelayTimes:
       - value: 3
-      - value: 2
-      - value: 2
+      - value: 1
+      - value: 1
       skillTriggerPhases:
       - triggerPhaseType: 0
         triggerPhaseHealth: 0

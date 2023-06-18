@@ -34,6 +34,7 @@ namespace Runtime.Gameplay.EntitySystem
             for (int i = 0; i < ownerModel.WaveNumber; i++)
             {
                 var hasFinishedAnimation = false;
+                var waveIndex = i;
                 entityTriggerActionEventProxy.TriggerEvent(
                     index.GetUseSkillByIndex(),
                     stateAction: callbackData =>
@@ -43,7 +44,7 @@ namespace Runtime.Gameplay.EntitySystem
                         var bigAngle = 360;
                         var projectileCenterAngleOffset = (float)bigAngle / numberOfProjectiles;
                         var firstDegree = 0;
-                        var firstDirection = Vector2.up;
+                        var firstDirection = MathHelper.RotateVector2(Vector2.up, waveIndex * ownerModel.RotateBetweenWaves);
                         Vector2 projectilePosition = suitablePosition;
                         float offset = 0.3f; // avoid collide obstacle immediately when spawn
                         for (int i = 0; i < numberOfProjectiles; i++)

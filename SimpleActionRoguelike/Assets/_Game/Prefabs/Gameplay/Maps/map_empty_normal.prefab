@@ -3686,7 +3686,7 @@ GameObject:
   - component: {fileID: 6540394909124579089}
   - component: {fileID: 3437172867001388865}
   - component: {fileID: 194049391977983460}
-  - component: {fileID: 4714814493069816447}
+  - component: {fileID: 6496081090651647728}
   m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
@@ -5455,7 +5455,7 @@ CompositeCollider2D:
       - {x: 13, y: 5.9999704}
   m_VertexDistance: 0.4
   m_OffsetDistance: 0.00005
---- !u!114 &4714814493069816447
+--- !u!114 &6496081090651647728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

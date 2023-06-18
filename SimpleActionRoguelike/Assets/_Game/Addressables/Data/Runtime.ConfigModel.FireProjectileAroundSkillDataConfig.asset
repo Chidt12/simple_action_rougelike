@@ -51,7 +51,7 @@ MonoBehaviour:
     rotateBetweenWaves: 45
   - dataId: 3
     targetType: 3
-    castRange: 6
+    castRange: 10
     cooldown: 2
     dependTarget: 0
     canBeCanceled: 1
@@ -64,6 +64,6 @@ MonoBehaviour:
     projectileDamageFactors:
     - damageFactorStatType: 14
       damageFactorValue: 1
-    waveNumber: 1
-    delayBetweenWaves: 0.2
-    rotateBetweenWaves: 45
+    waveNumber: 8
+    delayBetweenWaves: 0.1
+    rotateBetweenWaves: 20
