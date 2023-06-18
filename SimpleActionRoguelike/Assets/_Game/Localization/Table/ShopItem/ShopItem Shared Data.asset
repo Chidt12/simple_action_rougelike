@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: ShopItem
   m_TableCollectionNameGuidString: bc090fb0cd1933048abd836161514f7f
-  m_Entries: []
+  m_Entries:
+  - m_Id: 52178456612864
+    m_Key: shop_item_1_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52178465001472
+    m_Key: shop_item_1_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

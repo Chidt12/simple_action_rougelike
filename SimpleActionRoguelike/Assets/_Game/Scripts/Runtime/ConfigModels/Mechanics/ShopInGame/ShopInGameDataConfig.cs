@@ -14,7 +14,7 @@ namespace Runtime.ConfigModel
     public abstract class ShopInGameDataConfig : ScriptableObject
     {
         public abstract ShopInGameDataConfigItem GetItem(int dataId);
-        public abstract UniTask<string> GetDescription(int dataId);
+        public abstract UniTask<(string, string)> GetDescription(int dataId);
     }
 
     public abstract class ShopInGameDataConfig<T> : ShopInGameDataConfig where T : ShopInGameDataConfigItem, new()
@@ -26,12 +26,12 @@ namespace Runtime.ConfigModel
             return items.FirstOrDefault(x => x.dataId == dataId);
         }
 
-        public async override UniTask<string> GetDescription(int dataId)
+        public async override UniTask<(string, string)> GetDescription(int dataId)
         {
             var item = GetItem(dataId) as T;
             return await GetDescription(item);
         }
 
-        protected abstract UniTask<string> GetDescription(T itemData);
+        protected abstract UniTask<(string, string)> GetDescription(T itemData);
     }
 }

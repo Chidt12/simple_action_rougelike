@@ -21,6 +21,18 @@ MonoBehaviour:
     m_Address: Assets/_Game/Localization/Table/ShopItem/ShopItem Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: aed8ad8dcfddd5e4f9c70a576c422466
+    m_Address: Assets/_Game/Localization/Table/General/General Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: bd20478399bd629459a13fcfa683a2e2
+    m_Address: Assets/_Game/Localization/Table/UI/UI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: abb0f6a2125c26c47b62b40edea5bb5f
+    m_Address: Assets/_Game/Localization/Table/Artifact/Artifact Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

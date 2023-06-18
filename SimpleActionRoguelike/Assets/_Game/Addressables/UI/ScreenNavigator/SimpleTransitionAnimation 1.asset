@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d90c5fa676b8046a0b041a4c738432, type: 3}
+  m_Script: {fileID: 11500000, guid: df7e3895b45f96141a325f48c269ca59, type: 3}
   m_Name: SimpleTransitionAnimation 1
   m_EditorClassIdentifier: 
   _delay: 0
   _duration: 0.3
-  _easeType: 3
+  _easeType: 15
   _beforeAlignment: 4
   _beforeScale: {x: 1, y: 1, z: 1}
   _beforeAlpha: 1

@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Runtime.ConfigModel;
 using Runtime.Constants;
 using Runtime.Core.Message;
@@ -39,6 +38,7 @@ namespace Runtime.Manager.Gameplay
         [SerializeField] private CameraManager _cameraManager;
 
         protected MechanicSystemManager mechanicSystemManager;
+        protected ShopInGameManager shopInGameManager;
         protected GameplayMessageCenter messageCenter;
         protected WaveTimer waveTimer;
         private List<ISubscription> subscriptions;
@@ -57,6 +57,8 @@ namespace Runtime.Manager.Gameplay
         private List<CheckEndStage> _checkEndStageConditions;
 
         public GameplayMessageCenter MessageCenter => messageCenter;
+        public List<BuffInGameIdentity> CurrentBuffInGameItems => mechanicSystemManager.GetCurrentBuffsInGame();
+        public List<ShopInGameItem> CurrentShopInGameItems => shopInGameManager.CurrentShopInGameItems;
         public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
         public int CurrentWaveIndex { get; protected set; }
@@ -70,11 +72,15 @@ namespace Runtime.Manager.Gameplay
             subscriptions.Add(SimpleMessenger.Subscribe<EntityNotifyDiedMessage>(OnEntityDied));
             subscriptions.Add(SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage));
             subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
+            
 
             _cameraManager.Init();
 
             mechanicSystemManager = new();
             mechanicSystemManager.Init();
+
+            shopInGameManager = new();
+            shopInGameManager.Init();
 
             messageCenter = new();
             messageCenter.Init();
@@ -212,7 +218,7 @@ namespace Runtime.Manager.Gameplay
             await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_INGAME_SHOP), selectInGameShopData);
         }
 
-        public async UniTaskVoid LoadShopInGameAsync()
+        private async UniTaskVoid LoadShopInGameAsync()
         {
             var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
             var selectInGameShopData = new ModalSelectIngameShopData(shopItems.ToArray(), OnBuyShopItem);
@@ -243,9 +249,9 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTask AddShopItemAsync(ShopInGameIdentity identity)
         {
-            await ShopInGameManager.Instance.AddShopInGameItem(EntitiesManager.Instance.HeroData, identity.shopInGameItemType, identity.dataId);
+            await shopInGameManager.AddShopInGameItem(EntitiesManager.Instance.HeroData, identity.shopInGameItemType, identity.dataId);
             var dataConfig = await ConfigDataManager.Instance.LoadShopInGameDataConfig(identity.shopInGameItemType);
-            var description = await dataConfig.GetDescription(identity.dataId);
+            var (title, description) = await dataConfig.GetDescription(identity.dataId);
             ToastController.Instance.Show(description);
         }
 
@@ -383,7 +389,7 @@ namespace Runtime.Manager.Gameplay
                 heroPoint += weaponData.WeaponModel.BalancingPoint;
 
             // Bonus shop point
-            var allShopItems = ShopInGameManager.Instance.CurrentShopInGameItems;
+            var allShopItems = shopInGameManager.CurrentShopInGameItems;
             foreach (var shopItem in allShopItems)
                 heroPoint += shopItem.BalancingPoint;
 

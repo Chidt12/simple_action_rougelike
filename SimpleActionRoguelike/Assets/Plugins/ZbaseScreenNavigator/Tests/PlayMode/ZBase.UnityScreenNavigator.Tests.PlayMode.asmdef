@@ -1,0 +1,21 @@
+{
+    "name": "ZBase.UnityScreenNavigator.Tests.PlayMode",
+    "rootNamespace": "ZBase.UnityScreenNavigator.Tests.PlayMode",
+    "references": [
+        "UnityEngine.TestRunner",
+        "ZBase.UnityScreenNavigator"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Runtime.ConfigModel.BuffStatShopInGameDataConfig
   m_EditorClassIdentifier: 
   items:
-  - point: 0
+  - point: 1
     dataId: 0
-    statType: 7
-    statValue: 5
+    statType: 101
+    statValue: 1
     statModifyType: 0

@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: General_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: aed8ad8dcfddd5e4f9c70a576c422466, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 6979076427776
+    m_Localized: Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979529412608
+    m_Localized: Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979533606912
+    m_Localized: Armor penetration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979533606913
+    m_Localized: Crit chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801216
+    m_Localized: Crit damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801217
+    m_Localized: Move speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801218
+    m_Localized: Life steal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801219
+    m_Localized: Attack speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801220
+    m_Localized: dodge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801221
+    m_Localized: CC reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801222
+    m_Localized: Cooldown reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801223
+    m_Localized: Damage reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801224
+    m_Localized: Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801225
+    m_Localized: Detect range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801226
+    m_Localized: Collide damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801227
+    m_Localized: Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801228
+    m_Localized: Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6979537801229
+    m_Localized: Dash's number
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

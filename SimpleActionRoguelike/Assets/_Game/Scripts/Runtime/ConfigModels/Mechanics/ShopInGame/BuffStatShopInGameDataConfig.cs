@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
+using Runtime.Localization;
 using System;
 
 namespace Runtime.ConfigModel
@@ -15,11 +16,13 @@ namespace Runtime.ConfigModel
 
     public class BuffStatShopInGameDataConfig : ShopInGameDataConfig<BuffStatShopInGameDataConfigItem>
     {
-        protected override UniTask<string> GetDescription(BuffStatShopInGameDataConfigItem itemData)
+        protected override async UniTask<(string, string)> GetDescription(BuffStatShopInGameDataConfigItem itemData)
         {
             var isPercentValue = itemData.statType.IsPercentValue() || itemData.statModifyType.IsPercentValue();
-            var description = $"{itemData.statType} +{(isPercentValue ? itemData.statValue * 100 : itemData.statValue)} {(isPercentValue?"%":"")}";
-            return UniTask.FromResult(description);
+            var title = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemName(itemData.ShopInGameType, itemData.dataId));
+            var statName = await LocalizeManager.GetLocalizeAsync(LocalizeTable.GENERAL, LocalizeKeys.GetStatName(itemData.statType));
+            var description = $"{statName} +{(isPercentValue ? itemData.statValue * 100 : itemData.statValue)} {(isPercentValue?"%":"")}";
+            return(title, description);
         }
     }
 }

@@ -8,15 +8,19 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class ShopInGameManager : MonoSingleton<ShopInGameManager>
+    public class ShopInGameManager
     {
         private List<ShopInGameItem> _shopInGameItems;
 
         public List<ShopInGameItem> CurrentShopInGameItems => _shopInGameItems;
 
-        protected override void Awake()
+        public ShopInGameManager()
         {
-            base.Awake();
+
+        }
+
+        public void Init()
+        {
             _shopInGameItems = new();
         }
 

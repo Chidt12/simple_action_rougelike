@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b15ff60fcf110249b1f95c0fdfe5e8e, type: 3}
+  m_Script: {fileID: 11500000, guid: e2dbdcf5b5d416444982209a9eeb5969, type: 3}
   m_Name: UnityScreenNavigatorSettings
   m_EditorClassIdentifier: 
   _sheetEnterAnimation: {fileID: 0}
   _sheetExitAnimation: {fileID: 0}
   _screenPushEnterAnimation: {fileID: 11400000, guid: 3553fd44d1838044cbca86d64ee2b0fd, type: 2}
-  _screenPushExitAnimation: {fileID: 11400000, guid: 195915cd46cbccb419d72535f81655c7, type: 2}
+  _screenPushExitAnimation: {fileID: 11400000, guid: cd17b47f59e90cc41855eb54bef6cb44, type: 2}
   _screenPopEnterAnimation: {fileID: 11400000, guid: 3553fd44d1838044cbca86d64ee2b0fd, type: 2}
-  _screenPopExitAnimation: {fileID: 11400000, guid: 195915cd46cbccb419d72535f81655c7, type: 2}
+  _screenPopExitAnimation: {fileID: 11400000, guid: cd17b47f59e90cc41855eb54bef6cb44, type: 2}
   _modalEnterAnimation: {fileID: 0}
   _modalExitAnimation: {fileID: 0}
   _modalBackdropEnterAnimation: {fileID: 0}

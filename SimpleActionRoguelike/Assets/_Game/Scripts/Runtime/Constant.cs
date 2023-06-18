@@ -5,6 +5,8 @@ namespace Runtime.Constants
         public const string HERO_ID = "1001";
         public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
         public const float DELAY_TIME_FOR_FIRST_WAVE = 1f;
+
+        public static string IconSpriteAtlasKey(string spriteName) => $"Icons[{spriteName}]";
     }
 
     public class ModalIds
@@ -18,6 +20,7 @@ namespace Runtime.Constants
         public const string GIVE_INGAME_SHOP = "prefab_modal_give_ingame_shop";
 
         public const string QUIT_GAME = "prefab_modal_quit_game";
+        public const string INVENTORY_INGAME = "prefab_modal_gameplay_inventory";
     }
 
     public class ScreenIds

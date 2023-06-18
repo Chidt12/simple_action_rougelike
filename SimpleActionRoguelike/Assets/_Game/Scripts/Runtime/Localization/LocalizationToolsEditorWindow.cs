@@ -124,7 +124,7 @@ namespace GameEditor.Localization
                 { "All Localizations", null , EditorIcons.House },
             };
 
-            tree.AddAllAssetsAtPath("All Localizations", "Assets/_Game/Localization/StringTables", typeof(StringTableCollection), true, true).SortMenuItemsByName();
+            tree.AddAllAssetsAtPath("All Localizations", "Assets/_Game/Localization/Table", typeof(StringTableCollection), true, true).SortMenuItemsByName();
            
 
             var customMenuStyle = new OdinMenuStyle {

@@ -44,7 +44,6 @@ namespace Runtime.Manager.UserInput
                     SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.RightMouseButton));
                 else if (Input.GetKeyDown(KeyCode.Space))
                     SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Dash));
-
             }
             else
             {
@@ -64,13 +63,16 @@ namespace Runtime.Manager.UserInput
                 {
                     SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Up));
                 }
-            }
 
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-                SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Confirm));
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+                    SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Confirm));
+            }
 
             if (Input.GetKeyDown(KeyCode.Escape))
                 SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.Back));
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+                SimpleMessenger.Publish(new InputKeyPressMessage(KeyPressType.OpenInventory));
         }
     }
 }

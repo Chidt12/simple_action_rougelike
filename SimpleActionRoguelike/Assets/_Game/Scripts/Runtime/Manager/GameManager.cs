@@ -28,7 +28,7 @@ namespace Runtime.Manager
                 _previousGameStateType = _currentGameStateType;
                 _currentGameStateType = value;
 
-                if (_currentGameStateType == GameStateType.GameplayPausing)
+                if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
                     Time.timeScale = 0;
                 else
                     Time.timeScale = 1;

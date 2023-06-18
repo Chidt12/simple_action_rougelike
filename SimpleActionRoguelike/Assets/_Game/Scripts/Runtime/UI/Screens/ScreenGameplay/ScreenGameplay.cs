@@ -118,7 +118,9 @@ namespace Runtime.UI
         private void InitIcons(int numberOfDash)
         {
             foreach (var item in _activeDashIcons)
-                Destroy(item);
+                Destroy(item.gameObject);
+
+            _activeDashIcons.Clear();
 
             for (int i = 0; i < numberOfDash; i++)
             {

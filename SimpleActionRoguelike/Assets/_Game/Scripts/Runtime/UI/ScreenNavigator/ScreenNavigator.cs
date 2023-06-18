@@ -2,6 +2,8 @@ using Cysharp.Threading.Tasks;
 using Runtime.Constants;
 using Runtime.Core.Message;
 using Runtime.Core.Singleton;
+using Runtime.Definition;
+using Runtime.Manager;
 using Runtime.Message;
 using System;
 using System.Collections.Generic;
@@ -95,9 +97,29 @@ namespace Runtime.UI
 
         private void OnKeyPress(InputKeyPressMessage message)
         {
-            if(message.KeyPressType == KeyPressType.Back)
+            if (message.KeyPressType == KeyPressType.Back)
             {
+                if (GameManager.Instance.CurrentGameStateType == GameStateType.GameplayChoosingItem)
+                    return;
+
                 ExecuteBackKeyAsync().Forget();
+            }
+            else if (message.KeyPressType == KeyPressType.OpenInventory)
+            {
+                var modalContainer = globalContainerLayerManager.Find<ModalContainer>(ContainerKey.MODAL_CONTAINER_LAYER_NAME);
+                if (modalContainer.Modals.Count > 0 && modalContainer.Current.View is ModalGameplayInventory)
+                {
+                    ExecuteBackKeyAsync().Forget();
+                }   
+                else
+                {
+                    // Load Game Inventory 
+                    if (GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning)
+                    {
+                        var options = new WindowOptions(ModalIds.INVENTORY_INGAME);
+                        LoadModal(options).Forget();
+                    }
+                }
             }
         }
 

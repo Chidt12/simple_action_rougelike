@@ -66,6 +66,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 458ce97b95645b446ab30a27f69da3ec, type: 3}
   - {fileID: 21300000, guid: f73e23ed33932f442a8748f326ad7933, type: 3}
   - {fileID: 21300000, guid: 3227e7cfd3025bd4a823ea41413be69b, type: 3}
+  - {fileID: 21300000, guid: b85354ff02be6b141a43d9fdf09f6229, type: 3}
   m_PackedSpriteNamesToIndex:
   - weapon_icon5
   - stats_icon_18
@@ -83,6 +84,7 @@ SpriteAtlas:
   - weapon_icon4
   - stats_icon_101
   - weapon_icon3
+  - shop_item_icon_1_0
   m_RenderDataMap: {}
   m_Tag: Icons
   m_IsVariant: 0

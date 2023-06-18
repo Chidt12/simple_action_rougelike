@@ -1029,6 +1029,7 @@ MonoBehaviour:
     _exitAnimations: []
   _closeButton: {fileID: 0}
   _itemUIs: []
+  _inventoryPanel: {fileID: 5563550667157139870}
 --- !u!1 &441238383629739167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4788,3 +4789,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2542890339045060586, guid: bb832210aee0ef44c868f88f42fdb6f5, type: 3}
   m_PrefabInstance: {fileID: 18444318487306845}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5563550667157139870 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5581143942118151107, guid: bb832210aee0ef44c868f88f42fdb6f5, type: 3}
+  m_PrefabInstance: {fileID: 18444318487306845}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5656d2b1a3401a14286b6b64425a92ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

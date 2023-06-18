@@ -1,4 +1,2 @@
 shop_in_game_item_type,data_id,resource_type,resource_id,resource_number,weight
 BuffStat,0,1,0,1,1
-BuffStat,1,1,0,1,1
-BuffStat,2,1,0,1,1

@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: LocalizationPullTool
   m_EditorClassIdentifier: Assembly-CSharp:GameEditor.Localization:LocalizationPullTool
-  localizations: []
+  localizations:
+  - tableCollection: {fileID: 11400000, guid: f9e7524cbe392aa4880e6df106484da7, type: 2}
+    name: Artifact
+    selected: 1
+  - tableCollection: {fileID: 11400000, guid: f81a59fa51307e045ad3de2ce2f5b747, type: 2}
+    name: General
+    selected: 1
+  - tableCollection: {fileID: 11400000, guid: 6d27465fd0e1aa348814f15c26c6e0aa, type: 2}
+    name: ShopItem
+    selected: 1
+  - tableCollection: {fileID: 11400000, guid: 367f66e96fda78a4caa93dc5f678ea84, type: 2}
+    name: UI
+    selected: 1

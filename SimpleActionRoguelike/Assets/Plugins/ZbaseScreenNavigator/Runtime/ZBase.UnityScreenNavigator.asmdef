@@ -1,0 +1,35 @@
+{
+    "name": "ZBase.UnityScreenNavigator",
+    "rootNamespace": "ZBase.UnityScreenNavigator",
+    "references": [
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "Unity.Timeline",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "",
+            "define": "USN_USE_ADDRESSABLES"
+        },
+        {
+            "name": "com.unity.timeline",
+            "expression": "",
+            "define": "USN_USE_TIMELINE"
+        },
+        {
+            "name": "com.unity.addressables",
+            "expression": "1.17.4",
+            "define": "ADDRESSABLES_1_17_4_OR_NEWER"
+        }
+    ],
+    "noEngineReferences": false
+}

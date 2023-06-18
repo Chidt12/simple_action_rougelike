@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DanielLochner.Assets.SimpleScrollSnap;
 using Runtime.Definition;
+using Runtime.Localization;
 using Runtime.Manager;
 using Runtime.Manager.Data;
 using Runtime.Message;
@@ -90,7 +91,8 @@ namespace Runtime.UI
             foreach (var item in _statItems)
             {
                 var statBonus = weaponConfigItem.stats.FirstOrDefault(x => x.statType == item.StatType);
-                var stringValue = $"{statBonus.statType}: {(statBonus.statType.IsPercentValue() ? statBonus.value * 100 + "%" : statBonus.value)}";
+                var statName = await LocalizeManager.GetLocalizeAsync(LocalizeTable.GENERAL, LocalizeKeys.GetStatName(statBonus.statType));
+                var stringValue = $"{statName}: {(statBonus.statType.IsPercentValue() ? statBonus.value * 100 + "%" : statBonus.value)}";
                 item.SetValue(stringValue);
                 item.gameObject.SetActive(true);
             }

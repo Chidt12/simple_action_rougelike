@@ -3,7 +3,6 @@ using Runtime.ConfigModel;
 using Runtime.Manager;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Runtime.UI
 {
@@ -21,8 +20,8 @@ namespace Runtime.UI
 
     public class ModalGiveInGameShop : Modal<ModalGiveInGameShopData>
     {
-        [SerializeField] private Button _closeButton;
         [SerializeField] private GiveShopInGameUI[] _itemUIs;
+        [SerializeField] private InventoryPanel _inventoryPanel;
 
         private bool _isSelected;
 
@@ -36,8 +35,9 @@ namespace Runtime.UI
         public override async UniTask Initialize(ModalGiveInGameShopData data)
         {
             _isSelected = false;
-            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayPausing);
-            _closeButton.onClick.AddListener(() => ScreenNavigator.Instance.PopModal(true).Forget());
+            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
+
+            _inventoryPanel.LoadUI().Forget();
 
             for (int i = 0; i < data.Items.Length; i++)
             {

@@ -1,2 +1,2 @@
-﻿data_id,stat_type,stat_value,stat_modify_type
-0,MoveSpeed,5,0
+﻿data_id,point,stat_type,stat_value,stat_modify_type
+0,1,DashNumber,1,0

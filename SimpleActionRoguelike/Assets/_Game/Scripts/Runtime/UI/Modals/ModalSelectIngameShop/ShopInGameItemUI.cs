@@ -18,10 +18,10 @@ namespace Runtime.UI
         public async UniTask Init(ShopInGameStageLoadConfigItem dataConfigItem, Action<ShopInGameStageLoadConfigItem> selectAction)
         {
             var buffInGameDataConfig = await DataManager.Config.LoadShopInGameDataConfig(dataConfigItem.identity.shopInGameItemType);
-            var description = await buffInGameDataConfig.GetDescription(dataConfigItem.identity.dataId);
+            var (title, description) = await buffInGameDataConfig.GetDescription(dataConfigItem.identity.dataId);
 
             _description.text = description;
-            _title.text = dataConfigItem.identity.shopInGameItemType.ToString();
+            _title.text = title;
             _price.text = dataConfigItem.cost.resourceNumber.ToString();
 
             _buyButton.onClick.RemoveAllListeners();

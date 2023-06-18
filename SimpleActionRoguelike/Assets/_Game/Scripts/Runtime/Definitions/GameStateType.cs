@@ -10,6 +10,7 @@ namespace Runtime.Definition
         Loading,
         GameplayRunning,
         GameplayPausing,
+        GameplayChoosingItem,
         WinGameplay,
         LoseGameplay
     }

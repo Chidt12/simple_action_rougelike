@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Constants;
 using Runtime.Core.Pool;
 using Runtime.Definition;
 using TMPro;
@@ -24,7 +25,7 @@ namespace Runtime.UI
 
         private async UniTaskVoid LoadSpriteAsync()
         {
-            _icon.sprite = await AssetLoader.LoadSprite($"Icons[stats_icon_{(int)_statType}]", this.GetCancellationTokenOnDestroy());
+            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"stats_icon_{(int)_statType}"), this.GetCancellationTokenOnDestroy());
         }
     }
 }
