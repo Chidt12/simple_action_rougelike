@@ -3,6 +3,7 @@ using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Localization;
 using Runtime.Manager.Gameplay;
+using TMPro;
 using UnityEngine;
 
 namespace Runtime.UI
@@ -12,12 +13,15 @@ namespace Runtime.UI
         [SerializeField] private StatItemUI[] _stats;
         [SerializeField] private InventoryArtifactItemUI[] _artifacts;
         [SerializeField] private InventoryShopItemUI[] _shopItems;
+        [SerializeField] private TextMeshProUGUI _infoText;
 
-        public async UniTask LoadUI()
+        public UniTask LoadUI()
         {
             LoadStats().Forget();
             LoadShopItems().Forget();
             LoadArtifactItems().Forget();
+
+            return UniTask.CompletedTask;
         }
 
         private async UniTask LoadStats()
@@ -33,13 +37,19 @@ namespace Runtime.UI
             }
         }
 
-        private async UniTask LoadShopItems()
+        private UniTask LoadShopItems()
         {
             var allItems = GameplayManager.Instance.CurrentShopInGameItems;
-            foreach (var item in allItems)
+            if(allItems.Count > 0)
             {
-
+                for (int i = 0; i < allItems.Count; i++)
+                {
+                    var item = allItems[i];
+                    _shopItems[i].LoadUI(item.ShopInGameItemType, item.DataId, OnChangeInfo).Forget();
+                }
             }
+
+            return UniTask.CompletedTask;
         }
 
         private async UniTask LoadArtifactItems()
@@ -49,6 +59,11 @@ namespace Runtime.UI
             {
 
             }
+        }
+
+        private void OnChangeInfo(string info)
+        {
+            _infoText.text = info;
         }
     }
 }

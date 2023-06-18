@@ -6,6 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
     public abstract class ShopInGameItem
     {
         public int BalancingPoint { get; protected set; }
+        public abstract int DataId { get; }
         public abstract ShopInGameItemType ShopInGameItemType { get; }
         public abstract void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem);
         public abstract void Remove();
@@ -15,6 +16,9 @@ namespace Runtime.Gameplay.EntitySystem
     {
         protected T dataConfigItem;
         protected IEntityData owner;
+
+        public override ShopInGameItemType ShopInGameItemType => dataConfigItem.ShopInGameType;
+        public override int DataId => dataConfigItem.dataId;
 
         public override void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem)
         {

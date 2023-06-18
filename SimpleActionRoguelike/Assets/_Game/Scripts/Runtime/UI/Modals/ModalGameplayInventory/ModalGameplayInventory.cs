@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Manager;
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace Runtime.UI

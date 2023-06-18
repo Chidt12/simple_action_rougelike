@@ -5,8 +5,6 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class BuffStatShopInGameItem : ShopInGameItem<BuffStatShopInGameDataConfigItem>
     {
-        public override ShopInGameItemType ShopInGameItemType => ShopInGameItemType.BuffStat;
-
         protected override void Apply()
         {
             var statData = owner as IEntityModifiedStatData;
