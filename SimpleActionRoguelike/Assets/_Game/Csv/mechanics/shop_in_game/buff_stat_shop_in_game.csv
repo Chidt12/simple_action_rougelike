@@ -1,4 +1,2 @@
 ﻿data_id,stat_type,stat_value,stat_modify_type
 0,MoveSpeed,5,0
-1,AttackDamage,20,0
-2,AttackDamage,60,0

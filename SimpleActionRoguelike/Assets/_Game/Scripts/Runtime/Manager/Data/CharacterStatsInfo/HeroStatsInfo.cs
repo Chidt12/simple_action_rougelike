@@ -11,7 +11,7 @@ namespace Runtime.Manager.Data
         {
             statsDictionary.Add(StatType.AttackSpeed, new EntityStatInfo(0));
             statsDictionary.Add(StatType.AttackRange, new EntityStatInfo(0));
-            statsDictionary.Add(StatType.DashNumber, new EntityStatInfo(2));
+            statsDictionary.Add(StatType.DashNumber, new EntityStatInfo(0));
         }
 
         public UniTask UpdateBaseStatByWeapon(WeaponDataConfigItem weapon)

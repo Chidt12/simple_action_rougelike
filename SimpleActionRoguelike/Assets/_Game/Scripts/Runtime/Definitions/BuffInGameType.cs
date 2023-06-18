@@ -11,13 +11,5 @@ namespace Runtime.Definition
         FreezeArea = 6,
         MiniHelper = 7,
         StableGun = 8,
-
-    }
-
-    public enum ShopInGameItemType
-    {
-        None = 0,
-        BuffStat = 1,
-
     }
 }

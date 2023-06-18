@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Icons
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 3
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 77c6a92eca1cf8e47a53cbc4fa2ac33e, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 46dd3710db75852418ce8ccaa4d859ce, type: 3}
+  - {fileID: 21300000, guid: bab64760248ab5b41aef266916d27b39, type: 3}
+  - {fileID: 21300000, guid: b0446fc2a9114e4459a43c9bdb5cd65d, type: 3}
+  - {fileID: 21300000, guid: d29952d28c217f642b0b1bd0b4efa0b8, type: 3}
+  - {fileID: 21300000, guid: c7674d3321fb4ab479f6c6b1fa3bc788, type: 3}
+  - {fileID: 21300000, guid: d5bcfd54f242b4944afcfd4dbc21cb9c, type: 3}
+  - {fileID: 21300000, guid: 956f04b6ab258034aa4d87c933d6528a, type: 3}
+  - {fileID: 21300000, guid: 9ab00a9718fd7714cbf60ffe3980d1b7, type: 3}
+  - {fileID: 21300000, guid: 43921ba71e09f00479c84bbc9e8e10b8, type: 3}
+  - {fileID: 21300000, guid: a524f3289d3839a46b4e42c5825bec68, type: 3}
+  - {fileID: 21300000, guid: 71bf61886540d544c840860a78c5f76f, type: 3}
+  - {fileID: 21300000, guid: 40f934a8e2091444c808a18f20bcc256, type: 3}
+  - {fileID: 21300000, guid: ca4fe6c9f8cd1de44950fc68286a0039, type: 3}
+  - {fileID: 21300000, guid: 458ce97b95645b446ab30a27f69da3ec, type: 3}
+  - {fileID: 21300000, guid: f73e23ed33932f442a8748f326ad7933, type: 3}
+  - {fileID: 21300000, guid: 3227e7cfd3025bd4a823ea41413be69b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - weapon_icon5
+  - stats_icon_18
+  - stats_icon_6
+  - stats_icon_14
+  - stats_icon_7
+  - stats_icon7
+  - dash_icon_1
+  - weapon_icon6
+  - weapon_icon2
+  - stats_icon_2
+  - stats_icon_5
+  - weapon_icon1
+  - dash_icon2
+  - weapon_icon4
+  - stats_icon_101
+  - weapon_icon3
+  m_RenderDataMap: {}
+  m_Tag: Icons
+  m_IsVariant: 0

@@ -177,6 +177,10 @@ MonoBehaviour:
     m_Address: warning_damage_vfx
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 03b9c2d8f2841fb439ec1716d6ed9f9a
+    m_Address: Icons
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:
