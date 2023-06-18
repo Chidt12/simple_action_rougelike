@@ -83,7 +83,7 @@ namespace Runtime.Gameplay.Balancing
 
             if (cheat)
             {
-                return (cheatMap, stageLoadConfigItem, roomType, GameplayGateSetupType.None);
+                return (cheatMap, stageLoadConfigItem, this.roomType, GameplayGateSetupType.None);
             }
             else
             {
