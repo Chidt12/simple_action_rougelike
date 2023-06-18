@@ -169,6 +169,14 @@ MonoBehaviour:
     m_Address: 2009
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: ff98c8be90b464f4cbf63d8f64f79bd9
+    m_Address: 3001
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1e416028ef28a774a8d3129c6c9ce216
+    m_Address: warning_damage_vfx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

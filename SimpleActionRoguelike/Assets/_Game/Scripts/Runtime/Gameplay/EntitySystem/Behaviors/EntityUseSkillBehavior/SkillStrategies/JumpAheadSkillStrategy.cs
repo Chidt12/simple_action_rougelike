@@ -4,6 +4,7 @@ using Runtime.Core.Message;
 using Runtime.Helper;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -56,20 +57,26 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected async override UniTask PresentSkillAsync(CancellationToken cancellationToken, int index)
         {
-            var direction = creatorData.FaceDirection;
-            if (ownerModel.DependTarget)
-                direction = creatorData.Target.Position - creatorData.Position;
+            for (int i = 0; i < ownerModel.NumberOfJump; i++)
+            {
+                var direction = creatorData.FaceDirection;
+                if (ownerModel.DependTarget)
+                    direction = creatorData.Target.Position - creatorData.Position;
 
-            _isJumping = true;
-            entityTriggerActionEventProxy.TriggerEvent(
-                    index.GetUseSkillByIndex(),
-                    stateAction: callbackData =>
-                    {
-                        JumpAhead(direction, cancellationToken).Forget();
-                    }
-                );
+                _isJumping = true;
+                entityTriggerActionEventProxy.TriggerEvent(
+                        index.GetUseSkillByIndex(),
+                        stateAction: callbackData =>
+                        {
+                            JumpAhead(direction, cancellationToken).Forget();
+                        }
+                    );
 
-            await UniTask.WaitUntil(() => !_isJumping, cancellationToken: cancellationToken);
+                await UniTask.WaitUntil(() => !_isJumping, cancellationToken: cancellationToken);
+
+                if(i != ownerModel.NumberOfJump - 1)
+                    await UniTask.Delay(TimeSpan.FromSeconds(ownerModel.DelayBetweenJump), cancellationToken: cancellationToken);
+            }
         }
 
         private async UniTaskVoid JumpAhead(Vector2 jumpDirection, CancellationToken token)

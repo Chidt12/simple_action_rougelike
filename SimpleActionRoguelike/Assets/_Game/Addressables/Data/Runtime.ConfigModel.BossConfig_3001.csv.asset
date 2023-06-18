@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24cd71a0881086c4682c34ddf4f4c2b3, type: 3}
+  m_Name: Runtime.ConfigModel.BossConfig_3001.csv
+  m_EditorClassIdentifier: 
+  items:
+  - id: 3001
+    levels:
+    - point: 2
+      level: 1
+      detectedPriority: 0
+      bossLevelStats:
+        detectRange: 20
+        hp: 200
+        armor: 0
+        armorPenetration: 0
+        critChance: 0
+        critDamage: 0
+        moveSpeed: 2.5
+        lifeSteal: 0
+        attackDamage: 10
+        collideDamage: 2
+      deathDataIdentity:
+        deathDataId: 0
+        deathType: 0
+      skillIdentities:
+      - skillType: 10
+        skillDataId: 1
+        skillAnimIndex: 3
+      - skillType: 2
+        skillDataId: 3
+        skillAnimIndex: 1
+      - skillType: 2
+        skillDataId: 3
+        skillAnimIndex: 1
+      skillDelayTimes:
+      - value: 3
+      - value: 2
+      - value: 2
+      skillTriggerPhases:
+      - triggerPhaseType: 0
+        triggerPhaseHealth: 0
+        triggerPhaseEntityId: 0
+      - triggerPhaseType: 1
+        triggerPhaseHealth: 0.5
+        triggerPhaseEntityId: 0
+      - triggerPhaseType: 1
+        triggerPhaseHealth: 0.5
+        triggerPhaseEntityId: 0
+      autoInputStrategies: 010000000100000001000000

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f2262640bdc4c145a1f10c3a63c49a9, type: 3}
+  m_Name: Runtime.ConfigModel.BigJumpSkillDataConfig
+  m_EditorClassIdentifier: 
+  items:
+  - dataId: 1
+    targetType: 3
+    castRange: 10
+    cooldown: 4
+    dependTarget: 1
+    canBeCanceled: 0
+    warningVfx: warning_damage_vfx
+    displayWarningTime: 0.3
+    jumpUpDuration: 0.25
+    jumpMiddleDuration: 0.75
+    jumpDownDuration: 0.25
+    jumpHeight: 20
+    jumpDistance: 20
+    numberOfJump: 1
+    delayBetweenJump: 1
+    damageWidth: 3
+    damageHeight: 1.5
+    jumpDamageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1

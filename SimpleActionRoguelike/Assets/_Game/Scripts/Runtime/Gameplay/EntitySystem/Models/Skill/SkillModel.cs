@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
         public float Cooldown { get; set; }
         public float CurrentCooldown { get; set; }
         public bool IsReady => CurrentSkillPhase == SkillPhase.Ready;
-        public bool DependTarget { get; protected set; }
+        public virtual bool DependTarget { get; protected set; }
         public SkillTargetType TargetType { get; protected set; }
         public bool CanBeCanceled { get; protected set; }
         public abstract SkillType SkillType { get; }

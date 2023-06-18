@@ -49,3 +49,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.BigJumpSkillDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.BigJumpSkillDataConfig
+      csvFile: {fileID: 4900000, guid: c98c2957610b0fb45ace38e3c866b4c7, type: 3}
+      csvPath: Assets/_Game/Csv/skills/big_jump_skill.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

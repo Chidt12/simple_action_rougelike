@@ -7,6 +7,7 @@ namespace Runtime.Gameplay
     [RequireComponent(typeof(Collider2D))]
     public class DamageBox : MonoBehaviour
     {
+        [SerializeField] private Collider2D _collider;
         private Action<IEntityData> _onTriggeredEntered;
         private Action<IEntityData> _onTriggeredExit;
         private bool _isInited;
@@ -16,11 +17,17 @@ namespace Runtime.Gameplay
             _isInited = false;
         }
 
+        private void OnEnable()
+        {
+            _collider.enabled = false;
+        }
+
         public void Init(Action<IEntityData> onTriggeredEntered, Action<IEntityData> onTriggeredExit = null)
         {
             _isInited = true;
             _onTriggeredEntered = onTriggeredEntered;
             _onTriggeredExit = onTriggeredExit;
+            _collider.enabled = true;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
