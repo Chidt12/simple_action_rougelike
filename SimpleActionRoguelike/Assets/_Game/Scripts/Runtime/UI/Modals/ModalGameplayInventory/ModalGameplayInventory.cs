@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Manager;
+using Runtime.Message;
 using System;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,12 @@ namespace Runtime.UI
         {
             GameManager.Instance.ReturnPreviousGameStateType();
             return base.Cleanup();
+        }
+
+        protected override void OnKeyPress(InputKeyPressMessage message)
+        {
+            base.OnKeyPress(message);
+            _inventoryPanel.OnKeyPress(message);
         }
     }
 }
