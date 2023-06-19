@@ -16,6 +16,7 @@ namespace Runtime.UI
             await base.Initialize(args);
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayPausing);
             await _inventoryPanel.LoadUI();
+            _inventoryPanel.IsSelected = true;
         }
 
         public override UniTask Cleanup()

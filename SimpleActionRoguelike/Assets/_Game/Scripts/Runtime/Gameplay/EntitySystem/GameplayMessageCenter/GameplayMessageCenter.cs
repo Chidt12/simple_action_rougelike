@@ -11,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         private List<IPreCalculateDamageModifier> preCalculateDamageModifiers;
         private List<IPostCalculateDamageModifier> postCalculateDamageModifiers;
         private List<IDamageModifier> damageModifiers;
+        private List<IFinalDamagedModifier> finalDamageCreatedModifiers;
 
         private List<ISubscription> _subscriptions;
 
@@ -26,6 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
             preCalculateDamageModifiers = new();
             postCalculateDamageModifiers = new();
             damageModifiers = new();
+            finalDamageCreatedModifiers = new();
         }
 
         public void Dispose()
@@ -36,6 +38,7 @@ namespace Runtime.Gameplay.EntitySystem
             preCalculateDamageModifiers.Clear();
             postCalculateDamageModifiers.Clear();
             damageModifiers.Clear();
+            finalDamageCreatedModifiers.Clear();
         }
 
         public void AddDamageModifier(IDamageModifier damageModifier)
@@ -52,6 +55,16 @@ namespace Runtime.Gameplay.EntitySystem
         public void AddPostCalculateDamageModifier(IPostCalculateDamageModifier postCalculateDamageModifier)
         {
             postCalculateDamageModifiers.Add(postCalculateDamageModifier);
+        }
+
+        public void AddFinalDamageCreatedModifier(IFinalDamagedModifier finalDamagedModifier)
+        {
+            finalDamageCreatedModifiers.Add(finalDamagedModifier);
+        }
+
+        public void RemoveFinalDamageCreatedModifier(IFinalDamagedModifier finalDamagedModifier)
+        {
+            finalDamageCreatedModifiers.Remove(finalDamagedModifier);
         }
 
         private partial void OnSentStatusEffect(SentStatusEffectMessage message);

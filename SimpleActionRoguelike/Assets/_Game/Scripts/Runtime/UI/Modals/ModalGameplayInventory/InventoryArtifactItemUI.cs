@@ -6,7 +6,7 @@ using System;
 
 namespace Runtime.UI
 {
-    public class InventoryArtifactItemUI : MonoBehaviour, InventoryItem
+    public class InventoryArtifactItemUI : MonoBehaviour, IInventoryItem
     {
         [SerializeField] private CustomButton _clickButton;
         [SerializeField] private Image _icon;
@@ -24,6 +24,11 @@ namespace Runtime.UI
         {
             _loadInfoAction = loadInfoAction;
             _icon.gameObject.SetActive(false);
+        }
+
+        public void ToggleSelect(bool value)
+        {
+            _clickButton.ToggleSelect(value);
         }
     }
 }

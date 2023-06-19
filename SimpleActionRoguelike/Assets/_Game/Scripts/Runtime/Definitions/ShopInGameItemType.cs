@@ -4,7 +4,7 @@ namespace Runtime.Definition
     {
         None = 0,
         BuffStat = 1,
-        MakeStatusAfterHits = 2,
+        CauseStatusAfterHits = 2,
         HealWhenDefeatEnemyInStatus = 3,
         GetMoreCoinsWhenGoShop = 4,
         CritAfterHits = 5,

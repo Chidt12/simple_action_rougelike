@@ -131,6 +131,8 @@ namespace Runtime.Gameplay.EntitySystem
 #endif
 
                 var finalCreatedDamage = targetModifiedStatData.GetDamage(damageTaken, damageInfo.damageSource, isCrit ? EffectProperty.Crit : damageInfo.damageProperty);
+                foreach (var item in finalDamageCreatedModifiers)
+                    finalCreatedDamage = item.Finalize(finalCreatedDamage, damageInfo.targetData);
 
                 if (message.Target.IsDead)
                 {

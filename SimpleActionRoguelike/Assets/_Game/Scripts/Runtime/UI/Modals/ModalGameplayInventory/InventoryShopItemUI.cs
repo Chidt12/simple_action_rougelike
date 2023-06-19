@@ -8,7 +8,7 @@ using Runtime.Constants;
 
 namespace Runtime.UI
 {
-    public class InventoryShopItemUI : MonoBehaviour, InventoryItem
+    public class InventoryShopItemUI : MonoBehaviour, IInventoryItem
     {
         [SerializeField] private CustomButton _clickButton;
         [SerializeField] private Image _icon;
@@ -26,6 +26,11 @@ namespace Runtime.UI
         {
             _loadInfoAction = loadInfoAction;
             _icon.gameObject.SetActive(false);
+        }
+
+        public void ToggleSelect(bool value)
+        {
+            _clickButton.ToggleSelect(value);
         }
     }
 }

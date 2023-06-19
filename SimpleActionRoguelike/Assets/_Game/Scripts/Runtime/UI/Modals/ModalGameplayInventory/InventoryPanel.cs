@@ -4,12 +4,13 @@ using Runtime.Gameplay.EntitySystem;
 using Runtime.Localization;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
+using System;
 using TMPro;
 using UnityEngine;
 
 namespace Runtime.UI
 {
-    public interface InventoryItem
+    public interface IInventoryItem
     {
         void ToggleSelect(bool value);
     }
@@ -20,8 +21,10 @@ namespace Runtime.UI
         [SerializeField] private InventoryArtifactItemUI[] _artifacts;
         [SerializeField] private InventoryShopItemUI[] _shopItems;
         [SerializeField] private TextMeshProUGUI _infoText;
-        [SerializeField] private int numberShopItemInHorizontal = 5;
-        [SerializeField] private int numberShopItemInVertical = 4;
+        [SerializeField] private int _numberShopItemInHorizontal = 5;
+        [SerializeField] private int _numberShopItemInVertical = 4;
+
+        private IInventoryItem _inventoryItem;
 
         public bool IsSelected { get; set; }
 
@@ -94,7 +97,19 @@ namespace Runtime.UI
                 }
             }
 
+            UpdateToggle(_artifacts[0]);
             return UniTask.CompletedTask;
+        }
+
+        private void UpdateToggle(IInventoryItem inventoryItem)
+        {
+            if(_inventoryItem != null)
+            {
+                _inventoryItem.ToggleSelect(false);
+            }
+
+            _inventoryItem = inventoryItem;
+            _inventoryItem.ToggleSelect(true);
         }
 
         private void OnChangeInfo(string info)
@@ -104,7 +119,65 @@ namespace Runtime.UI
 
         public void OnKeyPress(InputKeyPressMessage message)
         {
+            if (!IsSelected)
+                return;
 
+            if(message.KeyPressType == KeyPressType.Right || message.KeyPressType == KeyPressType.Left || message.KeyPressType == KeyPressType.Up || message.KeyPressType == KeyPressType.Down)
+            {
+                if (_inventoryItem != null)
+                {
+                    if (_inventoryItem is InventoryArtifactItemUI)
+                    {
+                        var index = Array.IndexOf(_artifacts, _inventoryItem);
+                        if(message.KeyPressType == KeyPressType.Right && index < _artifacts.Length - 1)
+                        {
+                            var nextIndex = index + 1;
+                            UpdateToggle(_artifacts[nextIndex]);
+                        }
+                        else if (message.KeyPressType == KeyPressType.Left && index > 0)
+                        {
+                            var nextIndex = index - 1;
+                            UpdateToggle(_artifacts[nextIndex]);
+                        }
+                        else if (message.KeyPressType == KeyPressType.Down)
+                        {
+                            UpdateToggle(_shopItems[index]);
+                        }
+                    }
+                    else if (_inventoryItem is InventoryShopItemUI)
+                    {
+                        var index = Array.IndexOf(_shopItems, _inventoryItem);
+                        if (message.KeyPressType == KeyPressType.Right && index % _numberShopItemInHorizontal < _numberShopItemInHorizontal - 1)
+                        {
+                            var nextIndex = index + 1;
+                            UpdateToggle(_shopItems[nextIndex]);
+                        }
+                        else if (message.KeyPressType == KeyPressType.Left && index % _numberShopItemInHorizontal > 0)
+                        {
+                            var nextIndex = index - 1;
+                            UpdateToggle(_shopItems[nextIndex]);
+                        }
+                        else if (message.KeyPressType == KeyPressType.Down && index < _shopItems.Length - 1 - _numberShopItemInHorizontal)
+                        {
+                            var nextIndex = index + _numberShopItemInHorizontal;
+                            UpdateToggle(_shopItems[nextIndex]);
+                        }
+                        else if (message.KeyPressType == KeyPressType.Up)
+                        {
+                            if(index > _numberShopItemInHorizontal - 1)
+                            {
+                                var nextIndex = index - _numberShopItemInHorizontal;
+                                UpdateToggle(_shopItems[nextIndex]);
+                            }
+                            else
+                            {
+                                
+                                UpdateToggle(_artifacts[index]);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
