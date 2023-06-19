@@ -1,10 +1,7 @@
 using Cysharp.Threading.Tasks;
-using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Manager.Data;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -29,6 +26,7 @@ namespace Runtime.Gameplay.EntitySystem
             var dataConfigItem = await DataManager.Config.LoadShopInGameDataConfigItem(shopInGameItemType, dataId);
             var shopInGameItem = ShopInGameItemFactory.GetShopInGameItem(shopInGameItemType);
             shopInGameItem.Apply(ownerData, dataConfigItem);
+            _shopInGameItems.Add(shopInGameItem);
         }
 
         public void RemoveShopInGameItem(ShopInGameItem shopInGameItem)
