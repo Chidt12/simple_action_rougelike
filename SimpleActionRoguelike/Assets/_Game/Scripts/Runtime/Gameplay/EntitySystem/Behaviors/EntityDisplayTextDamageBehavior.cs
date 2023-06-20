@@ -16,6 +16,7 @@ namespace Runtime.Gameplay.EntitySystem
         private const string DODGE_TEXT = "dodge_text_damage";
         private const string CRIT_TEXT_DAMAGE = "crit_text_damage";
         private const string POISON_TEXT_DAMAGE = "poison_text_damage";
+        private const string HERO_TEXT_HEAL = "hero_text_heal";
         private const string HEAL_TEXT = "heal_text";
 
 
@@ -50,7 +51,13 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnHealed(float value, EffectSource effectSource, EffectProperty effectProperty)
         {
+            if (value > 0)
+                DisplayTextHeal(value, effectSource, effectProperty).Forget();
+        }
 
+        private async UniTask DisplayTextHeal(float value, EffectSource effectSource, EffectProperty effectProperty)
+        {
+            await TextDamageController.Instance.Spawn(_ownerData.EntityType.IsHero() ? HERO_TEXT_HEAL : HEAL_TEXT, value, true, _topTransform.position, _cancellationTokenSource.Token);
         }
 
         private void OnReactionChanged(EntityReactionType reactionType)

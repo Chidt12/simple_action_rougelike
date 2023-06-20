@@ -21,3 +21,19 @@ MonoBehaviour:
       resourceType: 1
       resourceNumber: 1
     weight: 1
+  - identity:
+      shopInGameItemType: 2
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 1
+  - identity:
+      shopInGameItemType: 3
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 1

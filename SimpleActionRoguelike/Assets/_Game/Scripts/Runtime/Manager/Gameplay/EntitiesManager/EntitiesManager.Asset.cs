@@ -36,7 +36,6 @@ namespace Runtime.Gameplay.EntitySystem
             await enemyGameObject.GetComponent<IEntityHolder>().BuildAsync(assetModel);
 
             SimpleMessenger.Publish(new EntitySpawnedMessage(assetModel, enemyGameObject.transform));
-            EnemiesData.Add(assetModel);
 
             return enemyGameObject;
         }

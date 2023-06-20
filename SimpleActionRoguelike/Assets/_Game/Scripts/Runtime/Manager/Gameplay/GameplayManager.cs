@@ -109,6 +109,7 @@ namespace Runtime.Manager.Gameplay
             foreach (var dispose in disposables)
                 dispose.Dispose();
 
+            shopInGameManager.Dispose();
             mechanicSystemManager.Dispose();
             messageCenter.Dispose();
             waveTimer.Dispose();
@@ -301,7 +302,7 @@ namespace Runtime.Manager.Gameplay
             }
             else
             {
-                WonCurrentLevel();
+                SetUpAfterWinLevel();
             }
         }
 
@@ -446,18 +447,20 @@ namespace Runtime.Manager.Gameplay
 
         private void HandleLoseStage()
         {
+            SimpleMessenger.Publish(new FinishedCurrentLevelMessage(false));
             Debug.LogError("LOSE GAME");
         }
 
         private UniTask HandleWinLevelAsync()
         {
-            WonCurrentLevel();
+            SimpleMessenger.Publish(new FinishedCurrentLevelMessage(true));
+            SetUpAfterWinLevel();
             ToastController.Instance.Show($"Add + {RewardCoins}");
             DataManager.Transient.AddMoney(InGameMoneyType.Gold, RewardCoins);
             return UniTask.CompletedTask;
         }
 
-        private void WonCurrentLevel()
+        private void SetUpAfterWinLevel()
         {
             if(_currentStageData.CurrentRoomType == GameplayRoomType.EliteHaveArtifact 
                 || _currentStageData.CurrentRoomType == GameplayRoomType.Elite

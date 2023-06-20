@@ -106,7 +106,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public float Heal(float value, EffectSource healSource, EffectProperty healDamage)
         {
-            return healthStat.TakeDamage(value, healSource, healDamage);
+            return healthStat.Heal(value, healSource, healDamage);
         }
     }
 }

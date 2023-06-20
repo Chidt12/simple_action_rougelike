@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: def087e8471008e419ebbe074e2830c4, type: 3}
-  m_Name: Runtime.ConfigModel.StunStatusDataConfig
+  m_Script: {fileID: 11500000, guid: a6e0b4e4f4223464a91731ec052816de, type: 3}
+  m_Name: Runtime.ConfigModel.HealWhenDefeatEnemyInStatusShopInGameDataConfig
   m_EditorClassIdentifier: 
   items:
-  - dataId: 0
-    chance: 1
-    duration: 2
-  - dataId: 1
-    chance: 1
-    duration: 10
+  - point: 1
+    dataId: 0
+    healAmount: 2
+    triggeredStatusType: 900

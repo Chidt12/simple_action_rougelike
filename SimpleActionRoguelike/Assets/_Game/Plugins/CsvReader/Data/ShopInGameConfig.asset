@@ -25,3 +25,27 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.CauseStatusAfterHitsShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.CauseStatusAfterHitsShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: 163030bbd0ed160468573a5f0558a2d1, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/cause_status_after_hits_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 
+  - className: Runtime.ConfigModel.HealWhenDefeatEnemyInStatusShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.HealWhenDefeatEnemyInStatusShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: 6c6e5a5dfcf364f43a2bb29d1c41773f, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/heal_when_defeat_enemy_in_status_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

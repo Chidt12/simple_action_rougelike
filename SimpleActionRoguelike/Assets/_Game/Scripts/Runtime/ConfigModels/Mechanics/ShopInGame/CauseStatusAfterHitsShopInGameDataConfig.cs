@@ -1,9 +1,11 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Localization;
+using System;
 
 namespace Runtime.ConfigModel
 {
+    [Serializable]
     public class CauseStatusAfterHitsShopInGameDataConfigItem : ShopInGameDataConfigItem
     {
         public override ShopInGameItemType ShopInGameType => ShopInGameItemType.CauseStatusAfterHits;
