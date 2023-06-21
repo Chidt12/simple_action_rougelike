@@ -4,9 +4,9 @@ using Runtime.Definition;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class UpgradeWeaponBuffInGameSystem : BuffInGameSystem<UpgradeWeaponBuffInGameDataConfigItem>
+    public class UpgradeWeaponArtifactSystem : ArtifactSystem<UpgradeWeaponArtifactDataConfigItem>
     {
-        public override BuffInGameType BuffInGameType => BuffInGameType.UpgradeWeapon;
+        public override ArtifactType ArtifactType => ArtifactType.UpgradeWeapon;
 
         public async override UniTask Init(IEntityData entityData)
         {

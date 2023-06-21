@@ -30,14 +30,14 @@ namespace Runtime.Manager.Data
         }
 
 
-        public async UniTask<List<BuffInGameStageLoadConfigItem>> LoadCurrentSuitableBuffInGameItems(List<BuffInGameIdentity> currentBuffedItems)
+        public async UniTask<List<ArtifactStageLoadConfigItem>> LoadCurrentSuitableBuffInGameItems(List<ArtifactIdentity> currentBuffedItems)
         {
-            var dataConfig = await Load<BuffInGameStageLoadConfig>();
-            var suitableItems = new List<BuffInGameStageLoadConfigItem>();
+            var dataConfig = await Load<ArtifactStageLoadConfig>();
+            var suitableItems = new List<ArtifactStageLoadConfigItem>();
             foreach (var item in dataConfig.items)
             {
-                var currentBuffedItem = currentBuffedItems.FirstOrDefault(x => x.buffInGameType == item.identity.buffInGameType);
-                if (currentBuffedItem.buffInGameType != BuffInGameType.None)
+                var currentBuffedItem = currentBuffedItems.FirstOrDefault(x => x.artifactType == item.identity.artifactType);
+                if (currentBuffedItem.artifactType != ArtifactType.None)
                 {
                     var levelRequired = currentBuffedItem.level + 1;
                     if (item.identity.level == levelRequired)
@@ -52,16 +52,16 @@ namespace Runtime.Manager.Data
             return suitableItems;
         }
 
-        public async UniTask<BuffInGameDataConfigItem> LoadBuffInGameDataConfigItem(BuffInGameType buffInGameType, int level)
+        public async UniTask<ArtifactDataConfigItem> LoadBuffInGameDataConfigItem(ArtifactType buffInGameType, int level)
         {
             var config = await LoadBuffInGameDataConfig(buffInGameType);
             var configItem = config.GetBuffItem(level);
             return configItem;
         }
 
-        public async UniTask<BuffInGameDataConfig> LoadBuffInGameDataConfig(BuffInGameType buffInGameType)
+        public async UniTask<ArtifactDataConfig> LoadBuffInGameDataConfig(ArtifactType buffInGameType)
         {
-            var config = await Load<BuffInGameDataConfig>(string.Format(AddressableKeys.BUFF_INGAME_DATA_CONFIG_ASSET_FORMAT, buffInGameType));
+            var config = await Load<ArtifactDataConfig>(string.Format(AddressableKeys.BUFF_INGAME_DATA_CONFIG_ASSET_FORMAT, buffInGameType));
             return config;
         }
     }

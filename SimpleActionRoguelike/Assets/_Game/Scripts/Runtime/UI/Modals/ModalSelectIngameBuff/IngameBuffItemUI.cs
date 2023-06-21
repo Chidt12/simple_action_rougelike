@@ -16,14 +16,14 @@ namespace Runtime.UI
         [SerializeField] private TextMeshProUGUI _description;
         [SerializeField] private TextMeshProUGUI _level;
 
-        public async UniTask Init(IEntityData entityData, BuffInGameIdentity identity, Action<BuffInGameIdentity> selectAction)
+        public async UniTask Init(IEntityData entityData, ArtifactIdentity identity, Action<ArtifactIdentity> selectAction)
         {
-            var buffInGameDataConfig = await DataManager.Config.LoadBuffInGameDataConfig(identity.buffInGameType);
+            var buffInGameDataConfig = await DataManager.Config.LoadBuffInGameDataConfig(identity.artifactType);
             var description = await buffInGameDataConfig.GetDescription(entityData, identity.level);
 
             _level.text = $"Level {identity.level}";
             _description.text = description;
-            _title.text = identity.buffInGameType.ToString();
+            _title.text = identity.artifactType.ToString();
 
             _selectButton.onClick.RemoveAllListeners();
             _selectButton.onClick.AddListener(() =>

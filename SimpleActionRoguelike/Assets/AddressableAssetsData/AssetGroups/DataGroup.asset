@@ -37,18 +37,6 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.StunStatusDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 57f32cabd6ce8824384c3b77af43ef2d
-    m_Address: Runtime.ConfigModel.UpgradeWeaponBuffInGameDataConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 635d20d1bdfecb040abc254c0d08f002
-    m_Address: Runtime.ConfigModel.RotateOrbsBuffInGameDataConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 10c4b3d3f1d3f6f489b5c92e12b90e45
-    m_Address: Runtime.ConfigModel.BuffInGameStageLoadConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: cf55131322d9d0b4c820083acc867cde
     m_Address: Runtime.ConfigModel.BuffStatShopInGameDataConfig
     m_ReadOnly: 0

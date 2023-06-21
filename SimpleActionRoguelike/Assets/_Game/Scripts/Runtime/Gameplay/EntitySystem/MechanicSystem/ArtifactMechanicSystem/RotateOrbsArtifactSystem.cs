@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public class RotateOrbsBuffInGameSystem : BuffInGameSystem<RotateOrbsBuffInGameDataConfigItem>
+    public class RotateOrbsArtifactSystem : ArtifactSystem<RotateOrbsArtifactDataConfigItem>
     {
         private const string PIVOT_NAME = "weapon_pivot_point";
         private static readonly float s_angleOffset = 90f;
@@ -19,7 +19,7 @@ namespace Runtime.Gameplay.EntitySystem
         private Transform _middleTransform;
         private CancellationTokenSource _cancellationTokenSource;
 
-        public override BuffInGameType BuffInGameType => BuffInGameType.RotateOrbs;
+        public override ArtifactType ArtifactType => ArtifactType.RotateOrbs;
 
         public override async UniTask Init(IEntityData entityData)
         {

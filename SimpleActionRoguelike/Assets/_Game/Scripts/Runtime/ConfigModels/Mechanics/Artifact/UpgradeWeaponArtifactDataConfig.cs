@@ -7,16 +7,16 @@ using System;
 namespace Runtime.ConfigModel
 {
     [Serializable]
-    public class UpgradeWeaponBuffInGameDataConfigItem : BuffInGameDataConfigItem
+    public class UpgradeWeaponArtifactDataConfigItem : ArtifactDataConfigItem
     {
         public RarityType rarityType;
 
-        public override BuffInGameType BuffInGameType => BuffInGameType.UpgradeWeapon;
+        public override ArtifactType BuffInGameType => ArtifactType.UpgradeWeapon;
     }
 
-    public class UpgradeWeaponBuffInGameDataConfig : BuffInGameDataConfig<UpgradeWeaponBuffInGameDataConfigItem>
+    public class UpgradeWeaponArtifactDataConfig : ArtifactDataConfig<UpgradeWeaponArtifactDataConfigItem>
     {
-        protected override async UniTask<string> GetDescription(IEntityData entityData, UpgradeWeaponBuffInGameDataConfigItem itemData, UpgradeWeaponBuffInGameDataConfigItem previousItemData)
+        protected override async UniTask<string> GetDescription(IEntityData entityData, UpgradeWeaponArtifactDataConfigItem itemData, UpgradeWeaponArtifactDataConfigItem previousItemData)
         {
             var weaponData = entityData as IEntityWeaponData;
             if (weaponData != null)

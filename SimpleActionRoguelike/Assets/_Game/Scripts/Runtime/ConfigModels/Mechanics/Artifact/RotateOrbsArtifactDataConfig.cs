@@ -7,7 +7,7 @@ using System;
 namespace Runtime.ConfigModel
 {
     [Serializable]
-    public class RotateOrbsBuffInGameDataConfigItem : BuffInGameDataConfigItem
+    public class RotateOrbsArtifactDataConfigItem : ArtifactDataConfigItem
     {
         public string orbPrefabName;
         public int numberOfOrbs;
@@ -17,12 +17,12 @@ namespace Runtime.ConfigModel
         [CsvColumnFormat(ColumnFormat = "orb_{0}")]
         public DamageFactor[] orbDamageFactors;
 
-        public override BuffInGameType BuffInGameType => BuffInGameType.RotateOrbs;
+        public override ArtifactType BuffInGameType => ArtifactType.RotateOrbs;
     }
 
-    public class RotateOrbsBuffInGameDataConfig : BuffInGameDataConfig<RotateOrbsBuffInGameDataConfigItem>
+    public class RotateOrbsArtifactDataConfig : ArtifactDataConfig<RotateOrbsArtifactDataConfigItem>
     {
-        protected override UniTask<string> GetDescription(IEntityData entityData, RotateOrbsBuffInGameDataConfigItem itemData, RotateOrbsBuffInGameDataConfigItem previousItemData)
+        protected override UniTask<string> GetDescription(IEntityData entityData, RotateOrbsArtifactDataConfigItem itemData, RotateOrbsArtifactDataConfigItem previousItemData)
         {
             if (itemData != null)
             {

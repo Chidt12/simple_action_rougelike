@@ -6,23 +6,23 @@ using UnityEngine;
 
 namespace Runtime.ConfigModel
 {
-    public abstract class BuffInGameDataConfigItem : BaseWithPointConfigItem
+    public abstract class ArtifactDataConfigItem : BaseWithPointConfigItem
     {
         public int level;
-        public abstract BuffInGameType BuffInGameType { get; }
+        public abstract ArtifactType BuffInGameType { get; }
     }
 
-    public abstract class BuffInGameDataConfig : ScriptableObject
+    public abstract class ArtifactDataConfig : ScriptableObject
     {
-        public abstract BuffInGameDataConfigItem GetBuffItem(int level);
+        public abstract ArtifactDataConfigItem GetBuffItem(int level);
         public abstract UniTask<string> GetDescription(IEntityData entityData, int level);
     }
 
-    public abstract class BuffInGameDataConfig<T> : BuffInGameDataConfig  where T : BuffInGameDataConfigItem, new()
+    public abstract class ArtifactDataConfig<T> : ArtifactDataConfig  where T : ArtifactDataConfigItem, new()
     {
         public T[] items;
 
-        public override BuffInGameDataConfigItem GetBuffItem(int level)
+        public override ArtifactDataConfigItem GetBuffItem(int level)
         {
             return items.FirstOrDefault(x => x.level == level);
         }

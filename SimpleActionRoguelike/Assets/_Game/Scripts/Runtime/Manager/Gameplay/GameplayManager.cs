@@ -57,7 +57,7 @@ namespace Runtime.Manager.Gameplay
         private List<CheckEndStage> _checkEndStageConditions;
 
         public GameplayMessageCenter MessageCenter => messageCenter;
-        public List<BuffInGameIdentity> CurrentBuffInGameItems => mechanicSystemManager.GetCurrentBuffsInGame();
+        public List<ArtifactIdentity> CurrentBuffInGameItems => mechanicSystemManager.GetCurrentBuffsInGame();
         public List<ShopInGameItem> CurrentShopInGameItems => shopInGameManager.CurrentShopInGameItems;
         public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
@@ -510,15 +510,15 @@ namespace Runtime.Manager.Gameplay
             StartWave();
         }
 
-        private void OnSelectBuffItem(BuffInGameIdentity dataIdentity)
+        private void OnSelectBuffItem(ArtifactIdentity dataIdentity)
         {
             OnSelectBuffItemAsync(dataIdentity).Forget();
         }
 
-        private async UniTaskVoid OnSelectBuffItemAsync(BuffInGameIdentity dataIdentity)
+        private async UniTaskVoid OnSelectBuffItemAsync(ArtifactIdentity dataIdentity)
         {
             var heroData = EntitiesManager.Instance.HeroData;
-            await mechanicSystemManager.AddBuffInGameSystem(heroData, dataIdentity.buffInGameType);
+            await mechanicSystemManager.AddBuffInGameSystem(heroData, dataIdentity.artifactType);
             GameManager.Instance.ReturnPreviousGameStateType();
             await ScreenNavigator.Instance.PopModal(true);
         }

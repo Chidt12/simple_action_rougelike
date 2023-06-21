@@ -13,7 +13,7 @@ namespace Runtime.UI
 
         private Action<string> _loadInfoAction;
 
-        public UniTask LoadUI(BuffInGameType buffInGameType, int level, Action<string> loadInfoAction)
+        public UniTask LoadUI(ArtifactType buffInGameType, int level, Action<string> loadInfoAction)
         {
             _loadInfoAction = loadInfoAction;
             _icon.gameObject.SetActive(true);

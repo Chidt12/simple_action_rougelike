@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class MechanicSystemManager
     {
-        private List<IBuffInGameSystem> _buffItems;
+        private List<IArtifactSystem> _buffItems;
 
         public void Init()
         {
@@ -26,19 +26,19 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public List<BuffInGameIdentity> GetCurrentBuffsInGame()
+        public List<ArtifactIdentity> GetCurrentBuffsInGame()
         {
-            return _buffItems.Select(x => new BuffInGameIdentity(x.BuffInGameType, x.Level)).ToList();
+            return _buffItems.Select(x => new ArtifactIdentity(x.ArtifactType, x.Level)).ToList();
         }
 
-        public async UniTask AddBuffInGameSystem(IEntityData entityData, BuffInGameType buffInGameType)
+        public async UniTask AddBuffInGameSystem(IEntityData entityData, ArtifactType buffInGameType)
         {
             // Add level 1 or increase after time.
-            var mechanic = _buffItems.FirstOrDefault(x => x.BuffInGameType == buffInGameType);
+            var mechanic = _buffItems.FirstOrDefault(x => x.ArtifactType == buffInGameType);
             if (mechanic == null)
             {
                 var dataConfigItem = await DataManager.Config.LoadBuffInGameDataConfigItem(buffInGameType, 0);
-                var buffInGame = BuffInGameSystemFactory.GetBuffInGameSystem(buffInGameType);
+                var buffInGame = ArtifactSystemFactory.GetArtifactSystem(buffInGameType);
 
                 buffInGame.SetData(dataConfigItem);
                 await buffInGame.Init(entityData);
@@ -54,11 +54,11 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public void RemoveBuffInGameSystem(IEntityData entityData, BuffInGameType buffInGameType)
+        public void RemoveBuffInGameSystem(IEntityData entityData, ArtifactType buffInGameType)
         {
             // Remove
             var mechanic = _buffItems.FirstOrDefault(x => x.EntityData.EntityUID == entityData.EntityUID &&
-                                                            x.BuffInGameType == buffInGameType);
+                                                            x.ArtifactType == buffInGameType);
             if(mechanic != null)
             {
                 mechanic.Dispose();

@@ -18,4 +18,4 @@ MonoBehaviour:
     duration: 2
   - dataId: 1
     chance: 1
-    duration: 10
+    duration: 1

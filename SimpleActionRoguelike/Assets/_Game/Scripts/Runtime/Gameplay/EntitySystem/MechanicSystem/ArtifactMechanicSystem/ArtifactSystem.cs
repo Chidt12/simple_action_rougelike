@@ -4,18 +4,18 @@ using Runtime.Definition;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public interface IBuffInGameSystem : IMechanicSystem
+    public interface IArtifactSystem : IMechanicSystem
     {
-        public BuffInGameType BuffInGameType { get; }
-        public void SetData(BuffInGameDataConfigItem ownerData);
+        public ArtifactType ArtifactType { get; }
+        public void SetData(ArtifactDataConfigItem ownerData);
     }
 
-    public abstract class BuffInGameSystem<T> : IBuffInGameSystem where T : BuffInGameDataConfigItem
+    public abstract class ArtifactSystem<T> : IArtifactSystem where T : ArtifactDataConfigItem
     {
         protected IEntityData ownerEntityData;
         protected T ownerData;
 
-        public abstract BuffInGameType BuffInGameType { get; }
+        public abstract ArtifactType ArtifactType { get; }
 
         public IEntityData EntityData => ownerEntityData;
 
@@ -30,7 +30,7 @@ namespace Runtime.Gameplay.EntitySystem
             return UniTask.CompletedTask;
         }
 
-        public virtual void SetData(BuffInGameDataConfigItem ownerData)
+        public virtual void SetData(ArtifactDataConfigItem ownerData)
         {
             this.ownerData = ownerData as T;
         }

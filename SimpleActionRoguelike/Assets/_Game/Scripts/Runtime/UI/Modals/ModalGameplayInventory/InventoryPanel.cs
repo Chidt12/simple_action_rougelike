@@ -89,7 +89,7 @@ namespace Runtime.UI
                 if (i < allItems.Count)
                 {
                     var buffItem = allItems[i];
-                    artifact.LoadUI(buffItem.buffInGameType, buffItem.level, OnChangeInfo).Forget();
+                    artifact.LoadUI(buffItem.artifactType, buffItem.level, OnChangeInfo).Forget();
                 }
                 else
                 {

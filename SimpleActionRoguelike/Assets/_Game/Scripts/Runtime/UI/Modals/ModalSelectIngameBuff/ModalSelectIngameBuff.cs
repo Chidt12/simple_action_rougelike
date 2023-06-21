@@ -9,10 +9,10 @@ namespace Runtime.UI
     public class ModalSelectIngameBuffData
     {
         public readonly IEntityData EntityData;
-        public readonly BuffInGameIdentity[] Items;
-        public readonly Action<BuffInGameIdentity> OnSelectItemBuff;
+        public readonly ArtifactIdentity[] Items;
+        public readonly Action<ArtifactIdentity> OnSelectItemBuff;
 
-        public ModalSelectIngameBuffData(IEntityData entityData, BuffInGameIdentity[] items, Action<BuffInGameIdentity> onSelectItemBuff)
+        public ModalSelectIngameBuffData(IEntityData entityData, ArtifactIdentity[] items, Action<ArtifactIdentity> onSelectItemBuff)
         {
             EntityData = entityData;
             Items = items;
