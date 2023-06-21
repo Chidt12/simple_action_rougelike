@@ -17,7 +17,7 @@ namespace Runtime.ConfigModel
         [CsvColumnFormat(ColumnFormat = "orb_{0}")]
         public DamageFactor[] orbDamageFactors;
 
-        public override ArtifactType BuffInGameType => ArtifactType.RotateOrbs;
+        public override ArtifactType ArtifactType => ArtifactType.RotateOrbs;
     }
 
     public class RotateOrbsArtifactDataConfig : ArtifactDataConfig<RotateOrbsArtifactDataConfigItem>

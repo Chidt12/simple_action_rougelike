@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    [RequireComponent(typeof(Collider2D))]
     public abstract class CollisionShapeBody : Disposable, ICollisionBody
     {
         #region Members

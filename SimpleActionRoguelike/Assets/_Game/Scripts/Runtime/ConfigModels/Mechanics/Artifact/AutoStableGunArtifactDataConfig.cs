@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
 
-public class AutoStableGunArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    public class AutoStableGunArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
+        public override ArtifactType ArtifactType => ArtifactType.AutoStableGun;
+        public float interval;
+        public float lifeTime;
+        public float damageBonus;
+        public DamageFactor[] damageFactors;
+        public float range;
+        public string projectileId;
+        public string gunPrefabName;
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public class AutoStableGunArtifactDataConfig : ArtifactDataConfig<AutoStableGunArtifactDataConfigItem>
     {
-        
+        protected override UniTask<string> GetDescription(IEntityData entityData, AutoStableGunArtifactDataConfigItem itemData, AutoStableGunArtifactDataConfigItem previousItemData)
+        {
+            return UniTask.FromResult(string.Empty);
+        }
     }
 }

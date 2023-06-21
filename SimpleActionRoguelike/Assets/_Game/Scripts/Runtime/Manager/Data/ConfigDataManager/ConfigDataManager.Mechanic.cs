@@ -55,7 +55,7 @@ namespace Runtime.Manager.Data
         public async UniTask<ArtifactDataConfigItem> LoadBuffInGameDataConfigItem(ArtifactType buffInGameType, int level)
         {
             var config = await LoadBuffInGameDataConfig(buffInGameType);
-            var configItem = config.GetBuffItem(level);
+            var configItem = config.GetArtifactItem(level);
             return configItem;
         }
 

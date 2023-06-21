@@ -11,7 +11,7 @@ namespace Runtime.ConfigModel
     {
         public RarityType rarityType;
 
-        public override ArtifactType BuffInGameType => ArtifactType.UpgradeWeapon;
+        public override ArtifactType ArtifactType => ArtifactType.UpgradeWeapon;
     }
 
     public class UpgradeWeaponArtifactDataConfig : ArtifactDataConfig<UpgradeWeaponArtifactDataConfigItem>
