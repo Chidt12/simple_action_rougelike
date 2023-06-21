@@ -2,6 +2,6 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public interface IFinalDamagedModifier
     {
-        public float Finalize(float damageCreated, IEntityData receiver);
+        public void Finalize(float damageCreated, IEntityData receiver);
     }
 }

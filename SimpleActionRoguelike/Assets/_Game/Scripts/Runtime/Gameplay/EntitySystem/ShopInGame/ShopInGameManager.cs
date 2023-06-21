@@ -21,6 +21,16 @@ namespace Runtime.Gameplay.EntitySystem
             _shopInGameItems = new();
         }
 
+        public void Dispose()
+        {
+            foreach (var item in _shopInGameItems)
+            {
+                item.Remove();
+            }
+
+            _shopInGameItems.Clear();
+        }
+
         public async UniTask AddShopInGameItem(IEntityData ownerData, ShopInGameItemType shopInGameItemType, int dataId)
         {
             var dataConfigItem = await DataManager.Config.LoadShopInGameDataConfigItem(shopInGameItemType, dataId);

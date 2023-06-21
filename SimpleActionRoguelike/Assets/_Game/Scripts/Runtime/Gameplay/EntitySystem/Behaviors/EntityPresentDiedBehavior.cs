@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Pool;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -23,6 +24,12 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnDeath()
         {
+            OnDeathAsync().Forget();
+        }
+
+        private async UniTaskVoid OnDeathAsync()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: this.GetCancellationTokenOnDestroy());
             var position = _spawnVFXPosition ? _spawnVFXPosition.position : transform.position;
             PoolManager.Instance.Return(gameObject);
             if (!string.IsNullOrEmpty(_diedPrefab))
@@ -31,7 +38,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid SpawnExplodePrefabs(Vector2 position)
         {
-            var diedGameObject = await PoolManager.Instance.Rent(_diedPrefab);
+            var diedGameObject = await PoolManager.Instance.Rent(_diedPrefab, token: this.GetCancellationTokenOnDestroy());
             diedGameObject.transform.position = position;
         }
     }

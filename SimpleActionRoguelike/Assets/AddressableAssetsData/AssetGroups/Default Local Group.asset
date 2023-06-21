@@ -181,6 +181,14 @@ MonoBehaviour:
     m_Address: Icons
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 64417dc455fbc664fb44b916271f5ff2
+    m_Address: hero_text_heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 560b60f82a50e5745829d37c695b3f58
+    m_Address: text_heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

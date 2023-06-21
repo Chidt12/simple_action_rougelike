@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: def087e8471008e419ebbe074e2830c4, type: 3}
-  m_Name: Runtime.ConfigModel.StunStatusDataConfig
+  m_Script: {fileID: 11500000, guid: bc48b3dd81f25ca43a22e3c157905676, type: 3}
+  m_Name: Runtime.ConfigModel.CauseStatusAfterHitsShopInGameDataConfig
   m_EditorClassIdentifier: 
   items:
-  - dataId: 0
-    chance: 1
-    duration: 2
-  - dataId: 1
-    chance: 1
-    duration: 10
+  - point: 1
+    dataId: 0
+    statusIdentity:
+      statusDataId: 1
+      statusType: 900
+    numberHitTriggered: 4

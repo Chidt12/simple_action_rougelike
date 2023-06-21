@@ -26,7 +26,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool CheckContainStatusInStack(StatusType[] statusTypes)
         {
-            return CurrentStatuses.Any(x => statusTypes.Contains(x.StatusType));
+            var containStatus = CurrentStatuses.Any(x => statusTypes.Contains(x.StatusType));
+            return containStatus;
         }
 
         public int GetNumberOfStatus(StatusType statusType)
@@ -53,6 +54,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void RemoveStatus(StatusType statusType)
         {
+            
+
             var removedStatuses = statuses.Where(x => x.StatusType == statusType);
             foreach (var removedStatus in removedStatuses)
                 removedStatus.Dispose();
