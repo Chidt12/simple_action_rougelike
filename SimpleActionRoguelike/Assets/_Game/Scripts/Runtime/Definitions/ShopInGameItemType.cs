@@ -12,5 +12,6 @@ namespace Runtime.Definition
         DamageIncreaseWhenAttackSameTarget = 7,
         IncreaseStatWhenKillEnemies = 8,
         IncreaseDamageWhenHealthEnough = 9,
+        HealAfterCrit = 10,
     }
 }
