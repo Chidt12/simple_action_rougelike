@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2947415530204503340}
   - component: {fileID: 309288909455914146}
   - component: {fileID: 7179043864925140256}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: rune_artifact
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -260,16 +260,13 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTaskVoid LoadGiveArtifactAsync()
         {
-            // Pause for select buff
-            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
-
             var heroEntityData = EntitiesManager.Instance.HeroData;
             var currentBuffs = mechanicSystemManager.GetCurrentBuffsInGame();
 
-            var suitableItems = await DataManager.Config.LoadCurrentSuitableBuffInGameItems(currentBuffs);
+            var suitableItems = await DataManager.Config.LoadCurrentSuitableArtifactItems(currentBuffs);
 
-            var modalData = new ModalSelectIngameBuffData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
-            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_BUFF), modalData).Forget();
+            var modalData = new ModalGiveArtifactData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_ARTIFACT), modalData).Forget();
         }
 
         private async UniTaskVoid LoadNextLevelAsync(GameplayRoomType roomType)
@@ -520,9 +517,7 @@ namespace Runtime.Manager.Gameplay
         private async UniTaskVoid OnSelectBuffItemAsync(ArtifactIdentity dataIdentity)
         {
             var heroData = EntitiesManager.Instance.HeroData;
-            await mechanicSystemManager.AddBuffInGameSystem(heroData, dataIdentity.artifactType);
-            GameManager.Instance.ReturnPreviousGameStateType();
-            await ScreenNavigator.Instance.PopModal(true);
+            await mechanicSystemManager.AddArtifactystem(heroData, dataIdentity.artifactType);
         }
 
         #endregion Class Methods

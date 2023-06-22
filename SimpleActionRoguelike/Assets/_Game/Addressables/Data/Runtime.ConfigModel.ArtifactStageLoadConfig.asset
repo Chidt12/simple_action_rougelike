@@ -15,5 +15,5 @@ MonoBehaviour:
   items:
   - identity:
       artifactType: 3
-      level: 1
+      level: 0
     weight: 1

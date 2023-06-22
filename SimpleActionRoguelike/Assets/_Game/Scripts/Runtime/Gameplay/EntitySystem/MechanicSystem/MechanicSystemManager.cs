@@ -77,13 +77,13 @@ namespace Runtime.Gameplay.EntitySystem
             return _artifacts.Select(x => new ArtifactIdentity(x.ArtifactType, x.Level)).ToList();
         }
 
-        public async UniTask AddBuffInGameSystem(IEntityData entityData, ArtifactType buffInGameType)
+        public async UniTask AddArtifactystem(IEntityData entityData, ArtifactType buffInGameType)
         {
             // Add level 1 or increase after time.
             var mechanic = _artifacts.FirstOrDefault(x => x.ArtifactType == buffInGameType);
             if (mechanic == null)
             {
-                var dataConfigItem = await DataManager.Config.LoadBuffInGameDataConfigItem(buffInGameType, 0);
+                var dataConfigItem = await DataManager.Config.LoadArtifactDataConfigItem(buffInGameType, 0);
                 var buffInGame = ArtifactSystemFactory.GetArtifactSystem(buffInGameType);
 
                 buffInGame.SetData(dataConfigItem);
@@ -93,14 +93,14 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 var currentLevel = mechanic.Level;
-                var dataConfigItem = await DataManager.Config.LoadBuffInGameDataConfigItem(buffInGameType, currentLevel + 1);
+                var dataConfigItem = await DataManager.Config.LoadArtifactDataConfigItem(buffInGameType, currentLevel + 1);
 
                 mechanic.SetData(dataConfigItem);
                 await mechanic.Init(entityData);
             }
         }
 
-        public void RemoveBuffInGameSystem(IEntityData entityData, ArtifactType buffInGameType)
+        public void RemoveArtifactSystem(IEntityData entityData, ArtifactType buffInGameType)
         {
             // Remove
             var mechanic = _artifacts.FirstOrDefault(x => x.EntityData.EntityUID == entityData.EntityUID &&

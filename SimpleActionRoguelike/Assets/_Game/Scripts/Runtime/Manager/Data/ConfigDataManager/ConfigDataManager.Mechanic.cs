@@ -30,7 +30,7 @@ namespace Runtime.Manager.Data
         }
 
 
-        public async UniTask<List<ArtifactStageLoadConfigItem>> LoadCurrentSuitableBuffInGameItems(List<ArtifactIdentity> currentBuffedItems)
+        public async UniTask<List<ArtifactStageLoadConfigItem>> LoadCurrentSuitableArtifactItems(List<ArtifactIdentity> currentBuffedItems)
         {
             var dataConfig = await Load<ArtifactStageLoadConfig>();
             var suitableItems = new List<ArtifactStageLoadConfigItem>();
@@ -52,16 +52,16 @@ namespace Runtime.Manager.Data
             return suitableItems;
         }
 
-        public async UniTask<ArtifactDataConfigItem> LoadBuffInGameDataConfigItem(ArtifactType buffInGameType, int level)
+        public async UniTask<ArtifactDataConfigItem> LoadArtifactDataConfigItem(ArtifactType artifactType, int level)
         {
-            var config = await LoadBuffInGameDataConfig(buffInGameType);
+            var config = await LoadArtifactDataConfig(artifactType);
             var configItem = config.GetArtifactItem(level);
             return configItem;
         }
 
-        public async UniTask<ArtifactDataConfig> LoadBuffInGameDataConfig(ArtifactType buffInGameType)
+        public async UniTask<ArtifactDataConfig> LoadArtifactDataConfig(ArtifactType artifacType)
         {
-            var config = await Load<ArtifactDataConfig>(string.Format(AddressableKeys.BUFF_INGAME_DATA_CONFIG_ASSET_FORMAT, buffInGameType));
+            var config = await Load<ArtifactDataConfig>(string.Format(AddressableKeys.ARTIFACT_DATA_CONFIG_ASSET_FORMAT, artifacType));
             return config;
         }
     }

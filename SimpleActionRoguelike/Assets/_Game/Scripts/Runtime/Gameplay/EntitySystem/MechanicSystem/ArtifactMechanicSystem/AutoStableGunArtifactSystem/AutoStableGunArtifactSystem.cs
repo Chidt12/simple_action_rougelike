@@ -45,8 +45,10 @@ namespace Runtime.Gameplay.EntitySystem
         private async UniTaskVoid SpawnGunAsync()
         {
             var gunObject = await PoolManager.Instance.Rent(ownerData.gunPrefabName);
+            gunObject.transform.position = ownerEntityData.Position;
             var autoGun = gunObject.GetComponent<AutoStableGun>();
             autoGun.Init(ownerData.range, ownerData.interval, new[] { EntityType.Enemy, EntityType.Boss }, OnShooting);
+            _listGuns.Add(autoGun);
         }
 
         private void OnShooting(Transform spawnPoint, Vector2 direction)

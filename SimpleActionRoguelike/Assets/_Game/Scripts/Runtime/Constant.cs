@@ -15,8 +15,8 @@ namespace Runtime.Constants
         public const string VICTORY = "prefab_modal_victory";
         public const string LOSE = "prefab_modal_lose";
 
-        public const string SELECT_INGAME_BUFF = "prefab_modal_select_ingame_buff";
         public const string SELECT_INGAME_SHOP = "prefab_modal_select_ingame_shop";
+        public const string GIVE_ARTIFACT = "prefab_modal_give_ingame_artifact";
         public const string GIVE_INGAME_SHOP = "prefab_modal_give_ingame_shop";
 
         public const string QUIT_GAME = "prefab_modal_quit_game";
@@ -38,7 +38,7 @@ namespace Runtime.Constants
 
         public const string WEAPON_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}WeaponDataConfig";
         public const string SKILL_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}SkillDataConfig";
-        public const string BUFF_INGAME_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}BuffInGameDataConfig";
+        public const string ARTIFACT_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}ArtifactDataConfig";
         public const string SHOP_INGAME_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}ShopInGameDataConfig";
         public const string DEATH_DATA_CONFIG_ASSET_FORMAT = "Runtime.ConfigModel.{0}DeathDataConfig";
                                                    

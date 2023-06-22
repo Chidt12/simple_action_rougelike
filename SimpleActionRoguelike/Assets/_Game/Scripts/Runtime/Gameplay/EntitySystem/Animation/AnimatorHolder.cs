@@ -6,6 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
     [RequireComponent(typeof(Animator))]
     public class AnimatorHolder : MonoBehaviour
     {
+        [SerializeField] private Animator _animator;
         protected Action OperatedPointTriggeredCallbackAction { get; set; }
         protected Action EndActionCallbackAction { get; set; }
 
@@ -14,6 +15,8 @@ namespace Runtime.Gameplay.EntitySystem
             OperatedPointTriggeredCallbackAction = operatedPointEvent;
             EndActionCallbackAction = endPointEvent;
         }
+
+        public void Play(string animState) => _animator.Play(animState, 0, 0);
 
         #region Unity Animation Callback Event Methods
 

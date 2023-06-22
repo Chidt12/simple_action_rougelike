@@ -17,6 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private AnimatorHolder _animatorHolder;
         [SerializeField] private Transform _rangeObject;
+        [SerializeField] private string attackAnimState = "auto_gun_attack";
 
         private const float ROTATE_SPEED = 1200;
         private List<IEntityData> _targets;
@@ -69,7 +70,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void UpdateCurrentTarget()
         {
-            if(_currentTarget.IsDead || !_targets.Contains(_currentTarget))
+            if(_currentTarget == null || _currentTarget.IsDead || !_targets.Contains(_currentTarget))
             {
                 _currentTarget = _targets.FirstOrDefault(x => !x.IsDead);
             }
@@ -103,13 +104,18 @@ namespace Runtime.Gameplay.EntitySystem
             _currentTime = 0;
             _isShooting = true;
             _animatorHolder.SetEvents(OnAnimationTriggeredPoint, () => _isShooting = false);
+            _animatorHolder.Play(attackAnimState);
         }
 
         #region UNITY EVENT
 
         public void OnAnimationTriggeredPoint()
         {
-            _onShootingAction?.Invoke(_spawnPoint, _rotateTransform.up);
+            if(_currentTarget != null)
+            {
+                var direction = _currentTarget.Position - (Vector2)_rotateTransform.position;
+                _onShootingAction?.Invoke(_spawnPoint, direction);
+            }
         }
 
         #endregion UNITY EVENT

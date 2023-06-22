@@ -57,15 +57,14 @@ namespace Runtime.Gameplay.EntitySystem
                 else
                 {
                     _currentTime += Time.deltaTime;
-                    _progressTransform.localScale = new Vector2(_currentTime / _lifeTime, 1);
                 }
             }
         }
 
         public async UniTask InitAsync(float lifeTime, ArtifactType artifactType, CancellationToken cancellationToken)
         {
+            _artifactType = artifactType;
             _currentTime = 0;
-            _progressTransform.localScale = Vector2.one;
             _lifeTime = lifeTime;
             _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}"), cancellationToken);
             _isFlying = false;
@@ -81,7 +80,6 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     _isFlying = true;
                     _target = collision.transform;
-                    transform.DOScale(new Vector2(0.3f, 0.3f), 1f);
                 }
             }
         }
