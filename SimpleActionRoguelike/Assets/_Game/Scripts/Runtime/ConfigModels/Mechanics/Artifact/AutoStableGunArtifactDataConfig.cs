@@ -1,9 +1,11 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using System;
 
 namespace Runtime.ConfigModel
 {
+    [Serializable]
     public class AutoStableGunArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
         public override ArtifactType ArtifactType => ArtifactType.AutoStableGun;
@@ -13,6 +15,7 @@ namespace Runtime.ConfigModel
         public DamageFactor[] damageFactors;
         public float range;
         public string projectileId;
+        public float projectileSpeed;
         public string gunPrefabName;
         
     }

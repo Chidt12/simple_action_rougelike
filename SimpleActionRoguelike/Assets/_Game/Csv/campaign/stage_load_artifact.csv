@@ -1,12 +1,2 @@
 artifact_type,level,weight
-RotateOrbs,0,2
-RotateOrbs,1,1
-RotateOrbs,2,1
-RotateOrbs,3,1
-RotateOrbs,4,1
-RotateOrbs,5,1
-UpgradeWeapon,0,1
-UpgradeWeapon,1,1
-UpgradeWeapon,2,1
-UpgradeWeapon,3,1
-UpgradeWeapon,4,1
+AutoStableGun,1,1

@@ -230,7 +230,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7496784376469914663}
   m_Father: {fileID: 2974820501437865227}
@@ -664,8 +664,8 @@ MonoBehaviour:
   _flipPivotTransform: {fileID: 7496784376469914663}
   _rotateTransform: {fileID: 2974820501437865227}
   _spawnPoint: {fileID: 6847274338981895021}
-  _animatorHolder: {fileID: 0}
-  _rangeObject: {fileID: 0}
+  _animatorHolder: {fileID: 5173023332361906421}
+  _rangeObject: {fileID: 7496784377138041147}
 --- !u!1 &8322947848407867185
 GameObject:
   m_ObjectHideFlags: 0

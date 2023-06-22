@@ -23,10 +23,10 @@ namespace Runtime.Gameplay.EntitySystem
 
         public int Level => ownerData.level;
 
-        public void Trigger()
+        public virtual void Trigger()
         {}
 
-        public bool CanTrigger() => true;
+        public virtual bool CanTrigger() => true;
 
         public virtual void Dispose()
         {}

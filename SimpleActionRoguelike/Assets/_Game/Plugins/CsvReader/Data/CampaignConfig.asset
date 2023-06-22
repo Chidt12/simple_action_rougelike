@@ -35,11 +35,11 @@ MonoBehaviour:
       fieldSetValue: _tempWaveConfigs
       isConvert: 1
       convertMethod: Convert
-  - className: Runtime.ConfigModel.BuffInGameStageLoadConfig
+  - className: Runtime.ConfigModel.ArtifactStageLoadConfig
     csvInformations:
-    - className: Runtime.ConfigModel.BuffInGameStageLoadConfig
+    - className: Runtime.ConfigModel.ArtifactStageLoadConfig
       csvFile: {fileID: 4900000, guid: 6c28d4c49572c6e45b1a486e065d4378, type: 3}
-      csvPath: Assets/_Game/Csv/campaign/stage_load_buff_in_game.csv
+      csvPath: Assets/_Game/Csv/campaign/stage_load_artifact.csv
       usingFolder: 0
       csvFolderPath: 
       separateScriptableObject: 0

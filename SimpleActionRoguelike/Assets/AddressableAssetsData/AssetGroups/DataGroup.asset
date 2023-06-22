@@ -109,6 +109,14 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.HealWhenDefeatEnemyInStatusShopInGameDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 0a6319fe9fdfe2448bece2a7b5c0926a
+    m_Address: Runtime.ConfigModel.ArtifactStageLoadConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cf555050516e3f04187254e38735d185
+    m_Address: Runtime.ConfigModel.AutoStableGunArtifactDataConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

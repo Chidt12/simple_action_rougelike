@@ -4,6 +4,7 @@ using Runtime.Core.Pool;
 using Runtime.Definition;
 using Runtime.Manager;
 using Runtime.Manager.Gameplay;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -11,22 +12,24 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public abstract class RuneArtifactSystem<T> : ArtifactSystem<T> where T : RuneArtifactDataConfigItem
     {
-        private CancellationTokenSource _cancellationTokenSource;
+        protected CancellationTokenSource cancellationTokenSource;
 
         public async override UniTask Init(IEntityData entityData)
         {
             await base.Init(entityData);
-            _cancellationTokenSource = new();
+            cancellationTokenSource = new();
             StartRuneCooldownAsync().Forget();
         }
 
-        protected virtual async UniTaskVoid StartRuneCooldownAsync()
+        protected async UniTaskVoid StartRuneCooldownAsync()
         {
             float currentCountTime = 0;
             while (true)
             {
-                await UniTask.Yield(_cancellationTokenSource.Token);
+                await UniTask.Yield(cancellationTokenSource.Token);
                 currentCountTime += Time.deltaTime;
+
+                OnUpdateAsync();
 
                 if (GameManager.Instance.CurrentGameStateType != GameStateType.GameplayRunning)
                     continue;
@@ -39,16 +42,18 @@ namespace Runtime.Gameplay.EntitySystem
 
                     var runeArtifact = rune.GetComponent<RuneArtifact>();
                     // Find some place to spawn.
-                    await runeArtifact.InitAsync(ownerData.runeLifeTime, ArtifactType, _cancellationTokenSource.Token);
+                    await runeArtifact.InitAsync(ownerData.runeLifeTime, ArtifactType, cancellationTokenSource.Token);
                     currentCountTime = 0;
                 }
             }
         }
 
+        protected virtual void OnUpdateAsync() { }
+
         public override void Dispose()
         {
             base.Dispose();
-            _cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Cancel();
         }
     }
 }

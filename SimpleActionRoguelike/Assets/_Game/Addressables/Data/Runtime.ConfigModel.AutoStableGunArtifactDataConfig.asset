@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490f72eb26fd2e540993e90762b7522a, type: 3}
+  m_Name: Runtime.ConfigModel.AutoStableGunArtifactDataConfig
+  m_EditorClassIdentifier: 
+  items:
+  - point: 1
+    level: 0
+    runeLifeTime: 3
+    runeInterval: 5
+    interval: 1
+    lifeTime: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.3
+    range: 7
+    projectileId: bullet_blue
+    projectileSpeed: 15
+    gunPrefabName: auto_gun
+  - point: 1
+    level: 1
+    runeLifeTime: 3
+    runeInterval: 5
+    interval: 1
+    lifeTime: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.3
+    range: 7
+    projectileId: bullet_blue
+    projectileSpeed: 15
+    gunPrefabName: auto_gun
+  - point: 1
+    level: 2
+    runeLifeTime: 3
+    runeInterval: 5
+    interval: 1
+    lifeTime: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.3
+    range: 7
+    projectileId: bullet_blue
+    projectileSpeed: 15
+    gunPrefabName: auto_gun
+  - point: 1
+    level: 3
+    runeLifeTime: 3
+    runeInterval: 5
+    interval: 1
+    lifeTime: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.3
+    range: 7
+    projectileId: bullet_blue
+    projectileSpeed: 15
+    gunPrefabName: auto_gun
+  - point: 1
+    level: 4
+    runeLifeTime: 3
+    runeInterval: 5
+    interval: 1
+    lifeTime: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.3
+    range: 7
+    projectileId: bullet_blue
+    projectileSpeed: 15
+    gunPrefabName: auto_gun

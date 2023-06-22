@@ -23,13 +23,16 @@ namespace Runtime.Gameplay.EntitySystem
         private IEntityData _currentTarget;
         private EntityType[] _targetTypes;
         private bool _isShooting;
+        private float _currentTime;
+        private float _cooldown;
 
         private Action<Transform, Vector2> _onShootingAction; // Spawn point and direction
 
-        public void Init(float detectRange, EntityType[] targetTypes, Action<Transform, Vector2> onShootingAction)
+        public void Init(float detectRange, float cooldown, EntityType[] targetTypes, Action<Transform, Vector2> onShootingAction)
         {
             _collision.Init(detectRange);
             _targetTypes = targetTypes;
+            _cooldown = cooldown;
             _targets = new List<IEntityData>();
             _onShootingAction = onShootingAction;
             _collision.OnCollisionEvent = OnCollision;
@@ -74,6 +77,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
+            if(!_isShooting)
+                _currentTime += Time.deltaTime;
+
             if (_currentTarget != null)
             {
                 var direction = _currentTarget.Position - (Vector2)_rotateTransform.position;
@@ -89,11 +95,12 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool CanShooting()
         {
-            return !_isShooting && _currentTarget != null && !_currentTarget.IsDead;
+            return _currentTime >= _cooldown && !_isShooting && _currentTarget != null && !_currentTarget.IsDead;
         }
 
         public void Shooting()
         {
+            _currentTime = 0;
             _isShooting = true;
             _animatorHolder.SetEvents(OnAnimationTriggeredPoint, () => _isShooting = false);
         }
