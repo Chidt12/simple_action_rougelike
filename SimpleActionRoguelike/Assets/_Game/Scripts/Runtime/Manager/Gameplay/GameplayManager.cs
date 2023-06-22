@@ -57,6 +57,8 @@ namespace Runtime.Manager.Gameplay
         private List<CheckEndStage> _checkEndStageConditions;
 
         public GameplayMessageCenter MessageCenter => messageCenter;
+        public MechanicSystemManager MechanicSystemManager => mechanicSystemManager;
+        public ShopInGameManager ShopInGameManager => shopInGameManager;
         public List<ArtifactIdentity> CurrentBuffInGameItems => mechanicSystemManager.GetCurrentBuffsInGame();
         public List<ShopInGameItem> CurrentShopInGameItems => shopInGameManager.CurrentShopInGameItems;
         public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();

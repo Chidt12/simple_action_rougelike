@@ -155,8 +155,13 @@ namespace Runtime.Manager.Gameplay
             else return false;
         }
 
-        public void UpdateMap(Vector2 position)
-            => ActiveGraph.UpdateNodeStatus(position);
+        public Vector2 GetRandomWalkablePoint()
+        {
+            var walkablePoints = ActiveGraph.nodes.Where(x => x.Walkable).ToList();
+            var point = walkablePoints[UnityEngine.Random.Range(0, walkablePoints.Count)];
+
+            return (Vector3)point.position;
+        }
 
         public void UpdateMap(int indexX, int indexY)
             => ActiveGraph.UpdateNodeStatus(indexX, indexY);
