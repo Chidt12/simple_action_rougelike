@@ -33,12 +33,12 @@ namespace Runtime.UI
             _subscriptions = new();
             _subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
             _subscriptions.Add(SimpleMessenger.Subscribe<EntitySpawnedMessage>(OnEntitySpawned));
-            _subscriptions.Add(SimpleMessenger.Subscribe<LoadNextLevelMessage>(OnLoadNextLevel));
+            _subscriptions.Add(SimpleMessenger.Subscribe<FinishedLoadNextLevelMessage>(OnLoadNextLevel));
             ResetBossHealthBars();
             return base.Initialize(args);
         }
 
-        private void OnLoadNextLevel(LoadNextLevelMessage message) => ResetBossHealthBars();
+        private void OnLoadNextLevel(FinishedLoadNextLevelMessage message) => ResetBossHealthBars();
 
         private void ResetBossHealthBars()
         {

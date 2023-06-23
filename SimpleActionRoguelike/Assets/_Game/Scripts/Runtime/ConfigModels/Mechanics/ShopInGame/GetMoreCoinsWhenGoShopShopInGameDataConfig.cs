@@ -1,21 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Localization;
+using System;
 
 namespace Runtime.ConfigModel
 {
-    public class GetMoreCoinsWhenGoShopShopInGameDataConfig : MonoBehaviour
+    [Serializable]
+    public class GetMoreCoinsWhenGoShopShopInGameDataConfigItem : ShopInGameDataConfigItem
     {
-        // Start is called before the first frame update
-        void Start()
+        public override ShopInGameItemType ShopInGameType => ShopInGameItemType.GetMoreCoinsWhenGoShop;
+        public int numberOfCoins;
+    }
+
+    public class GetMoreCoinsWhenGoShopShopInGameDataConfig : ShopInGameDataConfig<GetMoreCoinsWhenGoShopShopInGameDataConfigItem>
+    {
+        protected override async UniTask<(string, string)> GetDescription(GetMoreCoinsWhenGoShopShopInGameDataConfigItem itemData)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            var title = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemName(itemData.ShopInGameType, itemData.dataId));
+            var description = string.Empty;
+            return (title, description);
         }
     }
 }

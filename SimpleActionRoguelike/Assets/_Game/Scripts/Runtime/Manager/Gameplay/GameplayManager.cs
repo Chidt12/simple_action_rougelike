@@ -281,7 +281,7 @@ namespace Runtime.Manager.Gameplay
             // Load Level.
             await LoadLevelAsync(roomType);
             EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position);
-            SimpleMessenger.Publish(new LoadNextLevelMessage());
+            SimpleMessenger.Publish(new FinishedLoadNextLevelMessage(_currentStageData.CurrentRoomType));
 
             // Delay to wait for camera move to hero.
             await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
@@ -291,6 +291,8 @@ namespace Runtime.Manager.Gameplay
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Update current Stage info.
             SetUpNewStage();
+
+            SimpleMessenger.Publish(new EnteredNextLevelMessage(_currentStageData.CurrentRoomType));
         }
 
         private void SetUpNewStage()
@@ -447,15 +449,13 @@ namespace Runtime.Manager.Gameplay
         private void HandleLoseStage()
         {
             SimpleMessenger.Publish(new FinishedCurrentLevelMessage(false));
-            Debug.LogError("LOSE GAME");
         }
 
         private UniTask HandleWinLevelAsync()
         {
             SimpleMessenger.Publish(new FinishedCurrentLevelMessage(true));
             SetUpAfterWinLevel();
-            ToastController.Instance.Show($"Add + {RewardCoins}");
-            DataManager.Transient.AddMoney(InGameMoneyType.Gold, RewardCoins);
+            GiveRewards(RewardCoins);
             return UniTask.CompletedTask;
         }
 
@@ -518,6 +518,12 @@ namespace Runtime.Manager.Gameplay
         {
             var heroData = EntitiesManager.Instance.HeroData;
             await mechanicSystemManager.AddArtifactystem(heroData, dataIdentity.artifactType);
+        }
+
+        public void GiveRewards(int numberCoins)
+        {
+            ToastController.Instance.Show($"Add + {numberCoins}");
+            DataManager.Transient.AddMoney(InGameMoneyType.Gold, numberCoins);
         }
 
         #endregion Class Methods

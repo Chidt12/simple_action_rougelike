@@ -52,6 +52,7 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 46dd3710db75852418ce8ccaa4d859ce, type: 3}
   - {fileID: 21300000, guid: bab64760248ab5b41aef266916d27b39, type: 3}
+  - {fileID: 21300000, guid: 19e59de0d3a16df41aee620823eb91c6, type: 3}
   - {fileID: 21300000, guid: b0446fc2a9114e4459a43c9bdb5cd65d, type: 3}
   - {fileID: 21300000, guid: d29952d28c217f642b0b1bd0b4efa0b8, type: 3}
   - {fileID: 21300000, guid: c7674d3321fb4ab479f6c6b1fa3bc788, type: 3}
@@ -73,6 +74,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - weapon_icon5
   - stats_icon_18
+  - shop_item_icon_4_0
   - stats_icon_6
   - stats_icon_14
   - stats_icon_7

@@ -49,3 +49,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.GetMoreCoinsWhenGoShopShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.GetMoreCoinsWhenGoShopShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: cd2b6817dcad5704d81cd0cc3ff8c668, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/get_more_coins_when_go_shop_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

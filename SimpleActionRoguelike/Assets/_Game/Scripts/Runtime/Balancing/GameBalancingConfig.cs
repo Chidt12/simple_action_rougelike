@@ -71,8 +71,8 @@ namespace Runtime.Gameplay.Balancing
         [Header("==== Cheat ====")]
         public bool cheat;
         [ShowIf(nameof(cheat))] public MapLevelScriptableObject cheatMap;
-        [ShowIf(nameof(cheat))] public GameplayRoomType roomType;
-        [ShowIf(nameof(cheat))] public StageLoadConfigItem stageLoadConfigItem;
+        [ShowIf(nameof(cheat))] public GameplayRoomType[] roomTypes;
+        [ShowIf(nameof(cheat))] public StageLoadConfigItem[] stageLoadConfigItems;
 
         #region Calculate
 
@@ -83,7 +83,7 @@ namespace Runtime.Gameplay.Balancing
 
             if (cheat)
             {
-                return (cheatMap, stageLoadConfigItem, this.roomType, GameplayGateSetupType.None);
+                return (cheatMap, stageLoadConfigItems[currentStageData.StageNumber], this.roomTypes[currentStageData.StageNumber], GameplayGateSetupType.None);
             }
             else
             {
