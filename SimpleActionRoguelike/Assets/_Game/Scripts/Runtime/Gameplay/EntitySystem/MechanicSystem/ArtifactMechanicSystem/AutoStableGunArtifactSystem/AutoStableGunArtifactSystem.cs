@@ -26,6 +26,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected override void OnUpdateAsync()
         {
             base.OnUpdateAsync();
+            var removedGuns = new List<AutoStableGun>();
             foreach (var gun in _listGuns)
             {
                 gun.OnUpdate(Time.deltaTime);
@@ -33,6 +34,18 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     gun.Shooting();
                 }
+
+                if (gun.UpdateProgressLifetime(ownerData.lifeTime))
+                {
+                    PoolManager.Instance.Return(gun.gameObject);
+                    removedGuns.Add(gun);
+                }
+            }
+
+            if(removedGuns.Count > 0)
+            {
+                foreach (var gun in removedGuns)
+                    _listGuns.Remove(gun);
             }
         }
 

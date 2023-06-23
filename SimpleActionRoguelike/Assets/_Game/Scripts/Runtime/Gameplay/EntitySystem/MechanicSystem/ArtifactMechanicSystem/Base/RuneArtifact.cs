@@ -57,6 +57,7 @@ namespace Runtime.Gameplay.EntitySystem
                 else
                 {
                     _currentTime += Time.deltaTime;
+                    _progressTransform.localScale = new Vector2(Mathf.Clamp01((_lifeTime - _currentTime) / _lifeTime), 1);
                 }
             }
         }
@@ -69,6 +70,7 @@ namespace Runtime.Gameplay.EntitySystem
             _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}"), cancellationToken);
             _isFlying = false;
             _collider.enabled = true;
+            _progressTransform.localScale = new Vector2(1, 1);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

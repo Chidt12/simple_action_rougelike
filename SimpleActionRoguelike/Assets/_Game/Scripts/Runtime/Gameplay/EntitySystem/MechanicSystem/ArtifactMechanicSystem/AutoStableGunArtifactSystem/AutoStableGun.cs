@@ -17,6 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private AnimatorHolder _animatorHolder;
         [SerializeField] private Transform _rangeObject;
+        [SerializeField] private Transform _progressTransform;
         [SerializeField] private string attackAnimState = "auto_gun_attack";
 
         private const float ROTATE_SPEED = 1200;
@@ -24,6 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
         private IEntityData _currentTarget;
         private EntityType[] _targetTypes;
         private bool _isShooting;
+        private float _currentLifeTime;
         private float _currentTime;
         private float _cooldown;
 
@@ -38,6 +40,9 @@ namespace Runtime.Gameplay.EntitySystem
             _onShootingAction = onShootingAction;
             _collision.OnCollisionEvent = OnCollision;
             _rangeObject.localScale = new Vector2(detectRange * 2, detectRange * 2);
+            _currentTime = 0;
+            _currentLifeTime = 0;
+            _progressTransform.localScale = Vector2.one;
         }
 
         private void OnCollision(CollisionResult result, ICollisionBody collisionBody)
@@ -78,8 +83,10 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void OnUpdate(float deltaTime)
         {
-            if(!_isShooting)
-                _currentTime += Time.deltaTime;
+            _currentLifeTime += deltaTime;
+
+            if (!_isShooting)
+                _currentTime += deltaTime;
 
             if (_currentTarget != null)
             {
@@ -92,6 +99,12 @@ namespace Runtime.Gameplay.EntitySystem
                 else
                     _flipPivotTransform.localScale = new Vector3(1, 1, 1);
             }
+        }
+
+        public bool UpdateProgressLifetime(float lifeTime)
+        {
+            _progressTransform.localScale = new Vector2(Mathf.Clamp01((lifeTime - _currentLifeTime) / lifeTime), 1);
+            return _currentLifeTime >= lifeTime;
         }
 
         public bool CanShooting()

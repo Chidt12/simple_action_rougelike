@@ -15,10 +15,10 @@ MonoBehaviour:
   items:
   - point: 1
     level: 0
-    runeLifeTime: 3
+    runeLifeTime: 5
     runeInterval: 5
-    interval: 1
-    lifeTime: 3
+    interval: 0.3
+    lifeTime: 10
     damageBonus: 0
     damageFactors:
     - damageFactorStatType: 14
@@ -31,8 +31,8 @@ MonoBehaviour:
     level: 1
     runeLifeTime: 3
     runeInterval: 5
-    interval: 1
-    lifeTime: 3
+    interval: 0.3
+    lifeTime: 10
     damageBonus: 0
     damageFactors:
     - damageFactorStatType: 14
@@ -45,8 +45,8 @@ MonoBehaviour:
     level: 2
     runeLifeTime: 3
     runeInterval: 5
-    interval: 1
-    lifeTime: 3
+    interval: 0.3
+    lifeTime: 10
     damageBonus: 0
     damageFactors:
     - damageFactorStatType: 14
@@ -59,8 +59,8 @@ MonoBehaviour:
     level: 3
     runeLifeTime: 3
     runeInterval: 5
-    interval: 1
-    lifeTime: 3
+    interval: 0.3
+    lifeTime: 10
     damageBonus: 0
     damageFactors:
     - damageFactorStatType: 14
@@ -73,8 +73,8 @@ MonoBehaviour:
     level: 4
     runeLifeTime: 3
     runeInterval: 5
-    interval: 1
-    lifeTime: 3
+    interval: 0.3
+    lifeTime: 10
     damageBonus: 0
     damageFactors:
     - damageFactorStatType: 14

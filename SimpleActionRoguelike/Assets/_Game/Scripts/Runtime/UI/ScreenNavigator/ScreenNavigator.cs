@@ -259,7 +259,7 @@ namespace Runtime.UI
         public bool IsModalCanDetectAction(Modal modal)
         {
             var modalContainer = globalContainerLayerManager.Find<ModalContainer>(ContainerKey.MODAL_CONTAINER_LAYER_NAME);
-            return modalContainer.Current.View.Equals(modal);
+            return modalContainer.Modals.Count > 0 && modalContainer.Current.View.Equals(modal);
         }
     }
 }

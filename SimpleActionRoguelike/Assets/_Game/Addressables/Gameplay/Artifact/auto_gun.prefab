@@ -296,8 +296,8 @@ Transform:
   m_GameObject: {fileID: 7496784375846746459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7496784377138041147}
   m_RootOrder: 0
@@ -322,7 +322,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -344,7 +344,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 9e6cfa20a6eb154469d4bdc2063bf6d5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.27450982}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.15686275}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -494,7 +494,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7496784377138041144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -667,6 +667,8 @@ MonoBehaviour:
   _spawnPoint: {fileID: 6847274338981895021}
   _animatorHolder: {fileID: 5173023332361906421}
   _rangeObject: {fileID: 7496784377138041147}
+  _progressTransform: {fileID: 1576657736}
+  attackAnimState: auto_gun_attack
 --- !u!1 &8322947848407867185
 GameObject:
   m_ObjectHideFlags: 0
