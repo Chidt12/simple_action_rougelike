@@ -73,3 +73,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.HealWhenEndMapShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.HealWhenEndMapShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: 4c569f207bd808f448adfd5814b7e714, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/heal_when_end_map_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

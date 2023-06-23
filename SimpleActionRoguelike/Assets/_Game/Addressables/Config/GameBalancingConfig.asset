@@ -70,7 +70,7 @@ MonoBehaviour:
       duration: -1
       entites:
       - entityConfigItem:
-          entityId: 2003
+          entityId: 2001
           entityType: 1
           entityNumber: 1
           entityLevel: 1
@@ -83,29 +83,11 @@ MonoBehaviour:
       duration: -1
       entites:
       - entityConfigItem:
-          entityId: 2003
+          entityId: 2001
           entityType: 1
-          entityNumber: 5
+          entityNumber: 2
           entityLevel: 1
         delaySpawnTime: 0
-        followHero: 1
-        distanceFromHero: 5
-        spawnPointIndex: 0
-      - entityConfigItem:
-          entityId: 2003
-          entityType: 1
-          entityNumber: 10
-          entityLevel: 1
-        delaySpawnTime: 5
-        followHero: 1
-        distanceFromHero: 5
-        spawnPointIndex: 0
-      - entityConfigItem:
-          entityId: 2003
-          entityType: 1
-          entityNumber: 10
-          entityLevel: 1
-        delaySpawnTime: 10
         followHero: 1
         distanceFromHero: 5
         spawnPointIndex: 0

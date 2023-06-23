@@ -1,18 +1,38 @@
+using Runtime.ConfigModel;
+using Runtime.Core.Message;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ZBase.Foundation.PubSub;
+using Runtime.Message;
+using System;
 
-public class HealWhenEndMapShopInGameItem : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class HealWhenEndMapShopInGameItem : ShopInGameItem<HealWhenEndMapShopInGameDataConfigItem>
     {
-        
-    }
+        private ISubscription _subscription;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void Remove()
+        {
+            _subscription.Dispose();
+        }
+
+        protected override void Apply()
+        {
+            _subscription = SimpleMessenger.Subscribe<FinishedCurrentLevelMessage>(OnFinishedCurrentLevel);
+        }
+
+        private void OnFinishedCurrentLevel(FinishedCurrentLevelMessage message)
+        {
+            if (message.IsWin)
+            {
+                var statData = owner as IEntityModifiedStatData;
+                if (statData != null)
+                {
+                    statData.Heal(dataConfigItem.healAmount, EffectSource.None, EffectProperty.Normal);
+                }
+            }
+        }
     }
 }
