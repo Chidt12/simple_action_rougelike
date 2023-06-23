@@ -61,3 +61,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.IncreaseStatWhenKillEnemiesShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.IncreaseStatWhenKillEnemiesShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: 45deccf2681e80143a0c87fca1afe831, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/increase_stat_when_kill_enemies_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

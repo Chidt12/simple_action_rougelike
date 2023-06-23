@@ -273,7 +273,7 @@ MonoBehaviour:
   _flipTransform: {fileID: 6882819894183790083}
   _updateFaceRightType: 1
   _playDotweenTransform:
-  - {fileID: 0}
+  - {fileID: 6882819894183790083}
 --- !u!114 &465409382476491032
 MonoBehaviour:
   m_ObjectHideFlags: 0

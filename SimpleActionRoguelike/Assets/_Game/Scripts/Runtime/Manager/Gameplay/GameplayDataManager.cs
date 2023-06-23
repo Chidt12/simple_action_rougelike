@@ -4,6 +4,7 @@ using Runtime.Constants;
 using Runtime.Core.Message;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
+using Runtime.Gameplay;
 using Runtime.Gameplay.Balancing;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager.Data;
@@ -12,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Runtime.Gameplay
+namespace Runtime.Manager.Gameplay
 {
     public class GameplayDataManager : MonoSingleton<GameplayDataManager>
     {

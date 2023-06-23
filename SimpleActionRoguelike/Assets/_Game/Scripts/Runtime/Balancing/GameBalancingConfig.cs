@@ -83,7 +83,9 @@ namespace Runtime.Gameplay.Balancing
 
             if (cheat)
             {
-                return (cheatMap, stageLoadConfigItems[currentStageData.StageNumber], this.roomTypes[currentStageData.StageNumber], GameplayGateSetupType.None);
+                var index = currentStageData.StageNumber % roomTypes.Length;
+
+                return (cheatMap, stageLoadConfigItems[index], this.roomTypes[index], GameplayGateSetupType.None);
             }
             else
             {

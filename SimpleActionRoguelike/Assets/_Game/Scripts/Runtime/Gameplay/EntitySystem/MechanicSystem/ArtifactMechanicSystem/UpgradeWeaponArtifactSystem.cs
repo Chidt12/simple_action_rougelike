@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Definition;
+using Runtime.Manager.Gameplay;
 
 namespace Runtime.Gameplay.EntitySystem
 {

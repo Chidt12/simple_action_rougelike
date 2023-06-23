@@ -20,7 +20,7 @@ MonoBehaviour:
       detectedPriority: 0
       enemyLevelStats:
         detectRange: 4
-        hp: 100
+        hp: 40
         armor: 0
         armorPenetration: 0
         critChance: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
         skillType: 1
         skillDataId: 1
         skillAnimIndex: 0
-      autoInputStrategy: 6
+      autoInputStrategy: 0
       deathDataIdentity:
         deathDataId: 1
         deathType: 2
