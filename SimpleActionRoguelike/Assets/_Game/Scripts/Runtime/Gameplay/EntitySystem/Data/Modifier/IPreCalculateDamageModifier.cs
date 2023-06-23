@@ -16,7 +16,7 @@ namespace Runtime.Gameplay.EntitySystem
         }
     }
 
-    public interface IPreCalculateDamageModifier
+    public interface IPreCalculateDamageModifier : IPriorityModifier
     {
         PrepareDamageModifier Calculate(IEntityData target, EffectSource damageSource, PrepareDamageModifier prepareDamageModifier);
     }

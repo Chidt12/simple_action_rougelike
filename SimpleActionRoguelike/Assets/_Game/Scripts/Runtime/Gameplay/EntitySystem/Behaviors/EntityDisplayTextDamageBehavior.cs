@@ -46,7 +46,14 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTask DisplayTextDamage(float value, EffectSource effectSource, EffectProperty effectProperty)
         {
-            await TextDamageController.Instance.Spawn(_ownerData.EntityType.IsHero() ? HERO_TEXT_DAMAGE : TEXT_DAMAGE, value, false, _topTransform.position, _cancellationTokenSource.Token);
+            if(effectProperty == EffectProperty.Crit)
+            {
+                await TextDamageController.Instance.Spawn(CRIT_TEXT_DAMAGE, value, false, _topTransform.position, _cancellationTokenSource.Token);
+            }
+            else
+            {
+                await TextDamageController.Instance.Spawn(_ownerData.EntityType.IsHero() ? HERO_TEXT_DAMAGE : TEXT_DAMAGE, value, false, _topTransform.position, _cancellationTokenSource.Token);
+            }
         }
 
         private void OnHealed(float value, EffectSource effectSource, EffectProperty effectProperty)

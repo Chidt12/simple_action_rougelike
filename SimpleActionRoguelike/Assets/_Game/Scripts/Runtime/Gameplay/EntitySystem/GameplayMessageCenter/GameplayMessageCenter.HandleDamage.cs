@@ -66,9 +66,9 @@ namespace Runtime.Gameplay.EntitySystem
             }
 
             var prepareDamageModifier = new PrepareDamageModifier(message.DamageProperty, message.DamageBonus, message.DamageFactors, critChance);
-            if(message.Creator.EntityType == EntityType.Hero && preCalculateDamageModifiers != null)
+            if(message.Creator.EntityType == EntityType.Hero && _preCalculateDamageModifiers != null)
             {
-                foreach (var item in preCalculateDamageModifiers)
+                foreach (var item in _preCalculateDamageModifiers)
                     prepareDamageModifier = item.Calculate(message.Target, message.DamageSource, prepareDamageModifier);
             }
 
@@ -85,7 +85,10 @@ namespace Runtime.Gameplay.EntitySystem
                 prepareDamageModifier.critChance = 0;
             var isCrit = prepareDamageModifier.critChance <= 0 ? false : Random.Range(0, 1f) < prepareDamageModifier.critChance;
             if (isCrit)
+            {
                 damageValue = damageValue * (1 + critDamage);
+                prepareDamageModifier.damageProperty = EffectProperty.Crit;
+            }
 
 
 
@@ -94,9 +97,9 @@ namespace Runtime.Gameplay.EntitySystem
                   $" | armorPenet: {armorPenetration} | damageFactor: {(prepareDamageModifier.damageFactors != null && prepareDamageModifier.damageFactors.Length > 0 ? GetTextFactorLog(prepareDamageModifier.damageFactors) : "1")} | damageBonus: {prepareDamageModifier.damageBonus}");
 #endif
             var damageInfo = new DamageInfo(message.DamageSource, damageValue, message.Creator, message.Target, prepareDamageModifier.damageProperty);
-            if (message.Creator.EntityType == EntityType.Hero && postCalculateDamageModifiers != null)
+            if (message.Creator.EntityType == EntityType.Hero && _postCalculateDamageModifiers != null)
             {
-                foreach (var item in postCalculateDamageModifiers)
+                foreach (var item in _postCalculateDamageModifiers)
                     damageInfo = item.Calculate(damageInfo);
             }
 
@@ -118,9 +121,9 @@ namespace Runtime.Gameplay.EntitySystem
                 var damageTaken = (damageInfo.damage - armor * (1 - armorPenetration)) * (1 - damageReduction);
                 damageTaken = damageTaken > 0 ? damageTaken : 0;
 
-                if (message.Target.EntityType == EntityType.Hero && damageModifiers != null)
+                if (message.Target.EntityType == EntityType.Hero && _damageModifiers != null)
                 {
-                    foreach (var item in damageModifiers)
+                    foreach (var item in _damageModifiers)
                         damageTaken = item.Damage(damageTaken, damageInfo.damageSource, damageInfo.damageProperty, damageInfo.creatorData);
                 }
 
@@ -132,10 +135,10 @@ namespace Runtime.Gameplay.EntitySystem
 
                 var finalCreatedDamage = targetModifiedStatData.GetDamage(damageTaken, damageInfo.damageSource, isCrit ? EffectProperty.Crit : damageInfo.damageProperty);
 
-                if(message.Creator.EntityType == EntityType.Hero && finalDamageCreatedModifiers != null)
+                if(message.Creator.EntityType == EntityType.Hero && _finalDamageCreatedModifiers != null)
                 {
-                    foreach (var item in finalDamageCreatedModifiers)
-                        item.Finalize(finalCreatedDamage, damageInfo.targetData);
+                    foreach (var item in _finalDamageCreatedModifiers)
+                        item.Finalize(finalCreatedDamage, damageInfo.damageSource, damageInfo.damageProperty, damageInfo.targetData);
                 }
 
                 if (message.Target.IsDead)

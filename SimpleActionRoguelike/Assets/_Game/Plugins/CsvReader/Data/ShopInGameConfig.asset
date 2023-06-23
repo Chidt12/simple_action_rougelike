@@ -85,3 +85,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.HealAfterCritShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.HealAfterCritShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: f68feb7c07db86544a36ee85b2562a2e, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/heal_after_crit_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

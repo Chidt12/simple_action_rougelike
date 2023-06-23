@@ -6,6 +6,8 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class HealWhenDefeatEnemyInStatusShopInGameItem : ShopInGameItem<HealWhenDefeatEnemyInStatusShopInGameDataConfigItem>, IFinalDamagedModifier
     {
+        public int Priority => throw new System.NotImplementedException();
+
         protected override void Apply()
         {
             GameplayManager.Instance.MessageCenter.AddFinalDamageCreatedModifier(this);
@@ -16,7 +18,7 @@ namespace Runtime.Gameplay.EntitySystem
             GameplayManager.Instance.MessageCenter.RemoveFinalDamageCreatedModifier(this);
         }
 
-        public void Finalize(float damageCreated, IEntityData receiver)
+        public void Finalize(float damageCreated, EffectSource effectSource, EffectProperty effectProperty, IEntityData receiver)
         {
             if(receiver.IsDead && damageCreated > 0)
             {

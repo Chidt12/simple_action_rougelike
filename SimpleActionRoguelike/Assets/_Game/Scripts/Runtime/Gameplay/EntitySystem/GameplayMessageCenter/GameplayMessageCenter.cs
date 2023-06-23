@@ -8,10 +8,11 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public partial class GameplayMessageCenter
     {
-        private List<IPreCalculateDamageModifier> preCalculateDamageModifiers;
-        private List<IPostCalculateDamageModifier> postCalculateDamageModifiers;
-        private List<IDamageModifier> damageModifiers;
-        private List<IFinalDamagedModifier> finalDamageCreatedModifiers;
+        private List<IPreCalculateDamageModifier> _preCalculateDamageModifiers;
+        private List<IPostCalculateDamageModifier> _postCalculateDamageModifiers;
+        private List<IDamageModifier> _damageModifiers;
+        private List<IFinalDamagedModifier> _finalDamageCreatedModifiers;
+        private List<IHealModifier> _healModifiers;
 
         private List<ISubscription> _subscriptions;
 
@@ -24,10 +25,11 @@ namespace Runtime.Gameplay.EntitySystem
             _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentDamageMessage>(OnSentDamage));
             _subscriptions.Add(SimpleMessenger.Scope(MessageScope.EntityMessage).Subscribe<SentStatusEffectMessage>(OnSentStatusEffect));
 
-            preCalculateDamageModifiers = new();
-            postCalculateDamageModifiers = new();
-            damageModifiers = new();
-            finalDamageCreatedModifiers = new();
+            _preCalculateDamageModifiers = new();
+            _postCalculateDamageModifiers = new();
+            _damageModifiers = new();
+            _finalDamageCreatedModifiers = new();
+            _healModifiers = new();
         }
 
         public void Dispose()
@@ -35,36 +37,71 @@ namespace Runtime.Gameplay.EntitySystem
             foreach (var item in _subscriptions)
                 item.Dispose();
 
-            preCalculateDamageModifiers.Clear();
-            postCalculateDamageModifiers.Clear();
-            damageModifiers.Clear();
-            finalDamageCreatedModifiers.Clear();
+            _preCalculateDamageModifiers.Clear();
+            _postCalculateDamageModifiers.Clear();
+            _damageModifiers.Clear();
+            _finalDamageCreatedModifiers.Clear();
         }
 
         public void AddDamageModifier(IDamageModifier damageModifier)
         {
-            damageModifiers.Add(damageModifier);
-            damageModifiers = damageModifiers.OrderBy(x => x.Priority).ToList();
+            _damageModifiers.Add(damageModifier);
+            _damageModifiers = _damageModifiers.OrderBy(x => x.Priority).ToList();
+        }
+
+        public void RemoveDamageModifier(IDamageModifier damageModifier)
+        {
+            _damageModifiers.Remove(damageModifier);
+            _damageModifiers = _damageModifiers.OrderBy(x => x.Priority).ToList();
+        }
+
+        public void AddHealModifier(IHealModifier healModifier)
+        {
+            _healModifiers.Add(healModifier);
+            _healModifiers = _healModifiers.OrderBy(x => x.Priority).ToList();
+        }
+
+        public void RemoveHealModifier(IHealModifier healModifier)
+        {
+            _healModifiers.Remove(healModifier);
+            _healModifiers = _healModifiers.OrderBy(x => x.Priority).ToList();
         }
 
         public void AddPreCalculateDamageModifier(IPreCalculateDamageModifier preCalculateDamageModifier)
         {
-            preCalculateDamageModifiers.Add(preCalculateDamageModifier);
+            _preCalculateDamageModifiers.Add(preCalculateDamageModifier);
+            _preCalculateDamageModifiers = _preCalculateDamageModifiers.OrderBy(x => x.Priority).ToList();
+        }
+
+        public void RemovePreCalculateDamageModifier(IPreCalculateDamageModifier preCalculateDamageModifier)
+        {
+            _preCalculateDamageModifiers.Remove(preCalculateDamageModifier);
+            _preCalculateDamageModifiers = _preCalculateDamageModifiers.OrderBy(x => x.Priority).ToList();
         }
 
         public void AddPostCalculateDamageModifier(IPostCalculateDamageModifier postCalculateDamageModifier)
         {
-            postCalculateDamageModifiers.Add(postCalculateDamageModifier);
+            _postCalculateDamageModifiers.Add(postCalculateDamageModifier);
+            _postCalculateDamageModifiers = _postCalculateDamageModifiers.OrderBy(x => x.Priority).ToList();
         }
+
+        public void RemovePostCalculateDamageModifier(IPostCalculateDamageModifier postCalculateDamageModifier)
+        {
+            _postCalculateDamageModifiers.Remove(postCalculateDamageModifier);
+            _postCalculateDamageModifiers = _postCalculateDamageModifiers.OrderBy(x => x.Priority).ToList();
+        }
+
 
         public void AddFinalDamageCreatedModifier(IFinalDamagedModifier finalDamagedModifier)
         {
-            finalDamageCreatedModifiers.Add(finalDamagedModifier);
+            _finalDamageCreatedModifiers.Add(finalDamagedModifier);
+            _finalDamageCreatedModifiers = _finalDamageCreatedModifiers.OrderBy(x => x.Priority).ToList();
         }
 
         public void RemoveFinalDamageCreatedModifier(IFinalDamagedModifier finalDamagedModifier)
         {
-            finalDamageCreatedModifiers.Remove(finalDamagedModifier);
+            _finalDamageCreatedModifiers.Remove(finalDamagedModifier);
+            _finalDamageCreatedModifiers = _finalDamageCreatedModifiers.OrderBy(x => x.Priority).ToList();
         }
 
         private partial void OnSentStatusEffect(SentStatusEffectMessage message);

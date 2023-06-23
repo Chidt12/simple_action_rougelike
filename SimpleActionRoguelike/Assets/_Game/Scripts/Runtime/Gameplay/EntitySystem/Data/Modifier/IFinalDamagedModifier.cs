@@ -1,7 +1,7 @@
 namespace Runtime.Gameplay.EntitySystem
 {
-    public interface IFinalDamagedModifier
+    public interface IFinalDamagedModifier : IPriorityModifier
     {
-        public void Finalize(float damageCreated, IEntityData receiver);
+        public void Finalize(float damageCreated, EffectSource effectSource, EffectProperty effectProperty, IEntityData receiver);
     }
 }

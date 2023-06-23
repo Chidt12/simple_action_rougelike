@@ -38,7 +38,7 @@ MonoBehaviour:
       resourceNumber: 1
     weight: 1
   - identity:
-      shopInGameItemType: 8
+      shopInGameItemType: 10
       dataId: 0
     cost:
       resourceId: 0

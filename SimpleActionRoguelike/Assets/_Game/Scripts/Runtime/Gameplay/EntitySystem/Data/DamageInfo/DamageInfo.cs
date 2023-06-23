@@ -11,7 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         None,
         FromNormalAttack,
         FromSkill,
-        FromMechanicOrbs
+        FromArtifact
     }
 
     public enum EffectProperty

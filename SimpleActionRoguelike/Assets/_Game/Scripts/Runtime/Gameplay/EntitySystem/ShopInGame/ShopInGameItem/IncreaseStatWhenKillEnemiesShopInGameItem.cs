@@ -8,6 +8,8 @@ namespace Runtime.Gameplay.EntitySystem
         private float _currentBuffedValue;
         private int _currentCountEnemies;
 
+        public int Priority => 0;
+
         public override void Remove()
         {
             GameplayManager.Instance.MessageCenter.RemoveFinalDamageCreatedModifier(this);
@@ -25,7 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
             GameplayManager.Instance.MessageCenter.AddFinalDamageCreatedModifier(this);
         }
 
-        public void Finalize(float damageCreated, IEntityData receiver)
+        public void Finalize(float damageCreated, EffectSource effectSource, EffectProperty effectProperty, IEntityData receiver)
         {
             if(receiver != null && receiver.IsDead && receiver.EntityType.IsEnemy())
             {

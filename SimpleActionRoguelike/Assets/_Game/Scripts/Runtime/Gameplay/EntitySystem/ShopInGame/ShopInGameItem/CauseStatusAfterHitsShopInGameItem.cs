@@ -9,6 +9,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private int _currentHitNumber;
 
+        public int Priority => 0;
+
         protected override void Apply()
         {
             _currentHitNumber = 0;
@@ -20,7 +22,7 @@ namespace Runtime.Gameplay.EntitySystem
             GameplayManager.Instance.MessageCenter.RemoveFinalDamageCreatedModifier(this);
         }
 
-        public void Finalize(float damageCreated, IEntityData receiver)
+        public void Finalize(float damageCreated, EffectSource effectSource, EffectProperty effectProperty, IEntityData receiver)
         {
             if(damageCreated > 0)
             {

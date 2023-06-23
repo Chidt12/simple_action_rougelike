@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Runtime.ConfigModel;
+using Runtime.Manager.Gameplay;
 
-public class HealAfterCritShopInGameItem : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class HealAfterCritShopInGameItem : ShopInGameItem<HealAfterCritShopInGameDataConfigItem>, IFinalDamagedModifier
     {
-        
-    }
+        public int Priority => 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void Remove()
+        {
+            GameplayManager.Instance.MessageCenter.RemoveFinalDamageCreatedModifier(this);
+        }
+
+        protected override void Apply()
+        {
+            GameplayManager.Instance.MessageCenter.AddFinalDamageCreatedModifier(this);
+        }
+
+        public void Finalize(float damageCreated, EffectSource effectSource, EffectProperty effectProperty, IEntityData receiver)
+        {
+            if (damageCreated > 0 && effectProperty == EffectProperty.Crit)
+            {
+                var statData = owner as IEntityModifiedStatData;
+                if(statData != null)
+                {
+                    statData.Heal(dataConfigItem.healAmount, EffectSource.FromArtifact, EffectProperty.Normal);
+                }
+            }
+        }
     }
 }

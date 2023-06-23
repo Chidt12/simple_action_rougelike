@@ -87,7 +87,7 @@ namespace Runtime.Gameplay.EntitySystem
         private void OnGetHit(ProjectileCallbackData callbackData)
         {
             SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
-                EffectSource.FromMechanicOrbs,
+                EffectSource.FromArtifact,
                 EffectProperty.Normal,
                 ownerData.orbDamageBonus,
                 ownerData.orbDamageFactors,

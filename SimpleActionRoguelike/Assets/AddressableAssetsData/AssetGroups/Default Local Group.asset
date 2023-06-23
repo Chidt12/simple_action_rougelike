@@ -197,6 +197,10 @@ MonoBehaviour:
     m_Address: auto_gun
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 980e1ebf56ec6584b8e59978e5db3799
+    m_Address: crit_text_damage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:
