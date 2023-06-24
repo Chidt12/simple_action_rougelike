@@ -1,0 +1,2 @@
+﻿data_id,point,is_above,health_percent,stat_type,value,stat_modify_type
+0,1,TRUE,0.6,AttackDamage,5,0

@@ -31,7 +31,7 @@ namespace Runtime.Gameplay.EntitySystem
             _shopInGameItems.Clear();
         }
 
-        public async UniTask AddShopInGameItem(IEntityData ownerData, ShopInGameItemType shopInGameItemType, int dataId)
+        public async UniTask AddShopInGameItem(IEntityModifiedStatData ownerData, ShopInGameItemType shopInGameItemType, int dataId)
         {
             var dataConfigItem = await DataManager.Config.LoadShopInGameDataConfigItem(shopInGameItemType, dataId);
             var shopInGameItem = ShopInGameItemFactory.GetShopInGameItem(shopInGameItemType);

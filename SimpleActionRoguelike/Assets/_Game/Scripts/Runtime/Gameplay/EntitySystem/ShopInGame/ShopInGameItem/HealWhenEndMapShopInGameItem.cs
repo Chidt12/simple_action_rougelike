@@ -27,11 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if (message.IsWin)
             {
-                var statData = owner as IEntityModifiedStatData;
-                if (statData != null)
-                {
-                    statData.Heal(dataConfigItem.healAmount, EffectSource.None, EffectProperty.Normal);
-                }
+                owner.Heal(dataConfigItem.healAmount, EffectSource.None, EffectProperty.Normal);
             }
         }
     }

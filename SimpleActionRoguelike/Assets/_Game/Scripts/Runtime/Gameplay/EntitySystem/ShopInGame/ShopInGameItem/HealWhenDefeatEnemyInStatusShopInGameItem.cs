@@ -27,11 +27,7 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     if(statusData.CheckContainStatusInStack(new[] { dataConfigItem.triggeredStatusType }))
                     {
-                        var modifiedStatData = owner as IEntityModifiedStatData;
-                        if(modifiedStatData != null)
-                        {
-                            modifiedStatData.Heal(dataConfigItem.healAmount, EffectSource.None, EffectProperty.Normal);
-                        }
+                        owner.Heal(dataConfigItem.healAmount, EffectSource.None, EffectProperty.Normal);
                     }
                 }
             }

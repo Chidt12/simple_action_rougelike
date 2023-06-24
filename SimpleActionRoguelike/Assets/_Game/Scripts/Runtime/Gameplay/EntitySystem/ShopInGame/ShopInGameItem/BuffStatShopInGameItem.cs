@@ -7,20 +7,12 @@ namespace Runtime.Gameplay.EntitySystem
     {
         protected override void Apply()
         {
-            var statData = owner as IEntityModifiedStatData;
-            if(statData != null)
-            {
-                statData.BuffStat(dataConfigItem.statType, dataConfigItem.statValue, dataConfigItem.statModifyType);
-            }
+            owner.BuffStat(dataConfigItem.statType, dataConfigItem.statValue, dataConfigItem.statModifyType);
         }
 
         public override void Remove()
         {
-            var statData = owner as IEntityModifiedStatData;
-            if (statData != null)
-            {
-                statData.DebuffStat(dataConfigItem.statType, dataConfigItem.statValue, dataConfigItem.statModifyType);
-            }
+            owner.DebuffStat(dataConfigItem.statType, dataConfigItem.statValue, dataConfigItem.statModifyType);
         }
     }
 }

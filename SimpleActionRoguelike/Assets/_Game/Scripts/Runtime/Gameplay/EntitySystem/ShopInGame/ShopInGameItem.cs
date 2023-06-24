@@ -8,19 +8,19 @@ namespace Runtime.Gameplay.EntitySystem
         public int BalancingPoint { get; protected set; }
         public abstract int DataId { get; }
         public abstract ShopInGameItemType ShopInGameItemType { get; }
-        public abstract void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem);
+        public abstract void Apply(IEntityModifiedStatData entityData, ShopInGameDataConfigItem dataConfigItem);
         public abstract void Remove();
     }
 
     public abstract class ShopInGameItem<T> : ShopInGameItem where T : ShopInGameDataConfigItem
     {
         protected T dataConfigItem;
-        protected IEntityData owner;
+        protected IEntityModifiedStatData owner;
 
         public override ShopInGameItemType ShopInGameItemType => dataConfigItem.ShopInGameType;
         public override int DataId => dataConfigItem.dataId;
 
-        public override void Apply(IEntityData entityData, ShopInGameDataConfigItem dataConfigItem)
+        public override void Apply(IEntityModifiedStatData entityData, ShopInGameDataConfigItem dataConfigItem)
         {
             this.dataConfigItem = dataConfigItem as T;
             BalancingPoint = dataConfigItem.point;

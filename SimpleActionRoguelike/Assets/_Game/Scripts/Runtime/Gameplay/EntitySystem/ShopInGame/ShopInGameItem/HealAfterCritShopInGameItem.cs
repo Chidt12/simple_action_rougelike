@@ -21,11 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             if (damageCreated > 0 && effectProperty == EffectProperty.Crit)
             {
-                var statData = owner as IEntityModifiedStatData;
-                if(statData != null)
-                {
-                    statData.Heal(dataConfigItem.healAmount, EffectSource.FromArtifact, EffectProperty.Normal);
-                }
+                owner.Heal(dataConfigItem.healAmount, EffectSource.FromArtifact, EffectProperty.Normal);
             }
         }
     }

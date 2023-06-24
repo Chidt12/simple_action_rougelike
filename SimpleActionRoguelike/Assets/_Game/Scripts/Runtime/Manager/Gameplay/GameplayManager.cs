@@ -252,7 +252,7 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTask AddShopItemAsync(ShopInGameIdentity identity)
         {
-            await shopInGameManager.AddShopInGameItem(EntitiesManager.Instance.HeroData, identity.shopInGameItemType, identity.dataId);
+            await shopInGameManager.AddShopInGameItem(EntitiesManager.Instance.HeroData as IEntityModifiedStatData, identity.shopInGameItemType, identity.dataId);
             var dataConfig = await ConfigDataManager.Instance.LoadShopInGameDataConfig(identity.shopInGameItemType);
             var (title, description) = await dataConfig.GetDescription(identity.dataId);
             ToastController.Instance.Show(description);

@@ -55,7 +55,9 @@ namespace Runtime.Definition
 
         // Stat use for mechanics
         OrbBonusRotateSpeed = 100,
-        DashNumber = 101
-
+        DashNumber = 101,
+        ArtifactInterval = 102,
+        RuneArtifactLifeTime = 103,
+        RuneArtifactCooldown = 104
     }
 }

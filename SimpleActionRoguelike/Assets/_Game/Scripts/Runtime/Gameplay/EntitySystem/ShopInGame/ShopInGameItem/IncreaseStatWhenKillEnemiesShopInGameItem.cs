@@ -15,9 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
             GameplayManager.Instance.MessageCenter.RemoveFinalDamageCreatedModifier(this);
             if(owner != null)
             {
-                var statData = owner as IEntityModifiedStatData;
-                if(statData != null)
-                    statData.DebuffStat(dataConfigItem.statType, _currentBuffedValue, Definition.StatModifyType.TotalBonus);
+                owner.DebuffStat(dataConfigItem.statType, _currentBuffedValue, Definition.StatModifyType.TotalBonus);
             }
         }
 
@@ -37,12 +35,8 @@ namespace Runtime.Gameplay.EntitySystem
                     _currentCountEnemies = 0;
                     if (owner != null)
                     {
-                        var statData = owner as IEntityModifiedStatData;
-                        if (statData != null)
-                        {
-                            statData.BuffStat(dataConfigItem.statType, dataConfigItem.valueEachTurn, Definition.StatModifyType.TotalBonus);
-                            _currentBuffedValue += dataConfigItem.valueEachTurn;
-                        }
+                        owner.BuffStat(dataConfigItem.statType, dataConfigItem.valueEachTurn, Definition.StatModifyType.TotalBonus);
+                        _currentBuffedValue += dataConfigItem.valueEachTurn;
                     }
                 }
             }
