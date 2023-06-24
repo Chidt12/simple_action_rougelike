@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Localization;
+using System;
 
-public class CritAfterHitsShopInGameDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class CritAfterHitsShopInGameDataConfigItem : ShopInGameDataConfigItem
     {
-        
+        public override ShopInGameItemType ShopInGameType => ShopInGameItemType.CritAfterHits;
+        public int numberOfHit;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class CritAfterHitsShopInGameDataConfig : ShopInGameDataConfig<CritAfterHitsShopInGameDataConfigItem>
     {
-        
+        protected override async UniTask<(string, string)> GetDescription(CritAfterHitsShopInGameDataConfigItem itemData)
+        {
+            var title = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemName(itemData.ShopInGameType, itemData.dataId));
+            var description = string.Empty;
+            return (title, description);
+        }
     }
 }

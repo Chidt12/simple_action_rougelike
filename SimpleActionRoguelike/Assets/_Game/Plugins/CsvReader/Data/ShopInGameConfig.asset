@@ -109,3 +109,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.CritAfterHitsShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.CritAfterHitsShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: 271679c52fa42ba49a384f4e25ce12fa, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/crit_after_hits_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

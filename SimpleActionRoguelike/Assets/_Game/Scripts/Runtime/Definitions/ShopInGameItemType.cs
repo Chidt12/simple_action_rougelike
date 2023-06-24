@@ -9,15 +9,14 @@ namespace Runtime.Definition
         GetMoreCoinsWhenGoShop = 4, // done
         CritAfterHits = 5, 
         HealWhenEndMap = 6, // done
-        DamageIncreaseWhenAttackSameTarget = 7,
-        IncreaseStatWhenKillEnemies = 8, // done => improve with lifetime buffed.
-        BuffStatWhenHealthEnough = 9,
-        HealAfterCrit = 10, // done
-        BuffStatWhenLowerHealth = 11,
-        BuffStatWhenDamagedWithDuration = 12,
-        BuffStatWhenKillEnemiesWithDuration = 13,
-        ConvertRuneOnMapToCoins = 14,
-        PersistantRune = 15, // concern
-        MagnetoRune = 16, 
+        IncreaseStatWhenKillEnemies = 7, // done => improve with lifetime buffed.
+        BuffStatWhenHealthEnough = 8, // done
+        HealAfterCrit = 9, // done
+        BuffStatWhenLowerHealth = 10,
+        BuffStatWhenDamagedWithDuration = 11,
+        BuffStatWhenKillEnemiesWithDuration = 12,
+        ConvertRuneOnMapToCoins = 13,
+        PersistantRune = 14, // concern
+        MagnetoRune = 15, 
     }
 }

@@ -1,18 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Runtime.ConfigModel;
+using Runtime.Manager.Gameplay;
 
-public class CritAfterHitsShopInGameItem : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class CritAfterHitsShopInGameItem : ShopInGameItem<CritAfterHitsShopInGameDataConfigItem>, IFinalDamagedModifier, IPreCalculateDamageModifier
     {
-        
-    }
+        public int Priority => 0;
+        private int _currentCritHits;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void Remove()
+        {
+            GameplayManager.Instance.MessageCenter.RemoveFinalDamageCreatedModifier(this);
+            GameplayManager.Instance.MessageCenter.RemovePreCalculateDamageModifier(this);
+        }
+
+        protected override void Apply()
+        {
+            GameplayManager.Instance.MessageCenter.AddFinalDamageCreatedModifier(this);
+            GameplayManager.Instance.MessageCenter.AddPreCalculateDamageModifier(this);
+        }
+
+        public void Finalize(float damageCreated, EffectSource effectSource, EffectProperty effectProperty, IEntityData receiver)
+        {
+            if(damageCreated > 0)
+            {
+                _currentCritHits++;   
+            }
+        }
+
+        public PrepareDamageModifier Calculate(IEntityData target, EffectSource damageSource, PrepareDamageModifier prepareDamageModifier)
+        {
+            if (_currentCritHits + 1 >= dataConfigItem.numberOfHit)
+            {
+                _currentCritHits = 0;
+                prepareDamageModifier.critChance = 1;
+            }
+            return prepareDamageModifier;
+        }
     }
 }
