@@ -3,20 +3,20 @@ namespace Runtime.Definition
     public enum ShopInGameItemType
     {
         None = 0,
-        BuffStat = 1, // done
-        CauseStatusAfterHits = 2, // done
-        HealWhenDefeatEnemyInStatus = 3, // done
-        GetMoreCoinsWhenGoShop = 4, // done
-        CritAfterHits = 5, 
-        HealWhenEndMap = 6, // done
-        IncreaseStatWhenKillEnemies = 7, // done => improve with lifetime buffed.
-        BuffStatWhenHealthEnough = 8, // done
-        HealAfterCrit = 9, // done
+        BuffStat = 1,
+        CauseStatusAfterHits = 2,
+        HealWhenDefeatEnemyInStatus = 3,
+        GetMoreCoinsWhenGoShop = 4,
+        CritAfterHits = 5,
+        HealWhenEndMap = 6,
+        IncreaseStatWhenKillEnemies = 7,
+        BuffStatWhenHealthEnough = 8,
+        HealAfterCrit = 9, 
         BuffStatWhenLowerHealth = 10,
-        BuffStatWhenDamagedWithDuration = 11,
-        BuffStatWhenKillEnemiesWithDuration = 12,
-        ConvertRuneOnMapToCoins = 13,
-        PersistantRune = 14, // concern
-        MagnetoRune = 15, 
+        //BuffStatWhenDamagedWithDuration = 11,
+        //BuffStatWhenKillEnemiesWithDuration = 12,
+        //ConvertRuneOnMapToCoins = 13,
+        //PersistantRune = 14, 
+        //MagnetoRune = 15, 
     }
 }

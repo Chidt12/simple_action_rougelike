@@ -121,3 +121,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.BuffStatWhenLowerHealthShopInGameDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.BuffStatWhenLowerHealthShopInGameDataConfig
+      csvFile: {fileID: 4900000, guid: 0ee8e546b23881042bbf954c359ddc08, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/shop_in_game/buff_stat_when_lower_health_shop_in_game.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

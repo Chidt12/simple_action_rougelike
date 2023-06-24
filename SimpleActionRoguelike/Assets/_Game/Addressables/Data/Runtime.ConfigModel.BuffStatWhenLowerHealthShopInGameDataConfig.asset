@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27ec50f6833e4142bbe66af491a62fc, type: 3}
-  m_Name: Runtime.ConfigModel.BuffStatShopInGameDataConfig
+  m_Script: {fileID: 11500000, guid: e7149df9eb79f9c4f92a190bf1cc2a1e, type: 3}
+  m_Name: Runtime.ConfigModel.BuffStatWhenLowerHealthShopInGameDataConfig
   m_EditorClassIdentifier: 
   items:
   - point: 1
     dataId: 0
-    statType: 14
-    statValue: 30
-    statModifyType: 0
+    buffStat:
+      statType: 14
+      value: 100
+      statModifyType: 0
