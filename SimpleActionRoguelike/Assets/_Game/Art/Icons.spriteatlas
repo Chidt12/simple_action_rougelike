@@ -72,6 +72,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: da12474b34826774880262e47fe9dafb, type: 3}
   - {fileID: 21300000, guid: 458ce97b95645b446ab30a27f69da3ec, type: 3}
   - {fileID: 21300000, guid: 5159595c451c3cb439602da8e0f94ce2, type: 3}
+  - {fileID: 21300000, guid: d5b250bcf9b5dcf47a872e90fe8e6dd6, type: 3}
   - {fileID: 21300000, guid: f73e23ed33932f442a8748f326ad7933, type: 3}
   - {fileID: 21300000, guid: a799cc6f37c21e548bcdd0fef504b4a9, type: 3}
   - {fileID: 21300000, guid: 3227e7cfd3025bd4a823ea41413be69b, type: 3}
@@ -99,6 +100,7 @@ SpriteAtlas:
   - shop_item_icon_9_0
   - weapon_icon4
   - artifact_3
+  - shop_item_icon_10_0
   - stats_icon_101
   - shop_item_icon_6_0
   - weapon_icon3

@@ -16,8 +16,8 @@ namespace Runtime.Gameplay.EntitySystem
     [DisallowMultipleComponent]
     public class EntityAnimationBehavior : EntityBehavior<IEntityControlData, IEntityStatusData, IEntityStatData>, IDisposeEntityBehavior, IEntityTriggerActionEventProxy
     {
-        private static readonly Color s_appearanceHitEffectColor = new Color(1.0f, 1.0f, 1.0f, 0.85f);
-        private static readonly Color s_appearanceNormalColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        private static readonly Color32 s_appearanceHitEffectColor = new Color32(205, 205, 205, 0);
+        private static readonly Color32 s_appearanceNormalColor = new Color32(0,0,0,0);
 
         [SerializeField] private float _showHitEffectColorDuration = 0.4f;
         [SerializeField] private int _showHitEffectColorTimes = 1;

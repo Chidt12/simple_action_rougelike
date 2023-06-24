@@ -201,6 +201,14 @@ MonoBehaviour:
     m_Address: crit_text_damage
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: d2164cc049a10184e9cacca957959f32
+    m_Address: CharacterBodyMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 623900291e79ddd4c9df192af9f6cd74
+    m_Address: CharacterGlowMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

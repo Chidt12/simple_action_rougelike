@@ -98,7 +98,7 @@ namespace Runtime.Gameplay.EntitySystem
         public void ChangeColor(Color changedColor)
         {
             if(changeColorSprite)
-                changeColorSprite.material.SetColor("_FillColor_Color_1", changedColor);
+                changeColorSprite.material.SetColor("_SpriteColor", changedColor);
         }
 
         #region Unity Animation Callback Event Methods
