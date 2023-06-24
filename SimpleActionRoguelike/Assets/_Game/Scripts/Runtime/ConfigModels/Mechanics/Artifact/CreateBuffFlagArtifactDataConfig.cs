@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class CreateBuffFlagArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class CreateBuffFlagArtifactDataConfigItem : ArtifactDataConfigItem
     {
-        
+        public override ArtifactType ArtifactType => ArtifactType.CreateBuffFlag;
+        public float range;
+        public EquipmentStat buffStat;
+        public string flagPrefabName;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class CreateBuffFlagArtifactDataConfig : ArtifactDataConfig<CreateBuffFlagArtifactDataConfigItem>
     {
-        
+        protected override UniTask<string> GetDescription(IEntityData entityData, CreateBuffFlagArtifactDataConfigItem itemData, CreateBuffFlagArtifactDataConfigItem previousItemData)
+        {
+            return UniTask.FromResult(string.Empty);
+        }
     }
 }
