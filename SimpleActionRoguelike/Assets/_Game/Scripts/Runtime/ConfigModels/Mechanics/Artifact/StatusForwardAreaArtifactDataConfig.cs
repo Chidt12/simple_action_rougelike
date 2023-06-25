@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class StatusForwardAreaArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class StatusForwardAreaArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
-        
+        public override ArtifactType ArtifactType => ArtifactType.StatusForwardArea;
+        public float damageBonus;
+        public DamageFactor[] damageFactors;
+        public StatusIdentity triggeredStatus;
+        public float distanceBetweenObject;
+        public float numberOfObjects;
+        public string forwardPrefabName;
+        public float delayBetweenSpawn;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class StatusForwardAreaArtifactDataConfig : ArtifactDataConfig<StatusForwardAreaArtifactDataConfigItem>
     {
-        
+        protected override UniTask<string> GetDescription(IEntityData entityData, StatusForwardAreaArtifactDataConfigItem itemData, StatusForwardAreaArtifactDataConfigItem previousItemData)
+        {
+            return UniTask.FromResult(string.Empty);
+        }
     }
 }

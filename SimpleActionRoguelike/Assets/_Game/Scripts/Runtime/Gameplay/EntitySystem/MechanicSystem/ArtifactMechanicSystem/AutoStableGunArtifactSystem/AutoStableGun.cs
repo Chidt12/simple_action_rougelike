@@ -33,6 +33,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void Init(float detectRange, float cooldown, EntityType[] targetTypes, Action<Transform, Vector2> onShootingAction)
         {
+            _isShooting = false;
             _collision.Init(detectRange);
             _targetTypes = targetTypes;
             _cooldown = cooldown;

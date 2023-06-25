@@ -49,3 +49,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.StatusForwardAreaArtifactDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.StatusForwardAreaArtifactDataConfig
+      csvFile: {fileID: 4900000, guid: b7bbcf4b8acc1ef4a981ea82f198e6a9, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/artifact/status_forward_area_artifact.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

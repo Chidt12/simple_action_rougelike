@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - identity:
-      artifactType: 5
+      artifactType: 3
       level: 0
     weight: 1
