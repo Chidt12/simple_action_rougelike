@@ -25,3 +25,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.CreateBuffFlagArtifactDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.CreateBuffFlagArtifactDataConfig
+      csvFile: {fileID: 4900000, guid: 910d966b30500004fb7e90f2555adda6, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/artifact/create_buff_flag_artifact.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

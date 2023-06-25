@@ -6,12 +6,14 @@ using System;
 namespace Runtime.ConfigModel
 {
     [Serializable]
-    public class CreateBuffFlagArtifactDataConfigItem : ArtifactDataConfigItem
+    public class CreateBuffFlagArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
         public override ArtifactType ArtifactType => ArtifactType.CreateBuffFlag;
-        public float range;
-        public EquipmentStat buffStat;
+        public float rangeWidth;
+        public float rangeHeight;
+        public EquipmentStat[] buffStats;
         public string flagPrefabName;
+        public string buffVfxPrefabName;
     }
 
     public class CreateBuffFlagArtifactDataConfig : ArtifactDataConfig<CreateBuffFlagArtifactDataConfigItem>

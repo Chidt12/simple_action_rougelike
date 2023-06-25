@@ -67,7 +67,7 @@ namespace Runtime.Gameplay.EntitySystem
             _artifactType = artifactType;
             _currentTime = 0;
             _lifeTime = lifeTime;
-            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}"), cancellationToken);
+            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_0"), cancellationToken);
             _isFlying = false;
             _collider.enabled = true;
             _progressTransform.localScale = new Vector2(1, 1);

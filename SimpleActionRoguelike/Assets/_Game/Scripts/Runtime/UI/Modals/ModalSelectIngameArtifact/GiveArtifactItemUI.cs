@@ -40,7 +40,7 @@ namespace Runtime.UI
 
         private async UniTaskVoid LoadSpriteAsync(ArtifactType artifactType)
         {
-            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}"), this.GetCancellationTokenOnDestroy());
+            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_0"), this.GetCancellationTokenOnDestroy());
         }
     }
 }

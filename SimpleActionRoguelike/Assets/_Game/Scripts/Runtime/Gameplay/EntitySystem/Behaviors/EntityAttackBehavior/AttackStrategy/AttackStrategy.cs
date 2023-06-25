@@ -55,7 +55,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnStatChanged(float updatedValue)
         {
-            var newAttackCooldownTime = 1 / updatedValue;
+            var newAttackCooldownTime = updatedValue > 0 ? 1 / updatedValue : 0;
             attackCooldownTime = newAttackCooldownTime;
             if (newAttackCooldownTime <= currentAttackCooldownTime)
             {
