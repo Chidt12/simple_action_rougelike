@@ -167,7 +167,7 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     if (_skillData.CheckCanUseSkill())
                     {
-                        _skillData.IsPlayingSkill = true;
+                        _skillData.IsPrecheckSkill = true;
                         _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlaySkill);
                         StartExecutingSkillAsync(_skillStrategies[_currentlyUsedSkillIndex], _skillModels[_currentlyUsedSkillIndex].SkillIndex).Forget();
                     }
@@ -193,6 +193,8 @@ namespace Runtime.Gameplay.EntitySystem
                 PoolManager.Instance.Return(_warningGameObject);
                 _warningGameObject = null;
             }
+            _skillData.IsPlayingSkill = true;
+            _skillData.IsPrecheckSkill = false;
         }
 
         private void SetUpCurrentSkill(bool init)
@@ -200,6 +202,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (init)
             {
                 _skillData.IsPlayingSkill = false;
+                _skillData.IsPrecheckSkill = false;
                 _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
 
                 if (_delayBeforeExecuteSkillTime > 0)
@@ -213,6 +216,7 @@ namespace Runtime.Gameplay.EntitySystem
                     if (_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase == SkillPhase.Precheck)
                     {
                         _skillData.IsPlayingSkill = false;
+                        _skillData.IsPrecheckSkill = false;
                         _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
                         _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
                     }
@@ -220,6 +224,7 @@ namespace Runtime.Gameplay.EntitySystem
                 else
                 {
                     _skillData.IsPlayingSkill = false;
+                    _skillData.IsPrecheckSkill = false;
                     _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
                     _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
 

@@ -22,7 +22,7 @@ namespace Runtime.Gameplay
             _collider.enabled = false;
         }
 
-        public void Init(Action<IEntityData> onTriggeredEntered, Action<IEntityData> onTriggeredExit = null)
+        public void StartDamage(Action<IEntityData> onTriggeredEntered, Action<IEntityData> onTriggeredExit = null)
         {
             _isInited = true;
             _onTriggeredEntered = onTriggeredEntered;
@@ -36,6 +36,7 @@ namespace Runtime.Gameplay
                 return;
 
             var entityHolder = collision.GetComponent<EntityHolder>();
+            Debug.LogError("entity holder " + entityHolder.EntityData.EntityType + " " + entityHolder.EntityData.EntityUID);
             if (entityHolder && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
             {
                 _onTriggeredEntered?.Invoke(entityHolder.EntityData);

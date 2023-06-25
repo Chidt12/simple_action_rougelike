@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -7,12 +8,12 @@ namespace Runtime.Gameplay.EntitySystem
     public class AnimatorHolder : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
-        protected Action OperatedPointTriggeredCallbackAction { get; set; }
+        protected List<Action> OperatedPointTriggeredCallbackActions { get; set; }
         protected Action EndActionCallbackAction { get; set; }
 
-        public void SetEvents(Action operatedPointEvent, Action endPointEvent)
+        public void SetEvents(List<Action> operatedPointEvents, Action endPointEvent)
         {
-            OperatedPointTriggeredCallbackAction = operatedPointEvent;
+            OperatedPointTriggeredCallbackActions = operatedPointEvents;
             EndActionCallbackAction = endPointEvent;
         }
 
@@ -20,16 +21,17 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Unity Animation Callback Event Methods
 
-        public void TriggerWeaponOperatedPointActionEvent()
+        public void TriggerOperatedPointActionEvent(int index)
         {
-            OperatedPointTriggeredCallbackAction?.Invoke();
-            OperatedPointTriggeredCallbackAction = null;
+            OperatedPointTriggeredCallbackActions[index]?.Invoke();
+            OperatedPointTriggeredCallbackActions[index] = null;
         }
 
-        public void TriggerWeaponEndActionEvent()
+        public void TriggerEndActionEvent()
         {
             EndActionCallbackAction?.Invoke();
             EndActionCallbackAction = null;
+            OperatedPointTriggeredCallbackActions.Clear();
         }
 
         #endregion Unity Animation Callback Event Methods

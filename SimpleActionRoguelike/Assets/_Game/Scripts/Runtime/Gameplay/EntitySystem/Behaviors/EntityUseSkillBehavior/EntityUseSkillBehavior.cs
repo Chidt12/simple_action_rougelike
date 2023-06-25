@@ -120,7 +120,7 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     if (_skillData.CheckCanUseSkill())
                     {
-                        _skillData.IsPlayingSkill = true;
+                        _skillData.IsPrecheckSkill = true;
                         _currentlyUsedSkillIndex = skillIndex;
                         _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustPlaySkill);
                         StartExecutingSkillAsync(_skillStrategies[skillIndex], _skillModels[skillIndex].SkillIndex).Forget();
@@ -147,6 +147,8 @@ namespace Runtime.Gameplay.EntitySystem
                 PoolManager.Instance.Return(_warningGameObject);
                 _warningGameObject = null;
             }
+            _skillData.IsPlayingSkill = true;
+            _skillData.IsPrecheckSkill = false;
         }
 
         private void FinishSkill()
@@ -156,6 +158,7 @@ namespace Runtime.Gameplay.EntitySystem
                 if(_skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase == SkillPhase.Precheck)
                 {
                     _skillData.IsPlayingSkill = false;
+                    _skillData.IsPrecheckSkill = false;
                     _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
 
                     _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Ready;
@@ -164,6 +167,7 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 _skillData.IsPlayingSkill = false;
+                _skillData.IsPrecheckSkill = false;
                 _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustFinishedUseSkill);
 
                 _skillModels[_currentlyUsedSkillIndex].CurrentSkillPhase = SkillPhase.Cooldown;

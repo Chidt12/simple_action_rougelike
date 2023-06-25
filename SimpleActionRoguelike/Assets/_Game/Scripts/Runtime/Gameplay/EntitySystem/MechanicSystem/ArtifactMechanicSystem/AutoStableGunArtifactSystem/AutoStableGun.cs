@@ -116,7 +116,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             _currentTime = 0;
             _isShooting = true;
-            _animatorHolder.SetEvents(OnAnimationTriggeredPoint, () => _isShooting = false);
+            _animatorHolder.SetEvents(new() { OnAnimationTriggeredPoint }, () => _isShooting = false);
             _animatorHolder.Play(attackAnimState);
         }
 

@@ -37,3 +37,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.StatusStormArtifactDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.StatusStormArtifactDataConfig
+      csvFile: {fileID: 4900000, guid: d6f20667d22bcd942813a05a7777aee6, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/artifact/status_storm_artifact.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

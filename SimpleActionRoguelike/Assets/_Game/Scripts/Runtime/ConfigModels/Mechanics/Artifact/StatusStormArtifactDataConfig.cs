@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class StatusStormArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class StatusStormArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
-        
+        public override ArtifactType ArtifactType => ArtifactType.StatusStorm;
+        public StatusIdentity triggeredStatus;
+        public float damageBonus;
+        public DamageFactor[] damageFactors;
+        public float range;
+        public float delayBetweenLightning;
+        public float numberOfLightning;
+        public string ligntningPrefab;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class StatusStormArtifactDataConfig : ArtifactDataConfig<StatusStormArtifactDataConfigItem>
     {
-        
+        protected override UniTask<string> GetDescription(IEntityData entityData, StatusStormArtifactDataConfigItem itemData, StatusStormArtifactDataConfigItem previousItemData)
+        {
+            return UniTask.FromResult(string.Empty);
+        }
     }
 }

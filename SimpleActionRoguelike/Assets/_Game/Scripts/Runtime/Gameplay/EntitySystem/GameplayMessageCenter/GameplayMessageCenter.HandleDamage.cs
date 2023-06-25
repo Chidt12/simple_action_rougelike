@@ -11,6 +11,9 @@ namespace Runtime.Gameplay.EntitySystem
     {
         private partial void OnSentDamage(SentDamageMessage message)
         {
+            if(message.Target.IsDead)
+                return;
+
             // Check hero attack object
             if(message.Target.EntityType == EntityType.Asset)
             {

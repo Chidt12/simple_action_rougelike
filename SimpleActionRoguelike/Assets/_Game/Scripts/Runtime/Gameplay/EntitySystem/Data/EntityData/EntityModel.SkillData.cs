@@ -15,6 +15,7 @@ namespace Runtime.Gameplay.EntitySystem
         public List<float> SkillDelayTimes => _skillDelayTimes;
         public List<TriggerPhase> TriggerPhases => _triggerPhases;
         public bool IsPlayingSkill { get; set; }
+        public bool IsPrecheckSkill { get; set; }
         public Action OnTriggeredPhaseEvent { get; set; }
 
         public bool CheckCanUseSkill()

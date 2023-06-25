@@ -158,8 +158,7 @@ namespace Runtime.Manager.Gameplay
         public Vector2 GetRandomWalkablePoint()
         {
             var walkablePoints = ActiveGraph.nodes.Where(x => x.Walkable).ToList();
-            var point = walkablePoints[UnityEngine.Random.Range(0, walkablePoints.Count)];
-
+            var point = walkablePoints[UnityRandom.Range(0, walkablePoints.Count)];
             return (Vector3)point.position;
         }
 

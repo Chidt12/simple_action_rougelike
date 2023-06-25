@@ -84,7 +84,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (_creatorDamageBox)
             {
                 _creatorDamageBox.gameObject.SetActive(true);
-                _creatorDamageBox.Init(OnTriggeredEntered);
+                _creatorDamageBox.StartDamage(OnTriggeredEntered);
             }
 
             var predictJumpPosition = creatorData.Position;

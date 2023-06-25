@@ -149,6 +149,10 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.CreateBuffFlagArtifactDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: fcdbee7edf5ab8b4a81b5d2cb677e6d0
+    m_Address: Runtime.ConfigModel.StatusStormArtifactDataConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

@@ -18,7 +18,7 @@ namespace Runtime.Gameplay.EntitySystem
         public void InitDamageBox(Action<IEntityData> onTriggeredEntered, Action<IEntityData> onTriggeredExit = null)
         {
             _damageBox.gameObject.SetActive(true);
-            _damageBox.Init(onTriggeredEntered, onTriggeredExit);
+            _damageBox.StartDamage(onTriggeredEntered, onTriggeredExit);
         }
 
         public void DisableGraphic()

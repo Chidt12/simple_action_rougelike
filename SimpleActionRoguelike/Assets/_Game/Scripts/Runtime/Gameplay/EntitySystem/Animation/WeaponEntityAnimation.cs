@@ -21,18 +21,15 @@ namespace Runtime.Gameplay.EntitySystem
             if (!_inited || _isPaused)
                 return;
 
-            if(currentAnimationType == AnimationType.Attack1 || currentAnimationType == AnimationType.None || currentAnimationType == AnimationType.Idle || currentAnimationType == AnimationType.Run)
+            if (_rotateTowardFaceDirection)
             {
-                if (_rotateTowardFaceDirection)
-                {
-                    var toRotation = _controlData.FaceDirection.ToQuaternion(0);
-                    _rotateTransform.rotation = Quaternion.RotateTowards(_rotateTransform.rotation, toRotation, ROTATE_SPEED * Time.deltaTime);
-                    var degree = Quaternion.Angle(_rotateTransform.rotation, Quaternion.identity);
-                    if (degree > 90 || degree < -90)
-                        _flipPivotTransform.localScale = new Vector3(1, -1, 1);
-                    else
-                        _flipPivotTransform.localScale = new Vector3(1, 1, 1);
-                }
+                var toRotation = _controlData.FaceDirection.ToQuaternion(0);
+                _rotateTransform.rotation = Quaternion.RotateTowards(_rotateTransform.rotation, toRotation, ROTATE_SPEED * Time.deltaTime);
+                var degree = Quaternion.Angle(_rotateTransform.rotation, Quaternion.identity);
+                if (degree > 90 || degree < -90)
+                    _flipPivotTransform.localScale = new Vector3(1, -1, 1);
+                else
+                    _flipPivotTransform.localScale = new Vector3(1, 1, 1);
             }
         }
 

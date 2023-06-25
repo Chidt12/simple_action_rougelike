@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2387503767118596822}
   m_Layer: 0
-  m_Name: lightning
+  m_Name: lightning_chain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
