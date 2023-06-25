@@ -10,6 +10,13 @@ namespace Runtime.Definition
         Obstacle
     }
 
+    public enum EntityFormType // Change the visual and stuff;
+    {
+        Normal = 0,
+        Form1 = 1,
+        Form2 = 2
+    }
+
     public static class EntityTypeExtensions
     {
         public static bool IsDisplayWarningExecuteSkill(this EntityType entityType)

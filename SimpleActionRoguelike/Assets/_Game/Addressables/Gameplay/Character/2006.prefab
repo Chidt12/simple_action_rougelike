@@ -241,6 +241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0405a2cf474d04c8a11917a1669462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _diedPrefab: 
+  _spawnVFXPosition: {fileID: 0}
 --- !u!114 &6700534491653510249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2a261b04258684e840d86cb7ab681e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _disableWhenGetHurt: 0
+  _disableWhenGetHurtTime: 0
 --- !u!114 &4071451377642683667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,9 +269,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c808ed1678e61384ba76d8882f86d82b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showHitEffectColorDuration: 0.4
+  _showHitEffectColorTimes: 1
   _flipTransform: {fileID: 6621292275667589157}
   _updateFaceRightType: 1
-  _playDotweenTransform: {fileID: 6621292275667589157}
+  _playDotweenTransform:
+  - {fileID: 0}
 --- !u!114 &149262389982820158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f47807c13eeb87428ce59471ee10275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hideWarning: 0
+  _warningSkillVFX: warning_execute_skill_vfx
+  _warningDisplayPosition: {fileID: 0}
+  _timeDisplayWarning: 0.3
   _delayBeforeExecuteSkillTime: 3
 --- !u!114 &602677810869427067
 MonoBehaviour:
@@ -400,7 +411,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7d7645f72e65594288f7380c05d405f, type: 2}
+  - {fileID: 2100000, guid: d2164cc049a10184e9cacca957959f32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
