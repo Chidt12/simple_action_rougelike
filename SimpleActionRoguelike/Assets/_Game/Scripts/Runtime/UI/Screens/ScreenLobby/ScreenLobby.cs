@@ -91,8 +91,7 @@ namespace Runtime.UI
             foreach (var item in _statItems)
             {
                 var statBonus = weaponConfigItem.stats.FirstOrDefault(x => x.statType == item.StatType);
-                var statName = await LocalizeManager.GetLocalizeAsync(LocalizeTable.GENERAL, LocalizeKeys.GetStatName(statBonus.statType));
-                var stringValue = $"{statName}: {(statBonus.statType.IsPercentValue() ? statBonus.value * 100 + "%" : statBonus.value)}";
+                var stringValue = $"{(statBonus.statType.IsPercentValue() ? statBonus.value * 100 + "%" : statBonus.value)}";
                 item.SetValue(stringValue);
                 item.gameObject.SetActive(true);
             }

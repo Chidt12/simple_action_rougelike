@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 6979076427776
-    m_Localized: Health
+    m_Localized: HP
     m_Metadata:
       m_Items: []
   - m_Id: 6979529412608
@@ -27,19 +27,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6979533606912
-    m_Localized: Armor penetration
+    m_Localized: Armor Pen
     m_Metadata:
       m_Items: []
   - m_Id: 6979533606913
-    m_Localized: Crit chance
+    m_Localized: Crit %
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801216
-    m_Localized: Crit damage
+    m_Localized: Crit DMG
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801217
-    m_Localized: Move speed
+    m_Localized: Move
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801218
@@ -47,7 +47,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801219
-    m_Localized: Attack speed
+    m_Localized: Atk Speed
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801220
@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801224
-    m_Localized: Attack
+    m_Localized: Atk
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801225
@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6979537801229
-    m_Localized: Dash's number
+    m_Localized: Dash
     m_Metadata:
       m_Items: []
   references:

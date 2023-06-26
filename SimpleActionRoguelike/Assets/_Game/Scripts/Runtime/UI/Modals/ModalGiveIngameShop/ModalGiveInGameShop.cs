@@ -91,6 +91,11 @@ namespace Runtime.UI
                         _currentSelectedIndex--;
                         EnterAButton(_buttons[_currentSelectedIndex]);
                     }
+                    else
+                    {
+                        _currentSelectedIndex = 0;
+                        EnterAButton(_buttons[_currentSelectedIndex]);
+                    }
                 }
             }
 

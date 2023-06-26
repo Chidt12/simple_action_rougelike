@@ -13,6 +13,9 @@ namespace Runtime.Localization
     public class LocalizeKeys
     {
         public static string GetStatName(StatType statType) => $"stat_{(int)statType}";
-        public static string GetShopItemName(ShopInGameItemType shopInGameItemType, int dataId) => $"shop_item_{(int)shopInGameItemType}_{dataId}";
+        public static string GetShopItemName(ShopInGameItemType shopInGameItemType, int dataId) => $"shop_item_{(int)shopInGameItemType}_{dataId}_name";
+        public static string GetArtifactName(ArtifactType artifactType) => $"artifact_item_{(int)artifactType}_name";
+
+        
     }
 }

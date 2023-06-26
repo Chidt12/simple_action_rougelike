@@ -73,11 +73,17 @@ namespace Runtime.ConfigModel
         public override UniTask<string> GetDescription(RarityType rarityType)
         {
             var mechanicData = GetEquipmentMechanicDataConfigItem(rarityType) as TMechanic;
+
+            TMechanic previousMechanicData = null;
+            if (RarityType.Common < rarityType)
+            {
+                previousMechanicData = GetEquipmentMechanicDataConfigItem(rarityType - 1) as TMechanic;
+            }
             var itemData = GetWeaponDataConfigItem() as T;
-            return GetDescription(rarityType, itemData, mechanicData);
+            return GetDescription(rarityType, itemData, mechanicData, previousMechanicData);
         }
 
-        protected abstract UniTask<string> GetDescription(RarityType rarityType, T itemData, TMechanic mechanicData);
+        protected abstract UniTask<string> GetDescription(RarityType rarityType, T itemData, TMechanic mechanicData, TMechanic previousMechanicData);
 
         #endregion Interface Methods
     }

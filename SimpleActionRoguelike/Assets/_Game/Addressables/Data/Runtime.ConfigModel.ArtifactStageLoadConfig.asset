@@ -17,3 +17,11 @@ MonoBehaviour:
       artifactType: 3
       level: 0
     weight: 1
+  - identity:
+      artifactType: 4
+      level: 0
+    weight: 1
+  - identity:
+      artifactType: 8
+      level: 0
+    weight: 1

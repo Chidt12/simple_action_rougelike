@@ -218,14 +218,14 @@ namespace Runtime.Manager.Gameplay
         {
             var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
             var selectInGameShopData = new ModalGiveInGameShopData(shopItems.ToArray(), OnGiveShopItem);
-            await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_INGAME_SHOP), selectInGameShopData);
+            await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_INGAME_SHOP, false), selectInGameShopData);
         }
 
         private async UniTaskVoid LoadShopInGameAsync()
         {
             var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
             var selectInGameShopData = new ModalSelectIngameShopData(shopItems.ToArray(), OnBuyShopItem);
-            await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_SHOP), selectInGameShopData);
+            await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_SHOP, false), selectInGameShopData);
         }
 
         private void OnBuyShopItem(ShopInGameStageLoadConfigItem item)
@@ -266,7 +266,7 @@ namespace Runtime.Manager.Gameplay
             var suitableItems = await DataManager.Config.LoadCurrentSuitableArtifactItems(currentBuffs);
 
             var modalData = new ModalGiveArtifactData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
-            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_ARTIFACT), modalData).Forget();
+            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_ARTIFACT, false), modalData).Forget();
         }
 
         private async UniTaskVoid LoadNextLevelAsync(GameplayRoomType roomType)

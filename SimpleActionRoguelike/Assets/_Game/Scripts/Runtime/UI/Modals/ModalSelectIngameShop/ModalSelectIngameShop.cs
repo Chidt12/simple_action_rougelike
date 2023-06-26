@@ -22,7 +22,6 @@ namespace Runtime.UI
     public class ModalSelectIngameShop : Modal<ModalSelectIngameShopData>
     {
         [SerializeField] private ShopInGameItemUI[] _itemUIs;
-        [SerializeField] private InventoryPanel _inventoryPanel;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -33,7 +32,6 @@ namespace Runtime.UI
         public async override UniTask Initialize(ModalSelectIngameShopData data)
         {
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
-            _inventoryPanel.LoadUI().Forget();
 
             for (int i = 0; i < data.Items.Length; i++)
             {

@@ -63,6 +63,7 @@ MonoBehaviour:
   z: 0
   cheat: 1
   cheatMap: {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
-  roomTypes: 0200000001000000
+  roomTypes: 0200000005000000
   stageLoadConfigItems:
+  - waveConfigs: []
   - waveConfigs: []

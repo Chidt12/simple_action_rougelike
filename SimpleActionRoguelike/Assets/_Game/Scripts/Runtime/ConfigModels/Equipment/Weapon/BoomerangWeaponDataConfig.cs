@@ -36,7 +36,7 @@ namespace Runtime.ConfigModel
             return item1;
         }
 
-        protected override UniTask<string> GetDescription(RarityType rarityType, BoomerangWeaponDataConfigItem itemData, BoomerangEquipmentMechanicDataConfigItem mechanicData)
+        protected override UniTask<string> GetDescription(RarityType rarityType, BoomerangWeaponDataConfigItem itemData, BoomerangEquipmentMechanicDataConfigItem mechanicData, BoomerangEquipmentMechanicDataConfigItem previousMechanicData)
         {
             string increaseWaveFormat = "You can use {0} more each time";
             string goThroughFormat = "The boomerang go through obstacles";
