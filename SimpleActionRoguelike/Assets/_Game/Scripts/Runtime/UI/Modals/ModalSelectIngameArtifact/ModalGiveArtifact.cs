@@ -24,7 +24,6 @@ namespace Runtime.UI
     public class ModalGiveArtifact : Modal<ModalGiveArtifactData>
     {
         [SerializeField] private GiveArtifactItemUI[] _itemUIs;
-        [SerializeField] private InventoryPanel _inventoryPanel;
 
         private bool _isSelected;
 
@@ -39,8 +38,6 @@ namespace Runtime.UI
         {
             _isSelected = false;
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
-
-            _inventoryPanel.LoadUI().Forget();
 
             for (int i = 0; i < data.Items.Length; i++)
             {
