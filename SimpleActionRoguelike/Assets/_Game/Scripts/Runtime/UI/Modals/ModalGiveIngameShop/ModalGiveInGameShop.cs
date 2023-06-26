@@ -25,10 +25,12 @@ namespace Runtime.UI
     {
         [SerializeField] private GiveShopInGameUI[] _itemUIs;
         [SerializeField] private Button[] _buttons;
-
+        [SerializeField] private Button _resetButton;
+ 
         private ModalGiveInGameShopData _data;
         private int _currentSelectedIndex;
         private bool _isSelected;
+        private bool _isSelectedResetButton;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -41,6 +43,7 @@ namespace Runtime.UI
         public override async UniTask Initialize(ModalGiveInGameShopData data)
         {
             _currentSelectedIndex = -1;
+            _isSelectedResetButton = false;
             _isSelected = false;
             _data = data;
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
@@ -49,18 +52,10 @@ namespace Runtime.UI
             {
                 _itemUIs[i].gameObject.SetActive(false);
             }
-        }
 
-        public override void DidPushEnter(Memory<object> args)
-        {
-            base.DidPushEnter(args);
-            LoadUiAsync().Forget();
-        }
-
-        private async UniTask LoadUiAsync()
-        {
             for (int i = 0; i < _data.Items.Length; i++)
             {
+                _itemUIs[i].gameObject.SetActive(true);
                 await _itemUIs[i].Init(_data.Items[i], (input) =>
                 {
                     if (!_isSelected)
@@ -70,30 +65,73 @@ namespace Runtime.UI
                         ScreenNavigator.Instance.PopModal(true).Forget();
                     }
                 });
-                await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: this.GetCancellationTokenOnDestroy());
             }
         }
 
         protected override void OnKeyPress(InputKeyPressMessage message)
         {
             base.OnKeyPress(message);
-            if (message.KeyPressType == KeyPressType.Right) 
+            if (!_isSelectedResetButton)
             {
-                if (_currentSelectedIndex < _buttons.Length - 1)
+                if (message.KeyPressType == KeyPressType.Right)
                 {
-                    if (_currentSelectedIndex != -1)
+                    if (_currentSelectedIndex < _buttons.Length - 1)
+                    {
+                        if (_currentSelectedIndex != -1)
+                            ExitAButton(_buttons[_currentSelectedIndex]);
+                        _currentSelectedIndex++;
+                        EnterAButton(_buttons[_currentSelectedIndex]);
+                    }
+                }
+                else if (message.KeyPressType == KeyPressType.Left)
+                {
+                    if (_currentSelectedIndex > 0)
+                    {
                         ExitAButton(_buttons[_currentSelectedIndex]);
-                    _currentSelectedIndex++;
-                    EnterAButton(_buttons[_currentSelectedIndex]);
+                        _currentSelectedIndex--;
+                        EnterAButton(_buttons[_currentSelectedIndex]);
+                    }
                 }
             }
-            else if (message.KeyPressType == KeyPressType.Left)
+
+            if (message.KeyPressType == KeyPressType.Down)
             {
-                if (_currentSelectedIndex > 0)
-                {
+                if (_currentSelectedIndex != -1)
                     ExitAButton(_buttons[_currentSelectedIndex]);
-                    _currentSelectedIndex--;
-                    EnterAButton(_buttons[_currentSelectedIndex]);
+                EnterAButton(_resetButton);
+                _isSelectedResetButton = true;
+            }
+            else if (message.KeyPressType == KeyPressType.Up)
+            {
+                if (_isSelectedResetButton)
+                {
+                    ExitAButton(_resetButton);
+                    _isSelectedResetButton = false;
+                }
+
+                if (_currentSelectedIndex == -1)
+                {
+                    _currentSelectedIndex = 0;
+                }
+
+                EnterAButton(_buttons[_currentSelectedIndex]);
+            }
+            else if (message.KeyPressType == KeyPressType.Confirm)
+            {
+                if (_isSelectedResetButton)
+                {
+                    Submit(_resetButton);
+                }
+                else
+                {
+                    if (_currentSelectedIndex != -1)
+                    {
+                        Submit(_buttons[_currentSelectedIndex]);
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
         }
