@@ -1,10 +1,14 @@
 using Cysharp.Threading.Tasks;
+using Runtime.ConfigModel;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Manager;
+using Runtime.Manager.Data;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
+using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -18,18 +22,21 @@ namespace Runtime.UI
     public class ModalGameplayInventory : BaseModal
     {
         [SerializeField] private StatItemUI[] _stats;
+        [SerializeField] private InventoryWeaponItemUI _weaponItem;
         [SerializeField] private InventoryArtifactItemUI[] _artifacts;
         [SerializeField] private InventoryShopItemUI[] _shopItems;
         [SerializeField] private TextMeshProUGUI _infoText;
         [SerializeField] private int _numberShopItemInHorizontal = 5;
         [SerializeField] private int _numberShopItemInVertical = 4;
 
+        private CancellationTokenSource _cancellationTokenSource;
         private IInventoryItem _inventoryItem;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
             base.OnValidate();
+            _weaponItem = GetComponentInChildren<InventoryWeaponItemUI>();
             _stats = GetComponentsInChildren<StatItemUI>();
             _artifacts = GetComponentsInChildren<InventoryArtifactItemUI>();
             _shopItems = GetComponentsInChildren<InventoryShopItemUI>();
@@ -40,18 +47,21 @@ namespace Runtime.UI
         {
             await base.Initialize(args);
             GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
+            _cancellationTokenSource = new();
             await LoadUI();
         }
 
         public override UniTask Cleanup()
         {
             GameManager.Instance.ReturnPreviousGameStateType();
+            _cancellationTokenSource?.Cancel();
             return base.Cleanup();
         }
 
         public async UniTask LoadUI()
         {
             LoadStats();
+            await LoadWeaponItem();
             await LoadShopItems();
             await LoadArtifactItems();
         }
@@ -66,6 +76,24 @@ namespace Runtime.UI
                 item.SetValue(stringValue);
                 item.gameObject.SetActive(true);
             }
+        }
+
+        private async UniTask LoadWeaponItem()
+        {
+            var weapon = EntitiesManager.Instance.HeroData as IEntityWeaponData;
+            var weaponModel = weapon.WeaponModel;
+
+            var currentUpgradeArtifact = GameplayManager.Instance.CurrentBuffInGameItems.FirstOrDefault(x => x.artifactType == ArtifactType.UpgradeWeapon);
+            if (currentUpgradeArtifact.artifactType == ArtifactType.UpgradeWeapon)
+            {
+                var artifactUpgradeWeapon = await DataManager.Config.LoadArtifactDataConfigItem(ArtifactType.UpgradeWeapon, currentUpgradeArtifact.level) as UpgradeWeaponArtifactDataConfigItem;
+                await _weaponItem.LoadUI(weaponModel.WeaponType, artifactUpgradeWeapon.rarityType, OnChangeInfo, _cancellationTokenSource.Token);
+            }
+            else
+            {
+                await _weaponItem.LoadUI(weaponModel.WeaponType, RarityType.Common, OnChangeInfo, _cancellationTokenSource.Token);
+            }
+            UpdateToggle(_weaponItem);
         }
 
         private UniTask LoadShopItems()
@@ -91,14 +119,14 @@ namespace Runtime.UI
 
         private UniTask LoadArtifactItems()
         {
-            var allItems = GameplayManager.Instance.CurrentBuffInGameItems;
+            var allItems = GameplayManager.Instance.CurrentBuffInGameItems.Where(x => x.artifactType != ArtifactType.UpgradeWeapon).ToList();
             for (int i = 0; i < _artifacts.Length; i++)
             {
                 var artifact = _artifacts[i];
                 if (i < allItems.Count)
                 {
                     var buffItem = allItems[i];
-                    artifact.LoadUI(buffItem.artifactType, buffItem.level, OnChangeInfo, this.GetCancellationTokenOnDestroy()).Forget();
+                    artifact.LoadUI(buffItem.artifactType, buffItem.level, OnChangeInfo, _cancellationTokenSource.Token).Forget();
                 }
                 else
                 {
@@ -106,7 +134,6 @@ namespace Runtime.UI
                 }
             }
 
-            UpdateToggle(_artifacts[0]);
             return UniTask.CompletedTask;
         }
 
@@ -140,10 +167,17 @@ namespace Runtime.UI
                             var nextIndex = index + 1;
                             UpdateToggle(_artifacts[nextIndex]);
                         }
-                        else if (message.KeyPressType == KeyPressType.Left && index > 0)
+                        else if (message.KeyPressType == KeyPressType.Left)
                         {
-                            var nextIndex = index - 1;
-                            UpdateToggle(_artifacts[nextIndex]);
+                            if(index > 0)
+                            {
+                                var nextIndex = index - 1;
+                                UpdateToggle(_artifacts[nextIndex]);
+                            }
+                            else
+                            {
+                                UpdateToggle(_weaponItem);
+                            }
                         }
                         else if (message.KeyPressType == KeyPressType.Down)
                         {
@@ -177,9 +211,27 @@ namespace Runtime.UI
                             }
                             else
                             {
-
-                                UpdateToggle(_artifacts[index]);
+                                var artifactIndex = index - 1;
+                                if(artifactIndex < 0)
+                                {
+                                    UpdateToggle(_weaponItem);
+                                }
+                                else
+                                {
+                                    UpdateToggle(_artifacts[artifactIndex]);
+                                }
                             }
+                        }
+                    }
+                    else if (_inventoryItem is InventoryWeaponItemUI)
+                    {
+                        if(message.KeyPressType == KeyPressType.Right)
+                        {
+                            UpdateToggle(_artifacts[0]);
+                        }
+                        else if (message.KeyPressType == KeyPressType.Down)
+                        {
+                            UpdateToggle(_shopItems[0]);
                         }
                     }
                 }
