@@ -17,7 +17,23 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: bd20478399bd629459a13fcfa683a2e2, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 3377638968070144
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377638980653056
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377638980653057
+    m_Localized: Do you want to exit game?<br>Your process will be reset!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377638980653058
+    m_Localized: Do you want to go back home?<br>Your process will be reset!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

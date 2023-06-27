@@ -50,7 +50,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 28d0f8f65114de04584f64ccc25820ff
-    m_Address: prefab_modal_quit_game
+    m_Address: prefab_modal_confirm_action
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: ad063283b55de9349b29e2b6053c278d
@@ -59,10 +59,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 178573056ec0b124f8a628e900172f1a
     m_Address: prefab_modal_gameplay_settings
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: cfe7f5b204f8fda4b8736fb8b06dd936
-    m_Address: prefab_modal_quit_gameplay
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: e21322bede3314641bf131cdc34e3cd2

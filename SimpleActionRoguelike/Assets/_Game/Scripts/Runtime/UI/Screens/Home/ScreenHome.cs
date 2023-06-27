@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Constants;
+using Runtime.Localization;
 using Runtime.Message;
 using System;
 using UnityEngine;
@@ -44,8 +45,9 @@ namespace Runtime.UI
 
         private void OnClickQuit()
         {
-            var windowOptions = new WindowOptions(ModalIds.QUIT_GAME);
-            ScreenNavigator.Instance.LoadModal(windowOptions).Forget();
+            var content = LocalizeManager.GetLocalize(LocalizeTable.UI, LocalizeKeys.POPUP_CONFIRM_QUIT_GAME);
+            var windowOptions = new WindowOptions(ModalIds.CONFIRM_ACTION);
+            ScreenNavigator.Instance.LoadModal(windowOptions, new ModalConfirmActionData(content, () => Application.Quit())).Forget();
         }
 
         private void OnEnterAnItem(int index)

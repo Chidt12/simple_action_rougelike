@@ -15,8 +15,16 @@ MonoBehaviour:
   m_TableCollectionName: ShopItem
   m_TableCollectionNameGuidString: bc090fb0cd1933048abd836161514f7f
   m_Entries:
-  - m_Id: 52178456612864
-    m_Key: shop_item_1_0
+  - m_Id: 3423209376387072
+    m_Key: shop_item_1_0_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3423209397358592
+    m_Key: shop_item_1_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3423209397358593
+    m_Key: shop_item_2_description
     m_Metadata:
       m_Items: []
   m_Metadata:
