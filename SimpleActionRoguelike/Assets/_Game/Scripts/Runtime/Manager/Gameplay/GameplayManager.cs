@@ -425,6 +425,7 @@ namespace Runtime.Manager.Gameplay
                     if (hasNoEnemiesLeft)
                         HandleWinLevelAsync().Forget();
                     else
+                        // Finished time
                         HandleLoseStage();
                 }
             }
@@ -443,7 +444,7 @@ namespace Runtime.Manager.Gameplay
 
         private void KillHero()
         {
-            ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.LOSE)).Forget();
+            HandleLoseStage();
         }
 
         private void HandleLoseStage()

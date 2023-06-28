@@ -4,6 +4,7 @@ using Runtime.Core.Message;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Message;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using ZBase.Foundation.PubSub;
@@ -18,7 +19,7 @@ namespace Runtime.Manager.Gameplay
         [SerializeField] private float _shakingTime;
 
         private CancellationTokenSource _cancellationTokenSource;
-        private ISubscription _heroSpawnedSubScription;
+        private List<ISubscription> _subscriptions;
         private IEntityStatData _entityStatData;
 
         public void Init()
@@ -27,12 +28,18 @@ namespace Runtime.Manager.Gameplay
             cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
             _cancellationTokenSource = new();
             SimpleMessenger.Publish(new UpdateCameraMessage(Camera.main));
-            _heroSpawnedSubScription = SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned);
+            _subscriptions = new();
+            _subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
+            _subscriptions.Add(SimpleMessenger.Subscribe<FinishedCurrentLevelMessage>(OnFinishedCurrentLevel));
         }
 
         public void Dispose()
         {
-            _heroSpawnedSubScription.Dispose();
+
+            foreach (var subscription in _subscriptions)
+                subscription.Dispose();
+
+            _subscriptions.Clear();
             _cancellationTokenSource?.Cancel();
 
             CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -56,6 +63,19 @@ namespace Runtime.Manager.Gameplay
                 _entityStatData = statData;
                 statData.HealthStat.OnDamaged += OnDamage;
             }
+        }
+
+        private void OnFinishedCurrentLevel(FinishedCurrentLevelMessage message)
+        {
+            if (!message.IsWin)
+            {
+                PresentEndStageAsync().Forget();
+            }
+        }
+
+        private async UniTaskVoid PresentEndStageAsync()
+        {
+
         }
 
         private void OnDamage(float value, EffectSource arg2, EffectProperty arg3)
