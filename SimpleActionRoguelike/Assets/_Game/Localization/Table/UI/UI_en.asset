@@ -34,6 +34,34 @@ MonoBehaviour:
     m_Localized: Do you want to go back home?<br>Your process will be reset!
     m_Metadata:
       m_Items: []
+  - m_Id: 3754956983046144
+    m_Localized: Replay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017664
+    m_Localized: Back Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017665
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017666
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957008211968
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3755155985993728
+    m_Localized: Defeated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3755155985993729
+    m_Localized: Victory
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -432,8 +432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0405a2cf474d04c8a11917a1669462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diedPrefab: 
-  _spawnVFXPosition: {fileID: 0}
+  _diedPrefab: 1001_die
+  _spawnVFXPosition: {fileID: 6875883244815912859}
+  _flipTransform: {fileID: 5654366969931541437}
 --- !u!114 &5496076449872901601
 MonoBehaviour:
   m_ObjectHideFlags: 0

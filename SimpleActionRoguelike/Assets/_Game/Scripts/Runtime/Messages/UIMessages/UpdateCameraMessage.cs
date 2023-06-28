@@ -12,4 +12,14 @@ namespace Runtime.Message
             Camera = camera;
         }
     }
+
+    public readonly struct PresentEndGameCameraMessage : IMessage
+    {
+        public readonly Transform FocusTarget;
+
+        public PresentEndGameCameraMessage(Transform target)
+        {
+            FocusTarget = target;
+        }
+    }
 }

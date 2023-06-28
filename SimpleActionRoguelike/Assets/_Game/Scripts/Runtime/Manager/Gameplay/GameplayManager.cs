@@ -450,6 +450,7 @@ namespace Runtime.Manager.Gameplay
         private void HandleLoseStage()
         {
             SimpleMessenger.Publish(new FinishedCurrentLevelMessage(false));
+            ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.LOSE), true).Forget();
         }
 
         private UniTask HandleWinLevelAsync()

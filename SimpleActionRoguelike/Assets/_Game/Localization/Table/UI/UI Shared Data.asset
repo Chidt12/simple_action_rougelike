@@ -23,12 +23,40 @@ MonoBehaviour:
     m_Key: button_cancel
     m_Metadata:
       m_Items: []
+  - m_Id: 3754956983046144
+    m_Key: button_replay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017664
+    m_Key: button_back_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017665
+    m_Key: button_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017666
+    m_Key: button_continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957008211968
+    m_Key: button_exit_game
+    m_Metadata:
+      m_Items: []
   - m_Id: 3377638980653057
     m_Key: popup_confirm_quit_game
     m_Metadata:
       m_Items: []
   - m_Id: 3377638980653058
     m_Key: popup_confirm_back_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3755155985993728
+    m_Key: lose_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3755155985993729
+    m_Key: victory_title
     m_Metadata:
       m_Items: []
   m_Metadata:

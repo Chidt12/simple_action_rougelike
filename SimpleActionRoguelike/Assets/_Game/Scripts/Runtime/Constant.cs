@@ -30,7 +30,7 @@ namespace Runtime.Constants
         public const string HOME = "prefab_screen_home";
         public const string GAMEPLAY = "prefab_screen_gameplay";
         public const string LOBBY = "prefab_screen_lobby";
-
+        public const string LOSE = "prefab_screen_lose";
     }
 
     public class AddressableKeys

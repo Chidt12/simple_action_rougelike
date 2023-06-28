@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Runtime.Constants;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
+using Runtime.Localization;
 using Runtime.Manager.Gameplay;
 using Runtime.UI;
 using System;
@@ -31,6 +32,12 @@ namespace Runtime.Manager
             base.Awake();
             _currentGameStateType = GameStateType.None;
             _previousGameStateTypeStack = new();
+            InitializeAsync().Forget();
+        }
+
+        private async UniTaskVoid InitializeAsync()
+        {
+            await LocalizeManager.InitializeAsync();
         }
 
         public void ClearGameStateHistory()

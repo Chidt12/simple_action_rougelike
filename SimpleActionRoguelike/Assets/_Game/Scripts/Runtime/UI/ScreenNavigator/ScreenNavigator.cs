@@ -262,7 +262,7 @@ namespace Runtime.UI
                 return false;
 
             var screenContainer = globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.SCREEN_CONTAINER_LAYER_NAME);
-            return screenContainer.Current.View.Equals(screen);
+            return screenContainer.Screens.Count > 0 && screenContainer.Current.View.Equals(screen);
         }
 
         public bool IsModalCanDetectAction(Modal modal)

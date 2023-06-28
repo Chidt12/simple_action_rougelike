@@ -15,26 +15,46 @@ namespace Runtime.Manager.Gameplay
     public class CameraManager : MonoBehaviour
     {
         [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+        [SerializeField] private Camera _uiCamera;
+        [SerializeField] private Camera _gameplayCamera;
         [SerializeField] private float _shakeAmplitude;
         [SerializeField] private float _shakingTime;
+        [SerializeField] private Canvas _canvas;
+
+        [Header("=== present end game ===")]
+        [SerializeField] private float _endGameOrthorSize = 4;
+        [SerializeField] private float _timeZoomEndGame = 3;
 
         private CancellationTokenSource _cancellationTokenSource;
         private List<ISubscription> _subscriptions;
         private IEntityStatData _entityStatData;
 
+        private void Awake()
+        {
+            _gameplayCamera.gameObject.SetActive(false);
+            _uiCamera.gameObject.SetActive(true);
+            _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        }
+
         public void Init()
         {
+            _gameplayCamera.gameObject.SetActive(true);
+            _uiCamera.gameObject.SetActive(false);
+
             CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
             _cancellationTokenSource = new();
             SimpleMessenger.Publish(new UpdateCameraMessage(Camera.main));
             _subscriptions = new();
             _subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
-            _subscriptions.Add(SimpleMessenger.Subscribe<FinishedCurrentLevelMessage>(OnFinishedCurrentLevel));
+            _subscriptions.Add(SimpleMessenger.Subscribe<PresentEndGameCameraMessage>(OnPresentEndGameAsync));
         }
 
         public void Dispose()
         {
+            _gameplayCamera.gameObject.SetActive(false);
+            _uiCamera.gameObject.SetActive(true);
+            _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
             foreach (var subscription in _subscriptions)
                 subscription.Dispose();
@@ -64,18 +84,27 @@ namespace Runtime.Manager.Gameplay
                 statData.HealthStat.OnDamaged += OnDamage;
             }
         }
-
-        private void OnFinishedCurrentLevel(FinishedCurrentLevelMessage message)
+        
+        private void OnPresentEndGameAsync(PresentEndGameCameraMessage message)
         {
-            if (!message.IsWin)
-            {
-                PresentEndStageAsync().Forget();
-            }
+            PresentEndStageAsync(message.FocusTarget).Forget();
         }
 
-        private async UniTaskVoid PresentEndStageAsync()
+        private async UniTaskVoid PresentEndStageAsync(Transform target)
         {
-
+            _gameplayCamera.gameObject.SetActive(false);
+            _uiCamera.transform.position = new Vector3(EntitiesManager.Instance.HeroData.Position.x, EntitiesManager.Instance.HeroData.Position.y, -10);
+            _uiCamera.gameObject.SetActive(true);
+            _canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            _uiCamera.orthographicSize = _gameplayCamera.orthographicSize; 
+            float currentTime = 0;
+            while(currentTime <= _timeZoomEndGame)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(Time.unscaledDeltaTime), ignoreTimeScale: true, cancellationToken: _cancellationTokenSource.Token);
+                currentTime += Time.unscaledDeltaTime;
+                var currentZoomValue = Mathf.Lerp(_gameplayCamera.orthographicSize, _endGameOrthorSize, Mathf.Clamp01(currentTime / _timeZoomEndGame));
+                _uiCamera.orthographicSize = currentZoomValue;
+            }
         }
 
         private void OnDamage(float value, EffectSource arg2, EffectProperty arg3)
