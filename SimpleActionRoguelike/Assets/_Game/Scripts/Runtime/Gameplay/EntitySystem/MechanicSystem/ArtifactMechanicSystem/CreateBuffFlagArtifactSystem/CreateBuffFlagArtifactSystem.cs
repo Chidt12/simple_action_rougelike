@@ -115,7 +115,7 @@ namespace Runtime.Gameplay.EntitySystem
                 if (_buffVfxs.ContainsKey(obj.EntityUID))
                 {
                     var buffVfx = _buffVfxs[obj.EntityUID];
-                    RemoveBuffVfxAsync(buffVfx);
+                    RemoveBuffVfxAsync(buffVfx).Forget();
                     _buffVfxs.Remove(obj.EntityUID);
                 }
             }
