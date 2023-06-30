@@ -4,6 +4,7 @@ using Runtime.Definition;
 using Runtime.Localization;
 using Runtime.Manager;
 using Runtime.Manager.Data;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace Runtime.UI
         public async override UniTask Initialize(Memory<object> args)
         {
             await base.Initialize(args);
+            GameManager.Instance.SetGameStateType(GameStateType.Lobby);
+
             _startGameButton.onClick.RemoveAllListeners();
             _startGameButton.onClick.AddListener(OnStartGame);
 
@@ -52,6 +55,7 @@ namespace Runtime.UI
         public override UniTask Cleanup()
         {
             _updateUICancellationTokenSource?.Cancel();
+            GameManager.Instance.ReturnPreviousGameStateType();
             return base.Cleanup();
         }
 

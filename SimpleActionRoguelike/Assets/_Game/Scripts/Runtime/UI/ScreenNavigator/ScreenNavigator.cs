@@ -133,6 +133,14 @@ namespace Runtime.UI
                 await PopModal(true);
             else if (IsOpeningMoreThanAScreen)
                 await PopScreen(true);
+            else
+            {
+                if(GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning)
+                {
+                    var options = new WindowOptions(ModalIds.GAME_SETTINGS);
+                    LoadModal(options).Forget();
+                }
+            }
             isBackKeyOperated = false;
         }
 
@@ -161,23 +169,24 @@ namespace Runtime.UI
             isLoading = false;
         }
 
-        public async UniTask LoadSingleScreen(WindowOptions option, params object[] args)
+        public async UniTask LoadSingleScreen(WindowOptions option, bool forcePush, params object[] args)
         {
             if (isLoading)
                 return;
 
+            isLoading = true;
             var screenContainer = globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.SCREEN_CONTAINER_LAYER_NAME);
-            if (screenContainer.Screens.Count == 0 || option.resourcePath != screenContainer.Current.ResourcePath)
+            if (screenContainer.Screens.Count == 0 || (option.resourcePath != screenContainer.Current.ResourcePath || forcePush))
             {
-                isLoading = true;
                 var modalContainer = globalContainerLayerManager.Find<ModalContainer>(ContainerKey.MODAL_CONTAINER_LAYER_NAME);
                 while (modalContainer.Modals.Count > 0)
                     await modalContainer.PopAsync(false);
                 while (screenContainer.Screens.Count > 0)
                     await screenContainer.PopAsync(false, args);
-                await screenContainer.PushAsync(option, args);
-                isLoading = false;
             }
+
+            await screenContainer.PushAsync(option, args);
+            isLoading = false;
         }
 
         public async UniTask LoadScreen(WindowOptions option, params object[] args)
@@ -253,7 +262,7 @@ namespace Runtime.UI
                 return false;
 
             var screenContainer = globalContainerLayerManager.Find<ScreenContainer>(ContainerKey.SCREEN_CONTAINER_LAYER_NAME);
-            return screenContainer.Current.View.Equals(screen);
+            return screenContainer.Screens.Count > 0 && screenContainer.Current.View.Equals(screen);
         }
 
         public bool IsModalCanDetectAction(Modal modal)

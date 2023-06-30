@@ -22,6 +22,7 @@ namespace Runtime.Gameplay.CollisionDetection
         private ICollisionBody[] _bodyList = new ICollisionBody[MAX_COLLISION_BODIES];
         private HashSet<int> _collidedPair = new HashSet<int>();
         private List<int> _collidedPairCache = new List<int>();
+        private HashSet<int> _removedBodyIds = new HashSet<int>();
         private QuadTree[] _quadTrees = new QuadTree[6];
         private Queue<int> _refIdsQueue = new Queue<int>();
         private int _currentBodyCount;
@@ -140,7 +141,7 @@ namespace Runtime.Gameplay.CollisionDetection
                     }
                 }
 
-                _refIdsQueue.Enqueue(body.RefId);
+                _removedBodyIds.Add(body.RefId);
                 _bodyList[body.RefId] = null;
 
                 // refresh QuadTree each frame if bodies can move
@@ -159,6 +160,13 @@ namespace Runtime.Gameplay.CollisionDetection
 
         private void Step()
         {
+            if (_removedBodyIds.Count > 0)
+            {
+                foreach (var id in _removedBodyIds)
+                    _refIdsQueue.Enqueue(id);
+                _refIdsQueue.Clear();
+            }
+
             // Get collided pair and remove pair not collide anymore.
             for (int i = 0; i <= _currentBodyCount; i++)
             {

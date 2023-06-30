@@ -103,11 +103,11 @@ SpriteAtlas:
   - artifact_2_0
   - dash_icon_1
   - weapon_icon6
-  - weapon_icon2
+  - weapon_icon1
   - stats_icon_2
   - stats_icon_5
   - shop_item_icon_8_0
-  - weapon_icon1
+  - weapon_icon0
   - shop_item_icon_7_0
   - artifact_1_0
   - dash_icon2

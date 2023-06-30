@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 67869302148463647}
   - component: {fileID: 6466770436314083180}
   - component: {fileID: 982913253628001778}
+  - component: {fileID: 7170116203040880583}
   m_Layer: 8
   m_Name: 1001
   m_TagString: Untagged
@@ -432,8 +433,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0405a2cf474d04c8a11917a1669462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diedPrefab: 
-  _spawnVFXPosition: {fileID: 0}
+  _diedPrefab: 1001_die
+  _spawnVFXPosition: {fileID: 6875883244815912859}
+  _flipTransform: {fileID: 5654366969931541437}
 --- !u!114 &5496076449872901601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +498,21 @@ MonoBehaviour:
   _speed: 30
   _dashCooldown: 2
   _dashEffect: {fileID: 5417580243802009177}
+--- !u!114 &7170116203040880583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875883244815912860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f42b7ae6b2d2140aa8eee10036c57a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winPrefab: 1001_win
+  _spawnVFXPosition: {fileID: 6875883244815912859}
+  _flipTransform: {fileID: 5654366969931541437}
 --- !u!1 &6875883244934980058
 GameObject:
   m_ObjectHideFlags: 0

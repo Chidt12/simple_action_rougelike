@@ -11,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         [SerializeField] private string _diedPrefab;
         [SerializeField] private Transform _spawnVFXPosition;
+        [SerializeField] private Transform _flipTransform;
 
         private IEntityData _entityData;
 
@@ -31,15 +32,23 @@ namespace Runtime.Gameplay.EntitySystem
         {
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: this.GetCancellationTokenOnDestroy());
             var position = _spawnVFXPosition ? _spawnVFXPosition.position : transform.position;
-            PoolManager.Instance.Return(gameObject);
             if (!string.IsNullOrEmpty(_diedPrefab))
+            {
                 SpawnExplodePrefabs(position).Forget();
+            }
+            else
+            {
+                PoolManager.Instance.Return(gameObject);
+            }
         }
 
         private async UniTaskVoid SpawnExplodePrefabs(Vector2 position)
         {
             var diedGameObject = await PoolManager.Instance.Rent(_diedPrefab, token: this.GetCancellationTokenOnDestroy());
             diedGameObject.transform.position = position;
+            if(_flipTransform)
+                diedGameObject.transform.localScale = _flipTransform.localScale;
+            PoolManager.Instance.Return(gameObject);
         }
     }
 }

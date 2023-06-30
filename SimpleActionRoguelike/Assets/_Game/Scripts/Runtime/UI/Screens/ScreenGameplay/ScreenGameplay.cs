@@ -73,8 +73,8 @@ namespace Runtime.UI
             }
             _subscriptions.Clear();
 
-            foreach (var bossHealthBar in _bossHealthBars)
-                bossHealthBar.Dispose();
+            ResetBossHealthBars();
+
             return base.Cleanup();
         }
 
@@ -117,7 +117,7 @@ namespace Runtime.UI
 
         private void InitIcons(int numberOfDash)
         {
-            foreach (var item in _activeDashIcons)
+            foreach (Transform item in _dashContainer)
                 Destroy(item.gameObject);
 
             _activeDashIcons.Clear();

@@ -14,7 +14,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: UI
   m_TableCollectionNameGuidString: bd20478399bd629459a13fcfa683a2e2
-  m_Entries: []
+  m_Entries:
+  - m_Id: 3377638968070144
+    m_Key: button_confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377638980653056
+    m_Key: button_cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754956983046144
+    m_Key: button_replay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017664
+    m_Key: button_back_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017665
+    m_Key: button_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957004017666
+    m_Key: button_continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3754957008211968
+    m_Key: button_exit_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377638980653057
+    m_Key: popup_confirm_quit_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377638980653058
+    m_Key: popup_confirm_back_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3755155985993728
+    m_Key: lose_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3755155985993729
+    m_Key: victory_title
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

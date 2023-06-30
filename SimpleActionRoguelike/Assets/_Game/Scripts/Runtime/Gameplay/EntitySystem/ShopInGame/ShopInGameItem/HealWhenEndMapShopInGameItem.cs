@@ -25,7 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnFinishedCurrentLevel(FinishedCurrentLevelMessage message)
         {
-            if (message.IsWin)
+            if (message.IsWin && !message.IsFinished)
             {
                 owner.Heal(dataConfigItem.healAmount, EffectSource.None, EffectProperty.Normal);
             }

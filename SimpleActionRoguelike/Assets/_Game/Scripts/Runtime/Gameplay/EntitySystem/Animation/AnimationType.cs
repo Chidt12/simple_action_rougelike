@@ -27,7 +27,6 @@ namespace Runtime.Gameplay.EntitySystem
         UseSkillPart2 = 20,
         UseSkillPart3 = 21,
         UseSkillPart4 = 22,
-
     }
 
     public static class AnimationTypeExtensions

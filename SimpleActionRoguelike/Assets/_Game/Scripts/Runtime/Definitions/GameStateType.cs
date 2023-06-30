@@ -12,6 +12,7 @@ namespace Runtime.Definition
         GameplayPausing,
         GameplayChoosingItem,
         WinGameplay,
-        LoseGameplay
+        LoseGameplay,
+        Lobby,
     }
 }

@@ -47,6 +47,7 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 cancellationTokenSource = new();
                 this._collider = collider;
+                _collider.enabled = true;
                 collisionShape = this.CreateCollisionShape(collider);
                 CollisionSystem.Instance.AddBody(this);
 

@@ -1,16 +1,32 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Message;
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace Runtime.UI
 {
-    public class ModalQuitGame : BaseModal
+    public class ModalConfirmActionData
     {
+        public string description;
+        public Action confirmAction;
+        public Action cancelAction;
+
+        public ModalConfirmActionData(string description, Action confirmAction, Action cancelAction = null)
+        {
+            this.description = description;
+            this.confirmAction = confirmAction;
+            this.cancelAction = cancelAction;
+        }
+    }
+
+    public class ModalConfirmAction : Modal<ModalConfirmActionData>
+    {
+        [SerializeField] private TextMeshProUGUI _descriptionText;
         [SerializeField] private CustomButton _yesButton;
         [SerializeField] private CustomButton _noButton;
 
-        public override UniTask Initialize(Memory<object> args)
+        public override UniTask Initialize(ModalConfirmActionData modalData)
         {
             _yesButton.Index = 0;
             _noButton.Index = 1;
@@ -20,12 +36,16 @@ namespace Runtime.UI
             _yesButton.onClick.RemoveAllListeners();
             _noButton.onClick.RemoveAllListeners();
 
-            _yesButton.onClick.AddListener(() => Application.Quit());
-            _noButton.onClick.AddListener(() => ScreenNavigator.Instance.PopModal(true).Forget());
+            _yesButton.onClick.AddListener(() => modalData.confirmAction?.Invoke());
+            _noButton.onClick.AddListener(() => {
+                modalData.cancelAction?.Invoke();
+                ScreenNavigator.Instance.PopModal(true).Forget();
+            });
 
             EnterAButton(_yesButton);
             currentSelectedIndex = 0;
-            return base.Initialize(args);
+
+            return UniTask.CompletedTask;
         }
 
         private void OnEnterAnItem(int index)

@@ -70,11 +70,15 @@ namespace Runtime.Gameplay.Balancing
 
         [Header("==== Cheat ====")]
         public bool cheat;
+        [ShowIf(nameof(cheat))] public int cheatStageEndGame;
         [ShowIf(nameof(cheat))] public MapLevelScriptableObject cheatMap;
         [ShowIf(nameof(cheat))] public GameplayRoomType[] roomTypes;
         [ShowIf(nameof(cheat))] public StageLoadConfigItem[] stageLoadConfigItems;
 
         #region Calculate
+
+        public int StageEndGame => !cheat ? stageEndGame : cheatStageEndGame;
+
 
         public async UniTask<(MapLevelScriptableObject, StageLoadConfigItem, GameplayRoomType, GameplayGateSetupType)> GetNextStage(int heroPoint, GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {

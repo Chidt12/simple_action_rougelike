@@ -35,6 +35,7 @@ namespace Runtime.Core.Pool
         {
             AddressGameObjectPool pool = GetPool(source);
             var gameObject = await pool.Rent(token);
+            gameObject.transform.SetParent(null);
             gameObject.name = source;
             gameObject.SetActive(isActive);
             return gameObject;
@@ -42,9 +43,7 @@ namespace Runtime.Core.Pool
 
         public void Return(GameObject instance)
         {
-            instance.transform.SetParent(transform);
             AddressGameObjectPool pool = GetPool(instance.name);
-
             if (this._dictionary.TryGetValue(instance.name, out pool))
             {
                 pool.Return(instance);
