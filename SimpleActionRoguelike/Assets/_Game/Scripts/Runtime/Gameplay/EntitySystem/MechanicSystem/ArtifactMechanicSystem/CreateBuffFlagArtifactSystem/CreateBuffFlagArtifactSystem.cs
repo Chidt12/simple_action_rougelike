@@ -115,7 +115,7 @@ namespace Runtime.Gameplay.EntitySystem
                 if (_buffVfxs.ContainsKey(obj.EntityUID))
                 {
                     var buffVfx = _buffVfxs[obj.EntityUID];
-                    PoolManager.Instance.Return(buffVfx);
+                    RemoveBuffVfxAsync(buffVfx);
                     _buffVfxs.Remove(obj.EntityUID);
                 }
             }
@@ -123,6 +123,12 @@ namespace Runtime.Gameplay.EntitySystem
 
             if(_targets.Count == 0)
                 _effectArea.ToggleEnableVisual(false);
+        }
+
+        private async UniTaskVoid RemoveBuffVfxAsync(GameObject buffVfx)
+        {
+            await UniTask.Yield(_cancellationTokenSource.Token);
+            PoolManager.Instance.Return(buffVfx);
         }
     }
 }

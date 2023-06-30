@@ -130,7 +130,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: lose
+  m_text: Victory
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0e51a02ec14a34644b95454147e57346, type: 2}
   m_sharedMaterial: {fileID: 8389666961603400704, guid: 0e51a02ec14a34644b95454147e57346, type: 2}
@@ -215,7 +215,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:bd20478399bd629459a13fcfa683a2e2
     m_TableEntryReference:
-      m_KeyId: 3755155985993728
+      m_KeyId: 3755155985993729
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -634,9 +634,9 @@ GameObject:
   - component: {fileID: 5133787607800685380}
   - component: {fileID: 5133787607800685386}
   - component: {fileID: 6877529565793023498}
-  - component: {fileID: 62452338041107906}
+  - component: {fileID: -5661284223113172533}
   m_Layer: 5
-  m_Name: prefab_screen_lose
+  m_Name: prefab_screen_victory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -716,7 +716,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &62452338041107906
+--- !u!114 &-5661284223113172533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5133787607800685377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cc95891f61b69b438df801c6b327106, type: 3}
+  m_Script: {fileID: 11500000, guid: cddae955422c989429fce2491a655256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _usePrefabNameAsIdentifier: 1
@@ -742,6 +742,7 @@ MonoBehaviour:
   - {fileID: 6578936051044018354}
   - {fileID: 5470497930009910540}
   _timeText: {fileID: 8607742511789986568}
+  _delayInteract: 1
 --- !u!1 &5525286753345716235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,9 +1028,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:bd20478399bd629459a13fcfa683a2e2
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 3754956983046144
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -1064,6 +1065,7 @@ GameObject:
   - component: {fileID: 7901927657983909423}
   - component: {fileID: 2698766516610804434}
   - component: {fileID: 5536565161777537728}
+  - component: {fileID: 8410250460742401089}
   m_Layer: 5
   m_Name: text
   m_TagString: Untagged
@@ -1188,6 +1190,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8410250460742401089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8666131478878990287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:bd20478399bd629459a13fcfa683a2e2
+    m_TableEntryReference:
+      m_KeyId: 3754957004017664
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5536565161777537728}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &8797387311634603473
 GameObject:
   m_ObjectHideFlags: 0

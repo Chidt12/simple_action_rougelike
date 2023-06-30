@@ -13,7 +13,6 @@ namespace Runtime.Constants
     {
         public const string NONE = "NONE";
         public const string VICTORY = "prefab_modal_victory";
-        public const string LOSE = "prefab_modal_lose";
         public const string GAME_SETTINGS = "prefab_modal_gameplay_settings";
 
         public const string SELECT_INGAME_SHOP = "prefab_modal_select_ingame_shop";
@@ -31,6 +30,7 @@ namespace Runtime.Constants
         public const string GAMEPLAY = "prefab_screen_gameplay";
         public const string LOBBY = "prefab_screen_lobby";
         public const string LOSE = "prefab_screen_lose";
+        public const string VICTORY = "prefab_screen_victory";
     }
 
     public class AddressableKeys

@@ -66,12 +66,6 @@ namespace Runtime.Manager.Gameplay
             cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
         }
 
-        public void SetConfinder(PolygonCollider2D confinder)
-        {
-            var confinderExtension = _virtualCamera.GetComponent<CinemachineConfiner2D>();
-            confinderExtension.m_BoundingShape2D = confinder;
-        }
-
         private void OnHeroSpawned(HeroSpawnedMessage message)
         {
             _virtualCamera.ForceCameraPosition(message.HeroTransform.position, _virtualCamera.transform.rotation);

@@ -25,10 +25,6 @@ MonoBehaviour:
     m_Address: prefab_screen_start_game
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 284559995610cf04e8d3b76fbcde2570
-    m_Address: prefab_modal_victory
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 4c2759301ae046546b802a5f196c9c3e
     m_Address: prefab_screen_lose
     m_ReadOnly: 0

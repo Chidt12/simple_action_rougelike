@@ -15,5 +15,6 @@ namespace Runtime.Definition
         BuffAttackSpeed,
         BuffArmor,
         BuffDefense,
+        Win,
     }
 }

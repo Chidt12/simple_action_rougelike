@@ -336,7 +336,6 @@ namespace Runtime.Manager.Gameplay
             _currentLevelMap = mapGameObject.GetComponent<MapLevel>();
 
             SetUpRoomGates(_currentLevelMap, gateSetupType);
-            _cameraManager.SetConfinder(_currentLevelMap.confinder);
             MapManager.Instance.LoadLevelMap(_currentLevelMap);
         }
 
@@ -449,15 +448,24 @@ namespace Runtime.Manager.Gameplay
 
         private void HandleLoseStage()
         {
-            SimpleMessenger.Publish(new FinishedCurrentLevelMessage(false));
+            SimpleMessenger.Publish(new FinishedCurrentLevelMessage(false, true));
             ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.LOSE), true).Forget();
         }
 
         private UniTask HandleWinLevelAsync()
         {
-            SimpleMessenger.Publish(new FinishedCurrentLevelMessage(true));
-            SetUpAfterWinLevel();
-            GiveRewards(RewardCoins);
+            if(_currentStageData.StageNumber >= GameBalancingConfig.StageEndGame)
+            {
+                SimpleMessenger.Publish(new FinishedCurrentLevelMessage(true, true));
+                EntitiesManager.Instance.HeroData.ReactionChangedEvent.Invoke(EntityReactionType.Win);
+                ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.VICTORY), true).Forget();
+            }
+            else
+            {
+                SimpleMessenger.Publish(new FinishedCurrentLevelMessage(true, false));
+                SetUpAfterWinLevel();
+                GiveRewards(RewardCoins);
+            }
             return UniTask.CompletedTask;
         }
 
