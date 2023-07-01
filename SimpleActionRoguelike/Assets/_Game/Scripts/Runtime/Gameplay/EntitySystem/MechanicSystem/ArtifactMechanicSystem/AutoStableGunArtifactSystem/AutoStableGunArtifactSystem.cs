@@ -26,10 +26,12 @@ namespace Runtime.Gameplay.EntitySystem
         protected override void OnUpdateAsync()
         {
             base.OnUpdateAsync();
+
             var removedGuns = new List<AutoStableGun>();
             foreach (var gun in _listGuns)
             {
                 gun.OnUpdate(Time.deltaTime);
+
                 if (gun.CanShooting())
                 {
                     gun.Shooting();
@@ -93,6 +95,18 @@ namespace Runtime.Gameplay.EntitySystem
                 ownerEntityData,
                 callbackData.target
             ));
+        }
+
+        public override UniTask ResetNewStage()
+        {
+            foreach (var gun in _listGuns)
+            {
+                PoolManager.Instance.Return(gun.gameObject);
+            }
+
+            _listGuns.Clear();
+
+            return base.ResetNewStage();
         }
     }
 }

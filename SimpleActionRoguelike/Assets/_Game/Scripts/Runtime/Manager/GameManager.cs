@@ -18,7 +18,7 @@ namespace Runtime.Manager
         [SerializeField] private bool _isTest;
 
         private GameStateType _currentGameStateType;
-        private Stack<GameStateType> _previousGameStateTypeStack;
+        private GameStateType _previousGameStateType;
 
         public bool IsTest => _isTest;
 
@@ -31,7 +31,6 @@ namespace Runtime.Manager
         {
             base.Awake();
             _currentGameStateType = GameStateType.None;
-            _previousGameStateTypeStack = new();
             InitializeAsync().Forget();
         }
 
@@ -40,17 +39,15 @@ namespace Runtime.Manager
             await LocalizeManager.InitializeAsync();
         }
 
-        public void ClearGameStateHistory()
-        {
-            _previousGameStateTypeStack.Clear();
-        }
-
-        public bool SetGameStateType(GameStateType gameStateType)
+        public bool SetGameStateType(GameStateType gameStateType, bool savePreviousGameState = false)
         {
             var currentGameState = _currentGameStateType;
-            _previousGameStateTypeStack.Push(_currentGameStateType);
-            _currentGameStateType = gameStateType;
+            if (savePreviousGameState)
+            {
+                _previousGameStateType = currentGameState;
+            }
 
+            _currentGameStateType = gameStateType;
             if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
                 Time.timeScale = 0;
             else
@@ -59,19 +56,14 @@ namespace Runtime.Manager
             return currentGameState != gameStateType;
         }
 
-        public bool ReturnPreviousGameStateType() 
+        public void ReturnPreviousGameState()
         {
-            if(_previousGameStateTypeStack.Count > 0)
-            {
-                _currentGameStateType = _previousGameStateTypeStack.Pop();
-                if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
-                    Time.timeScale = 0;
-                else
-                    Time.timeScale = 1;
-
-                return true;
-            }
-            return false;
+            _currentGameStateType = _previousGameStateType;
+            Debug.LogError(_currentGameStateType);
+            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1;
         }
 
         public async UniTask StartLoadingGameplayAsync()
@@ -90,9 +82,6 @@ namespace Runtime.Manager
 
             if (loadingLayer)
                 await loadingLayer.EndLoading();
-
-            SetGameStateType(GameStateType.GameplayRunning);
-            ClearGameStateHistory();
         }
 
         public async UniTask BackHomeAsync()
@@ -111,7 +100,6 @@ namespace Runtime.Manager
 
             if (loadingLayer)
                 await loadingLayer.EndLoading();
-            ClearGameStateHistory();
         }
 
         public async UniTask Replay()

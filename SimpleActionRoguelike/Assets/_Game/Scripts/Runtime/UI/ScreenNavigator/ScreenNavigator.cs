@@ -114,7 +114,7 @@ namespace Runtime.UI
                 else
                 {
                     // Load Game Inventory 
-                    if (GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning)
+                    if (GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning || GameManager.Instance.CurrentGameStateType == GameStateType.GameplayLobby)
                     {
                         var options = new WindowOptions(ModalIds.INVENTORY_INGAME);
                         LoadModal(options).Forget();
@@ -135,7 +135,7 @@ namespace Runtime.UI
                 await PopScreen(true);
             else
             {
-                if(GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning)
+                if(GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning || GameManager.Instance.CurrentGameStateType == GameStateType.GameplayLobby)
                 {
                     var options = new WindowOptions(ModalIds.GAME_SETTINGS);
                     LoadModal(options).Forget();

@@ -31,7 +31,7 @@ namespace Runtime.UI
 #endif
         public async override UniTask Initialize(ModalSelectIngameShopData data)
         {
-            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
+            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem, true);
 
             for (int i = 0; i < data.Items.Length; i++)
             {
@@ -46,7 +46,7 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-            GameManager.Instance.ReturnPreviousGameStateType();
+            GameManager.Instance.ReturnPreviousGameState();
             return base.Cleanup();
         }
     }

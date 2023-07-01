@@ -9,7 +9,8 @@ namespace Runtime.Manager.UserInput
     {
         private void Update()
         {
-            if(GameManager.Instance.CurrentGameStateType == Definition.GameStateType.GameplayRunning)
+            var gameState = GameManager.Instance.CurrentGameStateType;
+            if (gameState == Definition.GameStateType.GameplayRunning || gameState == Definition.GameStateType.GameplayLobby)
             {
                 // Move
                 var horizontalValue = Input.GetAxisRaw("Horizontal");

@@ -8,7 +8,7 @@ namespace Runtime.Gameplay.EntitySystem
         public int Level { get; }
         public IEntityData EntityData { get; }
         public UniTask Init(IEntityData entityData);
-        public void ResetNewStage();
+        public UniTask ResetNewStage();
         public void ResetRevive();
     }
 }

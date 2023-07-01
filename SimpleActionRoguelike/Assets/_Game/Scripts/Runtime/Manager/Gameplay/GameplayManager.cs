@@ -151,6 +151,7 @@ namespace Runtime.Manager.Gameplay
                 new SpawnedEntityInfo(Constant.HERO_ID, EntityType.Hero, GameplayDataDispatcher.Instance.HeroLevel),
                 MapManager.Instance.SpawnPoints[0].transform.position,
                 cancellationToken: _cancellationTokenSource.Token);
+
             SetUpNewStage();
         }
 
@@ -286,7 +287,6 @@ namespace Runtime.Manager.Gameplay
             // Delay to wait for camera move to hero.
             await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Fade Out
-            GameManager.Instance.ReturnPreviousGameStateType();
             SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, true));
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Update current Stage info.
@@ -299,6 +299,7 @@ namespace Runtime.Manager.Gameplay
         {
             if (_currentStageLoadConfigItem.waveConfigs != null && _currentStageLoadConfigItem.waveConfigs.Length > 0)
             {
+                GameManager.Instance.SetGameStateType(GameStateType.GameplayRunning);
                 StartCurrentLevel();
             }
             else
@@ -471,7 +472,15 @@ namespace Runtime.Manager.Gameplay
 
         private void SetUpAfterWinLevel()
         {
-            if(_currentStageData.CurrentRoomType == GameplayRoomType.EliteHaveArtifact 
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayLobby);
+            MechanicSystemManager.ResetForNextStage().Forget();
+            var runes = FindObjectsByType<RuneArtifact>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            foreach (var item in runes)
+            {
+                PoolManager.Instance.Return(item.gameObject);
+            }
+
+            if (_currentStageData.CurrentRoomType == GameplayRoomType.EliteHaveArtifact 
                 || _currentStageData.CurrentRoomType == GameplayRoomType.Elite
                 || _currentStageData.CurrentRoomType == GameplayRoomType.NormalHaveArtifact)
             {
