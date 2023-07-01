@@ -97,44 +97,8 @@ MonoBehaviour:
     m_Address: GameBalancingConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: df7c9e76b828302418686d8b06d05542
-    m_Address: map_empty_big
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 7bf67a0fc2ee006429239811d6ed616e
-    m_Address: map_empty_tiny
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 0aec31518caac4641a03750b8f0a8931
-    m_Address: map_empty_small
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 8cf891cf5eece20468d4824ef6a35487
-    m_Address: lobby
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: c361748a93dbdb44fbf18f877c0b3f73
-    m_Address: map_space_v_normal
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 71780f6ddee57104199fd0de2e775bc7
     m_Address: map_empty_normal
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 02d5e01ec8493b24486d6b6072fc61b4
-    m_Address: map_obstacle_normal
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: c34bf9a9e8907084a982f6e8ee7e2f2d
-    m_Address: shop_room
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 3182e95df6681334dbcf5616b1530c48
-    m_Address: map_space_h_normal
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 89ab12a842a6e79458f77d28c422b22b
-    m_Address: map_space_center_hole
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 2d19f648ffa92924884fa19d6f0e7b78

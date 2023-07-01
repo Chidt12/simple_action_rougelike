@@ -32,14 +32,7 @@ MonoBehaviour:
   bossMaps:
   - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
   maps:
-  - {fileID: 11400000, guid: b278e1e83e2564c41bb1c5ecc41c2020, type: 2}
   - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
-  - {fileID: 11400000, guid: 096e757202de9b14aab7858f8cccfd31, type: 2}
-  - {fileID: 11400000, guid: 0c9f3a81b86535146bbb849924d1ad63, type: 2}
-  - {fileID: 11400000, guid: 241c89f6b6910814c829951e54d20d6d, type: 2}
-  - {fileID: 11400000, guid: 1adc8ffbdf47e144e9e4baf0d822af0a, type: 2}
-  - {fileID: 11400000, guid: 0e28db917c9288340882de579d0ffd6e, type: 2}
-  - {fileID: 11400000, guid: 3d0b9007dcb03ff4ca4603a2bac611fc, type: 2}
   setupRoomTypes:
   - stageNumber: 0
     roomType: 1000

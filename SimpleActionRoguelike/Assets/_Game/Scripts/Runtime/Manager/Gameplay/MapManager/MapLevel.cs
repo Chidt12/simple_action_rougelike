@@ -9,10 +9,8 @@ namespace Runtime.Manager.Gameplay
     {
         [SerializeField] public MapSpawnPoint[] mapSpawnPoints;
         [SerializeField] public PathCreator[] pathCreators;
-        [SerializeField] public PolygonCollider2D confinder;
         [SerializeField] public MapGate[] gates;
-        [SerializeField]
-        public MapLevelScriptableObject scriptableObject;
+        [SerializeField] public MapLevelScriptableObject scriptableObject;
 
 #if UNITY_EDITOR
         private void OnValidate()

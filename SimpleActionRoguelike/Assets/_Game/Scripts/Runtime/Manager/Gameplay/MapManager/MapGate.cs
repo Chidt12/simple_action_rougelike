@@ -23,7 +23,6 @@ namespace Runtime.Manager.Gameplay
         private const float WAITING_TIME = 0.3f;
 
         [SerializeField] private GameObject _mainGraphic;
-        [SerializeField] private GameObject _shadow;
         [SerializeField] private GameObject _guideGraphic;
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private Collider2D _collider2D;
@@ -92,13 +91,11 @@ namespace Runtime.Manager.Gameplay
             }
 
             _mainGraphic.SetActive(false);
-            _shadow.SetActive(false);
         }
 
         public void OpenGate()
         {
             _mainGraphic.SetActive(true);
-            _shadow.SetActive(true);
             _collider2D.enabled = true;
         }
     }
