@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Core.Message;
 using Runtime.Definition;
+using Runtime.Manager;
 using Runtime.Manager.Data;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
@@ -30,9 +31,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnKeyPress(InputKeyPressMessage keyPressMessage)
         {
-            if(keyPressMessage.KeyPressType == KeyPressType.RightMouseButton)
+            if (keyPressMessage.KeyPressType == KeyPressType.RightMouseButton && GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning)
             {
-                if(_collectedArtifacts.Count > 0)
+                if (_collectedArtifacts.Count > 0)
                 {
 
                     var artifactType = ArtifactType.None;
@@ -63,6 +64,14 @@ namespace Runtime.Gameplay.EntitySystem
                 foreach (var buffItem in _artifacts)
                     buffItem.Dispose();
                 _artifacts.Clear();
+            }
+        }
+
+        public async UniTask ResetForNextStage()
+        {
+            foreach (var item in _artifacts)
+            {
+                await item.ResetNewStage();
             }
         }
 

@@ -33,6 +33,7 @@ namespace Runtime.UI
         private int _currentSelectedIndex;
         private bool _isSelected;
         private bool _isSelectedResetButton;
+        private ModalGiveArtifactData _data;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -44,11 +45,12 @@ namespace Runtime.UI
 
         public override async UniTask Initialize(ModalGiveArtifactData data)
         {
+            _data = data;
             _currentSelectedIndex = -1;
             _isSelectedResetButton = false;
             _isSelected = false;
 
-            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
+            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem, true);
 
             for (int i = 0; i < data.Items.Length; i++)
             {
@@ -79,7 +81,7 @@ namespace Runtime.UI
             {
                 if (message.KeyPressType == KeyPressType.Right)
                 {
-                    if (_currentSelectedIndex < _buttons.Length - 1)
+                    if (_currentSelectedIndex < _data.Items.Length - 1)
                     {
                         if (_currentSelectedIndex != -1)
                             ExitAButton(_buttons[_currentSelectedIndex]);
@@ -147,7 +149,7 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-            GameManager.Instance.ReturnPreviousGameStateType();
+            GameManager.Instance.ReturnPreviousGameState();
             return base.Cleanup();
         }
     }

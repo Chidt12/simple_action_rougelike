@@ -42,8 +42,7 @@ namespace Runtime.Gameplay.EntitySystem
             this.ownerData = ownerData as T;
         }
 
-        public virtual void ResetNewStage()
-        { }
+        public virtual UniTask ResetNewStage() => UniTask.CompletedTask;
 
         public virtual void ResetRevive()
         { }

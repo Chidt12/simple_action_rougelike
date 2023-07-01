@@ -16,7 +16,7 @@ namespace Runtime.UI
 
         public override UniTask Initialize(Memory<object> args)
         {
-            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing, true);
 
             for (int i = 0; i < _selectButtons.Length; i++)
             {
@@ -46,7 +46,7 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-            GameManager.Instance.ReturnPreviousGameStateType();
+            GameManager.Instance.ReturnPreviousGameState();
             return base.Cleanup();
         }
 

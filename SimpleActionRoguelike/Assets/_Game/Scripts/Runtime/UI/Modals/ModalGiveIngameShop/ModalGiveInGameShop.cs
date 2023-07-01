@@ -46,7 +46,7 @@ namespace Runtime.UI
             _isSelectedResetButton = false;
             _isSelected = false;
             _data = data;
-            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem);
+            GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem, true);
 
             for (int i = 0; i < _itemUIs.Length; i++)
             {
@@ -75,7 +75,7 @@ namespace Runtime.UI
             {
                 if (message.KeyPressType == KeyPressType.Right)
                 {
-                    if (_currentSelectedIndex < _buttons.Length - 1)
+                    if (_currentSelectedIndex < _data.Items.Length - 1)
                     {
                         if (_currentSelectedIndex != -1)
                             ExitAButton(_buttons[_currentSelectedIndex]);
@@ -143,7 +143,7 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-            GameManager.Instance.ReturnPreviousGameStateType();
+            GameManager.Instance.ReturnPreviousGameState();
             return base.Cleanup();
         }
     }

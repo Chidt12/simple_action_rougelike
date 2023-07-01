@@ -53,7 +53,6 @@ namespace Runtime.UI
 
         public override UniTask Cleanup()
         {
-            GameManager.Instance.ReturnPreviousGameStateType();
             _cancellationTokenSource?.Cancel();
             return base.Cleanup();
         }

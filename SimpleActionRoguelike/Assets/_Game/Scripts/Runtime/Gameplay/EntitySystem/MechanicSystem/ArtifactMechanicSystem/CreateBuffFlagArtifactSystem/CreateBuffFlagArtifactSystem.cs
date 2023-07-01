@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using Runtime.Manager;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -45,26 +46,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid SpawningFlagAsync()
         {
-            if (_effectArea)
-            {
-                PoolManager.Instance.Return(_effectArea.gameObject);
-                _effectArea = null;
-
-                foreach (var target in _targets)
-                {
-                    foreach (var item in ownerData.buffStats)
-                        target.DebuffStat(item.statType, item.value, item.statModifyType);
-
-                    if (_buffVfxs.ContainsKey(target.EntityUID))
-                    {
-                        var buffVfx = _buffVfxs[target.EntityUID];
-                        PoolManager.Instance.Return(buffVfx);
-                        _buffVfxs.Remove(target.EntityUID);
-                    }
-                }
-
-                _targets.Clear();
-            }
+            ClearOldFlag();
 
             _isSpawningFlag = true;
             var flagPrefab = await PoolManager.Instance.Rent(ownerData.flagPrefabName, token: _cancellationTokenSource.Token);
@@ -129,6 +111,36 @@ namespace Runtime.Gameplay.EntitySystem
         {
             await UniTask.Yield(_cancellationTokenSource.Token);
             PoolManager.Instance.Return(buffVfx);
+        }
+
+        public override UniTask ResetNewStage()
+        {
+            ClearOldFlag();
+            return base.ResetNewStage();
+        }
+
+        private void ClearOldFlag()
+        {
+            if(_effectArea != null)
+            {
+                PoolManager.Instance.Return(_effectArea.gameObject);
+                _effectArea = null;
+
+                foreach (var target in _targets)
+                {
+                    foreach (var item in ownerData.buffStats)
+                        target.DebuffStat(item.statType, item.value, item.statModifyType);
+
+                    if (_buffVfxs.ContainsKey(target.EntityUID))
+                    {
+                        var buffVfx = _buffVfxs[target.EntityUID];
+                        PoolManager.Instance.Return(buffVfx);
+                        _buffVfxs.Remove(target.EntityUID);
+                    }
+                }
+
+                _targets.Clear();
+            }
         }
     }
 }
