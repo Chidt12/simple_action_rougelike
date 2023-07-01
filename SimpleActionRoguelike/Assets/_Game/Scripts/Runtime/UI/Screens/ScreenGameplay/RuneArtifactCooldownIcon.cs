@@ -26,6 +26,7 @@ namespace Runtime.UI
             _cooldown = artifactSystem as ICooldown;
             if (_cooldown != null)
             {
+                _processImage.fillAmount = 0;
                 _cooldown.OnCountTimeChanged += OnCountTime;
             }
 

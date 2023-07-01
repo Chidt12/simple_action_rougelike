@@ -24,7 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             await base.Init(entityData);
             currentCountTime = 0;
-            OnCountTimeChanged?.Invoke(false);
+            OnCountTimeChanged?.Invoke(true);
             cancellationTokenSource = new();
             StartRuneCooldownAsync().Forget();
         }
@@ -35,12 +35,12 @@ namespace Runtime.Gameplay.EntitySystem
             while (true)
             {
                 await UniTask.Yield(cancellationTokenSource.Token);
+                if (GameManager.Instance.CurrentGameStateType != GameStateType.GameplayRunning)
+                    continue;
+
                 currentCountTime += Time.deltaTime;
 
                 OnUpdateAsync();
-
-                if (GameManager.Instance.CurrentGameStateType != GameStateType.GameplayRunning)
-                    continue;
 
                 if(currentCountTime >= ownerData.runeInterval)
                 {
@@ -63,6 +63,13 @@ namespace Runtime.Gameplay.EntitySystem
         }
 
         protected virtual void OnUpdateAsync() { }
+
+        public override UniTask ResetNewStage()
+        {
+            currentCountTime = 0;
+            OnCountTimeChanged?.Invoke(true);
+            return base.ResetNewStage();
+        }
 
         public override void Dispose()
         {
