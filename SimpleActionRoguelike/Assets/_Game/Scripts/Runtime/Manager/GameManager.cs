@@ -59,7 +59,6 @@ namespace Runtime.Manager
         public void ReturnPreviousGameState()
         {
             _currentGameStateType = _previousGameStateType;
-            Debug.LogError(_currentGameStateType);
             if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
                 Time.timeScale = 0;
             else
