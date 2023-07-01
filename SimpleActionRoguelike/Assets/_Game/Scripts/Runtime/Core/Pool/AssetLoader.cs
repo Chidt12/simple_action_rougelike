@@ -11,12 +11,27 @@ namespace Runtime.Core.Pool
     {
         private Dictionary<string, Sprite> _spriteAssetsDictionary;
         private Dictionary<string, Material> _materialDictionary;
+        private Dictionary<string, AudioClip> _audioClipDictionary;
 
         protected override void Awake()
         {
             base.Awake();
+            _audioClipDictionary = new Dictionary<string, AudioClip>();
             _spriteAssetsDictionary = new Dictionary<string, Sprite>();
             _materialDictionary = new Dictionary<string, Material>();
+        }
+
+        public static async UniTask<AudioClip> LoadAudioClip(string assetId)
+        {
+            AudioClip audioClip = null;
+            if (!Instance._audioClipDictionary.ContainsKey(assetId))
+            {
+                audioClip = await Addressables.LoadAssetAsync<AudioClip>(assetId);
+                if (!Instance._audioClipDictionary.ContainsKey(assetId))
+                    Instance._audioClipDictionary.Add(assetId, audioClip);
+            }
+            else audioClip = Instance._audioClipDictionary[assetId];
+            return audioClip;
         }
 
         public static async UniTask<Sprite> LoadSprite(string assetId, CancellationToken cancellationToken)

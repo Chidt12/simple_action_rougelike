@@ -6,6 +6,8 @@ namespace Runtime.Constants
         public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
         public const float DELAY_TIME_FOR_FIRST_WAVE = 1f;
 
+        public const string SFX_ITEM = "sfx_item";
+
         public static string IconSpriteAtlasKey(string spriteName) => $"Icons[{spriteName}]";
     }
 
@@ -31,6 +33,16 @@ namespace Runtime.Constants
         public const string LOBBY = "prefab_screen_lobby";
         public const string LOSE = "prefab_screen_lose";
         public const string VICTORY = "prefab_screen_victory";
+    }
+
+    public class MusicIds
+    {
+
+    }
+
+    public class SoundIds
+    {
+
     }
 
     public class AddressableKeys
