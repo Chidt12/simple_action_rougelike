@@ -3,6 +3,7 @@ using Runtime.ConfigModel;
 using Runtime.Core.Message;
 using Runtime.Definition;
 using Runtime.Manager.Data;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,10 @@ namespace Runtime.Gameplay.EntitySystem
     public class MechanicSystemManager
     {
         private List<IArtifactSystem> _artifacts;
-        private Queue<ArtifactType> _collectedArtifacts;
-
+        private Stack<ArtifactType> _collectedArtifacts;
         private List<ISubscription> _subscriptions;
+
+        public Stack<ArtifactType> CollectedArtifacts => _collectedArtifacts;
 
         public void Init()
         {
@@ -32,16 +34,23 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 if(_collectedArtifacts.Count > 0)
                 {
-                    var artifactType = UsedCurrentCollectedArtifact();
+
+                    var artifactType = ArtifactType.None;
+                    if (_collectedArtifacts.Count > 0)
+                    {
+                        artifactType = _collectedArtifacts.Pop();
+                    }
+
                     var artifact = _artifacts.FirstOrDefault(x => x.ArtifactType == artifactType);
                     if (artifact.CanTrigger())
                     {
                         artifact.Trigger();
                         // Update visual after used.
+                        SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(artifactType, UpdatedCurrentCollectedArtifactType.Used));
                     }
                     else
                     {
-                        AddCollectedArtifact(artifactType);
+                        _collectedArtifacts.Push(artifactType);
                     }
                 }
             }
@@ -59,23 +68,16 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void AddCollectedArtifact(ArtifactType artifactType)
         {
-            _collectedArtifacts.Enqueue(artifactType);
-        }
-
-        public ArtifactType UsedCurrentCollectedArtifact()
-        {
-            if(_collectedArtifacts.Count > 0)
-            {
-                return _collectedArtifacts.Dequeue();
-            }
-
-            return ArtifactType.None;
+            _collectedArtifacts.Push(artifactType);
+            SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(artifactType, UpdatedCurrentCollectedArtifactType.Add));
         }
 
         public List<ArtifactIdentity> GetCurrentBuffsInGame()
         {
             return _artifacts.Select(x => new ArtifactIdentity(x.ArtifactType, x.Level)).ToList();
         }
+
+        public bool CanAddCollectedArtifact() => _collectedArtifacts.Count < GameplayManager.Instance.GameBalancingConfig.numberStackArtifact;
 
         public async UniTask AddArtifactystem(IEntityData entityData, ArtifactType buffInGameType)
         {
@@ -89,6 +91,7 @@ namespace Runtime.Gameplay.EntitySystem
                 buffInGame.SetData(dataConfigItem);
                 await buffInGame.Init(entityData);
                 _artifacts.Add(buffInGame);
+                SimpleMessenger.Publish(new UpdateCurrentArtifactMessage(buffInGame, UpdateCurrentArtifactType.Added));
             }
             else
             {
@@ -97,6 +100,7 @@ namespace Runtime.Gameplay.EntitySystem
 
                 mechanic.SetData(dataConfigItem);
                 await mechanic.Init(entityData);
+                SimpleMessenger.Publish(new UpdateCurrentArtifactMessage(mechanic, UpdateCurrentArtifactType.LevelUp));
             }
         }
 
@@ -109,6 +113,8 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 mechanic.Dispose();
                 _artifacts.Remove(mechanic);
+
+                SimpleMessenger.Publish(new UpdateCurrentArtifactMessage(mechanic, UpdateCurrentArtifactType.Removed));
             }
         }
     }

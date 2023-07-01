@@ -23,6 +23,8 @@ namespace Runtime.Gameplay.Balancing
     [CreateAssetMenu(fileName = AddressableKeys.GAME_BALANCING_CONFIG, menuName = "Balancing/GameBalancingConfig")]
     public partial class GameBalancingConfig : ScriptableObject
     {
+        public int numberStackArtifact = 4;
+
         [HideIf(nameof(cheat))]
         [Header("=== Gen Enemies Config ===")]
         [HideIf(nameof(cheat))] public int minWave = 1; // boss only have 1 wave.

@@ -10,20 +10,28 @@ using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
 {
-    public abstract class RuneArtifactSystem<T> : ArtifactSystem<T> where T : RuneArtifactDataConfigItem
+    public abstract class RuneArtifactSystem<T> : ArtifactSystem<T>, ICooldown where T : RuneArtifactDataConfigItem
     {
+        protected float currentCountTime;
         protected CancellationTokenSource cancellationTokenSource;
+
+        public float CurrentCountTime => currentCountTime;
+        public float CountTime => ownerData.runeInterval;
+
+        public Action<bool> OnCountTimeChanged { get; set; }
 
         public async override UniTask Init(IEntityData entityData)
         {
             await base.Init(entityData);
+            currentCountTime = 0;
+            OnCountTimeChanged?.Invoke(false);
             cancellationTokenSource = new();
             StartRuneCooldownAsync().Forget();
         }
 
         protected async UniTaskVoid StartRuneCooldownAsync()
         {
-            float currentCountTime = 0;
+            currentCountTime = 0;
             while (true)
             {
                 await UniTask.Yield(cancellationTokenSource.Token);
@@ -36,6 +44,8 @@ namespace Runtime.Gameplay.EntitySystem
 
                 if(currentCountTime >= ownerData.runeInterval)
                 {
+                    OnCountTimeChanged?.Invoke(true);
+
                     var rune = await PoolManager.Instance.Rent("rune_artifact");
 
                     rune.transform.position = MapManager.Instance.GetRandomWalkablePoint();
@@ -44,6 +54,10 @@ namespace Runtime.Gameplay.EntitySystem
                     // Find some place to spawn.
                     await runeArtifact.InitAsync(ownerData.runeLifeTime, ArtifactType, cancellationTokenSource.Token);
                     currentCountTime = 0;
+                }
+                else
+                {
+                    OnCountTimeChanged?.Invoke(false);
                 }
             }
         }

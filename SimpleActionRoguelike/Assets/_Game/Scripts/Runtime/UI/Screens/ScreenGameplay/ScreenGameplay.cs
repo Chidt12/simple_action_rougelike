@@ -1,9 +1,12 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Message;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,21 +24,119 @@ namespace Runtime.UI
         [SerializeField] private Transform _dashContainer;
         [SerializeField] private BossHealthBar[] _bossHealthBars;
 
+        [Header("Artifact display")]
+        [SerializeField] private RuneArtifactCooldownIcon _runeArtifactIconPrefab;
+        [SerializeField] private Transform _runeArtifactIconsContainer;
+        [SerializeField] private StackArtifactIcon _stackArtifactIconPrefab;
+        [SerializeField] private Transform _stackArtifactIconsContainer;
+ 
         private List<DashIcon> _activeDashIcons;
+        private List<RuneArtifactCooldownIcon> _runeArtifactIcons;
+        private List<StackArtifactIcon> _stackArtifactIcons;
 
         private IEntityStatData _heroData;
         private List<ISubscription> _subscriptions;
         private EntityStatWithCurrentValue _dashStat;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public override UniTask Initialize(Memory<object> args)
         {
             _activeDashIcons = new();
+            _runeArtifactIcons = new();
+            _stackArtifactIcons = new();
+            _cancellationTokenSource = new();
+
             _subscriptions = new();
             _subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
             _subscriptions.Add(SimpleMessenger.Subscribe<EntitySpawnedMessage>(OnEntitySpawned));
             _subscriptions.Add(SimpleMessenger.Subscribe<FinishedLoadNextLevelMessage>(OnLoadNextLevel));
+            _subscriptions.Add(SimpleMessenger.Subscribe<UpdateCurrentArtifactMessage>(OnUpdateCurrentArtifact));
+            _subscriptions.Add(SimpleMessenger.Subscribe<UpdateCurrentCollectedArtifactMessage>(OnUpdateCollectedArtifact));
+
+            InitializeStackArtifacts();
+            InitializeRuneArtifacts();
             ResetBossHealthBars();
             return base.Initialize(args);
+        }
+
+        public override UniTask Cleanup()
+        {
+            foreach (var subscription in _subscriptions)
+                subscription.Dispose();
+
+            _subscriptions.Clear();
+
+            ResetBossHealthBars();
+            _cancellationTokenSource.Dispose();
+
+            return base.Cleanup();
+        }
+
+        private void InitializeStackArtifacts()
+        {
+            foreach (Transform item in _stackArtifactIconsContainer)
+                Destroy(item.gameObject);
+
+            _stackArtifactIcons.Clear();
+
+            for (int i = 0; i < GameplayManager.Instance.GameBalancingConfig.numberStackArtifact; i++)
+            {
+                var stackArtifact = Instantiate(_stackArtifactIconPrefab, _stackArtifactIconsContainer);
+                stackArtifact.Clear();
+                _stackArtifactIcons.Add(stackArtifact);
+            }
+        }
+
+        private void InitializeRuneArtifacts()
+        {
+            foreach (Transform item in _runeArtifactIconsContainer)
+                Destroy(item.gameObject);
+        }
+
+
+        private void OnUpdateCurrentArtifact(UpdateCurrentArtifactMessage message)
+        {
+            if(message.UpdateArtifactType == UpdateCurrentArtifactType.Added)
+            {
+                var runeArtifactIcon = Instantiate(_runeArtifactIconPrefab, _runeArtifactIconsContainer);
+                runeArtifactIcon.Init(message.UpdatedArtifact, _cancellationTokenSource.Token);
+                _runeArtifactIcons.Add(runeArtifactIcon);
+            }
+            else if (message.UpdateArtifactType == UpdateCurrentArtifactType.Removed)
+            {
+                var icon = _runeArtifactIcons.FirstOrDefault(x => x.ArtifactType == message.UpdatedArtifact.ArtifactType);
+                _runeArtifactIcons.Remove(icon);
+                Destroy(icon.gameObject);
+            }
+        }
+
+        private void OnUpdateCollectedArtifact(UpdateCurrentCollectedArtifactMessage message)
+        {
+            if(message.UpdatedCurrentCollectedArtifactType == UpdatedCurrentCollectedArtifactType.Add)
+            {
+                var lastItem = _stackArtifactIcons.LastOrDefault(x => x.HasData);
+                if (lastItem)
+                    lastItem.ToggleSelect(false);
+
+                foreach (var item in _stackArtifactIcons)
+                {
+                    if (!item.HasData)
+                    {
+                        item.UpdateData(message.ArtifactType, _cancellationTokenSource.Token);
+                        item.ToggleSelect(true);
+                        break;
+                    }
+                }
+            }
+            else if (message.UpdatedCurrentCollectedArtifactType == UpdatedCurrentCollectedArtifactType.Used)
+            {
+                var lastItem = _stackArtifactIcons.LastOrDefault(x => x.HasData);
+                if (lastItem)
+                    lastItem.Clear();
+                lastItem = _stackArtifactIcons.LastOrDefault(x => x.HasData);
+                if (lastItem)
+                    lastItem.ToggleSelect(true);
+            }
         }
 
         private void OnLoadNextLevel(FinishedLoadNextLevelMessage message) => ResetBossHealthBars();
@@ -65,19 +166,6 @@ namespace Runtime.UI
             }
         }
 
-        public override UniTask Cleanup()
-        {
-            foreach (var subscription in _subscriptions)
-            {
-                subscription.Dispose();
-            }
-            _subscriptions.Clear();
-
-            ResetBossHealthBars();
-
-            return base.Cleanup();
-        }
-
         private void OnHeroSpawned(HeroSpawnedMessage message)
         {
             _heroData = (IEntityStatData)message.EntityData;
@@ -95,7 +183,7 @@ namespace Runtime.UI
                     _dashStat.OnValueChanged += OnDashValueChanged;
                     _dashStat.OnIncreaseCurrentValue += OnDashInCreaseCurrentValue;
                     _dashStat.OnDecreaseCurrentValue += OnDashDecreaseCurrentValue;
-                    InitIcons((int)_dashStat.TotalValue);
+                    InitDashIcons((int)_dashStat.TotalValue);
                 }
             }
         }
@@ -115,7 +203,7 @@ namespace Runtime.UI
             }
         }
 
-        private void InitIcons(int numberOfDash)
+        private void InitDashIcons(int numberOfDash)
         {
             foreach (Transform item in _dashContainer)
                 Destroy(item.gameObject);
@@ -133,7 +221,7 @@ namespace Runtime.UI
             }
         }
 
-        private void OnDashValueChanged(float value) => InitIcons((int)_dashStat.TotalValue);
+        private void OnDashValueChanged(float value) => InitDashIcons((int)_dashStat.TotalValue);
 
         private void OnDamage(float value, EffectSource effectSource, EffectProperty effectProperty)
         {

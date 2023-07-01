@@ -41,5 +41,11 @@ namespace Runtime.Gameplay.EntitySystem
         {
             this.ownerData = ownerData as T;
         }
+
+        public virtual void ResetNewStage()
+        { }
+
+        public virtual void ResetRevive()
+        { }
     }
 }

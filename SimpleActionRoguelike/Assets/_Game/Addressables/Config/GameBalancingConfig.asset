@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3954f38c0cd187409829aab009cf942, type: 3}
   m_Name: GameBalancingConfig
   m_EditorClassIdentifier: 
+  numberStackArtifact: 4
   minWave: 1
   maxWave: 3
   minEnemyTypes: 1
@@ -62,21 +63,8 @@ MonoBehaviour:
   n: 1.1
   z: 0
   cheat: 1
-  cheatStageEndGame: 2
+  cheatStageEndGame: 100
   cheatMap: {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
-  roomTypes: 0200000005000000
+  roomTypes: 05000000
   stageLoadConfigItems:
-  - waveConfigs:
-    - waveIndex: 0
-      duration: 150
-      entites:
-      - entityConfigItem:
-          entityId: 2001
-          entityType: 1
-          entityNumber: 1
-          entityLevel: 1
-        delaySpawnTime: 0
-        followHero: 1
-        distanceFromHero: 4
-        spawnPointIndex: 0
   - waveConfigs: []

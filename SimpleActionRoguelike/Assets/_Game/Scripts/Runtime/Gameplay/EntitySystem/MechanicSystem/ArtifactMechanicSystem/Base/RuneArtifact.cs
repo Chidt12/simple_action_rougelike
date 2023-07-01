@@ -3,6 +3,7 @@ using DG.Tweening;
 using Runtime.Constants;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using Runtime.Manager;
 using Runtime.Manager.Gameplay;
 using System.Threading;
 using UnityEngine;
@@ -80,8 +81,11 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 if (entityHolder.EntityData.EntityType == EntityType.Hero)
                 {
-                    _isFlying = true;
-                    _target = collision.transform;
+                    if (GameplayManager.Instance.MechanicSystemManager.CanAddCollectedArtifact())
+                    {
+                        _isFlying = true;
+                        _target = collision.transform;
+                    }
                 }
             }
         }
