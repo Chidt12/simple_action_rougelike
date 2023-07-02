@@ -122,7 +122,7 @@ namespace Runtime.Gameplay.EntitySystem
                 var moveToPosition = Helper.Helper.Bezier(originPosition, middlePosition, predictJumpPosition, Mathf.Clamp01(currentTime / ownerModel.JumpDuration));
 
                 if (MapManager.Instance.IsWalkable(moveToPosition))
-                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition);
+                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
                 else
                     break;
 

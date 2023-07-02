@@ -44,7 +44,7 @@ namespace Runtime.Manager.Gameplay
         private List<ISubscription> subscriptions;
         private List<IDisposable> otherDisposables;
 
-        protected int RewardCoins = 2;
+        protected int RewardCoins = 20;
 
         protected bool hasFinishedSpawnWave;
         protected int maxWaveIndex;
@@ -55,6 +55,9 @@ namespace Runtime.Manager.Gameplay
         private StageLoadConfigItem _currentStageLoadConfigItem;
         private CurrentLoadedStageData _currentStageData;
         private List<CheckEndStage> _checkEndStageConditions;
+
+        private bool _isLoadedShopItems;
+        private List<ShopInGameStageLoadConfigItem> _shopItems;
 
         public GameplayMessageCenter MessageCenter => messageCenter;
         public MechanicSystemManager MechanicSystemManager => mechanicSystemManager;
@@ -69,6 +72,8 @@ namespace Runtime.Manager.Gameplay
 
         public async UniTask InitAsync()
         {
+            _isLoadedShopItems = false;
+
             otherDisposables = new();
             subscriptions = new();
             subscriptions.Add(SimpleMessenger.Subscribe<EntityNotifyDiedMessage>(OnEntityDied));
@@ -224,12 +229,24 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTaskVoid LoadShopInGameAsync()
         {
-            var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
-            var selectInGameShopData = new ModalSelectIngameShopData(shopItems.ToArray(), OnBuyShopItem);
-            await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.SELECT_INGAME_SHOP, false), selectInGameShopData);
+            if(!_isLoadedShopItems)
+            {
+                _isLoadedShopItems = true;
+                _shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
+            }
+
+            if(_shopItems.Count <= 0)
+            {
+                ToastController.Instance.Show("Sold out!");
+            }
+            else
+            {
+                var selectInGameShopData = new ModalBuyIngameShopData(_shopItems, OnBuyShopItem);
+                await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.BUY_INGAME_SHOP, false), selectInGameShopData);
+            }
         }
 
-        private void OnBuyShopItem(ShopInGameStageLoadConfigItem item)
+        private bool OnBuyShopItem(ShopInGameStageLoadConfigItem item)
         {
             if (item.cost.resourceType == ResourceType.MoneyInGame)
             {
@@ -237,13 +254,16 @@ namespace Runtime.Manager.Gameplay
                 if (value < item.cost.resourceNumber)
                 {
                     ToastController.Instance.Show("Not Enough Resource!");
-                    return;
+                    return false;
                 }
 
                 DataManager.Transient.RemoveMoney((InGameMoneyType)item.cost.resourceId, item.cost.resourceNumber);
 
                 AddShopItemAsync(item.identity).Forget();
+                return true;
             }
+
+            return false;
         }
 
         private void OnGiveShopItem(ShopInGameStageLoadConfigItem item)
@@ -281,11 +301,13 @@ namespace Runtime.Manager.Gameplay
 
             // Load Level.
             await LoadLevelAsync(roomType);
-            EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position);
+            EntitiesManager.Instance.HeroData.ForceUpdatePosition.Invoke(MapManager.Instance.SpawnPoints[0].transform.position, true);
             SimpleMessenger.Publish(new FinishedLoadNextLevelMessage(_currentStageData.CurrentRoomType));
 
             // Delay to wait for camera move to hero.
-            await UniTask.Delay(TimeSpan.FromSeconds(0.75f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayLobby);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.25f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Fade Out
             SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, true));
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
@@ -311,6 +333,8 @@ namespace Runtime.Manager.Gameplay
         private async UniTask LoadLevelAsync(GameplayRoomType roomType)
         {
             // Destroy current level
+
+            _isLoadedShopItems = false;
 
             foreach (var checkEndStage in _checkEndStageConditions)
                 Destroy(checkEndStage.gameObject);

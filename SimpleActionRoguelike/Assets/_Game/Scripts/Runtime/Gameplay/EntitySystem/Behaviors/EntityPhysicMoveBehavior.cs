@@ -59,10 +59,18 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public void OnForceUpdatePosition(Vector2 position)
+        public void OnForceUpdatePosition(Vector2 position, bool ignorePhysic)
         {
-            _rb.MovePosition(position);
-            _controlData.Position = _rb.position;
+            if (ignorePhysic)
+            {
+                transform.position = position;
+                _controlData.Position = position;
+            }
+            else
+            {
+                _rb.MovePosition(position);
+                _controlData.Position = _rb.position;
+            }
         }
 
         private void OnStatChanged(float updatedValue)

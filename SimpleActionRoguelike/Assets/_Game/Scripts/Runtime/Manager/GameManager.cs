@@ -48,10 +48,12 @@ namespace Runtime.Manager
             }
 
             _currentGameStateType = gameStateType;
-            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
+            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem || _currentGameStateType == GameStateType.GameplayBuyingItem)
                 Time.timeScale = 0;
             else
                 Time.timeScale = 1;
+
+            Debug.LogWarning(_currentGameStateType);
 
             return currentGameState != gameStateType;
         }
@@ -59,10 +61,12 @@ namespace Runtime.Manager
         public void ReturnPreviousGameState()
         {
             _currentGameStateType = _previousGameStateType;
-            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem)
+            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem || _currentGameStateType == GameStateType.GameplayBuyingItem)
                 Time.timeScale = 0;
             else
                 Time.timeScale = 1;
+
+            Debug.LogWarning(_currentGameStateType);
         }
 
         public async UniTask StartLoadingGameplayAsync()

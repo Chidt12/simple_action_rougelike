@@ -17,7 +17,7 @@ namespace Runtime.Constants
         public const string VICTORY = "prefab_modal_victory";
         public const string GAME_SETTINGS = "prefab_modal_gameplay_settings";
 
-        public const string SELECT_INGAME_SHOP = "prefab_modal_select_ingame_shop";
+        public const string BUY_INGAME_SHOP = "prefab_modal_buy_ingame_shop";
         public const string GIVE_ARTIFACT = "prefab_modal_give_ingame_artifact";
         public const string GIVE_INGAME_SHOP = "prefab_modal_give_ingame_shop";
 

@@ -70,7 +70,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             while(currentTime >= 0)
             {
-                _controlData.ForceUpdatePosition.Invoke(currentFaceDirection.normalized * _speed * Time.deltaTime + _controlData.Position);
+                _controlData.ForceUpdatePosition.Invoke(currentFaceDirection.normalized * _speed * Time.deltaTime + _controlData.Position, false);
                 currentTime -= Time.deltaTime;
                 await UniTask.WaitForFixedUpdate(cancellationToken: token);
                 if (!MapManager.Instance.IsWalkable(_controlData.Position))

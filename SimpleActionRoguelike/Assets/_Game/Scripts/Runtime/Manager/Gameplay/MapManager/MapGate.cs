@@ -20,8 +20,6 @@ namespace Runtime.Manager.Gameplay
             public Sprite icon;
         }
 
-        private const float WAITING_TIME = 0.3f;
-
         [SerializeField] private GameObject _mainGraphic;
         [SerializeField] private GameObject _guideGraphic;
         [SerializeField] private SpriteRenderer _renderer;

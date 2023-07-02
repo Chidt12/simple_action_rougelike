@@ -66,7 +66,7 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 currentTime += Time.deltaTime;
                 var moveToPosition = Helper.Helper.Bezier(originPosition, heightOriginPosition, Mathf.Clamp01(currentTime / ownerModel.JumpUpDuration));
-                creatorData.ForceUpdatePosition?.Invoke(moveToPosition);
+                creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
                 await UniTask.Yield(token);
             }
 
@@ -85,7 +85,7 @@ namespace Runtime.Gameplay.EntitySystem
 
                     currentTime += Time.deltaTime;
                     var moveToPosition = Helper.Helper.Bezier(originPosition, creatorData.Target.Position + Vector2.up * ownerModel.JumpHeight, Mathf.Clamp01(currentTime / ownerModel.JumpMiddleDuration));
-                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition);
+                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
                     await UniTask.Yield(token);
                 }
 
@@ -116,7 +116,7 @@ namespace Runtime.Gameplay.EntitySystem
                 {
                     currentTime += Time.deltaTime;
                     var moveToPosition = Helper.Helper.Bezier(originPosition, upperPredictJumpPosition, Mathf.Clamp01(currentTime / ownerModel.JumpMiddleDuration));
-                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition);
+                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
                     await UniTask.Yield(token);
                 }
             }
@@ -139,7 +139,7 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 currentTime += Time.deltaTime;
                 var moveToPosition = Helper.Helper.Bezier(originPosition, predictJumpPosition, Mathf.Clamp01(currentTime / ownerModel.JumpDownDuration));
-                creatorData.ForceUpdatePosition?.Invoke(moveToPosition);
+                creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
                 await UniTask.Yield(token);
             }
 

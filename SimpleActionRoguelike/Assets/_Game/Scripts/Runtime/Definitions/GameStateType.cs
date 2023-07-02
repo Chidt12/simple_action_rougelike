@@ -11,6 +11,7 @@ namespace Runtime.Definition
         GameplayRunning,
         GameplayPausing,
         GameplayChoosingItem,
+        GameplayBuyingItem,
         GameplayLobby,
         WinGameplay,
         LoseGameplay,

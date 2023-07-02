@@ -60,7 +60,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public void OnForceUpdatePosition(Vector2 position)
+        public void OnForceUpdatePosition(Vector2 position, bool ignorePhysic)
         {
             transform.position = position;
             _controlData.Position = position;
