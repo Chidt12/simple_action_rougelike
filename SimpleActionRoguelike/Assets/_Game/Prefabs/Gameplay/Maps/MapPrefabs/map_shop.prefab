@@ -1747,7 +1747,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0.5, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -1800,7 +1800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAA4IewryzHisgIAAK4FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVNtu2kAQ/RW0zyWygRDoW8strZQExa3yUOdhbY/xivWutZcAifj3zq5t7NBKkdicOXM5c/EHYUJXkBqpNoplDzID8nVA3Jt8GXTGezjSnRQRe4eW88IyUzgS9ZxnaphEPHRuWpZgFEu/iR135ABBK1guVbnKdrCQ2miEc8o1oElJ47wFQh8DcsSf4dy5nPA1unOvd3zNg8EZnykIA6qjjlpiQ6tZVqSclhVkruSOHE4adljTBIppGK7wVHLOdFMJMafKK42qAhQ4qRmjKMxnD25mCBTAdoVpsl+8n/Jcg2l0K3paMoUdqsOS77JuW0n1vi7sjXLrEk1vp0FdVh324R/GMPTmXMnyvs0cBi6LKVi6f6anlGrT62wfXnbFh75DB8r3NOHwUoB4lBslrcjQaJR1rlbDaNn9exG3KCDdd3hdagu2eW3V9fwyyZvxbBLOpuPpahjcNdNyis6+G8cFZ2XiOzupgYhLPwC/C6BwVD+wfL8puomLqKvpt4ZfdNdfqcawZkobNDWahSs2kVY5Klnjw00itWYhlQCPNrIqEJSb0xajmOuJXtl6Wa8sa+pup8nd2NqTuHLxcMcPgivTVh66yWn4actqK5kwEVCVFr14upCHB9DFkzWcCegUOcMj9nAhhai3Uf/HLbIqp2nPzcDRWAVLaqg/CqwJVybru2IbvYewnLvt9Cpc8D+owv29uiYXFPNyD5NHKfw9ffp9dXuwsyz7vPNkMk9vk9l8BHkQJEkQDsNgAtPbgN6FwXQcjhPij4IJ7Dnl27ppzahwgUSnReABtJ+3wUbRyh9ipuhhw95L2Rs/E7mMUgUgnuoIF7GgMAl+MbJVxlBmBMYw4VePfMSEy3QPWXwJFPvGro5G0biLEpOKvUnjkJgs/PcsJg6+HNlWwRuDg0veBjuT819QSwMEFAAACAgAADgh7Cl3H69tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKJZbJpkoWlUWqagUFSkoGhrqGBSaqZqUGiuaGBmbGhcZJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAADgh7CvLMeKyAgAArgUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAADgh7Cl3H69tAAAAeAAAAAkAJAAAAAAAAAAAAAAA/wIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAC3AwAAAAA=
+    dataString: UEsDBBQAAAgIAAA4Iez7i4xtswIAALAFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVNtu2kAQ/RW0zyWyuQX61gIhrZQExa3yUOdhbY/xivWutZcAifj3zq5t7NBKkdicOXM5c/EHYUJXkBqpNoplDzID8nVA3Jt8GXTGezjSnRQRe4eW88IyUzgS9ZxnaphEPHRuWpZgFEu/iR135ABBK1guVbnOdrCU2miEc8o1oElJ47wFQh8DcsSf4cK5nPA1unWvd3wtgsEZnykIA6qjhjfTltoQa54VKadlBZkrukcfN+ywpgmU0zBc6anknOmmFmJOldcaVQUocGIzRlGazx/czBEogO0K02S/eD/luQbTKFf0tGIKe1SHJd9l3biS6n1d2Bvl1iWaTWdBXVYd9uEfxjD05lzJ8r7NHAYuiylYun+mp5Rq0+ttH151xYe+QwfK9zTh8FKAeJQbJa3I0GiUda5Ww2jV/XsRtywg3Xd4XWoLtnlt1fX8Msub8XwSzmfj2XoY3DbTcorOvhvHJWdl4js7qYGISz8Avw2gcFQ/sHy/K7qJi6ir6beGX3TXX6rGcMeUNmhqNAtXbCKtclRyhw83idSapVQCPNrIqkBQbk5bjGKuJ3pl62W9stxRdz1N7sbWHsWVi4c7fhBcmbby0E1Ow09bVlvJhImAqrToxdOFPDyALp6s4UxAp8gZHrGHSylEvY36P26RVTlNe24GjsYqWFFD/VFgTbgyWd8V2+g9hOXcbadX4YL/QRXu79U1uaCYl3uYPErh7+nT76vbg51l2eedJ5NFOk3mixHkQZAkQTgMgwnMpgG9DYPZOBwnxB8FE9hzyrd105pR4QKJTovAA2g/cIONopU/xEzRw4a9l7I3fiZyGaUKQDzVES5iQWES/GJk64yhzAiMYcKvHvmICZfpHrL4Eij2jV0fjaJxFyUmFXuTxiExWfovWkwcfDmyrYI3BgeXvA12Jue/UEsDBBQAAAgIAAA4Iewpdx+vbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSSiWWyaZKFpVFqmoFBUpKBoa6hgUmqmalBormhgZmxoXGSUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAA4Iez7i4xtswIAALAFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAA4Iewpdx+vbQAAAHgAAAAJACQAAAAAAAAAAAAAAAADAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAuAMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -3613,7 +3613,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0.5, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -3633,7 +3633,7 @@ TilemapCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.5}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
 --- !u!50 &116443868123202579
@@ -3678,31 +3678,31 @@ CompositeCollider2D:
   - m_Collider: {fileID: 8879534222993169013}
     m_ColliderPaths:
     - - X: 100000000
-        Y: 90000000
+        Y: 95000000
       - X: -70000000
-        Y: 90000000
+        Y: 95000000
       - X: -70000000
-        Y: -60000000
+        Y: -55000000
       - X: 100000000
-        Y: -60000000
+        Y: -55000000
     - - X: -50000000
-        Y: -30000000
+        Y: -25000000
       - X: -50000000
-        Y: 70000000
+        Y: 75000000
       - X: 80000000
-        Y: 70000000
+        Y: 75000000
       - X: 80000000
-        Y: -30000000
+        Y: -25000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 9.99997, y: -6}
-      - {x: 9.99997, y: 9}
-      - {x: -7, y: 8.99997}
-      - {x: -6.9999704, y: -6}
-    - - {x: 8, y: -2.9999707}
-      - {x: -5, y: -2.9999707}
-      - {x: -4.9999704, y: 7}
-      - {x: 8, y: 6.9999704}
+    - - {x: 9.99997, y: -5.5}
+      - {x: 9.99997, y: 9.5}
+      - {x: -7, y: 9.49997}
+      - {x: -6.9999704, y: -5.5}
+    - - {x: 8, y: -2.4999707}
+      - {x: -5, y: -2.4999707}
+      - {x: -4.9999704, y: 7.5}
+      - {x: 8, y: 7.4999704}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!1001 &1340421692831121939
@@ -3726,7 +3726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2277887793386207010, guid: 539bc1ceb3cc3c34b9f75cda14502a9f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.95
+      value: 6.89
       objectReference: {fileID: 0}
     - target: {fileID: 2277887793386207010, guid: 539bc1ceb3cc3c34b9f75cda14502a9f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3861,7 +3861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2277887793386207010, guid: 539bc1ceb3cc3c34b9f75cda14502a9f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.98
+      value: 6.92
       objectReference: {fileID: 0}
     - target: {fileID: 2277887793386207010, guid: 539bc1ceb3cc3c34b9f75cda14502a9f, type: 3}
       propertyPath: m_LocalPosition.z
