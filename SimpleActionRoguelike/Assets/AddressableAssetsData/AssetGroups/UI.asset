@@ -57,16 +57,20 @@ MonoBehaviour:
     m_Address: prefab_modal_gameplay_settings
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: e21322bede3314641bf131cdc34e3cd2
-    m_Address: prefab_modal_replay
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: d7374ccb9cdb2bf458c78acd451ca91a
     m_Address: prefab_modal_gameplay_inventory
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 509c69407d2461843832d15badeb4089
     m_Address: prefab_modal_buy_ingame_shop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1e971badf0b680d4c9516d7186c41a38
+    m_Address: prefab_modal_gameplay_control_settings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 64347ddbae4415341ae2db0800a1ef47
+    m_Address: prefab_modal_game_settings
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

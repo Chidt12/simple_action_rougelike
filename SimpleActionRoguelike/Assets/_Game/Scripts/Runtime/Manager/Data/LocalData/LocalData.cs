@@ -39,5 +39,10 @@ namespace Runtime.Manager.Data
             ObscuredFilePrefs.Set(nameof(T), JsonConvert.SerializeObject(value));
             ObscuredFilePrefs.Save();
         }
+
+        public void SavePlayerData()
+        {
+            Set(playerBasicLocalData);
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace Runtime.Constants
         public const string HERO_ID = "1001";
         public const float SCENE_LOADING_STOP_PROGRESS_VALUE = 0.9f;
         public const float DELAY_TIME_FOR_FIRST_WAVE = 1f;
+        public const int MAX_CONFIG_SOUND = 5;
 
         public const string SFX_ITEM = "sfx_item";
 
@@ -15,7 +16,9 @@ namespace Runtime.Constants
     {
         public const string NONE = "NONE";
         public const string VICTORY = "prefab_modal_victory";
-        public const string GAME_SETTINGS = "prefab_modal_gameplay_settings";
+        public const string GAME_SETTINGS = "prefab_modal_game_settings";
+        public const string GAMEPLAY_SETTINGS = "prefab_modal_gameplay_settings";
+        public const string GAMEPLAY_CONTROL_SETTINGS = "prefab_modal_gameplay_control_settings";
 
         public const string BUY_INGAME_SHOP = "prefab_modal_buy_ingame_shop";
         public const string GIVE_ARTIFACT = "prefab_modal_give_ingame_artifact";
@@ -37,7 +40,7 @@ namespace Runtime.Constants
 
     public class MusicIds
     {
-
+        public const string START_SCREEN = "music_start_screen";
     }
 
     public class SoundIds

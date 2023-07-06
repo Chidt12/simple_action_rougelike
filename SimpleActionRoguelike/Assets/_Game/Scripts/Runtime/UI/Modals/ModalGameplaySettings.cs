@@ -28,7 +28,7 @@ namespace Runtime.UI
             _selectButtons[0].onClick.AddListener(OnResume);
 
             _selectButtons[1].onClick.RemoveAllListeners();
-            _selectButtons[1].onClick.AddListener(() => { });
+            _selectButtons[1].onClick.AddListener(OnOpenControl);
 
             _selectButtons[2].onClick.RemoveAllListeners();
             _selectButtons[2].onClick.AddListener(OnReplay);
@@ -74,6 +74,12 @@ namespace Runtime.UI
         private void OnResume()
         {
             ScreenNavigator.Instance.PopModal(true).Forget();
+        }
+
+        private void OnOpenControl()
+        {
+            var windowOptions = new WindowOptions(ModalIds.GAMEPLAY_CONTROL_SETTINGS);
+            ScreenNavigator.Instance.LoadModal(windowOptions).Forget();
         }
 
         private void OnEnterAnItem(int index)

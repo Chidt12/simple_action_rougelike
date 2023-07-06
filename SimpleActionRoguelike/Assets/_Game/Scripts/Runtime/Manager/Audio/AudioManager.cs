@@ -3,6 +3,7 @@ using DG.Tweening;
 using Runtime.Constants;
 using Runtime.Core.Pool;
 using Runtime.Core.Singleton;
+using Runtime.Manager.Data;
 using UnityEngine;
 
 namespace Runtime.Manager.Audio
@@ -14,6 +15,11 @@ namespace Runtime.Manager.Audio
         [SerializeField] AudioSource _musicAudioSource;
         [SerializeField] AudioSource _sfxLoopAudioSource;
 
+        [Range(0, 1)]
+        [SerializeField] float _audioMaxValue;
+        [Range(0,1)]
+        [SerializeField] float _musicMaxValue;
+
         private bool _isMuteMusic;
         private bool _isMuteSfx;
 
@@ -22,20 +28,30 @@ namespace Runtime.Manager.Audio
         protected override void Awake()
         {
             base.Awake();
-            LoadSettings();
         }
 
-        private void LoadSettings()
+        private void Start()
         {
+            UpdateSettings();
+        }
+
+        public void UpdateSettings()
+        {
+            var musicValue = DataManager.Local.playerBasicLocalData.musicSettings;
+            var soundValue = DataManager.Local.playerBasicLocalData.sfxSettings;
+
+            _musicAudioSource.volume = (float)musicValue / Constant.MAX_CONFIG_SOUND * _musicMaxValue;
+            _sfxLoopAudioSource.volume = (float)soundValue / Constant.MAX_CONFIG_SOUND * _audioMaxValue;
+
+            _isMuteMusic = musicValue == 0;
+            _isMuteSfx = soundValue == 0;
+
+            _musicAudioSource.mute = _isMuteMusic;
+            _sfxLoopAudioSource.mute = _isMuteSfx;
         }
 
         public void PlayMusic(string music)
         {
-            if (this._isMuteMusic)
-            {
-                return;
-            }
-
             this._musicAudioKey = music;
             this._musicAudioSource.DOFade(0, this.MUSIC_FADE_DURATION).OnComplete(LoadAndPlayMusic);
         }
@@ -49,9 +65,11 @@ namespace Runtime.Manager.Audio
                 return;
             }
 
+            var musicVolume = DataManager.Local.playerBasicLocalData.musicSettings;
+            var volume = (float)musicVolume / Constant.MAX_CONFIG_SOUND * _musicMaxValue;
             this._musicAudioSource.clip = audioClip;
             this._musicAudioSource.Play();
-            this._musicAudioSource.DOFade(1, this.MUSIC_FADE_DURATION);
+            this._musicAudioSource.DOFade(volume, this.MUSIC_FADE_DURATION);
         }
 
         public async UniTask PlaySfx(string sfx)
@@ -65,7 +83,10 @@ namespace Runtime.Manager.Audio
             sfxItem.transform.SetParent(this.transform, false);
             sfxItem.SetActive(true);
             SoundItem item = sfxItem.GetComponent<SoundItem>();;
-            await item.PlaySfx(sfx);
+
+            var sfxVolumn = DataManager.Local.playerBasicLocalData.sfxSettings;
+            var volume = (float)sfxVolumn / Constant.MAX_CONFIG_SOUND * _audioMaxValue;
+            await item.PlaySfx(sfx, volume);
         }
 
         public async void PlayLoopSfx(string sfx)

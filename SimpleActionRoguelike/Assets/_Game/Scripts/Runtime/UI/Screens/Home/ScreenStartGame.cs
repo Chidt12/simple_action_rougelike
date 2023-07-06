@@ -21,7 +21,7 @@ namespace Runtime.UI
                 if (!GameManager.Instance.IsTest)
                 {
                     var windowOptions = new WindowOptions(ScreenIds.HOME);
-                    ScreenNavigator.Instance.LoadScreen(windowOptions).Forget();
+                    ScreenNavigator.Instance.LoadSingleScreen(windowOptions, true).Forget();
                 }
                 else
                 {

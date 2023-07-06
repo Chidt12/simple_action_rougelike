@@ -1291,7 +1291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fd29e89c70a624db27d0b6c27ce67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isTest: 1
+  _isTest: 0
 --- !u!1 &1459154751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1530187050}
   - component: {fileID: 1530187049}
+  - component: {fileID: 1530187051}
   - component: {fileID: 1530187047}
   m_Layer: 0
   m_Name: UICamera
@@ -1450,6 +1451,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1530187051
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530187046}
+  m_Enabled: 1
 --- !u!1 &1532660272
 GameObject:
   m_ObjectHideFlags: 0
@@ -1888,6 +1897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicAudioSource: {fileID: 1921013757}
   _sfxLoopAudioSource: {fileID: 1532660274}
+  _audioMaxValue: 0.6
+  _musicMaxValue: 0.3
 --- !u!1 &1921013755
 GameObject:
   m_ObjectHideFlags: 0

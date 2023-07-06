@@ -130,7 +130,7 @@ namespace Runtime.UI
 
         private void OnStartGame()
         {
-            DataManager.Local.Set(DataManager.Local.playerBasicLocalData);
+            DataManager.Local.SavePlayerData();
             GameManager.Instance.StartLoadingGameplayAsync().Forget();
         }
     }

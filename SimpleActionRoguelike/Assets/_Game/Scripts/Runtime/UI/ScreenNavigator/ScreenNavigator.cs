@@ -137,6 +137,11 @@ namespace Runtime.UI
             {
                 if(GameManager.Instance.CurrentGameStateType == GameStateType.GameplayRunning || GameManager.Instance.CurrentGameStateType == GameStateType.GameplayLobby)
                 {
+                    var options = new WindowOptions(ModalIds.GAMEPLAY_SETTINGS);
+                    LoadModal(options).Forget();
+                }
+                else
+                {
                     var options = new WindowOptions(ModalIds.GAME_SETTINGS);
                     LoadModal(options).Forget();
                 }

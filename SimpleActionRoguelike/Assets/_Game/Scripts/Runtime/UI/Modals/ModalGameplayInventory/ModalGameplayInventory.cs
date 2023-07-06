@@ -46,13 +46,14 @@ namespace Runtime.UI
         public async override UniTask Initialize(Memory<object> args)
         {
             await base.Initialize(args);
-            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing);
+            GameManager.Instance.SetGameStateType(GameStateType.GameplayPausing, true);
             _cancellationTokenSource = new();
             await LoadUI();
         }
 
         public override UniTask Cleanup()
         {
+            GameManager.Instance.ReturnPreviousGameState();
             _cancellationTokenSource?.Cancel();
             return base.Cleanup();
         }

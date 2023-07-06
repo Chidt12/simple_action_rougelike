@@ -41,8 +41,7 @@ namespace Runtime.UI
 
         private void OnClickNewGame()
         {
-            var windowOptions = new WindowOptions(ScreenIds.LOBBY);
-            ScreenNavigator.Instance.LoadScreen(windowOptions).Forget();
+            GameManager.Instance.GoToLobbyScreen().Forget();
         }
 
         private void OnClickQuit()

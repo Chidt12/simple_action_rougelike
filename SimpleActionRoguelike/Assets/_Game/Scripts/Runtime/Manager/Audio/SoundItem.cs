@@ -13,7 +13,7 @@ namespace Runtime.Manager.Audio
             this._sfxAudio.Stop();
         }
 
-        public async UniTask PlaySfx(string sfx)
+        public async UniTask PlaySfx(string sfx, float volume)
         {
             AudioClip audioClip = await AssetLoader.LoadAudioClip(sfx);
 
@@ -22,6 +22,7 @@ namespace Runtime.Manager.Audio
                 return;
             }
 
+            this._sfxAudio.volume = volume;
             this._sfxAudio.clip = audioClip;
             this._sfxAudio.Play();
             Invoke(nameof(ReturnItem), audioClip.length + 0.1f);

@@ -3,6 +3,7 @@ using Runtime.Constants;
 using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Localization;
+using Runtime.Manager.Audio;
 using Runtime.Manager.Gameplay;
 using Runtime.UI;
 using System;
@@ -36,6 +37,8 @@ namespace Runtime.Manager
 
         private async UniTaskVoid InitializeAsync()
         {
+            AudioManager.Instance.PlayMusic(MusicIds.START_SCREEN);
+
             await LocalizeManager.InitializeAsync();
         }
 
@@ -85,6 +88,12 @@ namespace Runtime.Manager
 
             if (loadingLayer)
                 await loadingLayer.EndLoading();
+        }
+
+        public async UniTask GoToLobbyScreen()
+        {
+            var windowOptions = new WindowOptions(ScreenIds.LOBBY);
+            await ScreenNavigator.Instance.LoadSingleScreen(windowOptions, true);
         }
 
         public async UniTask BackHomeAsync()
