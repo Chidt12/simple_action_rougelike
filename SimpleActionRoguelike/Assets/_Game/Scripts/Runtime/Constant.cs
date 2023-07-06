@@ -41,6 +41,7 @@ namespace Runtime.Constants
     public class MusicIds
     {
         public const string START_SCREEN = "music_start_screen";
+        public const string LOBBY_SCREEN = "music_lobby_screen";
     }
 
     public class SoundIds

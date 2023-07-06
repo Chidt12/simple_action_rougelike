@@ -92,6 +92,7 @@ namespace Runtime.Manager
 
         public async UniTask GoToLobbyScreen()
         {
+            AudioManager.Instance.PlayMusic(MusicIds.LOBBY_SCREEN);
             var windowOptions = new WindowOptions(ScreenIds.LOBBY);
             await ScreenNavigator.Instance.LoadSingleScreen(windowOptions, true);
         }
@@ -108,6 +109,8 @@ namespace Runtime.Manager
             SetGameStateType(GameStateType.Loading);
             if (loadingLayer)
                 await loadingLayer.StartLoading();
+
+            AudioManager.Instance.PlayMusic(MusicIds.LOBBY_SCREEN);
             await ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.LOBBY), true);
 
             if (loadingLayer)
