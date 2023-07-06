@@ -259,6 +259,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   selectedGameObject: {fileID: 0}
+  _soundFx: sfx_button_click
 --- !u!1 &2632727633556674985
 GameObject:
   m_ObjectHideFlags: 0

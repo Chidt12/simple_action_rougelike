@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
+using Runtime.Manager.Audio;
 using Runtime.Manager.Gameplay;
 using System;
 using System.Threading;
@@ -13,6 +14,7 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] private float _speed;
         [SerializeField] private float _dashCooldown;
         [SerializeField] private ParticleSystem _dashEffect;
+        [SerializeField] private string _dashSfx;
 
         private EntityStatWithCurrentValue _dashStat;
 
@@ -61,6 +63,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid PresentDashAsync(CancellationToken token)
         {
+            AudioManager.Instance.PlaySfx(_dashSfx).Forget();
             _controlData.IsDashing = true;
             _controlData.ReactionChangedEvent.Invoke(EntityReactionType.JustDashing);
             _dashEffect.Play();

@@ -197,62 +197,6 @@ MonoBehaviour:
     m_Address: 1001_win
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 0a8cb52fa88eb204ca53054c46fa196d
-    m_Address: sfx_item
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 419d1846575681744a689ea833f6023b
-    m_Address: map_shop
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: d64dcda4f55367e4a8081a1ee6f732ef
-    m_Address: map_lobby
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 9507ec2a404d6534c9fabcdbc7b3cced
-    m_Address: map_1_line_hole_in_middle
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 3a8ae6dccbf461945a2830b4f57e9b1b
-    m_Address: map_1_line_hole_vertical_in_middle
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 89a08fa682d740643a31f7d19c62497a
-    m_Address: map_1_hole
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 6203825a2e2e92b40acaa1ecb2c32343
-    m_Address: map_1_obstacle
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 5f78f6ae654bc9d4db7442ac9cec70bb
-    m_Address: map_2_obstacles
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 77481aa51ed22dc48813b043b4e0b790
-    m_Address: map_4_holes
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 8bcf50591a2759443a33f4b4730ab1a1
-    m_Address: map_4_obstacles
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a4d13bf6a3b307546bd0af02f3f28fee
-    m_Address: map_4_obstacles_arround
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ec7df803cfe4bec4796fa5d1f20af722
-    m_Address: map_cross
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 04421b3bf19c4564f9aebd92a6460747
-    m_Address: music_start_screen
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e4fc971b9e385da4584ee99fcf5bd988
-    m_Address: music_lobby_screen
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

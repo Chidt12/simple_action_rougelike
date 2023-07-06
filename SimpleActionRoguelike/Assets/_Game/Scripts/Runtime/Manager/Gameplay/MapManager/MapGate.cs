@@ -1,6 +1,9 @@
+using Cysharp.Threading.Tasks;
+using Runtime.Constants;
 using Runtime.Core.Message;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Manager.Audio;
 using Runtime.Message;
 using System;
 using System.Linq;
@@ -71,6 +74,7 @@ namespace Runtime.Manager.Gameplay
                     return;
 
                 _isSubmitted = true;
+                AudioManager.Instance.PlaySfx(SoundIds.ENTER_GATE).Forget();
                 SimpleMessenger.Publish(new SendToGameplayMessage(SendToGameplayType.GoNextStage, _currentGraphic.gateType));
             }
         }

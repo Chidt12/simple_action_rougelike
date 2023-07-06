@@ -11,6 +11,7 @@ using Runtime.Gameplay.CollisionDetection;
 using Runtime.Gameplay.EntitySystem;
 using Runtime.Gameplay.Manager;
 using Runtime.Helper;
+using Runtime.Manager.Audio;
 using Runtime.Manager.Data;
 using Runtime.Message;
 using Runtime.UI;
@@ -36,6 +37,10 @@ namespace Runtime.Manager.Gameplay
         [SerializeField] private ArtifactChestItem _artifactChest;
         [SerializeField] private ShopChestItem _shopChest;
         [SerializeField] private CameraManager _cameraManager;
+
+        [Header("==== Sounds ====")]
+        [SerializeField] private string _heroAppear;
+
 
         protected MechanicSystemManager mechanicSystemManager;
         protected ShopInGameManager shopInGameManager;
@@ -309,6 +314,7 @@ namespace Runtime.Manager.Gameplay
             GameManager.Instance.SetGameStateType(GameStateType.GameplayLobby);
             await UniTask.Delay(TimeSpan.FromSeconds(0.25f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Fade Out
+            AudioManager.Instance.PlaySfx(_heroAppear, 0.5f).Forget();
             SimpleMessenger.Publish(new FadeInMessage(0.5f, fadeTween, true, EntitiesManager.Instance.HeroData.Position, true));
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: _cancellationTokenSource.Token, ignoreTimeScale: true);
             // Update current Stage info.

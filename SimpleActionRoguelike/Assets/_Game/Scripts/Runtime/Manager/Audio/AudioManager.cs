@@ -24,6 +24,7 @@ namespace Runtime.Manager.Audio
         private bool _isMuteSfx;
 
         private string _musicAudioKey;
+        private float _musicFactor;
 
         protected override void Awake()
         {
@@ -50,8 +51,9 @@ namespace Runtime.Manager.Audio
             _sfxLoopAudioSource.mute = _isMuteSfx;
         }
 
-        public void PlayMusic(string music)
+        public void PlayMusic(string music, float factor = 1)
         {
+            this._musicFactor = factor;
             this._musicAudioKey = music;
             this._musicAudioSource.DOFade(0, this.MUSIC_FADE_DURATION).OnComplete(LoadAndPlayMusic);
         }
@@ -66,13 +68,14 @@ namespace Runtime.Manager.Audio
             }
 
             var musicVolume = DataManager.Local.playerBasicLocalData.musicSettings;
-            var volume = (float)musicVolume / Constant.MAX_CONFIG_SOUND * _musicMaxValue;
+            var volume = (float)musicVolume / Constant.MAX_CONFIG_SOUND * _musicMaxValue * _musicFactor;
+
             this._musicAudioSource.clip = audioClip;
             this._musicAudioSource.Play();
             this._musicAudioSource.DOFade(volume, this.MUSIC_FADE_DURATION);
         }
 
-        public async UniTask PlaySfx(string sfx)
+        public async UniTask PlaySfx(string sfx, float factor = 1)
         {
             if (this._isMuteSfx)
             {
@@ -85,11 +88,11 @@ namespace Runtime.Manager.Audio
             SoundItem item = sfxItem.GetComponent<SoundItem>();;
 
             var sfxVolumn = DataManager.Local.playerBasicLocalData.sfxSettings;
-            var volume = (float)sfxVolumn / Constant.MAX_CONFIG_SOUND * _audioMaxValue;
+            var volume = (float)sfxVolumn / Constant.MAX_CONFIG_SOUND * _audioMaxValue * factor;
             await item.PlaySfx(sfx, volume);
         }
 
-        public async void PlayLoopSfx(string sfx)
+        public async void PlayLoopSfx(string sfx, float factor)
         {
             if (this._isMuteSfx)
             {

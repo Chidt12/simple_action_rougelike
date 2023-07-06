@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Sounds
+  m_EditorClassIdentifier: 
+  m_GroupName: Sounds
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 5d6f69960ddbe314f9cb720a1dfae96f
+  m_SerializeEntries:
+  - m_GUID: 04421b3bf19c4564f9aebd92a6460747
+    m_Address: music_start_screen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e4fc971b9e385da4584ee99fcf5bd988
+    m_Address: music_lobby_screen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2371a4ff8199f8d459b72d8844ecc8d8
+    m_Address: sfx_laser_shooting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: aac5b67ca138fcd40abaff5fb24cdb42
+    m_Address: music_gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 67b6a59b40a61e948b4f3dfa17594717
+    m_Address: music_gameplay_boss
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7804c6624676c4b4388851a086bf5674
+    m_Address: sfx_laser_shooting_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2bda5cadd00e0a04190f52dc3eefb458
+    m_Address: sfx_laser_explode
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0a8cb52fa88eb204ca53054c46fa196d
+    m_Address: sfx_item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1547223313905dc4c8e4ca60f997a756
+    m_Address: sfx_dash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 97684e1bdbe6d2743a1b3949686d6602
+    m_Address: sfx_player_enter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a8de918f8f2faee438d1c3fc4b9bfbc5
+    m_Address: sfx_button_click
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 572e46688688c6042b1fe0dcff5d2939
+    m_Address: sfx_button_selected
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ffe71c6351339414e834cd6a8e932dc5, type: 2}
+    - {fileID: 11400000, guid: 52862c26101ac48449f54fc17043bc22, type: 2}

@@ -292,6 +292,14 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 48
       objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _soundFx
+      value: sfx_button_click
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _selectedSoundFx
+      value: sfx_button_selected
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
 --- !u!224 &464215050042475382 stripped
@@ -413,6 +421,14 @@ PrefabInstance:
       propertyPath: m_text
       value: continue
       objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _soundFx
+      value: sfx_button_click
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _selectedSoundFx
+      value: sfx_button_selected
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
 --- !u!224 &2703039304187363543 stripped
@@ -533,6 +549,14 @@ PrefabInstance:
     - target: {fileID: 8881766648740002053, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
       propertyPath: m_text
       value: exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _soundFx
+      value: sfx_button_click
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _selectedSoundFx
+      value: sfx_button_selected
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
@@ -658,6 +682,14 @@ PrefabInstance:
     - target: {fileID: 8881766648740002053, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
       propertyPath: m_fontSize
       value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _soundFx
+      value: sfx_button_click
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970211655753565897, guid: 136ee3b5b9284414194e64fb64882510, type: 3}
+      propertyPath: _selectedSoundFx
+      value: sfx_button_selected
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 136ee3b5b9284414194e64fb64882510, type: 3}

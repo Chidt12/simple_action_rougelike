@@ -37,7 +37,7 @@ namespace Runtime.Manager
 
         private async UniTaskVoid InitializeAsync()
         {
-            AudioManager.Instance.PlayMusic(MusicIds.START_SCREEN);
+            AudioManager.Instance.PlayMusic(MusicIds.START_SCREEN, 1.5f);
 
             await LocalizeManager.InitializeAsync();
         }
@@ -88,11 +88,13 @@ namespace Runtime.Manager
 
             if (loadingLayer)
                 await loadingLayer.EndLoading();
+
+            AudioManager.Instance.PlayMusic(MusicIds.MUSIC_GAMEPLAY);
         }
 
         public async UniTask GoToLobbyScreen()
         {
-            AudioManager.Instance.PlayMusic(MusicIds.LOBBY_SCREEN);
+            AudioManager.Instance.PlayMusic(MusicIds.LOBBY_SCREEN, 1.5f);
             var windowOptions = new WindowOptions(ScreenIds.LOBBY);
             await ScreenNavigator.Instance.LoadSingleScreen(windowOptions, true);
         }
@@ -110,7 +112,7 @@ namespace Runtime.Manager
             if (loadingLayer)
                 await loadingLayer.StartLoading();
 
-            AudioManager.Instance.PlayMusic(MusicIds.LOBBY_SCREEN);
+            AudioManager.Instance.PlayMusic(MusicIds.LOBBY_SCREEN, 1.5f);
             await ScreenNavigator.Instance.LoadSingleScreen(new WindowOptions(ScreenIds.LOBBY), true);
 
             if (loadingLayer)

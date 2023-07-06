@@ -4880,6 +4880,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9032949480587802861}
   - component: {fileID: 9032949480587802860}
+  - component: {fileID: 3730258330275217377}
   m_Layer: 0
   m_Name: impact_blue
   m_TagString: Untagged
@@ -4917,3 +4918,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReturnByParticleTime: 1
   returnDelayTime: 0
+--- !u!114 &3730258330275217377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032949480587802856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a522f477a879d4cae6f278f603f939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sfx: sfx_laser_explode
+  _factor: 1

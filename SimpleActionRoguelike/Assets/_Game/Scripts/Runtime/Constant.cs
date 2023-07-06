@@ -42,11 +42,13 @@ namespace Runtime.Constants
     {
         public const string START_SCREEN = "music_start_screen";
         public const string LOBBY_SCREEN = "music_lobby_screen";
+        public const string MUSIC_GAMEPLAY = "music_gameplay";
+        public const string MUSIC_GAMEPLAY_BOSS = "music_gameplay_boss";
     }
 
     public class SoundIds
     {
-
+        public const string ENTER_GATE = "sfx_enter_gate";
     }
 
     public class AddressableKeys

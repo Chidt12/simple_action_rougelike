@@ -21,7 +21,7 @@ MonoBehaviour:
       value: 40
       statModifyType: 0
     - statType: 5
-      value: 0
+      value: 0.1
       statModifyType: 0
     - statType: 6
       value: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
       value: 4.1
       statModifyType: 0
     - statType: 9
-      value: 0
+      value: 5
       statModifyType: 0
     - statType: 101
       value: 2

@@ -5094,6 +5094,7 @@ MonoBehaviour:
     stateName: weapon_attack
     vfxSpawnPoints:
     - {fileID: 8961677106561110085}
+    soundFx: sfx_laser_shooting
   defaultState: weapon_idle
   changeColorSprite: {fileID: 1713211640106278287}
   _rotateTowardFaceDirection: 1

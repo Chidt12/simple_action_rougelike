@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using Runtime.Manager.Audio;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
         public AnimationType animationType;
         public string stateName;
         public Transform[] vfxSpawnPoints;
+        public string soundFx;
     }
 
     [RequireComponent(typeof(Animator))]
@@ -66,6 +69,11 @@ namespace Runtime.Gameplay.EntitySystem
                 animator.Play(defaultState, 0, 0);
             else
                 animator.Play(animation.stateName, 0, 0);
+
+            if (!string.IsNullOrEmpty(animation.soundFx))
+            {
+                AudioManager.Instance.PlaySfx(animation.soundFx).Forget();
+            }
         }
 
         public virtual void Pause()

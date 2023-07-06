@@ -336,6 +336,7 @@ MonoBehaviour:
   _artifactChest: {fileID: 8008112546618274198, guid: 9a37596cff0b49a41bc7e87e5e75adb8, type: 3}
   _shopChest: {fileID: 4954397665454446004, guid: d10d10b01c240d74e945c838d9ac1847, type: 3}
   _cameraManager: {fileID: 491132355}
+  _heroAppear: sfx_player_enter
 --- !u!4 &491132359
 Transform:
   m_ObjectHideFlags: 0
@@ -1897,8 +1898,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicAudioSource: {fileID: 1921013757}
   _sfxLoopAudioSource: {fileID: 1532660274}
-  _audioMaxValue: 0.6
-  _musicMaxValue: 0.3
+  _audioMaxValue: 0.5
+  _musicMaxValue: 0.15
 --- !u!1 &1921013755
 GameObject:
   m_ObjectHideFlags: 0
