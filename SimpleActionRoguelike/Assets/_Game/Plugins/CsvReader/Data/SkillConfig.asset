@@ -61,3 +61,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.RushAttackSkillDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.RushAttackSkillDataConfig
+      csvFile: {fileID: 4900000, guid: 2c1622372a8967a4da4aa3a08e8d5285, type: 3}
+      csvPath: Assets/_Game/Csv/skills/rush_attack_skill.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

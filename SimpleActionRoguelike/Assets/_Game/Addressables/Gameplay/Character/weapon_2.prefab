@@ -138,9 +138,11 @@ MonoBehaviour:
     stateName: weapon_attack
     vfxSpawnPoints:
     - {fileID: 65837077031919164}
+    rotateTowardFaceDirection: 1
+    soundFx: 
   defaultState: weapon_idle
+  defaultRotateTowardFaceDirection: 1
   changeColorSprite: {fileID: 7742021225345684470}
-  _rotateTowardFaceDirection: 1
   _flipPivotTransform: {fileID: 6690680622687795789}
   _rotateTransform: {fileID: 4902829696956813430}
 --- !u!114 &6084000657487789633

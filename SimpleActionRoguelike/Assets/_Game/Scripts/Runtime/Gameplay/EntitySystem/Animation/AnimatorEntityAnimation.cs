@@ -13,6 +13,7 @@ namespace Runtime.Gameplay.EntitySystem
         public AnimationType animationType;
         public string stateName;
         public Transform[] vfxSpawnPoints;
+        public bool rotateTowardFaceDirection;
         public string soundFx;
     }
 
@@ -22,9 +23,11 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] protected Animator animator;
         [SerializeField] protected AnimatorAnimation[] animations;
         [SerializeField] protected string defaultState;
+        [SerializeField] protected bool defaultRotateTowardFaceDirection;
         [SerializeField] protected SpriteRenderer changeColorSprite;
 
         protected AnimationType currentAnimationType;
+        protected bool rotateTowardFaceDirection;
 
         protected Action OperatedPointTriggeredCallbackAction { get; set; }
         protected Action EndActionCallbackAction { get; set; }
@@ -66,9 +69,15 @@ namespace Runtime.Gameplay.EntitySystem
             }
 
             if (animation.animationType == AnimationType.None)
+            {
+                rotateTowardFaceDirection = defaultRotateTowardFaceDirection;
                 animator.Play(defaultState, 0, 0);
+            }
             else
+            {
+                rotateTowardFaceDirection = animation.rotateTowardFaceDirection;
                 animator.Play(animation.stateName, 0, 0);
+            }
 
             if (!string.IsNullOrEmpty(animation.soundFx))
             {

@@ -27,7 +27,7 @@ MonoBehaviour:
         critDamage: 0
         moveSpeed: 2.5
         lifeSteal: 0
-        attackDamage: 30
+        attackDamage: 3
         collideDamage: 1
       skillIdentity:
         skillType: 1

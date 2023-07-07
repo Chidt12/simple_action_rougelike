@@ -5094,10 +5094,11 @@ MonoBehaviour:
     stateName: weapon_attack
     vfxSpawnPoints:
     - {fileID: 8961677106561110085}
+    rotateTowardFaceDirection: 1
     soundFx: sfx_laser_shooting
   defaultState: weapon_idle
+  defaultRotateTowardFaceDirection: 1
   changeColorSprite: {fileID: 1713211640106278287}
-  _rotateTowardFaceDirection: 1
   _flipPivotTransform: {fileID: 2336718610673693748}
   _rotateTransform: {fileID: 4088698931347856911}
 --- !u!114 &1742342305258091096

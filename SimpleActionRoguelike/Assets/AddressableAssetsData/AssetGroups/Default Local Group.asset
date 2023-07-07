@@ -197,6 +197,14 @@ MonoBehaviour:
     m_Address: 1001_win
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 152e4ad6b77e3df4aa042d50f05994c3
+    m_Address: 2010
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7396280ce3ac80343a96dd0c569a0b43
+    m_Address: rush_indicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

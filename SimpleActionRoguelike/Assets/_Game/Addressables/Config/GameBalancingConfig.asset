@@ -58,6 +58,18 @@ MonoBehaviour:
   cheat: 1
   cheatStageEndGame: 100
   cheatMap: {fileID: 11400000, guid: cdd25c33f8d33ed479b14fde282ccfa8, type: 2}
-  roomTypes: e8030000
+  roomTypes: 01000000
   stageLoadConfigItems:
-  - waveConfigs: []
+  - waveConfigs:
+    - waveIndex: 0
+      duration: -1
+      entites:
+      - entityConfigItem:
+          entityId: 2010
+          entityType: 1
+          entityNumber: 1
+          entityLevel: 1
+        delaySpawnTime: 0
+        followHero: 1
+        distanceFromHero: 4
+        spawnPointIndex: 0

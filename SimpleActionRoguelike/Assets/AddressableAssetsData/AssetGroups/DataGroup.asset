@@ -157,6 +157,14 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.StatusForwardAreaArtifactDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 07e11b66ca1b0bf4d8d77553e75b763f
+    m_Address: Runtime.ConfigModel.EnemyConfig_2010.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cc4d2f240d942d8439fd61e2ea9237b7
+    m_Address: Runtime.ConfigModel.RushAttackSkillDataConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

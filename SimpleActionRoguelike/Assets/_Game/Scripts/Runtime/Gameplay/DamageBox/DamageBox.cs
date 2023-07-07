@@ -13,6 +13,8 @@ namespace Runtime.Gameplay
         private Action<IEntityData> _onTriggeredExit;
         private bool _isInited;
 
+        public Vector2 CenterBoxPosition => _collider.bounds.center;
+
         private void OnDisable()
         {
             _isInited = false;
