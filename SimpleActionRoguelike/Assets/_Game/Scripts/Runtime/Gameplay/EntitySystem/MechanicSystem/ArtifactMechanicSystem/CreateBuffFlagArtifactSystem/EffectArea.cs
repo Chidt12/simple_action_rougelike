@@ -40,8 +40,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnCollisionEntered(Collider2D obj)
         {
-            var entityHolder = obj.GetComponent<EntityHolder>();
-            if(entityHolder && entityHolder.EntityData.EntityType == _detectEntityType)
+            var entityHolder = obj.GetComponent<IEntityHolder>();
+            if(entityHolder != null && entityHolder.EntityData.EntityType == _detectEntityType)
             {
                 var entityModifiedData = entityHolder.EntityData as IEntityModifiedStatData;
                 _entityEntered?.Invoke(entityModifiedData);
@@ -50,8 +50,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnCollisionExited(Collider2D obj)
         {
-            var entityHolder = obj.GetComponent<EntityHolder>();
-            if (entityHolder && entityHolder.EntityData.EntityType == _detectEntityType)
+            var entityHolder = obj.GetComponent<IEntityHolder>();
+            if (entityHolder != null && entityHolder.EntityData.EntityType == _detectEntityType)
             {
                 var entityModifiedData = entityHolder.EntityData as IEntityModifiedStatData;
                 _entityExited?.Invoke(entityModifiedData);

@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1113647021876274598}
   - component: {fileID: 6435951024848608332}
+  - component: {fileID: 7715706820173173245}
   m_Layer: 9
   m_Name: foot_collider
   m_TagString: Untagged
@@ -74,7 +75,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.027688757}
@@ -90,6 +91,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.85, y: 0.15462248}
   m_EdgeRadius: 0
+--- !u!114 &7715706820173173245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501784317204360754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d4107f075c95e42a3eb4ebe794e4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityHolder: {fileID: 65508197092086604}
 --- !u!1 &6882819894000871494
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _diedPrefab: 
   _spawnVFXPosition: {fileID: 0}
+  _flipTransform: {fileID: 0}
 --- !u!114 &6384462265963760207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +496,7 @@ MonoBehaviour:
     animationType: 2
     stateName: 2001_run
     vfxSpawnPoints: []
+    soundFx: 
   defaultState: 2001_idle
   changeColorSprite: {fileID: 6882819894183790082}
 --- !u!1001 &3137334094845904114

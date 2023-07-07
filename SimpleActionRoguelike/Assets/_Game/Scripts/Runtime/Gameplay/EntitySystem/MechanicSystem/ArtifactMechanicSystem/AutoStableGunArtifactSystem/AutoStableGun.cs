@@ -51,7 +51,7 @@ namespace Runtime.Gameplay.EntitySystem
             var collider = collisionBody.Collider;
             if (collider)
             {
-                var entityHolder = collider.GetComponent<EntityHolder>();
+                var entityHolder = collider.GetComponent<IEntityHolder>();
                 if (_targetTypes.Contains(entityHolder.EntityData.EntityType))
                 {
                     if (result.collisionType == CollisionType.Enter)

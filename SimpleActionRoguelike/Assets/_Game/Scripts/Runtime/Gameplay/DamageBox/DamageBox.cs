@@ -8,6 +8,7 @@ namespace Runtime.Gameplay
     public class DamageBox : MonoBehaviour
     {
         [SerializeField] private Collider2D _collider;
+
         private Action<IEntityData> _onTriggeredEntered;
         private Action<IEntityData> _onTriggeredExit;
         private bool _isInited;
@@ -35,8 +36,8 @@ namespace Runtime.Gameplay
             if (!_isInited)
                 return;
 
-            var entityHolder = collision.GetComponent<EntityHolder>();
-            if (entityHolder && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
+            var entityHolder = collision.GetComponent<IEntityHolder>();
+            if (entityHolder != null && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
             {
                 _onTriggeredEntered?.Invoke(entityHolder.EntityData);
             }
@@ -47,8 +48,8 @@ namespace Runtime.Gameplay
             if (!_isInited)
                 return;
 
-            var entityHolder = collision.GetComponent<EntityHolder>();
-            if (entityHolder && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
+            var entityHolder = collision.GetComponent<IEntityHolder>();
+            if (entityHolder != null && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
             {
                 _onTriggeredExit?.Invoke(entityHolder.EntityData);
             }

@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 5620235378340865497}
   - component: {fileID: 4580123979076985588}
   - component: {fileID: 2727452713149864773}
-  m_Layer: 15
+  m_Layer: 19
   m_Name: damage_box_polygon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

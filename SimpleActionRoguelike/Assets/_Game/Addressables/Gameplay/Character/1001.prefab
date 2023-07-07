@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1124988735681888892}
   - component: {fileID: 6465387856693066646}
-  m_Layer: 9
+  - component: {fileID: 8672788449404118970}
+  m_Layer: 20
   m_Name: foot_collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +59,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.74, y: 0.3936203}
   m_EdgeRadius: 0
+--- !u!114 &8672788449404118970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4508445895273613800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d4107f075c95e42a3eb4ebe794e4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityHolder: {fileID: 926233765}
 --- !u!1 &4598235157578677694
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
     {
         public override void Collide(Collider2D collider)
         {
-            var entityHolder = collider.GetComponent<EntityHolder>();
+            var entityHolder = collider.GetComponent<IEntityHolder>();
             if (entityHolder != null)
             {
                 if (!entityHolder.EntityData.IsDead)

@@ -76,8 +76,8 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            var entityHolder = collision.GetComponent<EntityHolder>();
-            if (entityHolder)
+            var entityHolder = collision.GetComponent<IEntityHolder>();
+            if (entityHolder != null)
             {
                 if (entityHolder.EntityData.EntityType == EntityType.Hero)
                 {

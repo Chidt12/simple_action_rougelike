@@ -15,6 +15,9 @@ namespace Runtime.Gameplay.EntitySystem
         private List<IDisposeEntityBehavior> DisposableBehaviors { get; set; }
 
         public IEntityData EntityData => entityData;
+
+        public bool IsProxy => false;
+
         private bool _built;
 
         public async UniTask<bool> BuildAsync(IEntityData entityData)

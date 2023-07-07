@@ -6,6 +6,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         IEntityData EntityData { get; }
 
+        bool IsProxy { get; }
+
         UniTask<bool> BuildAsync(IEntityData entityModel);
 
         void Dispose();
