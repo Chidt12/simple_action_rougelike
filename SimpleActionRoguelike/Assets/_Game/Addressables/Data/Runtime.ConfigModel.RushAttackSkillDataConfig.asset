@@ -21,11 +21,11 @@ MonoBehaviour:
     canBeCanceled: 1
     rushWidth: 1.2
     rushRange: 7
-    rushDuration: 1
-    warningRushDuration: 0.5
+    rushDuration: 0.3
+    warningRushDuration: 0.3
     numberOfRushTime: 3
     delayBetweenRush: 0.2
-    stopRushingAfterHitTarget: 1
+    stopRushingAfterHitTarget: 0
     rushDamageBonus: 0
     rushDamageFactors:
     - damageFactorStatType: 14

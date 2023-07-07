@@ -77,6 +77,8 @@ namespace Runtime.Gameplay.EntitySystem
 
                 var originPosition = creatorData.Position;
                 var direction = (creatorData.Target.Position - creatorData.Position).normalized;
+                creatorData.SetFaceDirection(direction);
+
                 var currentDuration = 0.0f;
                 _indicatorGameObject = await PoolManager.Instance.Rent(INDICATOR, token: cancellationToken);
                 var indicator = _indicatorGameObject.GetOrAddComponent<RushAttackIndicator>();
@@ -95,7 +97,7 @@ namespace Runtime.Gameplay.EntitySystem
                     }
 
                     currentDuration += Time.deltaTime;
-                    var easeValue = Easing.EaseInQuad(0.0f, 1.0f, Mathf.Clamp01(currentDuration / ownerModel.RushDuration));
+                    var easeValue = Easing.Linear(0.0f, 1.0f, Mathf.Clamp01(currentDuration / ownerModel.RushDuration));
                     float interpolationValue = Mathf.Lerp(0, ownerModel.RushRange, easeValue);
                     Vector2 dashPosition = originPosition + direction * interpolationValue;
 
