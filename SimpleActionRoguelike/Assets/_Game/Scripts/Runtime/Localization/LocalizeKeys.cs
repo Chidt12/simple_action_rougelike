@@ -8,6 +8,7 @@ namespace Runtime.Localization
         public const string GENERAL = "General";
         public const string ARTIFACT = "Artifact";
         public const string UI = "UI";
+        public const string ENTITY = "Entity";
     }
 
     public class LocalizeKeys
@@ -23,5 +24,6 @@ namespace Runtime.Localization
         public static string GetStatName(StatType statType) => $"stat_{(int)statType}";
         public static string GetShopItemName(ShopInGameItemType shopInGameItemType, int dataId) => $"shop_item_{(int)shopInGameItemType}_{dataId}_name";
         public static string GetArtifactName(ArtifactType artifactType) => $"artifact_item_{(int)artifactType}_name";
+        public static string GetEntityName(int entityId) => $"{entityId}_name";
     }
 }

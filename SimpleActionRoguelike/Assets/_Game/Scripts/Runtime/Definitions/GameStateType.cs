@@ -16,5 +16,6 @@ namespace Runtime.Definition
         WinGameplay,
         LoseGameplay,
         Lobby,
+        GameplayIntroduce,
     }
 }

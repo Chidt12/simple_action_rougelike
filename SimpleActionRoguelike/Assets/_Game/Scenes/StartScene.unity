@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 594159983}
   - component: {fileID: 594159987}
   m_Layer: 5
-  m_Name: HUD
+  m_Name: ScreenNavigator-HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,6 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containerLayerSettings: {fileID: 11400000, guid: 149b97df13a086d41b930d20f58fe63c, type: 2}
   unityScreenNavigatorSettings: {fileID: 11400000, guid: aa3904c6cbafe7949ae388fe80b554d9, type: 2}
+  gameStatesIgnoreOpenPopup: 040000000a000000
 --- !u!1 &600316785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fd29e89c70a624db27d0b6c27ce67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isTest: 0
+  _isTest: 1
+  _pausedGameStates: 0300000004000000050000000a000000
 --- !u!1 &1459154751
 GameObject:
   m_ObjectHideFlags: 0

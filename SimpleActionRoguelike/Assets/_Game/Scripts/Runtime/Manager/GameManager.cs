@@ -9,6 +9,7 @@ using Runtime.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using ZBase.UnityScreenNavigator.Core.Views;
 
@@ -17,6 +18,8 @@ namespace Runtime.Manager
     public class GameManager : MonoSingleton<GameManager>
     {
         [SerializeField] private bool _isTest;
+
+        [SerializeField] private GameStateType[] _pausedGameStates;
 
         private GameStateType _currentGameStateType;
         private GameStateType _previousGameStateType;
@@ -51,7 +54,7 @@ namespace Runtime.Manager
             }
 
             _currentGameStateType = gameStateType;
-            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem || _currentGameStateType == GameStateType.GameplayBuyingItem)
+            if (_pausedGameStates.Contains(_currentGameStateType))
                 Time.timeScale = 0;
             else
                 Time.timeScale = 1;
@@ -64,7 +67,7 @@ namespace Runtime.Manager
         public void ReturnPreviousGameState()
         {
             _currentGameStateType = _previousGameStateType;
-            if (_currentGameStateType == GameStateType.GameplayPausing || _currentGameStateType == GameStateType.GameplayChoosingItem || _currentGameStateType == GameStateType.GameplayBuyingItem)
+            if (_pausedGameStates.Contains(_currentGameStateType))
                 Time.timeScale = 0;
             else
                 Time.timeScale = 1;

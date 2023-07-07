@@ -60,10 +60,14 @@ namespace Runtime.Manager.Gameplay
         private StageLoadConfigItem _currentStageLoadConfigItem;
         private CurrentLoadedStageData _currentStageData;
         private List<CheckEndStage> _checkEndStageConditions;
+        private Queue<EntityIntroducedMessage> _entityWaitingToIntroducQueue;
+        private List<int> _entityIntroduced;
 
         private bool _isLoadedShopItems;
         private List<ShopInGameStageLoadConfigItem> _shopItems;
 
+        public Queue<EntityIntroducedMessage> EntityWaitingToIntroducQueue => _entityWaitingToIntroducQueue;
+        public List<int> EntityIntroduced => _entityIntroduced;
         public GameplayMessageCenter MessageCenter => messageCenter;
         public MechanicSystemManager MechanicSystemManager => mechanicSystemManager;
         public ShopInGameManager ShopInGameManager => shopInGameManager;
@@ -325,6 +329,9 @@ namespace Runtime.Manager.Gameplay
 
         private void SetUpNewStage()
         {
+            _entityIntroduced = new();
+            _entityWaitingToIntroducQueue = new();
+
             if (_currentStageLoadConfigItem.waveConfigs != null && _currentStageLoadConfigItem.waveConfigs.Length > 0)
             {
                 GameManager.Instance.SetGameStateType(GameStateType.GameplayRunning);
@@ -573,6 +580,22 @@ namespace Runtime.Manager.Gameplay
         {
             ToastController.Instance.Show($"Add + {numberCoins}");
             DataManager.Transient.AddMoney(InGameMoneyType.Gold, numberCoins);
+        }
+
+        public void AddIntroduced(int entityId)
+        {
+            _entityIntroduced.Add(entityId);
+        }
+
+        public void AddIntroduceToQueue(EntityIntroducedMessage message)
+        {
+            _entityWaitingToIntroducQueue.Enqueue(message);
+        }
+
+        public (EntityIntroducedMessage, bool) PopIntroduceInQueue()
+        {
+            var result = _entityWaitingToIntroducQueue.TryDequeue(out var message);
+            return (message, result);
         }
 
         #endregion Class Methods

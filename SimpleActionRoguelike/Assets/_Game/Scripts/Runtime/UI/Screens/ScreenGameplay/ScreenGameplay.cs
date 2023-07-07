@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Core.Message;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Manager;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
@@ -24,6 +25,9 @@ namespace Runtime.UI
         [SerializeField] private Transform _dashContainer;
         [SerializeField] private BossHealthBar[] _bossHealthBars;
 
+        [Header("Boss Introduce")]
+        [SerializeField] private EntityIntroduceUI _entityIntroduceUI;
+
         [Header("Artifact display")]
         [SerializeField] private RuneArtifactCooldownIcon _runeArtifactIconPrefab;
         [SerializeField] private Transform _runeArtifactIconsContainer;
@@ -33,6 +37,7 @@ namespace Runtime.UI
         private List<DashIcon> _activeDashIcons;
         private List<RuneArtifactCooldownIcon> _runeArtifactIcons;
         private List<StackArtifactIcon> _stackArtifactIcons;
+        private bool _isIntroducing;
 
         private IEntityStatData _heroData;
         private List<ISubscription> _subscriptions;
@@ -41,6 +46,8 @@ namespace Runtime.UI
 
         public override UniTask Initialize(Memory<object> args)
         {
+            _isIntroducing = false;
+            _entityIntroduceUI.gameObject.SetActive(false);
             _activeDashIcons = new();
             _runeArtifactIcons = new();
             _stackArtifactIcons = new();
@@ -52,6 +59,7 @@ namespace Runtime.UI
             _subscriptions.Add(SimpleMessenger.Subscribe<FinishedLoadNextLevelMessage>(OnLoadNextLevel));
             _subscriptions.Add(SimpleMessenger.Subscribe<UpdateCurrentArtifactMessage>(OnUpdateCurrentArtifact));
             _subscriptions.Add(SimpleMessenger.Subscribe<UpdateCurrentCollectedArtifactMessage>(OnUpdateCollectedArtifact));
+            _subscriptions.Add(SimpleMessenger.Subscribe<EntityIntroducedMessage>(OnEntityIntroduced));
 
             InitializeStackArtifacts();
             InitializeRuneArtifacts();
@@ -93,6 +101,44 @@ namespace Runtime.UI
                 Destroy(item.gameObject);
         }
 
+
+        private void OnEntityIntroduced(EntityIntroducedMessage message)
+        {
+            if (!GameplayManager.Instance.EntityIntroduced.Contains(message.EntityId))
+            {
+                if (_isIntroducing)
+                {
+                    GameplayManager.Instance.AddIntroduceToQueue(message);
+                }
+                else
+                {
+                    _isIntroducing = true;
+                    StartIntroduce(message).Forget();
+                }
+            }
+        }
+
+        private async UniTaskVoid StartIntroduce(EntityIntroducedMessage message)
+        {
+            GameplayManager.Instance.AddIntroduced(message.EntityId);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), cancellationToken: _cancellationTokenSource.Token);
+            await _entityIntroduceUI.StartIntroduce(message.EntityId, message.EntityType, _cancellationTokenSource.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(message.IntroduceTime), ignoreTimeScale: true, cancellationToken: _cancellationTokenSource.Token);
+            _entityIntroduceUI.EndIntroduce(CheckToStartIntroduce); 
+        }
+
+        private void CheckToStartIntroduce()
+        {
+            var popResult = GameplayManager.Instance.PopIntroduceInQueue();
+            if (popResult.Item2)
+            {
+                StartIntroduce(popResult.Item1).Forget();
+            }
+            else
+            {
+                _isIntroducing = false;
+            }
+        }
 
         private void OnUpdateCurrentArtifact(UpdateCurrentArtifactMessage message)
         {

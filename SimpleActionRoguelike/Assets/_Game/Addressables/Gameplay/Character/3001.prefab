@@ -308,32 +308,39 @@ MonoBehaviour:
     animationType: 2
     stateName: 3001_run
     vfxSpawnPoints: []
+    soundFx: 
   - isMainPart: 1
     animationType: 9
     stateName: 3001_attack_1
     vfxSpawnPoints: []
+    soundFx: 
   - isMainPart: 1
     animationType: 10
     stateName: 3001_attack_2
     vfxSpawnPoints:
     - {fileID: 7469765790741106132}
+    soundFx: 
   - isMainPart: 1
     animationType: 11
     stateName: 3001_attack_3
     vfxSpawnPoints:
     - {fileID: 4782336843093596467}
+    soundFx: 
   - isMainPart: 1
     animationType: 7
     stateName: 3001_precast_2
     vfxSpawnPoints: []
+    soundFx: 
   - isMainPart: 1
     animationType: 17
     stateName: 3001_attack_4
     vfxSpawnPoints: []
+    soundFx: 
   - isMainPart: 1
     animationType: 22
     stateName: 3001_attack_part_4
     vfxSpawnPoints: []
+    soundFx: 
   defaultState: 3001_idle
   changeColorSprite: {fileID: 7386596438361353229}
 --- !u!1 &7386596438375481929
@@ -359,6 +366,7 @@ GameObject:
   - component: {fileID: 1573412583591668133}
   - component: {fileID: 1601493094721505528}
   - component: {fileID: 1667479312196161333}
+  - component: {fileID: 6215132783817999762}
   m_Layer: 7
   m_Name: 3001
   m_TagString: Untagged
@@ -489,6 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _diedPrefab: enemy_death_small
   _spawnVFXPosition: {fileID: 1414573540971670945}
+  _flipTransform: {fileID: 0}
 --- !u!114 &7033757250741559360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +598,19 @@ MonoBehaviour:
   _warningDisplayPosition: {fileID: 5750138514969153640}
   _timeDisplayWarning: 0.3
   _delayBeforeExecuteSkillTime: 3
+--- !u!114 &6215132783817999762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386596438375481929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1cc9a573d6c2724596c980b6c5ab72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _introduceTime: 2
 --- !u!1001 &1336666208071823101
 PrefabInstance:
   m_ObjectHideFlags: 0

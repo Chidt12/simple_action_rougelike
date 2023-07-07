@@ -30,6 +30,7 @@ namespace Runtime.UI
     {
         [SerializeField] protected ContainerLayerSettings containerLayerSettings;
         [SerializeField] protected UnityScreenNavigatorSettings unityScreenNavigatorSettings;
+        [SerializeField] protected GameStateType[] gameStatesIgnoreOpenPopup;
 
         protected GlobalContainerLayerManager globalContainerLayerManager;
         protected List<ISubscription> subscriptions;
@@ -99,7 +100,7 @@ namespace Runtime.UI
         {
             if (message.KeyPressType == KeyPressType.Back)
             {
-                if (GameManager.Instance.CurrentGameStateType == GameStateType.GameplayChoosingItem)
+                if (gameStatesIgnoreOpenPopup.Contains(GameManager.Instance.CurrentGameStateType))
                     return;
 
                 ExecuteBackKeyAsync().Forget();

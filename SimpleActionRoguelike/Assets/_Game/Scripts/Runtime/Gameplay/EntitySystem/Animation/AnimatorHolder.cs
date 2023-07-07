@@ -31,7 +31,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             EndActionCallbackAction?.Invoke();
             EndActionCallbackAction = null;
-            OperatedPointTriggeredCallbackActions.Clear();
+            OperatedPointTriggeredCallbackActions?.Clear();
         }
 
         #endregion Unity Animation Callback Event Methods

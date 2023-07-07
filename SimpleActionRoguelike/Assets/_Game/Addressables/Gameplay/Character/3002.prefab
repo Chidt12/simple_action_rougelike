@@ -311,16 +311,19 @@ MonoBehaviour:
     animationType: 2
     stateName: 3002_run
     vfxSpawnPoints: []
+    soundFx: 
   - isMainPart: 1
     animationType: 9
     stateName: 3002_attack_1
     vfxSpawnPoints:
     - {fileID: 5588314581383290775}
+    soundFx: 
   - isMainPart: 1
     animationType: 10
     stateName: 3002_attack_2
     vfxSpawnPoints:
     - {fileID: 2183436885966397172}
+    soundFx: 
   defaultState: 3002_idle
   changeColorSprite: {fileID: 7386596438361353229}
 --- !u!1 &7386596438375481929
@@ -346,6 +349,7 @@ GameObject:
   - component: {fileID: 1573412583591668133}
   - component: {fileID: 1601493094721505528}
   - component: {fileID: 7235523714279144099}
+  - component: {fileID: 1878572042976708993}
   m_Layer: 7
   m_Name: 3002
   m_TagString: Untagged
@@ -473,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _diedPrefab: enemy_death_small
   _spawnVFXPosition: {fileID: 1414573540971670945}
+  _flipTransform: {fileID: 0}
 --- !u!114 &7033757250741559360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +578,19 @@ MonoBehaviour:
   _warningDisplayPosition: {fileID: 62285047295108349}
   _timeDisplayWarning: 0.3
   _delayBeforeExecuteSkillTime: 3
+--- !u!114 &1878572042976708993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386596438375481929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1cc9a573d6c2724596c980b6c5ab72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _introduceTime: 2
 --- !u!1001 &1336666208071823101
 PrefabInstance:
   m_ObjectHideFlags: 0
