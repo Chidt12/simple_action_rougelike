@@ -50,7 +50,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid SpawnEntitiesAsync()
         {
-            await EntitiesManager.Instance.CreateEntitiesAsync(controllerProjectile.CenterPosition, s_entitySpawnFromCharacterOffset, false,
+            await EntitiesManager.Instance.CreateEntitiesAsync(controllerProjectile.CenterPosition, s_entitySpawnFromCharacterOffset, false, false,
                                                          strategyData.CancellationToken, strategyData.SpawnedEntitiesInfo);
             strategyData.SpawnedEntitiesAction?.Invoke();
         }

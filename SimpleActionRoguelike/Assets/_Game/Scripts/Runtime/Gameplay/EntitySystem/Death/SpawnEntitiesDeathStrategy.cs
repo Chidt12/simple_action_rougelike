@@ -10,7 +10,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override UniTask Execute(IEntityData entityData, SpawnEntitiesDeathDataConfigItem deathDataConfig, CancellationToken cancellationToken)
         {
-            return EntitiesManager.Instance.CreateEntitiesAsync(entityData.Position, s_entitySpawnFromCharacterOffset, false,
+            return EntitiesManager.Instance.CreateEntitiesAsync(entityData.Position, s_entitySpawnFromCharacterOffset, false, false,
                                                          cancellationToken, deathDataConfig.spawnEntityInfo);
         }
     }

@@ -36,7 +36,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             var spawnEntities = dataConfig.spawnEntities;
             if (dataConfig.useOwnerLevel)
-                spawnEntities = spawnEntities.Select(x => new SpawnedEntityInfo(x.entityId, x.entityType, x.entityNumber, entityData.Level)).ToArray();
+                spawnEntities = spawnEntities.Select(x => new SpawnedEntityInfo(x.entityId, x.entityType, entityData.Level, x.entityNumber)).ToArray();
 
             FlyFowardSpawnEntitiesProjectileStrategyData flyForwardProjectileStrategyData = new FlyFowardSpawnEntitiesProjectileStrategyData(
                                                                                         spawnEntities,

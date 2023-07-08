@@ -61,7 +61,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected async override UniTask PresentSkillAsync(CancellationToken cancellationToken, int index)
         {
             _isHittedTarget = false;
-            entityTriggerActionEventProxy.TriggerEvent(AnimationType.UseSkill1);
+            entityTriggerActionEventProxy.TriggerEvent(index.GetUseSkillByIndex());
 
             creatorData.IsPausedControl = true;
             creatorData.SetMoveDirection(Vector2.zero);

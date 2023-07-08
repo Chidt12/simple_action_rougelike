@@ -73,3 +73,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.SummonSkillDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.SummonSkillDataConfig
+      csvFile: {fileID: 4900000, guid: 779bcd02268613d45bec406e9cae98c9, type: 3}
+      csvPath: Assets/_Game/Csv/skills/summon_skill.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

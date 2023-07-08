@@ -146,7 +146,7 @@ namespace Runtime.Gameplay.EntitySystem
                 var spawnedCenterPosition = HeroData.Position;
                 var spawnedCenterOffsetDistance = entityConfig.distanceFromHero;
                 var spawnedEntityInfo = entityConfig.entityConfigItem;
-                await CreateEntitiesAsync(spawnedCenterPosition, spawnedCenterOffsetDistance, true, _spawnWaveCancellationTokenSource.Token, spawnedEntityInfo);
+                await CreateEntitiesAsync(spawnedCenterPosition, spawnedCenterOffsetDistance, true, true, _spawnWaveCancellationTokenSource.Token, spawnedEntityInfo);
             }
             else
             {
@@ -155,14 +155,15 @@ namespace Runtime.Gameplay.EntitySystem
                     spawnPointIndex = 0;
 
                 var spawnPosition = MapManager.Instance.SpawnPoints[spawnPointIndex].Position;
-                await CreateEntitiesAsync(spawnPosition, 0.3f, true, _spawnWaveCancellationTokenSource.Token, entityConfig.entityConfigItem);
+                await CreateEntitiesAsync(spawnPosition, 0.3f, true, true, _spawnWaveCancellationTokenSource.Token, entityConfig.entityConfigItem);
             }
         }
 
         #region Create Entities
 
-        public async UniTask CreateEntitiesAsync(Vector3 spawnedCenterPosition, float spawnedCenterDistancedOffset, bool displayWarning, CancellationToken cancellationToken, params SpawnedEntityInfo[] spawnedEntitiesInfo)
+        public async UniTask<List<Vector2>> CreateEntitiesAsync(Vector3 spawnedCenterPosition, float spawnedCenterDistancedOffset, bool displayWarning, bool fromSystem, CancellationToken cancellationToken, params SpawnedEntityInfo[] spawnedEntitiesInfo)
         {
+            var spawnedPositions = new List<Vector2>();
             var numberOfDirectionsAwayCenterPosition = 32;
             var numberOfSpawnedEntities = spawnedEntitiesInfo.Sum(x => x.entityNumber);
             var validPositions = new List<Vector2>();
@@ -193,7 +194,8 @@ namespace Runtime.Gameplay.EntitySystem
                         }
 
                         var spawnPosition = validPositions[index++];
-                        await LoadEntity(spawnedEntityInfo, spawnPosition, displayWarning, cancellationToken);
+                        spawnedPositions.Add(spawnPosition);
+                        await LoadEntity(spawnedEntityInfo, spawnPosition, displayWarning, fromSystem, cancellationToken);
                         await UniTask.Yield(cancellationToken);
                     }
                 }
@@ -205,11 +207,14 @@ namespace Runtime.Gameplay.EntitySystem
                     for (int i = 0; i < spawnedEntityInfo.entityNumber; i++)
                     {
                         var spawnPosition = spawnedCenterPosition;
-                        await LoadEntity(spawnedEntityInfo, spawnPosition, displayWarning, cancellationToken);
+                        spawnedPositions.Add(spawnPosition);
+                        await LoadEntity(spawnedEntityInfo, spawnPosition, displayWarning, fromSystem, cancellationToken);
                         await UniTask.Yield(cancellationToken);
                     }
                 }
             }
+
+            return spawnedPositions;
         }
 
         public async UniTask<GameObject> CreateEntityAsync(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, CancellationToken cancellationToken = default)
@@ -311,15 +316,15 @@ namespace Runtime.Gameplay.EntitySystem
 
         #region Create Entity With warning
 
-        private async UniTask LoadEntity(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, bool displayWarning, CancellationToken cancellationToken)
+        private async UniTask LoadEntity(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, bool displayWarning, bool fromSystem, CancellationToken cancellationToken)
         {
             if (displayWarning && spawnedEntityInfo.entityType.IsEnemy())
-                CreateEntityWithWarningAsync(spawnedEntityInfo, spawnPosition, cancellationToken).Forget();
+                CreateEntityWithWarningAsync(spawnedEntityInfo, spawnPosition, fromSystem, cancellationToken).Forget();
             else
                 await CreateEntityAsync(spawnedEntityInfo, spawnPosition, cancellationToken);
         }
 
-        private async UniTaskVoid CreateEntityWithWarningAsync(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, CancellationToken cancellationToken)
+        private async UniTaskVoid CreateEntityWithWarningAsync(SpawnedEntityInfo spawnedEntityInfo, Vector2 spawnPosition, bool fromSystem, CancellationToken cancellationToken)
         {
             var warningVFX = await CreateSpawnWarningVFXAsync(spawnedEntityInfo.entityType, DISPLAY_SPAWN_WARNING_TIME, spawnPosition, cancellationToken);
             var entityGameObject = await CreateEntityAsync(spawnedEntityInfo, spawnPosition, cancellationToken);

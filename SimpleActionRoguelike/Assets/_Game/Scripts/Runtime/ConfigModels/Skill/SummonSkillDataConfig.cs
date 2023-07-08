@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using CsvReader;
+using System;
 
-public class SummonSkillDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class SummonSkillDataConfigItem : SkillDataConfigItem
     {
-        
+        [CsvColumnFormat(ColumnFormat = "summoned_{0}")]
+        public SpawnedEntityInfo[] summonedSpawnEntitiesInfo;
+        public float summonedCenterOffsetDistance;
+        public bool useOwnerLevel;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class SummonSkillDataConfig : SkillDataConfig<SummonSkillDataConfigItem>
     {
-        
     }
 }
