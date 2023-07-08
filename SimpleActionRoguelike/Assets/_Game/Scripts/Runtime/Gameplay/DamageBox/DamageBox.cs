@@ -1,4 +1,8 @@
+using Cysharp.Threading.Tasks;
+using Runtime.ConfigModel;
+using Runtime.Core.Message;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Message;
 using System;
 using UnityEngine;
 
@@ -7,53 +11,77 @@ namespace Runtime.Gameplay
     [RequireComponent(typeof(Collider2D))]
     public class DamageBox : MonoBehaviour
     {
-        [SerializeField] private Collider2D _collider;
+        [SerializeField] protected Collider2D collider2D;
 
-        private Action<IEntityData> _onTriggeredEntered;
-        private Action<IEntityData> _onTriggeredExit;
-        private bool _isInited;
+        protected EffectSource effectSource;
+        protected EffectProperty effectProperty;
+        protected float damageBonus;
+        protected DamageFactor[] damageFactors;
+        protected IEntityData creatorData;
+        protected StatusIdentity statusIdentity;
 
-        public Vector2 CenterBoxPosition => _collider.bounds.center;
+        protected Action<IEntityData> onTriggeredEntered;
+        protected Action<IEntityData> onTriggeredExit;
+        protected bool isInited;
+
+        public Vector2 CenterBoxPosition => collider2D.bounds.center;
 
         private void OnDisable()
         {
-            _isInited = false;
+            isInited = false;
         }
 
         private void OnEnable()
         {
-            _collider.enabled = false;
+            collider2D.enabled = false;
         }
 
-        public void StartDamage(Action<IEntityData> onTriggeredEntered, Action<IEntityData> onTriggeredExit = null)
+        public void StartDamage(
+            IEntityData creatorData, EffectSource effectSource, EffectProperty effectProperty, float damageBonus, DamageFactor[] damageFactors, StatusIdentity statusIdentity,
+            Action<IEntityData> onTriggeredEntered = null, Action<IEntityData> onTriggeredExit = null)
         {
-            _isInited = true;
-            _onTriggeredEntered = onTriggeredEntered;
-            _onTriggeredExit = onTriggeredExit;
-            _collider.enabled = true;
+            isInited = true;
+            this.onTriggeredEntered = onTriggeredEntered;
+            this.onTriggeredExit = onTriggeredExit;
+            collider2D.enabled = true;
+
+            this.creatorData = creatorData;
+            this.effectSource = effectSource;
+            this.effectProperty = effectProperty;
+            this.damageBonus = damageBonus;
+            this.damageFactors = damageFactors;
+            this.statusIdentity = statusIdentity;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!_isInited)
+            if (!isInited)
                 return;
 
             var entityHolder = collision.GetComponent<IEntityHolder>();
-            if (entityHolder != null && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
+            if (entityHolder != null && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead && creatorData.EntityType.CanCauseDamage(entityHolder.EntityData.EntityType))
             {
-                _onTriggeredEntered?.Invoke(entityHolder.EntityData);
+                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
+                    new SentDamageMessage(EffectSource.FromArtifact, EffectProperty.Normal,
+                    damageBonus, damageFactors, creatorData, entityHolder.EntityData)).Forget();
+
+                var targetStatusData = entityHolder.EntityData as IEntityStatusData;
+                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
+                    new SentStatusEffectMessage(creatorData, targetStatusData, statusIdentity)).Forget();
+
+                onTriggeredEntered?.Invoke(entityHolder.EntityData);
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (!_isInited)
+            if (!isInited)
                 return;
 
             var entityHolder = collision.GetComponent<IEntityHolder>();
             if (entityHolder != null && entityHolder.EntityData != null && !entityHolder.EntityData.IsDead)
             {
-                _onTriggeredExit?.Invoke(entityHolder.EntityData);
+                onTriggeredExit?.Invoke(entityHolder.EntityData);
             }
         }
     }

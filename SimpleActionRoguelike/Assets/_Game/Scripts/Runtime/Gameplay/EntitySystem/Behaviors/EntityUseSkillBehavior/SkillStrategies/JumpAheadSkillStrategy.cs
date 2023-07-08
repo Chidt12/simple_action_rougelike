@@ -84,7 +84,7 @@ namespace Runtime.Gameplay.EntitySystem
             if (_creatorDamageBox)
             {
                 _creatorDamageBox.gameObject.SetActive(true);
-                _creatorDamageBox.StartDamage(OnTriggeredEntered);
+                _creatorDamageBox.StartDamage(creatorData, EffectSource.FromSkill, EffectProperty.Normal, ownerModel.JumpDamageBonus, ownerModel.JumDamageFactors, default);
             }
 
             var predictJumpPosition = creatorData.Position;
@@ -133,15 +133,6 @@ namespace Runtime.Gameplay.EntitySystem
             _isJumping = false;
             if (_creatorDamageBox)
                 _creatorDamageBox.gameObject.SetActive(false);
-        }
-
-        private void OnTriggeredEntered(IEntityData entity)
-        {
-            if (creatorData.EntityType.CanCauseDamage(entity.EntityType))
-            {
-                SimpleMessenger.Publish(MessageScope.EntityMessage,
-                            new SentDamageMessage(EffectSource.FromSkill, EffectProperty.Normal, ownerModel.JumpDamageBonus, ownerModel.JumDamageFactors, creatorData, entity));
-            }
         }
 
         protected override void CancelSkill()

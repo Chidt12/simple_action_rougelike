@@ -39,23 +39,9 @@ namespace Runtime.Gameplay.EntitySystem
                     var spawnForwardObject = await PoolManager.Instance.Rent(ownerData.forwardPrefabName, token: cancellationToken);
                     spawnForwardObject.transform.position = position + direction.normalized * ownerData.distanceBetweenObject * (i+1);
                     var damageBox = spawnForwardObject.GetComponent<AnimatorDamageBox>();
-                    damageBox.Init(OnTriggeredEntered);
+                    damageBox.Init(ownerEntityData, EffectSource.FromArtifact, EffectProperty.Normal, ownerData.damageBonus, ownerData.damageFactors, ownerData.triggeredStatus);
                     await UniTask.Delay(TimeSpan.FromSeconds(ownerData.delayBetweenSpawn), cancellationToken: cancellationToken);
                 }
-            }
-        }
-
-        private void OnTriggeredEntered(IEntityData entityData)
-        {
-            if (entityData.EntityType.IsEnemy())
-            {
-                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
-                    new SentDamageMessage(EffectSource.FromArtifact, EffectProperty.Normal,
-                    ownerData.damageBonus, ownerData.damageFactors, ownerEntityData, entityData)).Forget();
-
-                var targetStatusData = entityData as IEntityStatusData;
-                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
-                    new SentStatusEffectMessage(ownerEntityData, targetStatusData, ownerData.triggeredStatus)).Forget();
             }
         }
     }

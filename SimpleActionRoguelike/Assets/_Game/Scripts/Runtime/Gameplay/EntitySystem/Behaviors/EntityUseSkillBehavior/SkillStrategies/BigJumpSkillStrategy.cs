@@ -149,10 +149,7 @@ namespace Runtime.Gameplay.EntitySystem
                     stateAction: callbackData =>
                     {
                         creatorData.IsInvincible = false;
-                        if (warningDamageVfx != null)
-                        {
-                            warningDamageVfx.InitDamageBox(OnTriggeredEntered);
-                        }
+                        // Spawn Damage Box.
                     },
                     endAction: _ =>
                     {
@@ -162,15 +159,6 @@ namespace Runtime.Gameplay.EntitySystem
                             PoolManager.Instance.Return(_warningVfx);
                     }
                 );
-        }
-
-        private void OnTriggeredEntered(IEntityData entity)
-        {
-            if (creatorData.EntityType.CanCauseDamage(entity.EntityType))
-            {
-                SimpleMessenger.Publish(MessageScope.EntityMessage,
-                            new SentDamageMessage(EffectSource.FromSkill, EffectProperty.Normal, ownerModel.JumpDamageBonus, ownerModel.JumDamageFactors, creatorData, entity));
-            }
         }
 
         protected override void CancelSkill()

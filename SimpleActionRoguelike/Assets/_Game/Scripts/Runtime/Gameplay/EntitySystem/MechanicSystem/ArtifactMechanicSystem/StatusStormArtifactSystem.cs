@@ -39,22 +39,8 @@ namespace Runtime.Gameplay.EntitySystem
                 var lightningObject = await PoolManager.Instance.Rent(ownerData.ligntningPrefab, token: cancellationToken);
                 lightningObject.transform.position = (Vector3)allPoints[UnityEngine.Random.Range(0, allPoints.Count)].position;
                 var damageBox = lightningObject.GetComponent<AnimatorDamageBox>();
-                damageBox.Init(OnEntityEntered);
+                damageBox.Init(ownerEntityData, EffectSource.FromArtifact, EffectProperty.Normal, ownerData.damageBonus, ownerData.damageFactors, ownerData.triggeredStatus);
                 await UniTask.Delay(TimeSpan.FromSeconds(ownerData.delayBetweenLightning), cancellationToken: cancellationToken);
-            }
-        }
-
-        private void OnEntityEntered(IEntityData obj)
-        {
-            if (obj.EntityType.IsEnemy())
-            {
-                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
-                    new SentDamageMessage(EffectSource.FromArtifact, EffectProperty.Normal, 
-                    ownerData.damageBonus, ownerData.damageFactors, ownerEntityData, obj)).Forget();
-
-                var targetStatusData = obj as IEntityStatusData;
-                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
-                    new SentStatusEffectMessage(ownerEntityData, targetStatusData, ownerData.triggeredStatus)).Forget();
             }
         }
     }

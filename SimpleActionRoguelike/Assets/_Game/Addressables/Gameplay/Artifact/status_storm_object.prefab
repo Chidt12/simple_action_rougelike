@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 710cce0a98285b04e9695d7d1919cafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animatorHolder: {fileID: 6850797072460414143}
-  _damageBox: {fileID: 6850797071700652925}
-  _selfDestroy: 0
+  animatorHolder: {fileID: 6850797072460414143}
+  damageBox: {fileID: 6850797071700652925}
+  selfDestroy: 1
 --- !u!1 &6850797071700652898
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e32be9dde65b3a47b123f97f24d22ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 6850797071700652924}
+  collider2D: {fileID: 6850797071700652924}
 --- !u!1 &6850797072460414115
 GameObject:
   m_ObjectHideFlags: 0

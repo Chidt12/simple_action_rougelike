@@ -72,7 +72,7 @@ namespace Runtime.Gameplay.EntitySystem
                 if (_creatorDamageBox)
                 {
                     _creatorDamageBox.gameObject.SetActive(true);
-                    _creatorDamageBox.StartDamage(OnTriggeredEntered);
+                    _creatorDamageBox.StartDamage(creatorData, EffectSource.FromSkill, EffectProperty.Normal, ownerModel.RushDamageBonus, ownerModel.RushDamageFactors, default);
                 }
 
                 var originPosition = creatorData.Position;
@@ -132,19 +132,6 @@ namespace Runtime.Gameplay.EntitySystem
 
             _creatorDamageBox.gameObject.SetActive(false);
             creatorData.IsPausedControl = false;;
-        }
-
-        private void OnTriggeredEntered(IEntityData entity)
-        {
-            if (creatorData.EntityType.CanCauseDamage(entity.EntityType))
-            {
-                if(creatorData.Target.EntityUID == entity.EntityUID)
-                {
-                    _isHittedTarget = true;
-                }
-                SimpleMessenger.Publish(MessageScope.EntityMessage,
-                            new SentDamageMessage(EffectSource.FromSkill, EffectProperty.Normal, ownerModel.RushDamageBonus, ownerModel.RushDamageFactors, creatorData, entity));
-            }
         }
 
         protected override void CancelSkill()
