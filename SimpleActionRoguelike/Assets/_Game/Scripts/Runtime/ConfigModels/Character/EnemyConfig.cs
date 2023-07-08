@@ -1,3 +1,4 @@
+using CsvReader;
 using Runtime.Definition;
 using System;
 
@@ -15,8 +16,11 @@ namespace Runtime.ConfigModel
         #region Members
 
         public EnemyLevelStats enemyLevelStats;
-        public SkillIdentity skillIdentity;
-        public AutoInputStrategyType autoInputStrategy;
+        public SkillIdentity[] skillIdentities;
+        [CsvColumnFormat(ColumnFormat = "skill_delay_time")]
+        public CustomFloat[] skillDelayTimes;
+        public TriggerPhase[] skillTriggerPhases;
+        public AutoInputStrategyType[] autoInputStrategies;
         public DeathDataIdentity deathDataIdentity;
 
         #endregion Members

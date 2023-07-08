@@ -6,8 +6,6 @@ namespace Runtime.Gameplay.EntitySystem
     public abstract class SkillModel
     {
         public float CastRange { get; protected set; }
-        public float Cooldown { get; set; }
-        public float CurrentCooldown { get; set; }
         public bool IsReady => CurrentSkillPhase == SkillPhase.Ready;
         public virtual bool DependTarget { get; protected set; }
         public SkillTargetType TargetType { get; protected set; }
@@ -20,7 +18,6 @@ namespace Runtime.Gameplay.EntitySystem
         {
             TargetType = configItem.targetType;
             CastRange = configItem.castRange;
-            Cooldown = configItem.cooldown;
             DependTarget = configItem.dependTarget;
             CanBeCanceled = canBeCanceled;
             SkillIndex = skillIndex;

@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 1756624811175612651}
   - component: {fileID: 8943426614653008273}
   - component: {fileID: 5084446544707482556}
-  - component: {fileID: 4136407254237824998}
+  - component: {fileID: 4690366408822616753}
   - component: {fileID: 5530693216369762297}
   - component: {fileID: 1424557966255781512}
   - component: {fileID: 7793978806378273038}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc71e4e1b75649c43b888bc550cc84ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4136407254237824998
+--- !u!114 &4690366408822616753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,12 +291,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2269341790078022370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f47807c13eeb87428ce59471ee10275, type: 3}
+  m_Script: {fileID: 11500000, guid: 247c48a7a62a6f54289e742cdff77157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _hideWarning: 0
   _warningSkillVFX: warning_execute_skill_vfx
-  _warningDisplayPosition: {fileID: 0}
+  _warningDisplayPosition: {fileID: 8728367423080764502}
   _timeDisplayWarning: 0.3
   _delayBeforeExecuteSkillTime: 3
 --- !u!114 &5530693216369762297
@@ -477,8 +477,10 @@ MonoBehaviour:
     animationType: 2
     stateName: 2001_run
     vfxSpawnPoints: []
+    rotateTowardFaceDirection: 0
     soundFx: 
   defaultState: 2001_idle
+  defaultRotateTowardFaceDirection: 0
   changeColorSprite: {fileID: 2269341790097398950}
 --- !u!1 &8157586967925692769
 GameObject:

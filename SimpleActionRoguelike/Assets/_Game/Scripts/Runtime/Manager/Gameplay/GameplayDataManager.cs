@@ -91,13 +91,12 @@ namespace Runtime.Manager.Gameplay
             var zombieConfigItem = zombieConfig.items.FirstOrDefault(x => x.id == enemyId);
 
             var zombieLevelConfigItem = zombieConfigItem.levels.FirstOrDefault(x => x.level == level);
-            var skillIdentity = zombieLevelConfigItem.skillIdentity;
-            SkillDataConfigItem skillDataConfigItem = null;
-            var skillModels = new List<SkillModel>();
+            var skillIdentities = zombieLevelConfigItem.skillIdentities;
 
-            if (skillIdentity.skillType != SkillType.None)
+            var skillModels = new List<SkillModel>();
+            foreach (var skillIdentity in skillIdentities)
             {
-                skillDataConfigItem = await DataManager.Config.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
+                var skillDataConfigItem = await DataManager.Config.GetSkillDataConfigItem(skillIdentity.skillType, skillIdentity.skillDataId);
                 var skillData = new SkillData(skillDataConfigItem, skillIdentity.skillAnimIndex);
                 var skillModel = SkillModelFactory.GetSkillModel(skillIdentity.skillType, skillData);
                 skillModels.Add(skillModel);

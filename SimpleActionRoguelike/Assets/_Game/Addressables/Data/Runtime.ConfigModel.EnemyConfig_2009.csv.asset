@@ -29,11 +29,17 @@ MonoBehaviour:
         lifeSteal: 0
         attackDamage: 3
         collideDamage: 1
-      skillIdentity:
-        skillType: 3
+      skillIdentities:
+      - skillType: 1
         skillDataId: 1
         skillAnimIndex: 0
-      autoInputStrategy: 1
+      skillDelayTimes:
+      - value: 3
+      skillTriggerPhases:
+      - triggerPhaseType: 0
+        triggerPhaseHealth: 0
+        triggerPhaseEntityId: 0
+      autoInputStrategies: 00000000
       deathDataIdentity:
-        deathDataId: 0
-        deathType: 0
+        deathDataId: 1
+        deathType: 2

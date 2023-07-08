@@ -13,7 +13,6 @@ namespace Runtime.ConfigModel
         public int dataId;
         public SkillTargetType targetType;
         public float castRange;
-        public float cooldown;
         public bool dependTarget;
         public bool canBeCanceled;
 

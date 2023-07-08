@@ -16,7 +16,6 @@ MonoBehaviour:
   - dataId: 1
     targetType: 3
     castRange: 5
-    cooldown: 2
     dependTarget: 1
     canBeCanceled: 1
     rushWidth: 1.2

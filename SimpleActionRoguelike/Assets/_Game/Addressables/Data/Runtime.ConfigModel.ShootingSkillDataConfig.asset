@@ -16,7 +16,6 @@ MonoBehaviour:
   - dataId: 1
     targetType: 3
     castRange: 8
-    cooldown: 2
     dependTarget: 1
     canBeCanceled: 1
     projectileId: bullet_red
@@ -36,7 +35,6 @@ MonoBehaviour:
   - dataId: 2
     targetType: 3
     castRange: 6
-    cooldown: 2
     dependTarget: 1
     canBeCanceled: 1
     projectileId: bullet_red
@@ -56,7 +54,6 @@ MonoBehaviour:
   - dataId: 3
     targetType: 3
     castRange: 6
-    cooldown: 2
     dependTarget: 1
     canBeCanceled: 1
     projectileId: bullet_red

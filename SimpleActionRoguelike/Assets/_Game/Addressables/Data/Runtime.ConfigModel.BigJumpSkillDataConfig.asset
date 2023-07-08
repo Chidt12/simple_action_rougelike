@@ -16,7 +16,6 @@ MonoBehaviour:
   - dataId: 1
     targetType: 3
     castRange: 10
-    cooldown: 4
     dependTarget: 1
     canBeCanceled: 0
     warningVfx: warning_damage_vfx

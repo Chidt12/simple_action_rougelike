@@ -260,8 +260,10 @@ MonoBehaviour:
     animationType: 2
     stateName: 2001_run
     vfxSpawnPoints: []
+    rotateTowardFaceDirection: 0
     soundFx: 
   defaultState: 2001_idle
+  defaultRotateTowardFaceDirection: 0
   changeColorSprite: {fileID: 7386596438361353229}
 --- !u!1 &7386596438375481929
 GameObject:
@@ -282,7 +284,7 @@ GameObject:
   - component: {fileID: 7033757250741559360}
   - component: {fileID: 423702413483919674}
   - component: {fileID: 4572192897293976343}
-  - component: {fileID: 4655416335586834253}
+  - component: {fileID: 8668627286299049569}
   - component: {fileID: 3836183063686295378}
   - component: {fileID: 7654201726909875747}
   - component: {fileID: 1573412583591668133}
@@ -463,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc71e4e1b75649c43b888bc550cc84ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4655416335586834253
+--- !u!114 &8668627286299049569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -472,7 +474,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7386596438375481929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f47807c13eeb87428ce59471ee10275, type: 3}
+  m_Script: {fileID: 11500000, guid: 247c48a7a62a6f54289e742cdff77157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _hideWarning: 0

@@ -16,7 +16,6 @@ MonoBehaviour:
   - dataId: 1
     targetType: 3
     castRange: 4
-    cooldown: 2
     dependTarget: 1
     canBeCanceled: 1
     projectileId: fly_round_orb_red

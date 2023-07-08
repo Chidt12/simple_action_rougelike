@@ -5,6 +5,7 @@ using Runtime.Definition;
 using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -33,8 +34,12 @@ namespace Runtime.Gameplay.EntitySystem
             enemyModel.Init(EntityType.Enemy, _entityUId++, entityId, entityLevel);
             enemyModel.InitStats(enemyData.Item1);
             enemyModel.InitSkills(enemyData.Item2);
+            var delayTimes = enemyData.Item3.skillDelayTimes.Select(x => x.value).ToList();
+            enemyModel.InitSkillDelayTimes(delayTimes);
+            enemyModel.InitTriggerPhases(enemyData.Item3.skillTriggerPhases.ToList());
+
             enemyModel.InitStatus();
-            enemyModel.InitAutoInputStrategy(new() { enemyData.Item3.autoInputStrategy });
+            enemyModel.InitAutoInputStrategy(enemyData.Item3.autoInputStrategies.ToList());
             enemyModel.InitDeathData(enemyData.Item3.deathDataIdentity);
 
             enemyGameObject.SetActive(true);
