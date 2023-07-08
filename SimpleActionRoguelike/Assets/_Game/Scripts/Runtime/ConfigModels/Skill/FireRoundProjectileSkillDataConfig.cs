@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using CsvReader;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class FireRoundProjectileSkillDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class FireRoundProjectileSkillDataConfigItem : SkillDataConfigItem
     {
-        
+        public string projectileId;
+        public string impactPrefabName;
+        public float projectileFlyDuration;
+        public float projectileFlyHeight;
+        public string warningPrefabName;
+        public float damageAreaHeight;
+        public float damageAreaWidth;
+        [CsvColumnFormat(ColumnFormat = "damage_area_{0}")]
+        public DamageFactor[] damageAreaDamageFactors;
+        public float damageAreaLifeTime;
+        public float damageAreaInterval;
+        public string damageAreaPrefabName;
+        [CsvColumnFormat(ColumnFormat = "first_init_{0}")]
+        public DamageFactor[] firstInitDamageFactors;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class FireRoundProjectileSkillDataConfig : SkillDataConfig<FireRoundProjectileSkillDataConfigItem>
     {
-        
     }
 }
