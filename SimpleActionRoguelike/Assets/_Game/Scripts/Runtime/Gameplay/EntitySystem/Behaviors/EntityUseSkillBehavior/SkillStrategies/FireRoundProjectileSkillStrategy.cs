@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Runtime.Core.Pool;
 using Runtime.Helper;
 using System;
 using System.Linq;
@@ -57,9 +58,8 @@ namespace Runtime.Gameplay.EntitySystem
 
             for (int i = 0; i < ownerModel.NumberOfBulletsInProjectile; i++)
             {
-                var currentDistance = distance * Mathf.Cos(Mathf.Deg2Rad * ownerModel.AngleBetweenBullet * i);
                 var bulletFireDirection = (Quaternion.AngleAxis(firstDegree + ownerModel.AngleBetweenBullet * i, Vector3.forward) * fireDirection).normalized;
-                var targetPosition = spawnTransform.position + bulletFireDirection * currentDistance;
+                var targetPosition = spawnTransform.position + bulletFireDirection * distance;
                 SpawnBulletAsync(spawnTransform.position, targetPosition, cancellationToken).Forget();
             }
         }
@@ -78,7 +78,25 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnProjectileCallback(ProjectileCallbackData callbackData)
         {
+            SpawnDamageBox(callbackData.hitPoint).Forget();
+        }
 
+        private async UniTaskVoid SpawnDamageBox(Vector2 spawnPoint)
+        {
+            var impactObject = await PoolManager.Instance.Rent(ownerModel.ImpactPrefabName);
+            var impact = impactObject.GetComponent<AnimatorDamageBox>();
+            impactObject.transform.position = spawnPoint;
+            impact.Scale(new Vector2(ownerModel.DamageAreaWidth / 2, ownerModel.DamageAreaHeight / 2));
+            impact.Init(creatorData, EffectSource.FromSkill, EffectProperty.Normal, 0, ownerModel.FirstInitDamageFactors, default, onTurnOff: () => {
+                if(ownerModel.DamageAreaInterval > 0 && ownerModel.DamageAreaLifeTime > 0)
+                    SpawnDamageArea(spawnPoint).Forget();
+            });
+        }
+
+        private async UniTaskVoid SpawnDamageArea(Vector2 spawnPoint)
+        {
+            var damageAreaData = new DamageAreaData(creatorData, ownerModel.DamageAreaLifeTime, ownerModel.DamageAreaInterval, EffectSource.FromSkill, EffectProperty.Normal, ownerModel.DamageAreaWidth, ownerModel.DamageAreaHeight, ownerModel.DamageAreaDamageFactors);
+            await EntitiesManager.Instance.CreateDamageAreaAsync(ownerModel.DamageAreaPrefabName, damageAreaData, creatorData, spawnPoint, default);
         }
     }
 }

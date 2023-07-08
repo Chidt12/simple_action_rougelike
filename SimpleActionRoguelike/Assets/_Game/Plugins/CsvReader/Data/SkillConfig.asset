@@ -97,3 +97,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.FireRoundProjectileSkillDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.FireRoundProjectileSkillDataConfig
+      csvFile: {fileID: 4900000, guid: 749bc42b7c849f641bf289dc0769b40b, type: 3}
+      csvPath: Assets/_Game/Csv/skills/fire_round_projectile_skill.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

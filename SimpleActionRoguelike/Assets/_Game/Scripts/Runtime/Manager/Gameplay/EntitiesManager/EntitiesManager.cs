@@ -278,6 +278,14 @@ namespace Runtime.Gameplay.EntitySystem
             return projectileGameObject;
         }
 
+        public async UniTask<DamageArea> CreateDamageAreaAsync(string damageId, DamageAreaData damageAreaData, IEntityData creatorData, Vector2 spawnPosition, CancellationToken cancellationToken = default)
+        {
+            var damageAreaGameObject = await PoolManager.Instance.Rent(damageId, token: cancellationToken);
+            var damageArea = damageAreaGameObject.GetComponent<DamageArea>(); 
+            await damageAreaGameObject.GetComponent<DamageArea>().BuildAsync(creatorData, spawnPosition, damageAreaData);
+            return damageArea;
+        }
+
         public virtual async UniTask<HandleCharacterDiedResultType> HandleCharacterDied(EntityNotifyDiedMessage entityDiedMessage)
         {
             if (entityDiedMessage.IsEnemyDied)

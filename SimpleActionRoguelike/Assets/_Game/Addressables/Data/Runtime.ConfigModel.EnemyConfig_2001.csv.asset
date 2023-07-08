@@ -30,7 +30,7 @@ MonoBehaviour:
         attackDamage: 3
         collideDamage: 1
       skillIdentity:
-        skillType: 1
+        skillType: 12
         skillDataId: 1
         skillAnimIndex: 0
       autoInputStrategy: 0

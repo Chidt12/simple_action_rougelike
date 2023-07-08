@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed711438ee74f348a91cf799f6e7aa4, type: 3}
+  m_Name: Runtime.ConfigModel.FireRoundProjectileSkillDataConfig
+  m_EditorClassIdentifier: 
+  items:
+  - dataId: 1
+    targetType: 3
+    castRange: 4
+    cooldown: 2
+    dependTarget: 1
+    canBeCanceled: 1
+    projectileId: fly_round_orb_red
+    impactPrefabName: explode_round_object
+    numberOfProjectiles: 3
+    numberOfBulletsInProjectile: 3
+    angleBetweenBullet: 50
+    delayBetweenProjectile: 0.3
+    maxProjectileFlyDistance: 6
+    focusTargetDuringExecute: 1
+    projectileFlyDuration: 1
+    projectileFlyHeight: 8
+    warningPrefabName: warning_damage_vfx
+    damageAreaHeight: 1.5
+    damageAreaWidth: 2
+    damageAreaDamageFactors: []
+    damageAreaLifeTime: 0
+    damageAreaInterval: 0
+    damageAreaPrefabName: 
+    firstInitDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 2

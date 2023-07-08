@@ -213,6 +213,10 @@ MonoBehaviour:
     m_Address: damage_area
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bc421ae75f434f24d88e4b368527ddf2
+    m_Address: fly_round_orb_red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

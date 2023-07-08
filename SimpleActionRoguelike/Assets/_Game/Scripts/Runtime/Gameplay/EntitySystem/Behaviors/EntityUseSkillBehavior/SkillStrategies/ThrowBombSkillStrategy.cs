@@ -56,6 +56,7 @@ namespace Runtime.Gameplay.EntitySystem
             var impactObject = await PoolManager.Instance.Rent(ownerModel.ImpactPrefabName);
             var impact = impactObject.GetComponent<AnimatorDamageBox>();
             impactObject.transform.position = spawnPosition;
+            impact.Scale(new Vector2(ownerModel.ImpactWidth / 2, ownerModel.ImpactHeight / 2));
             impact.Init(creatorData, EffectSource.FromSkill, EffectProperty.Normal, ownerModel.DamageBonus, ownerModel.DamageFactors, default, onTurnOn: () => {
                 if (warningObject)
                 {

@@ -9,7 +9,6 @@ namespace Runtime.Gameplay.EntitySystem
     public class UnityCollisionDamageArea : DamageArea
     {
         [SerializeField] private Collider2D _collider;
-        protected float timeToCauseFirstTimeDamage = 0.1f;
 
         private void OnEnable()
         {
@@ -30,12 +29,6 @@ namespace Runtime.Gameplay.EntitySystem
                 if (data.creatorData.EntityType.CanCauseDamage(entity.EntityData.EntityType) && !damagedTargets.Contains(entity.EntityData))
                 {
                     damagedTargets.Add(entity.EntityData);
-                    if (currentLifetime <= timeToCauseFirstTimeDamage)
-                    {
-                        SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
-                            new SentDamageMessage(data.damageSource, data.damageProperty,
-                                0, data.firstInitDamageFactors, data.creatorData, entity.EntityData)).Forget();
-                    }
                 }
             }
         }

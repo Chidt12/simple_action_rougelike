@@ -22,11 +22,9 @@ namespace Runtime.Gameplay.EntitySystem
         public float width;
         public float height;
         public DamageFactor[] damageAreaDamageFactors;
-        public DamageFactor[] firstInitDamageFactors;
 
         public DamageAreaData(IEntityData creatorData, float lifeTime, float damageInterval, EffectSource damageSource, EffectProperty damageProperty,
-                              float width, float height, DamageFactor[] damageAreaDamageFactors,
-                              DamageFactor[] firstInitDamageFactors)
+                              float width, float height, DamageFactor[] damageAreaDamageFactors)
         {
             this.creatorData = creatorData;
             this.damageSource = damageSource;
@@ -36,7 +34,6 @@ namespace Runtime.Gameplay.EntitySystem
             this.width = width;
             this.height = height;
             this.damageInterval = damageInterval;
-            this.firstInitDamageFactors = firstInitDamageFactors;
         }
     }
 

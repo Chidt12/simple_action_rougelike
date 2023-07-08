@@ -40,6 +40,7 @@ namespace Runtime.Gameplay.EntitySystem
             base.Init(projectileStrategyData, controllerProjectile, direction, originalPosition, targetPosition, targetData);
 
             this.originalPosition = originalPosition;
+            this.targetPosition = targetPosition;
             middlePosition = new Vector2((targetPosition.x + originalPosition.x) / 2, (targetPosition.y + originalPosition.y) / 2 + strategyData.flyHeight);
             currentFlyTime = 0;
             if (!string.IsNullOrEmpty(strategyData.warningPrefabName))
