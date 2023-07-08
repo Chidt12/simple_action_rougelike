@@ -24,6 +24,11 @@ namespace Runtime.Gameplay.EntitySystem
             }, OnEndAnim);
         }
 
+        public void Scale(Vector2 scale)
+        {
+            transform.localScale = scale;
+        }
+
         private void OnEndAnim()
         {
             if (selfDestroy)

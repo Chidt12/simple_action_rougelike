@@ -53,6 +53,11 @@ namespace Runtime.Gameplay
             this.statusIdentity = statusIdentity;
         }
 
+        public void ScaleSize(Vector2 scale)
+        {
+            transform.localScale = scale;
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (!isInited)

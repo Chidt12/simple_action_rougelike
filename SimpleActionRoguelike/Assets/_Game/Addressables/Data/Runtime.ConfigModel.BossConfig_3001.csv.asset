@@ -33,9 +33,9 @@ MonoBehaviour:
         deathDataId: 0
         deathType: 0
       skillIdentities:
-      - skillType: 7
+      - skillType: 10
         skillDataId: 1
-        skillAnimIndex: 1
+        skillAnimIndex: 3
       - skillType: 2
         skillDataId: 3
         skillAnimIndex: 1

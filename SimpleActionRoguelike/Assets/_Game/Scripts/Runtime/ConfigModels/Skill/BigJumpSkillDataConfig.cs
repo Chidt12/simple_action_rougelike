@@ -19,6 +19,7 @@ namespace Runtime.ConfigModel
         public float damageWidth;
         public float damageHeight;
 
+        public string jumpDamageBoxPrefabName;
         public float jumpDamageBonus;
         [CsvColumnFormat(ColumnFormat = "jump_{0}")]
         public DamageFactor[] damageFactors;

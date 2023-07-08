@@ -28,8 +28,9 @@ MonoBehaviour:
     jumpDistance: 20
     numberOfJump: 1
     delayBetweenJump: 1
-    damageWidth: 3
-    damageHeight: 1.5
+    damageWidth: 6
+    damageHeight: 3
+    jumpDamageBoxPrefabName: explode_round_object
     jumpDamageBonus: 0
     damageFactors:
     - damageFactorStatType: 14

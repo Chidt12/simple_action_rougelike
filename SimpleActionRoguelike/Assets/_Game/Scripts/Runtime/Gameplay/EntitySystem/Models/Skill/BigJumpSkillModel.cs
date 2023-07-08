@@ -14,6 +14,7 @@ namespace Runtime.Gameplay.EntitySystem
         public float DelayBetweenJump { get; private set; }
         public float JumpUpDuration { get; private set; }
         public float JumpMiddleDuration { get; private set; }
+        public string JumpDamageBoxPrefabName { get; private set; }
         public float JumpDownDuration { get; private set; }
         public float JumpDamageBonus { get; private set; }
         public float DamageWidth { get; private set; }
@@ -36,6 +37,7 @@ namespace Runtime.Gameplay.EntitySystem
             JumpDownDuration = dataConfig.jumpDownDuration;
             DamageWidth = dataConfig.damageWidth;
             DamageHeight = dataConfig.damageHeight;
+            JumpDamageBoxPrefabName = dataConfig.jumpDamageBoxPrefabName;
         }
     }
 }

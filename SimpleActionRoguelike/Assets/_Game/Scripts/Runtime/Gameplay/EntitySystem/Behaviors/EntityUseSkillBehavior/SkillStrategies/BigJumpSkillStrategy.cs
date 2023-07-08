@@ -129,7 +129,7 @@ namespace Runtime.Gameplay.EntitySystem
                 _warningVfx = await PoolManager.Instance.Rent(ownerModel.WarningVfx);
                 _warningVfx.transform.position = predictJumpPosition;
                 warningDamageVfx = _warningVfx.GetComponent<WarningDamageVFX>();
-                warningDamageVfx.Init(new Vector2(ownerModel.DamageWidth, ownerModel.DamageHeight));
+                warningDamageVfx.Init(new Vector2(ownerModel.DamageWidth / 2, ownerModel.DamageHeight / 2));
                 await UniTask.Delay(TimeSpan.FromSeconds(ownerModel.DisplayWarningTime), cancellationToken: token);
             }
 
@@ -150,6 +150,7 @@ namespace Runtime.Gameplay.EntitySystem
                     {
                         creatorData.IsInvincible = false;
                         // Spawn Damage Box.
+                        SpawnDamageBox(creatorData.Position, token).Forget();
                     },
                     endAction: _ =>
                     {
@@ -159,6 +160,15 @@ namespace Runtime.Gameplay.EntitySystem
                             PoolManager.Instance.Return(_warningVfx);
                     }
                 );
+        }
+
+        private async UniTaskVoid SpawnDamageBox(Vector2 spawnedPosition, CancellationToken token)
+        {
+            var spawnForwardObject = await PoolManager.Instance.Rent(ownerModel.JumpDamageBoxPrefabName, token: token);
+            spawnForwardObject.transform.position = spawnedPosition;
+            var damageBox = spawnForwardObject.GetComponent<AnimatorDamageBox>();
+            damageBox.Init(creatorData, EffectSource.FromSkill, EffectProperty.Normal, ownerModel.JumpDamageBonus, ownerModel.JumDamageFactors, default);
+            damageBox.Scale(new Vector2(ownerModel.DamageWidth / 2, ownerModel.DamageHeight / 2));
         }
 
         protected override void CancelSkill()
