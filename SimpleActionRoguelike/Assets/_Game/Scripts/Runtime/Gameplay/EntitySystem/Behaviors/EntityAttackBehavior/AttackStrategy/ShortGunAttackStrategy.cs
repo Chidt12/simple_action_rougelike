@@ -77,7 +77,7 @@ namespace Runtime.Gameplay.EntitySystem
 
                 var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerWeaponModel.ProjectileId, creatorData, spawnPoint, cancellationToken);
                 var projectile = projectileGameObject.GetOrAddComponent<Projectile>();
-                projectileStrategy.Init(projectileStrategyData, projectile, direction, spawnPoint, creatorData);
+                projectileStrategy.Init(projectileStrategyData, projectile, direction, spawnPoint, default, creatorData);
                 projectile.InitStrategy(projectileStrategy);
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.15f), cancellationToken: cancellationToken);

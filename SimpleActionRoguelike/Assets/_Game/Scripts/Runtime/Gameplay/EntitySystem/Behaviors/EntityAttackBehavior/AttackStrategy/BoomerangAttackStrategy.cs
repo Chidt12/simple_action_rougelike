@@ -62,7 +62,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             var faceDirection = GetFaceDirection();
 
-            projectileStrategy.Init(projectileStrategyData, projectile, faceDirection, spawnPoint, creatorData);
+            projectileStrategy.Init(projectileStrategyData, projectile, faceDirection, spawnPoint, default, creatorData);
             projectile.InitStrategy(projectileStrategy);
         }
 

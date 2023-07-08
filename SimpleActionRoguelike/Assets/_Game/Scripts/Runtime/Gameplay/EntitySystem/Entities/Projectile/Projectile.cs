@@ -29,6 +29,11 @@ namespace Runtime.Gameplay.EntitySystem
             return UniTask.CompletedTask;
         }
 
+        public void UpdatePosition(Vector2 position)
+        {
+            transform.position = position;
+        }
+
         public void UpdatePositionBySpeed(float speed, Vector3 direction)
             => transform.position = transform.position + speed * (1 + adjustSpeedFactor) * direction.normalized * Time.deltaTime;
 

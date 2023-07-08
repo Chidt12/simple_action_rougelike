@@ -71,8 +71,9 @@ namespace Runtime.Gameplay
                     damageBonus, damageFactors, creatorData, entityHolder.EntityData)).Forget();
 
                 var targetStatusData = entityHolder.EntityData as IEntityStatusData;
-                SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
-                    new SentStatusEffectMessage(creatorData, targetStatusData, statusIdentity)).Forget();
+                if(targetStatusData != null && statusIdentity.statusType != Definition.StatusType.None)
+                    SimpleMessenger.PublishAsync(MessageScope.EntityMessage,
+                        new SentStatusEffectMessage(creatorData, targetStatusData, statusIdentity)).Forget();
 
                 onTriggeredEntered?.Invoke(entityHolder.EntityData);
             }

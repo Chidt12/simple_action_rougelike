@@ -23,8 +23,11 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void TriggerOperatedPointActionEvent(int index)
         {
-            OperatedPointTriggeredCallbackActions[index]?.Invoke();
-            OperatedPointTriggeredCallbackActions[index] = null;
+            if(OperatedPointTriggeredCallbackActions != null && OperatedPointTriggeredCallbackActions.Count > index)
+            {
+                OperatedPointTriggeredCallbackActions[index]?.Invoke();
+                OperatedPointTriggeredCallbackActions[index] = null;
+            }
         }
 
         public void TriggerEndActionEvent()

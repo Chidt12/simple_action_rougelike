@@ -40,7 +40,7 @@ namespace Runtime.Gameplay.EntitySystem
             var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(dataConfig.projectileId, entityData, projectilePosition, cancellationToken);
             var projectile = projectileGameObject.GetComponent<Projectile>();
             var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyForward);
-            projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, projectilePosition);
+            projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, default, projectilePosition);
             projectile.InitStrategy(projectileStrategy);
         }
 

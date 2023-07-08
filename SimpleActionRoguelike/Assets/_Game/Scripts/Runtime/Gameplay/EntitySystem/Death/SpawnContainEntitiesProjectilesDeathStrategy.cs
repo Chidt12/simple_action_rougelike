@@ -50,7 +50,7 @@ namespace Runtime.Gameplay.EntitySystem
             var projectile = projectileGameObject.GetComponent<Projectile>();
 
             var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyForwardSpawnEntities);
-            projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, projectilePosition);
+            projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, default, projectilePosition);
             projectile.InitStrategy(projectileStrategy);
         }
 

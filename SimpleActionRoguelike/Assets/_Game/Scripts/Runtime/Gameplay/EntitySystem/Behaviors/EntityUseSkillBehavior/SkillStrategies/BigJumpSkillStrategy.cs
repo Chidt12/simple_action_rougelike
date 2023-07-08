@@ -127,9 +127,8 @@ namespace Runtime.Gameplay.EntitySystem
             if (!string.IsNullOrEmpty(ownerModel.WarningVfx))
             {
                 _warningVfx = await PoolManager.Instance.Rent(ownerModel.WarningVfx);
-                _warningVfx.transform.position = predictJumpPosition;
                 warningDamageVfx = _warningVfx.GetComponent<WarningDamageVFX>();
-                warningDamageVfx.Init(new Vector2(ownerModel.DamageWidth / 2, ownerModel.DamageHeight / 2));
+                warningDamageVfx.Init(predictJumpPosition, new Vector2(ownerModel.DamageWidth / 2, ownerModel.DamageHeight / 2));
                 await UniTask.Delay(TimeSpan.FromSeconds(ownerModel.DisplayWarningTime), cancellationToken: token);
             }
 

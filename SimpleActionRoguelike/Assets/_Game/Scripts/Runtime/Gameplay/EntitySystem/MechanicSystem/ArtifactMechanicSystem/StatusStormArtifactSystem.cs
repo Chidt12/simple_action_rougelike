@@ -31,8 +31,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private async UniTaskVoid SpawnLightningAsync(CancellationToken cancellationToken)
         {
-            var allPoints = MapManager.Instance.ActiveGraph.nodes.Where(x => x.Walkable 
-                                && Vector2.Distance(ownerEntityData.Position, (Vector3)x.position) <= ownerData.range).ToList();
+            var allPoints = MapManager.Instance.GetAllWalkableNodesInRange(ownerEntityData.Position, ownerData.range);
 
             for (int i = 0; i < ownerData.numberOfLightning; i++)
             {

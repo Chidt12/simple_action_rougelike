@@ -155,6 +155,13 @@ namespace Runtime.Manager.Gameplay
             else return false;
         }
 
+        public List<GridNode> GetAllWalkableNodesInRange(Vector2 centerPosition, float range)
+        {
+            var positions = ActiveGraph.nodes.Where(x => x.Walkable
+                                && Vector2.Distance(centerPosition, (Vector3)x.position) <= range).ToList();
+            return positions;
+        }
+
         public Vector2 GetRandomWalkablePoint()
         {
             var walkablePoints = ActiveGraph.nodes.Where(x => x.Walkable).ToList();

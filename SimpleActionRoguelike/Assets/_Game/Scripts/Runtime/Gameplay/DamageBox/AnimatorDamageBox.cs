@@ -11,11 +11,18 @@ namespace Runtime.Gameplay.EntitySystem
         [SerializeField] protected DamageBox damageBox;
         [SerializeField] protected bool selfDestroy;
 
+        protected Action onEndAnim;
+        protected Action onTurnOn;
+        protected Action onTurnOff;
+
         public void Init(
             IEntityData creatorData, EffectSource effectSource, EffectProperty effectProperty, float damageBonus, DamageFactor[] damageFactors, StatusIdentity statusIdentity,
-            Action<IEntityData> onTriggeredEntered = null, Action<IEntityData> onTriggeredExit = null)
+            Action<IEntityData> onTriggeredEntered = null, Action<IEntityData> onTriggeredExit = null, Action onEndAnim = null, Action onTurnOn = null, Action onTurnOff = null)
         {
             animatorHolder.Play("attack");
+            this.onEndAnim = onEndAnim;
+            this.onTurnOn = onTurnOn;
+            this.onTurnOff = onTurnOff;
             damageBox.gameObject.SetActive(false);
             animatorHolder.SetEvents(new() 
             {
@@ -31,6 +38,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnEndAnim()
         {
+            onEndAnim?.Invoke();
             if (selfDestroy)
             {
                 PoolManager.Instance.Return(gameObject);
@@ -40,12 +48,14 @@ namespace Runtime.Gameplay.EntitySystem
         private void OnTurnOnDamageBox(IEntityData creatorData, EffectSource effectSource, EffectProperty effectProperty, float damageBonus, DamageFactor[] damageFactors, StatusIdentity statusIdentity,
             Action<IEntityData> onTriggeredEntered = null, Action<IEntityData> onTriggeredExit = null)
         {
+            onTurnOn?.Invoke();
             damageBox.gameObject.SetActive(true);
             damageBox.StartDamage(creatorData, effectSource, effectProperty, damageBonus, damageFactors, statusIdentity, onTriggeredEntered, onTriggeredExit);
         }
 
         private void OnTurnOffDamageBox()
         {
+            onTurnOff?.Invoke();
             damageBox.gameObject.SetActive(false);
         }
     }

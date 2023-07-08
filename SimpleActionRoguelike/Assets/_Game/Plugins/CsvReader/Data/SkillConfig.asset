@@ -85,3 +85,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.ThrowBombSkillDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.ThrowBombSkillDataConfig
+      csvFile: {fileID: 4900000, guid: 16d0b540a8e38a844851a9b2f6d11f2b, type: 3}
+      csvPath: Assets/_Game/Csv/skills/throw_bomb_skill.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 
