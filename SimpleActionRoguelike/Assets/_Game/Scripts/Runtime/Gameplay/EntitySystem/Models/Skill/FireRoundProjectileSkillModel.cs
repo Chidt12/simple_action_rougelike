@@ -14,6 +14,7 @@ namespace Runtime.Gameplay.EntitySystem
         public float DelayBetweenProjectile { get; private set; }
         
         public float MaxProjectileFlyDistance { get; private set; }
+        public bool FocusTargetDuringExecute { get; private set; }
         public float ProjectileFlyDuration { get; private set; }
         public float ProjectileFlyHeight { get; private set; }
         public string WarningPrefabName { get; private set; }
@@ -36,6 +37,7 @@ namespace Runtime.Gameplay.EntitySystem
             AngleBetweenBullet = skillConfig.angleBetweenBullet;
             DelayBetweenProjectile = skillConfig.delayBetweenProjectile;
             MaxProjectileFlyDistance = skillConfig.maxProjectileFlyDistance;
+            FocusTargetDuringExecute = skillConfig.focusTargetDuringExecute;
 
             ProjectileFlyDuration = skillConfig.projectileFlyDuration;
             ProjectileFlyHeight = skillConfig.projectileFlyHeight;

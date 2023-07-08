@@ -50,7 +50,6 @@ namespace Runtime.Gameplay.EntitySystem
         private void FireProjectile(Transform fireTransform, CancellationToken cancellationToken)
         {
             var randomFireDeflectionAngle = UnityRandom.Range(-ownerModel.FireDeflectionAngle, ownerModel.FireDeflectionAngle);
-
             var originDirection = ownerModel.FocusTargetDuringExecute ? creatorData.Target.Position - creatorData.Position : creatorData.FaceDirection;
             var fireDirection = (Quaternion.AngleAxis(randomFireDeflectionAngle, Vector3.forward) * originDirection).normalized;
             creatorData.SetFaceDirection(fireDirection);

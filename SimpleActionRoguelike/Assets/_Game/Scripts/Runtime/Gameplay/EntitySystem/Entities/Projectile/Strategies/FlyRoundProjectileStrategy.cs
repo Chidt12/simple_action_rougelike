@@ -39,7 +39,6 @@ namespace Runtime.Gameplay.EntitySystem
         {
             base.Init(projectileStrategyData, controllerProjectile, direction, originalPosition, targetPosition, targetData);
 
-            targetPosition = targetData.Position;
             this.originalPosition = originalPosition;
             middlePosition = new Vector2((targetPosition.x + originalPosition.x) / 2, (targetPosition.y + originalPosition.y) / 2 + strategyData.flyHeight);
             currentFlyTime = 0;
@@ -66,6 +65,7 @@ namespace Runtime.Gameplay.EntitySystem
                     PoolManager.Instance.Return(warningGameObject);
                 }
 
+                strategyData.callbackAction?.Invoke(new ProjectileCallbackData(controllerProjectile.CenterPosition, default, default));
                 Complete(false, true);
             }
             else

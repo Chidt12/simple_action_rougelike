@@ -67,7 +67,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 97fca7a611634054eadd63932f759012, type: 3}
   - {fileID: 21300000, guid: 956f04b6ab258034aa4d87c933d6528a, type: 3}
   - {fileID: 21300000, guid: 9ab00a9718fd7714cbf60ffe3980d1b7, type: 3}
-  - {fileID: 21300000, guid: 43921ba71e09f00479c84bbc9e8e10b8, type: 3}
   - {fileID: 21300000, guid: a524f3289d3839a46b4e42c5825bec68, type: 3}
   - {fileID: 21300000, guid: 71bf61886540d544c840860a78c5f76f, type: 3}
   - {fileID: 21300000, guid: 8b791498951db844eb33477329fa618a, type: 3}
@@ -84,6 +83,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d5b250bcf9b5dcf47a872e90fe8e6dd6, type: 3}
   - {fileID: 21300000, guid: 2048500db9dfc8a40a26bafc9f259598, type: 3}
   - {fileID: 21300000, guid: f73e23ed33932f442a8748f326ad7933, type: 3}
+  - {fileID: 21300000, guid: 06f95f5e1247e5844a3742173421bf1b, type: 3}
   - {fileID: 21300000, guid: c5be93bea1783f946b703f5b4871ca9b, type: 3}
   - {fileID: 21300000, guid: a799cc6f37c21e548bcdd0fef504b4a9, type: 3}
   - {fileID: 21300000, guid: 3227e7cfd3025bd4a823ea41413be69b, type: 3}
@@ -106,11 +106,10 @@ SpriteAtlas:
   - 3002_introduce_icon
   - dash_icon_1
   - weapon_icon6
-  - weapon_icon1
   - stats_icon_2
   - stats_icon_5
   - shop_item_icon_8_0
-  - weapon_icon0
+  - weapon_icon1
   - shop_item_icon_7_0
   - artifact_1_0
   - dash_icon2
@@ -123,6 +122,7 @@ SpriteAtlas:
   - shop_item_icon_10_0
   - artifact_6_0
   - stats_icon_101
+  - weapon_icon0
   - artifact_9_0
   - shop_item_icon_6_0
   - weapon_icon3

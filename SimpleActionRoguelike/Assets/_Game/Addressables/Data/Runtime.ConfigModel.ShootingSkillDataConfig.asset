@@ -22,6 +22,10 @@ MonoBehaviour:
     projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
+    numberOfBulletsInProjectile: 2
+    angleBetweenBullets: 15
+    focusTargetDuringExecute: 1
+    fireDeflectionAngle: 0
     projectileMoveSpeed: 10
     projectileMoveDistance: 10
     projectileStrategyType: 0
@@ -36,8 +40,12 @@ MonoBehaviour:
     dependTarget: 1
     canBeCanceled: 1
     projectileId: bullet_red
-    numberOfProjectiles: 2
+    numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
+    numberOfBulletsInProjectile: 1
+    angleBetweenBullets: 15
+    focusTargetDuringExecute: 1
+    fireDeflectionAngle: 0
     projectileMoveSpeed: 10
     projectileMoveDistance: 10
     projectileStrategyType: 0
@@ -54,6 +62,10 @@ MonoBehaviour:
     projectileId: bullet_red
     numberOfProjectiles: 3
     delayBetweenProjectiles: 0.2
+    numberOfBulletsInProjectile: 1
+    angleBetweenBullets: 15
+    focusTargetDuringExecute: 1
+    fireDeflectionAngle: 0
     projectileMoveSpeed: 10
     projectileMoveDistance: 8
     projectileStrategyType: 0

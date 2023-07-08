@@ -14,6 +14,7 @@ namespace Runtime.ConfigModel
         public float angleBetweenBullet;
         public float delayBetweenProjectile;
         public float maxProjectileFlyDistance;
+        public bool focusTargetDuringExecute;
         public float projectileFlyDuration;
         public float projectileFlyHeight;
         public string warningPrefabName;
