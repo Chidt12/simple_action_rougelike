@@ -11,6 +11,12 @@ namespace Runtime.ConfigModel
         public string projectileId;
         public int numberOfProjectiles;
         public float delayBetweenProjectiles;
+        public int numberOfBulletsInProjectile;
+        public float angleBetweenBullets;
+
+        public bool focusTargetDuringExecute;
+        public float fireDeflectionAngle;
+
         public float projectileMoveSpeed;
         public float projectileMoveDistance;
         public ProjectileStrategyType projectileStrategyType;

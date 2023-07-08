@@ -9,6 +9,11 @@ namespace Runtime.ConfigModel
     {
         public string projectileId;
         public string impactPrefabName;
+        public int numberOfProjectiles;
+        public int numberOfBulletsInProjectile;
+        public float angleBetweenBullet;
+        public float delayBetweenProjectile;
+        public float maxProjectileFlyDistance;
         public float projectileFlyDuration;
         public float projectileFlyHeight;
         public string warningPrefabName;

@@ -5,9 +5,8 @@ using System.Linq;
 using Runtime.Helper;
 using Runtime.Core.Message;
 using Runtime.Message;
-using Runtime.Definition;
-using Runtime.ConfigModel;
 using System;
+using UnityRandom = UnityEngine.Random;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -29,8 +28,6 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected async override UniTask PresentSkillAsync(CancellationToken cancellationToken, int index)
         {
-            var direction = creatorData.FaceDirection;
-
             for (int i = 0; i < ownerModel.NumberOfProjectiles; i++)
             {
                 var hasFinishedAnimation = false;
@@ -38,8 +35,8 @@ namespace Runtime.Gameplay.EntitySystem
                     index.GetUseSkillByIndex(),
                     stateAction: callbackData =>
                     {
-                        var suitablePosition = callbackData.spawnVFXPoints == null ? (Vector3)creatorData.Position : callbackData.spawnVFXPoints.Select(x => x.position).ToList().GetSuitableValue(creatorData.Position);
-                        FireProjectile(suitablePosition, direction, cancellationToken).Forget();
+                        var fireTransform = callbackData.spawnVFXPoints == null ? creatorData.EntityTransform : callbackData.spawnVFXPoints.ToList().GetSuitableValue(creatorData.EntityTransform);
+                        FireProjectile(fireTransform, cancellationToken);
                     },
                     endAction: callbackData => hasFinishedAnimation = true         
                 );
@@ -50,17 +47,36 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        private async UniTaskVoid FireProjectile(Vector2 spawnPosition, Vector2 direction, CancellationToken cancellationToken)
+        private void FireProjectile(Transform fireTransform, CancellationToken cancellationToken)
+        {
+            var randomFireDeflectionAngle = UnityRandom.Range(-ownerModel.FireDeflectionAngle, ownerModel.FireDeflectionAngle);
+
+            var originDirection = ownerModel.FocusTargetDuringExecute ? creatorData.Target.Position - creatorData.Position : creatorData.FaceDirection;
+            var fireDirection = (Quaternion.AngleAxis(randomFireDeflectionAngle, Vector3.forward) * originDirection).normalized;
+            creatorData.SetFaceDirection(fireDirection);
+
+            var bigAngle = (ownerModel.NumberOfBulletsInProjectile - 1) * ownerModel.AngleBetweenBullets;
+            var firstDegree = -bigAngle / 2;
+
+            for (int i = 0; i < ownerModel.NumberOfBulletsInProjectile; i++)
+            {
+                var bulletFireDirection = (Quaternion.AngleAxis(firstDegree + ownerModel.AngleBetweenBullets * i, Vector3.forward) * fireDirection).normalized;
+                SpawnBulletAsync(fireTransform, bulletFireDirection, cancellationToken).Forget();
+            }
+
+        }
+
+        private async UniTaskVoid SpawnBulletAsync(Transform fireTransform, Vector2 fireDirection, CancellationToken cancellationToken)
         {
             FlyForwardProjectileStrategyData flyForwardProjectileStrategyData = null;
             flyForwardProjectileStrategyData = new FlyForwardProjectileStrategyData(ownerModel.ProjectileMoveDistance,
                                                                                     ownerModel.ProjectileMoveSpeed,
                                                                                     ProjectileCallback);
 
-            var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerModel.ProjectileId, creatorData, spawnPosition, cancellationToken);
+            var projectileGameObject = await EntitiesManager.Instance.CreateProjectileAsync(ownerModel.ProjectileId, creatorData, fireTransform.position, cancellationToken);
             var projectile = projectileGameObject.GetOrAddComponent<Projectile>();
             var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ownerModel.ProjectileStrategyType);
-            projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, direction, spawnPosition, default, creatorData);
+            projectileStrategy.Init(flyForwardProjectileStrategyData, projectile, fireDirection, fireTransform.position, default, creatorData);
             projectile.InitStrategy(projectileStrategy);
         }
 

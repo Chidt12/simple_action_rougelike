@@ -8,6 +8,12 @@ namespace Runtime.Gameplay.EntitySystem
         public override SkillType SkillType => SkillType.FireRoundProjectile;
         public string ProjectileId { get; private set; }
         public string ImpactPrefabName { get; private set; }
+        public int NumberOfProjectiles { get; private set; }
+        public int NumberOfBulletsInProjectile { get; private set; }
+        public float AngleBetweenBullet { get; private set; }
+        public float DelayBetweenProjectile { get; private set; }
+        
+        public float MaxProjectileFlyDistance { get; private set; }
         public float ProjectileFlyDuration { get; private set; }
         public float ProjectileFlyHeight { get; private set; }
         public string WarningPrefabName { get; private set; }
@@ -24,6 +30,13 @@ namespace Runtime.Gameplay.EntitySystem
             var skillConfig = configItem as FireRoundProjectileSkillDataConfigItem;
             ProjectileId = skillConfig.projectileId;
             ImpactPrefabName = skillConfig.impactPrefabName;
+
+            NumberOfBulletsInProjectile = skillConfig.numberOfBulletsInProjectile;
+            NumberOfProjectiles = skillConfig.numberOfProjectiles;
+            AngleBetweenBullet = skillConfig.angleBetweenBullet;
+            DelayBetweenProjectile = skillConfig.delayBetweenProjectile;
+            MaxProjectileFlyDistance = skillConfig.maxProjectileFlyDistance;
+
             ProjectileFlyDuration = skillConfig.projectileFlyDuration;
             ProjectileFlyHeight = skillConfig.projectileFlyHeight;
             WarningPrefabName = skillConfig.warningPrefabName;
