@@ -21,10 +21,12 @@ namespace Runtime.Gameplay.EntitySystem
             base.Dispose();
         }
 
-        public override void Trigger()
+        public override bool Trigger()
         {
             _cancellationTokenSource = new();
             SpawnForwardObjectsAsync(_cancellationTokenSource.Token).Forget();
+
+            return true;
         }
 
         private async UniTaskVoid SpawnForwardObjectsAsync(CancellationToken cancellationToken)

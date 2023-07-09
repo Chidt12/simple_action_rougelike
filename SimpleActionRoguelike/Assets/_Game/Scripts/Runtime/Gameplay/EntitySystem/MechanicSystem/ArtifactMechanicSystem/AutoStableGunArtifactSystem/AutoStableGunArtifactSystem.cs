@@ -51,10 +51,12 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public override void Trigger()
+        public override bool Trigger()
         {
             base.Trigger();
             SpawnGunAsync().Forget();
+
+            return true;
         }
 
         private async UniTaskVoid SpawnGunAsync()

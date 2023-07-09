@@ -39,9 +39,11 @@ namespace Runtime.Gameplay.EntitySystem
             base.Dispose();
         }
 
-        public override void Trigger()
+        public override bool Trigger()
         {
             SpawningFlagAsync().Forget();
+
+            return true;
         }
 
         private async UniTaskVoid SpawningFlagAsync()

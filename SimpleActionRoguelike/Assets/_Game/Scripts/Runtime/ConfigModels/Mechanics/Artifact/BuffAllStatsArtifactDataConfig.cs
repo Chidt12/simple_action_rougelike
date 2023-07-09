@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class BuffAllStatsArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class BuffAllStatsArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
-        
+        public override ArtifactType ArtifactType => ArtifactType.BuffAllStats;
+
+        public int formId;
+        public EquipmentStat[] buffStats;
+        public float buffDuration;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class BuffAllStatsArtifactDataConfig : ArtifactDataConfig<BuffAllStatsArtifactDataConfigItem>
     {
-        
+        protected async override UniTask<string> GetDescription(IEntityData entityData, BuffAllStatsArtifactDataConfigItem itemData, BuffAllStatsArtifactDataConfigItem previousItemData)
+        {
+            return string.Empty;
+        }
     }
 }

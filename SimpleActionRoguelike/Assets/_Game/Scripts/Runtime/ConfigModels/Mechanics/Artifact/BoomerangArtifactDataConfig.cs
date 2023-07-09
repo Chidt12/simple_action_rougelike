@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class BoomerangArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class BoomerangArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
-        
+        public override ArtifactType ArtifactType => ArtifactType.Boomerang;
+
+        public int numberOfHits;
+        public float damageBonus;
+        public DamageFactor[] damageFactors;
+        public StatusIdentity triggeredStatus;
+        public float flySpeed;
+        public float flyDistance;
+        public string projectileId;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class BoomerangArtifactDataConfig : ArtifactDataConfig<BoomerangArtifactDataConfigItem>
     {
-        
+        protected async override UniTask<string> GetDescription(IEntityData entityData, BoomerangArtifactDataConfigItem itemData, BoomerangArtifactDataConfigItem previousItemData)
+        {
+            return string.Empty;
+        }
     }
 }

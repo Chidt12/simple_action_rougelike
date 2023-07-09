@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Runtime.ConfigModel;
+using Runtime.Definition;
 
-public class BuffAllStatsArtifactSystem : MonoBehaviour
+namespace Runtime.Gameplay.EntitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public class BuffAllStatsArtifactSystem : RuneArtifactSystem<BuffAllStatsArtifactDataConfigItem>
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override ArtifactType ArtifactType => ArtifactType.BuffAllStats;
     }
 }

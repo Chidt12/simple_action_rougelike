@@ -73,3 +73,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.BoomerangArtifactDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.BoomerangArtifactDataConfig
+      csvFile: {fileID: 4900000, guid: 6d909dc00bdcd574e9b123c8abbbce7c, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/artifact/boomerang_artifact.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

@@ -86,7 +86,7 @@ MonoBehaviour:
       buffStatusIdentity:
         statusDataId: 0
         statusType: 0
-      buffFlySpeed: 5
+      buffFlySpeed: 6
       goThrough: 0
     projectileId: bullet_blue_boomerang
     projectileSpeed: 20

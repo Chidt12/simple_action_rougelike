@@ -12,11 +12,13 @@ namespace Runtime.Gameplay.EntitySystem
         public override ArtifactType ArtifactType => ArtifactType.StatusAroundArea;
 
 
-        public override void Trigger()
+        public override bool Trigger()
         {
             base.Trigger();
 
             SpawnDamageBoxAsync(cancellationTokenSource.Token).Forget();
+
+            return true;
         }
 
         private async UniTaskVoid SpawnDamageBoxAsync(CancellationToken cancellationToken)

@@ -57,9 +57,16 @@ namespace Runtime.Gameplay.EntitySystem
                     var artifact = _artifacts.FirstOrDefault(x => x.ArtifactType == collectedArtifact.artifactType && x.DataId == collectedArtifact.dataId);
                     if (artifact.CanTrigger())
                     {
-                        artifact.Trigger();
-                        // Update visual after used.
-                        SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(collectedArtifact.artifactType, collectedArtifact.dataId, UpdatedCurrentCollectedArtifactType.Used));
+                        var removedCollectedArtifact = artifact.Trigger();
+                        if (removedCollectedArtifact)
+                        {
+                            // Update visual after used.
+                            SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(collectedArtifact.artifactType, collectedArtifact.dataId, UpdatedCurrentCollectedArtifactType.Used));
+                        }
+                        else
+                        {
+                            _collectedArtifacts.Push(collectedArtifact);
+                        }
                     }
                     else
                     {

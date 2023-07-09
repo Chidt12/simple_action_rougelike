@@ -23,10 +23,12 @@ namespace Runtime.Gameplay.EntitySystem
             _cancellationTokenSource.Cancel();
         }
 
-        public override void Trigger()
+        public override bool Trigger()
         {
             _cancellationTokenSource = new();
             SpawnLightningAsync(_cancellationTokenSource.Token).Forget();
+
+            return true;
         }
 
         private async UniTaskVoid SpawnLightningAsync(CancellationToken cancellationToken)

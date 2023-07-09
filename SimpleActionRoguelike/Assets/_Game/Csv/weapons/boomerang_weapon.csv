@@ -4,6 +4,6 @@ weapon_2,AttackDamage,20,0,bullet_blue_boomerang,20,1,1,,,,,
 ,CritChance,0.1,0,,,3,3,,,,,TRUE
 ,CritDamage,1,0,,,4,4,1,,,,
 ,AttackRange,10,0,,,5,5,,1,Stun,,
-,MoveSpeed,6,0,,,6,6,,,,5,
+,MoveSpeed,6,0,,,6,6,,,,6,
 ,AttackSpeed,1,,,,,,,,,,
 ,DashNumber,4,,,,,,,,,,

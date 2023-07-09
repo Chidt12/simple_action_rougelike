@@ -16,6 +16,9 @@ namespace Runtime.ConfigModel
         public float orbDamageBonus;
         [CsvColumnFormat(ColumnFormat = "orb_{0}")]
         public DamageFactor[] orbDamageFactors;
+        public float projectileDamageBonus;
+        public DamageFactor[] projectileDamageFactors;
+        public float flySpeed;
 
         public override ArtifactType ArtifactType => ArtifactType.RotateOrbs;
     }

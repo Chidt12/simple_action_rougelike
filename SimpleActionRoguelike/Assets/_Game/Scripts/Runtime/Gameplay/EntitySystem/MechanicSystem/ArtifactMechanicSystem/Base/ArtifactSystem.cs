@@ -9,7 +9,7 @@ namespace Runtime.Gameplay.EntitySystem
         public ArtifactType ArtifactType { get; }
         public void SetData(ArtifactDataConfigItem ownerData);
         public bool CanTrigger();
-        public void Trigger();
+        public bool Trigger();
     }
 
     public abstract class ArtifactSystem<T> : IArtifactSystem where T : ArtifactDataConfigItem
@@ -24,8 +24,7 @@ namespace Runtime.Gameplay.EntitySystem
         public int Level => ownerData.level;
         public int DataId => ownerData.dataId;
 
-        public virtual void Trigger()
-        {}
+        public virtual bool Trigger() => false;
 
         public virtual bool CanTrigger() => true;
 
