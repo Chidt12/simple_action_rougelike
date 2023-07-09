@@ -18,18 +18,20 @@ namespace Runtime.UI
 
         private ArtifactType _artifactType;
         private int _level;
+        private int _dataId;
         private bool _hasData;
         private Action<string> _loadInfoAction;
 
-        public async UniTask LoadUI(ArtifactType artifactType, int level, Action<string> loadInfoAction, CancellationToken token)
+        public async UniTask LoadUI(ArtifactType artifactType, int level, int dataId, Action<string> loadInfoAction, CancellationToken token)
         {
+            _dataId = dataId;
             _hasData = true;
             _artifactType = artifactType;
             _level = level;
 
             _loadInfoAction = loadInfoAction;
             _icon.gameObject.SetActive(true);
-            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_0"), token);
+            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_{dataId}"), token);
         }
 
         public void ClearUI(Action<string> loadInfoAction)
@@ -55,7 +57,7 @@ namespace Runtime.UI
         {
             var buffInGameDataConfig = await DataManager.Config.LoadArtifactDataConfig(_artifactType);
             var heroData = EntitiesManager.Instance.HeroData;
-            var description = await buffInGameDataConfig.GetDescription(heroData, _level);
+            var description = await buffInGameDataConfig.GetDescription(heroData, _level, _dataId);
             _loadInfoAction?.Invoke(description);
         }
     }

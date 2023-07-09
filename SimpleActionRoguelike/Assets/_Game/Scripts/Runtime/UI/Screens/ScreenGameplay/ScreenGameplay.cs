@@ -168,7 +168,7 @@ namespace Runtime.UI
                 {
                     if (!item.HasData)
                     {
-                        item.UpdateData(message.ArtifactType, _cancellationTokenSource.Token);
+                        item.UpdateData(message.ArtifactType, message.DataId, _cancellationTokenSource.Token);
                         item.ToggleSelect(true);
                         break;
                     }

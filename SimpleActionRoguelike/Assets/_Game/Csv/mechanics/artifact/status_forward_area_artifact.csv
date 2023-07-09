@@ -1,2 +1,2 @@
-﻿level,point,rune_life_time,rune_interval,status_data_id,status_type,damage_bonus,damage_factor_stat_type,damage_factor_value,distance_between_object,delay_between_spawn,number_of_objects,forward_prefab_name
-0,1,5,5,0,Stun,0,AttackDamage,0.5,0.8,0.01,12,frozen_forward_object
+﻿data_id,level,point,rune_life_time,rune_interval,status_data_id,status_type,damage_bonus,damage_factor_stat_type,damage_factor_value,distance_between_object,delay_between_spawn,number_of_objects,forward_prefab_name
+0,0,1,5,5,0,Stun,0,AttackDamage,0.5,0.8,0.01,12,frozen_forward_object

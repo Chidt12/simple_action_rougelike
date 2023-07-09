@@ -86,7 +86,7 @@ namespace Runtime.UI
             var currentUpgradeArtifact = GameplayManager.Instance.CurrentBuffInGameItems.FirstOrDefault(x => x.artifactType == ArtifactType.UpgradeWeapon);
             if (currentUpgradeArtifact.artifactType == ArtifactType.UpgradeWeapon)
             {
-                var artifactUpgradeWeapon = await DataManager.Config.LoadArtifactDataConfigItem(ArtifactType.UpgradeWeapon, currentUpgradeArtifact.level) as UpgradeWeaponArtifactDataConfigItem;
+                var artifactUpgradeWeapon = await DataManager.Config.LoadArtifactDataConfigItem(ArtifactType.UpgradeWeapon, currentUpgradeArtifact.level, currentUpgradeArtifact.dataId) as UpgradeWeaponArtifactDataConfigItem;
                 await _weaponItem.LoadUI(weaponModel.WeaponType, artifactUpgradeWeapon.rarityType, OnChangeInfo, _cancellationTokenSource.Token);
             }
             else
@@ -126,7 +126,7 @@ namespace Runtime.UI
                 if (i < allItems.Count)
                 {
                     var buffItem = allItems[i];
-                    artifact.LoadUI(buffItem.artifactType, buffItem.level, OnChangeInfo, _cancellationTokenSource.Token).Forget();
+                    artifact.LoadUI(buffItem.artifactType, buffItem.level, buffItem.dataId, OnChangeInfo, _cancellationTokenSource.Token).Forget();
                 }
                 else
                 {

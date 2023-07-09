@@ -573,7 +573,7 @@ namespace Runtime.Manager.Gameplay
         private async UniTaskVoid OnSelectBuffItemAsync(ArtifactIdentity dataIdentity)
         {
             var heroData = EntitiesManager.Instance.HeroData;
-            await mechanicSystemManager.AddArtifactystem(heroData, dataIdentity.artifactType);
+            await mechanicSystemManager.AddArtifactystem(heroData, dataIdentity.artifactType, dataIdentity.dataId);
         }
 
         public void GiveRewards(int numberCoins)

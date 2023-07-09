@@ -23,7 +23,7 @@ namespace Runtime.UI
         public async UniTask Init(IEntityData entityData, ArtifactIdentity identity, Action<ArtifactIdentity> selectAction)
         {
             var buffInGameDataConfig = await DataManager.Config.LoadArtifactDataConfig(identity.artifactType);
-            var description = await buffInGameDataConfig.GetDescription(entityData, identity.level);
+            var description = await buffInGameDataConfig.GetDescription(entityData, identity.level, identity.dataId);
 
             _level.text = $"Level {identity.level}";
             _description.text = description;
@@ -35,12 +35,12 @@ namespace Runtime.UI
                 selectAction?.Invoke(identity);
             });
 
-            LoadSpriteAsync(identity.artifactType).Forget();
+            LoadSpriteAsync(identity.artifactType, identity.dataId).Forget();
         }
 
-        private async UniTaskVoid LoadSpriteAsync(ArtifactType artifactType)
+        private async UniTaskVoid LoadSpriteAsync(ArtifactType artifactType, int dataId)
         {
-            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_0"), this.GetCancellationTokenOnDestroy());
+            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_{dataId}"), this.GetCancellationTokenOnDestroy());
         }
     }
 }

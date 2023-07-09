@@ -1,18 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
+using System;
 
-public class StatusAroundAreaArtifactDataConfig : MonoBehaviour
+namespace Runtime.ConfigModel
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum StatusAroundSpawnPositionType
     {
-        
+        Center = 0,
+        TowardDirection = 1,
+        InPointerPoint = 2,
     }
 
-    // Update is called once per frame
-    void Update()
+    [Serializable]
+    public class StatusArroundAreaArtifactDataConfigItem : RuneArtifactDataConfigItem
     {
-        
+        public override ArtifactType ArtifactType => ArtifactType.StatusAroundArea;
+        public float damageBonus;
+        public DamageFactor[] damageFactors;
+        public StatusIdentity triggeredStatus;
+        public float damageBoxHeight;
+        public float damageBoxWidth;
+        public string damageBoxPrefabName;
+        public StatusAroundSpawnPositionType statusAroundSpawnPosition;
+    }
+
+    public class StatusAroundAreaArtifactDataConfig : ArtifactDataConfig<StatusArroundAreaArtifactDataConfigItem>
+    {
+        protected async override UniTask<string> GetDescription(IEntityData entityData, StatusArroundAreaArtifactDataConfigItem itemData, StatusArroundAreaArtifactDataConfigItem previousItemData)
+        {
+            return string.Empty;
+        }
     }
 }

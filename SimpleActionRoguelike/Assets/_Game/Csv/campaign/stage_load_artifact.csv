@@ -1,2 +1,2 @@
-artifact_type,level,weight
-AutoStableGun,0,1
+artifact_type,level,data_id,weight
+AutoStableGun,0,0,1

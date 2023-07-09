@@ -35,11 +35,13 @@ namespace Runtime.Message
 
     public readonly struct UpdateCurrentCollectedArtifactMessage : IMessage
     {
+        public readonly int DataId;
         public readonly ArtifactType ArtifactType;
         public readonly UpdatedCurrentCollectedArtifactType UpdatedCurrentCollectedArtifactType;
 
-        public UpdateCurrentCollectedArtifactMessage(ArtifactType artifactType, UpdatedCurrentCollectedArtifactType updatedCurrentCollectedArtifactType)
+        public UpdateCurrentCollectedArtifactMessage(ArtifactType artifactType, int dataId, UpdatedCurrentCollectedArtifactType updatedCurrentCollectedArtifactType)
         {
+            DataId = dataId;
             ArtifactType = artifactType;
             UpdatedCurrentCollectedArtifactType = updatedCurrentCollectedArtifactType;
         }

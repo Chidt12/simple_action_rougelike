@@ -19,14 +19,16 @@ namespace Runtime.UI
         private float _normalScale = 1;
         private float _selectScale = 1.4f;
         private ArtifactType _artifactType;
+        private int _dataId;
         private bool _hasData;
 
         public bool HasData => _hasData;
 
-        public void UpdateData(ArtifactType artifactType, CancellationToken token)
+        public void UpdateData(ArtifactType artifactType, int dataId, CancellationToken token)
         {
             _hasData = true;
             _artifactType = artifactType;
+            _dataId = dataId;
             _emptyGameObject.SetActive(false);
             LoadSpriteAsync(token).Forget();
         }
@@ -41,7 +43,7 @@ namespace Runtime.UI
 
         private async UniTaskVoid LoadSpriteAsync(CancellationToken token)
         {
-            _iconImage.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)_artifactType}_0"), token);
+            _iconImage.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)_artifactType}_{_dataId}"), token);
         }
 
         public void Clear()

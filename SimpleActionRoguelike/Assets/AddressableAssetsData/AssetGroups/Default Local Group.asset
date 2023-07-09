@@ -217,6 +217,10 @@ MonoBehaviour:
     m_Address: fly_round_orb_red
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: a0dae5363b96d5142bc158a44ce94315
+    m_Address: area_around
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

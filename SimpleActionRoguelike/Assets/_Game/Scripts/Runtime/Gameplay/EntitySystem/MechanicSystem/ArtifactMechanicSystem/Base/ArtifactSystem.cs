@@ -22,6 +22,7 @@ namespace Runtime.Gameplay.EntitySystem
         public IEntityData EntityData => ownerEntityData;
 
         public int Level => ownerData.level;
+        public int DataId => ownerData.dataId;
 
         public virtual void Trigger()
         {}

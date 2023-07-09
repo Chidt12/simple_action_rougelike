@@ -58,7 +58,7 @@ MonoBehaviour:
   cheat: 1
   cheatStageEndGame: 100
   cheatMap: {fileID: 11400000, guid: cdd25c33f8d33ed479b14fde282ccfa8, type: 2}
-  roomTypes: 01000000
+  roomTypes: 05000000
   stageLoadConfigItems:
   - waveConfigs:
     - waveIndex: 0

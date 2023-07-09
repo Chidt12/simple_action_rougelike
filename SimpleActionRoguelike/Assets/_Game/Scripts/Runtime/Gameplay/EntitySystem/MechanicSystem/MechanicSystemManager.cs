@@ -12,13 +12,25 @@ using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
 {
+    public struct CollectedArtifact
+    {
+        public int dataId;
+        public ArtifactType artifactType;
+
+        public CollectedArtifact(int dataId, ArtifactType artifactType)
+        {
+            this.dataId = dataId;
+            this.artifactType = artifactType;
+        }
+    }
+
     public class MechanicSystemManager
     {
         private List<IArtifactSystem> _artifacts;
-        private Stack<ArtifactType> _collectedArtifacts;
+        private Stack<CollectedArtifact> _collectedArtifacts;
         private List<ISubscription> _subscriptions;
 
-        public Stack<ArtifactType> CollectedArtifacts => _collectedArtifacts;
+        public Stack<CollectedArtifact> CollectedArtifacts => _collectedArtifacts;
 
         public void Init()
         {
@@ -36,22 +48,22 @@ namespace Runtime.Gameplay.EntitySystem
                 if (_collectedArtifacts.Count > 0)
                 {
 
-                    var artifactType = ArtifactType.None;
+                    var collectedArtifact = new CollectedArtifact(0, ArtifactType.None);
                     if (_collectedArtifacts.Count > 0)
                     {
-                        artifactType = _collectedArtifacts.Pop();
+                        collectedArtifact = _collectedArtifacts.Pop();
                     }
 
-                    var artifact = _artifacts.FirstOrDefault(x => x.ArtifactType == artifactType);
+                    var artifact = _artifacts.FirstOrDefault(x => x.ArtifactType == collectedArtifact.artifactType && x.DataId == collectedArtifact.dataId);
                     if (artifact.CanTrigger())
                     {
                         artifact.Trigger();
                         // Update visual after used.
-                        SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(artifactType, UpdatedCurrentCollectedArtifactType.Used));
+                        SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(collectedArtifact.artifactType, collectedArtifact.dataId, UpdatedCurrentCollectedArtifactType.Used));
                     }
                     else
                     {
-                        _collectedArtifacts.Push(artifactType);
+                        _collectedArtifacts.Push(collectedArtifact);
                     }
                 }
             }
@@ -75,26 +87,26 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public void AddCollectedArtifact(ArtifactType artifactType)
+        public void AddCollectedArtifact(ArtifactType artifactType, int dataId)
         {
-            _collectedArtifacts.Push(artifactType);
-            SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(artifactType, UpdatedCurrentCollectedArtifactType.Add));
+            _collectedArtifacts.Push(new CollectedArtifact(dataId, artifactType));
+            SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(artifactType, dataId, UpdatedCurrentCollectedArtifactType.Add));
         }
 
         public List<ArtifactIdentity> GetCurrentBuffsInGame()
         {
-            return _artifacts.Select(x => new ArtifactIdentity(x.ArtifactType, x.Level)).ToList();
+            return _artifacts.Select(x => new ArtifactIdentity(x.ArtifactType, x.Level, x.DataId)).ToList();
         }
 
         public bool CanAddCollectedArtifact() => _collectedArtifacts.Count < GameplayManager.Instance.GameBalancingConfig.numberStackArtifact;
 
-        public async UniTask AddArtifactystem(IEntityData entityData, ArtifactType buffInGameType)
+        public async UniTask AddArtifactystem(IEntityData entityData, ArtifactType buffInGameType, int dataId)
         {
             // Add level 1 or increase after time.
             var mechanic = _artifacts.FirstOrDefault(x => x.ArtifactType == buffInGameType);
             if (mechanic == null)
             {
-                var dataConfigItem = await DataManager.Config.LoadArtifactDataConfigItem(buffInGameType, 0);
+                var dataConfigItem = await DataManager.Config.LoadArtifactDataConfigItem(buffInGameType, 0, dataId);
                 var buffInGame = ArtifactSystemFactory.GetArtifactSystem(buffInGameType);
 
                 buffInGame.SetData(dataConfigItem);
@@ -105,7 +117,7 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 var currentLevel = mechanic.Level;
-                var dataConfigItem = await DataManager.Config.LoadArtifactDataConfigItem(buffInGameType, currentLevel + 1);
+                var dataConfigItem = await DataManager.Config.LoadArtifactDataConfigItem(buffInGameType, currentLevel + 1, dataId);
 
                 mechanic.SetData(dataConfigItem);
                 await mechanic.Init(entityData);

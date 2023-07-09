@@ -1,2 +1,2 @@
-﻿level,point,rune_life_time,rune_interval,status_data_id,status_type,damage_bonus,damage_factor_stat_type,damage_factor_value,range,delay_between_lightning,number_of_lightning,ligntning_prefab
-0,1,5,5,0,Stun,0,AttackDamage,0.5,7,0.1,20,status_storm_object
+﻿data_id,level,point,rune_life_time,rune_interval,status_data_id,status_type,damage_bonus,damage_factor_stat_type,damage_factor_value,range,delay_between_lightning,number_of_lightning,ligntning_prefab
+0,0,1,5,5,0,Stun,0,AttackDamage,0.5,7,0.1,20,status_storm_object

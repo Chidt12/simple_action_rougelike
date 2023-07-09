@@ -52,10 +52,10 @@ namespace Runtime.Manager.Data
             return suitableItems;
         }
 
-        public async UniTask<ArtifactDataConfigItem> LoadArtifactDataConfigItem(ArtifactType artifactType, int level)
+        public async UniTask<ArtifactDataConfigItem> LoadArtifactDataConfigItem(ArtifactType artifactType, int level, int dataId)
         {
             var config = await LoadArtifactDataConfig(artifactType);
-            var configItem = config.GetArtifactItem(level);
+            var configItem = config.GetArtifactItem(level, dataId);
             return configItem;
         }
 

@@ -21,6 +21,7 @@ namespace Runtime.Gameplay.EntitySystem
         private bool _isFlying;
         private Transform _target;
         private ArtifactType _artifactType;
+        private int _dataId;
         private float _lifeTime;
         private float _currentTime;
 
@@ -40,7 +41,7 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 if (Vector2.Distance(transform.position, _target.transform.position) <= Time.deltaTime * _flySpeed)
                 {
-                    GameplayManager.Instance.MechanicSystemManager.AddCollectedArtifact(_artifactType);
+                    GameplayManager.Instance.MechanicSystemManager.AddCollectedArtifact(_artifactType, _dataId);
                     PoolManager.Instance.Return(gameObject);
                 }
                 else
@@ -63,12 +64,13 @@ namespace Runtime.Gameplay.EntitySystem
             }
         }
 
-        public async UniTask InitAsync(float lifeTime, ArtifactType artifactType, CancellationToken cancellationToken)
+        public async UniTask InitAsync(float lifeTime, ArtifactType artifactType, int dataId, CancellationToken cancellationToken)
         {
             _artifactType = artifactType;
             _currentTime = 0;
             _lifeTime = lifeTime;
-            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_0"), cancellationToken);
+            _dataId = dataId;
+            _icon.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)artifactType}_{dataId}"), cancellationToken);
             _isFlying = false;
             _collider.enabled = true;
             _progressTransform.localScale = new Vector2(1, 1);

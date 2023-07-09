@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - point: 1
+    dataId: 0
     level: 0
     runeLifeTime: 5
     runeInterval: 5
@@ -28,6 +29,7 @@ MonoBehaviour:
     projectileSpeed: 15
     gunPrefabName: auto_gun
   - point: 1
+    dataId: 0
     level: 1
     runeLifeTime: 3
     runeInterval: 5
@@ -42,6 +44,7 @@ MonoBehaviour:
     projectileSpeed: 15
     gunPrefabName: auto_gun
   - point: 1
+    dataId: 0
     level: 2
     runeLifeTime: 3
     runeInterval: 5
@@ -56,6 +59,7 @@ MonoBehaviour:
     projectileSpeed: 15
     gunPrefabName: auto_gun
   - point: 1
+    dataId: 0
     level: 3
     runeLifeTime: 3
     runeInterval: 5
@@ -70,6 +74,7 @@ MonoBehaviour:
     projectileSpeed: 15
     gunPrefabName: auto_gun
   - point: 1
+    dataId: 0
     level: 4
     runeLifeTime: 3
     runeInterval: 5

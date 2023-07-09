@@ -17,6 +17,7 @@ namespace Runtime.UI
         [SerializeField] private Image _iconImage;
 
         private ArtifactType _artifactType;
+        private int _dataId;
         private ICooldown _cooldown;
 
         public ArtifactType ArtifactType => _artifactType;
@@ -31,12 +32,13 @@ namespace Runtime.UI
             }
 
             _artifactType = artifactSystem.ArtifactType;
+            _dataId = artifactSystem.DataId;
             LoadSpriteAsync(token).Forget();
         }
 
         private async UniTaskVoid LoadSpriteAsync(CancellationToken token)
         {
-            _iconImage.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)_artifactType}_0"), token);
+            _iconImage.sprite = await AssetLoader.LoadSprite(Constant.IconSpriteAtlasKey($"artifact_{(int)_artifactType}_{_dataId}"), token);
         }
 
         private void OnCountTime(bool isFinishedCountTime)

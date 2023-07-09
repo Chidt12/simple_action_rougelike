@@ -52,7 +52,7 @@ namespace Runtime.Gameplay.EntitySystem
 
                     var runeArtifact = rune.GetComponent<RuneArtifact>();
                     // Find some place to spawn.
-                    await runeArtifact.InitAsync(ownerData.runeLifeTime, ArtifactType, cancellationTokenSource.Token);
+                    await runeArtifact.InitAsync(ownerData.runeLifeTime, ArtifactType, DataId, cancellationTokenSource.Token);
                     currentCountTime = 0;
                 }
                 else

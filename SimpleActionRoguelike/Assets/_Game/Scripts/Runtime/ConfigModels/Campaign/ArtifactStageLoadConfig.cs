@@ -9,11 +9,13 @@ namespace Runtime.ConfigModel
     {
         public ArtifactType artifactType;
         public int level;
+        public int dataId;
 
-        public ArtifactIdentity(ArtifactType artifactType, int level)
+        public ArtifactIdentity(ArtifactType artifactType, int level, int dataId)
         {
             this.artifactType = artifactType;
             this.level = level;
+            this.dataId = dataId;
         }
     }
 
