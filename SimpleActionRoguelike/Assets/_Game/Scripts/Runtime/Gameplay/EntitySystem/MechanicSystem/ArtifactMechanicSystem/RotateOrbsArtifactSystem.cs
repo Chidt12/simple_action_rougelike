@@ -3,6 +3,7 @@ using Runtime.ConfigModel;
 using Runtime.Core.Message;
 using Runtime.Core.Pool;
 using Runtime.Definition;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System.Collections.Generic;
 using System.Threading;
@@ -24,7 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public override ArtifactType ArtifactType => ArtifactType.RotateOrbs;
 
-        public override async UniTask Init(IEntityData entityData)
+        public override async UniTask Init(IEntityControlData entityData)
         {
             await base.Init(entityData);
             _subscriptions = new();
@@ -78,12 +79,53 @@ namespace Runtime.Gameplay.EntitySystem
         public override bool Trigger()
         {
             base.Trigger();
-            foreach (var orb in _orbs)
+
+            if(_orbs.Count > 0)
             {
-                
+                var direction = ownerEntityData.FaceDirection;
+                var ray = new Ray2D(ownerEntityData.Position, direction.normalized);
+                var allEntities = EntitiesManager.Instance.EnemiesData;
+                IEntityData currentTarget = null;
+
+                var shortestDistance = float.MaxValue;
+                foreach (var item in allEntities)
+                {
+                    if (!item.IsDead)
+                    {
+                        var distance = Vector3.Cross(ray.direction, item.Position - ray.origin).magnitude;
+                        if (shortestDistance > distance)
+                        {
+                            currentTarget = item;
+                            shortestDistance = distance;
+                        }
+                    }
+                }
+
+                if(currentTarget != null)
+                {
+                    foreach (var orb in _orbs)
+                    {
+                        if (orb)
+                        {
+                            orb.transform.SetParent(null);
+                            var projectileStrategyData = new FlyFollowThroughProjectileStrategyData(false, 0, ownerData.flyRange, ownerData.flySpeed, OnProjectileCallback);
+                            var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyFollowThrough);
+                            var projectileDirection = currentTarget.Position - orb.CenterPosition;
+                            projectileStrategy.Init(projectileStrategyData, orb, projectileDirection, orb.CenterPosition, default, currentTarget);
+                            orb.InitStrategy(projectileStrategy);
+                        }
+                    }
+
+                    _currentOrbs = 0;
+                    _orbs.Clear();
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            return false;
+            return true;
         }
 
         private async UniTask AddProjectile()
@@ -96,6 +138,12 @@ namespace Runtime.Gameplay.EntitySystem
             var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.IdleThrough);
             projectileStrategy.Init(idleThroughProjectileStrategyData, projectile, _middleTransform.position, _middleTransform.position, default);
             projectile.InitStrategy(projectileStrategy);
+
+            if(!GameplayManager.Instance.MechanicSystemManager.CollectedArtifacts.Contains(new CollectedArtifact(ownerData.dataId, ownerData.ArtifactType)))
+            {
+                GameplayManager.Instance.MechanicSystemManager.AddCollectedArtifact(ownerData.ArtifactType, ownerData.dataId);
+            }
+
             _orbs.Add(projectile);
             RearrangeSpawnedProjectiles();
         }
@@ -109,7 +157,7 @@ namespace Runtime.Gameplay.EntitySystem
                 var direction = Quaternion.AngleAxis(angle * i, Vector3.forward) * Vector2.up;
                 spawnedProjectile.transform.SetParent(_weaponCenterPointTransform);
                 spawnedProjectile.transform.localRotation = Quaternion.AngleAxis(angle * i + s_angleOffset, Vector3.forward);
-                spawnedProjectile.transform.localPosition = direction * ownerData.flyRange;
+                spawnedProjectile.transform.localPosition = direction * ownerData.rotateRange;
             }
         }
 
@@ -120,6 +168,18 @@ namespace Runtime.Gameplay.EntitySystem
                 EffectProperty.Normal,
                 ownerData.orbDamageBonus,
                 ownerData.orbDamageFactors,
+                ownerEntityData,
+                callbackData.target
+            ));
+        }
+
+        private void OnProjectileCallback(ProjectileCallbackData callbackData)
+        {
+            SimpleMessenger.Publish(MessageScope.EntityMessage, new SentDamageMessage(
+                EffectSource.FromArtifact,
+                EffectProperty.Normal,
+                ownerData.projectileDamageBonus,
+                ownerData.projectileDamageFactors,
                 ownerEntityData,
                 callbackData.target
             ));

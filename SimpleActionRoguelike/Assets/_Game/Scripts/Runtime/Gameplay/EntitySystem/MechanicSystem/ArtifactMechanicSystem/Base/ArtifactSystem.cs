@@ -14,7 +14,7 @@ namespace Runtime.Gameplay.EntitySystem
 
     public abstract class ArtifactSystem<T> : IArtifactSystem where T : ArtifactDataConfigItem
     {
-        protected IEntityData ownerEntityData;
+        protected IEntityControlData ownerEntityData;
         protected T ownerData;
 
         public abstract ArtifactType ArtifactType { get; }
@@ -31,7 +31,7 @@ namespace Runtime.Gameplay.EntitySystem
         public virtual void Dispose()
         {}
 
-        public virtual UniTask Init(IEntityData entityData)
+        public virtual UniTask Init(IEntityControlData entityData)
         {
             this.ownerEntityData = entityData;
             return UniTask.CompletedTask;

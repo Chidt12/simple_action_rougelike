@@ -25,7 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
             return !_isSpawningFlag;
         }
 
-        public override UniTask Init(IEntityData entityData)
+        public override UniTask Init(IEntityControlData entityData)
         {
             _targets = new();
             _buffVfxs = new();

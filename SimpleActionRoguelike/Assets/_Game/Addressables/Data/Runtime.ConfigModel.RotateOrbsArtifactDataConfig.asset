@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e8bf97c728ffa44838ff3a8683d892, type: 3}
+  m_Name: Runtime.ConfigModel.RotateOrbsArtifactDataConfig
+  m_EditorClassIdentifier: 
+  items:
+  - point: 1
+    dataId: 0
+    level: 0
+    orbPrefabName: orb_blue
+    numberOfOrbs: 5
+    rotateRange: 3
+    rotateSpeed: 180
+    orbDamageBonus: 0
+    orbDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.5
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 10
+    flySpeed: 15
+    flyRange: 15

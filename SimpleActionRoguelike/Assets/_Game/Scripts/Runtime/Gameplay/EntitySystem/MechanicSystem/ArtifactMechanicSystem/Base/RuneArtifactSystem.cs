@@ -20,7 +20,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public Action<bool> OnCountTimeChanged { get; set; }
 
-        public async override UniTask Init(IEntityData entityData)
+        public async override UniTask Init(IEntityControlData entityData)
         {
             await base.Init(entityData);
             currentCountTime = 0;

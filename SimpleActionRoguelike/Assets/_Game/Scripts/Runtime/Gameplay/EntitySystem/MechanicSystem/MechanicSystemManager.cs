@@ -107,7 +107,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         public bool CanAddCollectedArtifact() => _collectedArtifacts.Count < GameplayManager.Instance.GameBalancingConfig.numberStackArtifact;
 
-        public async UniTask AddArtifactystem(IEntityData entityData, ArtifactType buffInGameType, int dataId)
+        public async UniTask AddArtifactystem(IEntityControlData entityData, ArtifactType buffInGameType, int dataId)
         {
             // Add level 1 or increase after time.
             var mechanic = _artifacts.FirstOrDefault(x => x.ArtifactType == buffInGameType);

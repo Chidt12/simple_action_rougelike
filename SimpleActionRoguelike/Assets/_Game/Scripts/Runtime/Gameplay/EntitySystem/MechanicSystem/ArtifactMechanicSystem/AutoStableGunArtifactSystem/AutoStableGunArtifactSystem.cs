@@ -17,7 +17,7 @@ namespace Runtime.Gameplay.EntitySystem
         public override ArtifactType ArtifactType => ArtifactType.AutoStableGun;
 
 
-        public async override UniTask Init(IEntityData entityData)
+        public async override UniTask Init(IEntityControlData entityData)
         {
             await base.Init(entityData);
             _listGuns = new();

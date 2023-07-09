@@ -67,7 +67,7 @@ MonoBehaviour:
       - entityConfigItem:
           entityId: 2001
           entityType: 1
-          entityNumber: 4
+          entityNumber: 5
           entityLevel: 1
         delaySpawnTime: 0
         followHero: 1
