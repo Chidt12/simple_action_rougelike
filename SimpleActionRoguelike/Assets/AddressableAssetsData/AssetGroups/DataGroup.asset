@@ -189,6 +189,10 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.RotateOrbsArtifactDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 889aed5e563129a44ba0fa30c4511e73
+    m_Address: Runtime.ConfigModel.BuffAllStatsArtifactDataConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

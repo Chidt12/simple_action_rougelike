@@ -28,6 +28,7 @@ namespace Runtime.Gameplay.EntitySystem
         public Action DeathEvent { get; set; }
         public Action<EntityReactionType> ReactionChangedEvent { get; set; }
         public Action<Vector2, bool> ForceUpdatePosition { get; set; }
+        public Action<int> ChangeFormEvent { get; set; }
         public Transform EntityTransform { get; set; }
 
         public virtual void Init(EntityType entityType, int uid, int entityId, int level)
@@ -41,6 +42,7 @@ namespace Runtime.Gameplay.EntitySystem
             DirectionChangedEvent = () => { };
             ReactionChangedEvent = _ => { };
             ForceUpdatePosition = (_,_) => { };
+            ChangeFormEvent = _ => { };
 
             InitControl();
         }

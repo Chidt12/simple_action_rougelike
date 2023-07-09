@@ -97,3 +97,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.BuffAllStatsArtifactDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.BuffAllStatsArtifactDataConfig
+      csvFile: {fileID: 4900000, guid: 9f41c0067de1d7b458fa761790f449d3, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/artifact/buff_all_stats_artifact.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

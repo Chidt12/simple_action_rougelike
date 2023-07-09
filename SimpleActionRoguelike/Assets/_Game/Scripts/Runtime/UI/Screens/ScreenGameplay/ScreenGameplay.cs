@@ -144,9 +144,12 @@ namespace Runtime.UI
         {
             if(message.UpdateArtifactType == UpdateCurrentArtifactType.Added)
             {
-                var runeArtifactIcon = Instantiate(_runeArtifactIconPrefab, _runeArtifactIconsContainer);
-                runeArtifactIcon.Init(message.UpdatedArtifact, _cancellationTokenSource.Token);
-                _runeArtifactIcons.Add(runeArtifactIcon);
+                if(message.UpdatedArtifact is ICooldown)
+                {
+                    var runeArtifactIcon = Instantiate(_runeArtifactIconPrefab, _runeArtifactIconsContainer);
+                    runeArtifactIcon.Init(message.UpdatedArtifact, _cancellationTokenSource.Token);
+                    _runeArtifactIcons.Add(runeArtifactIcon);
+                }
             }
             else if (message.UpdateArtifactType == UpdateCurrentArtifactType.Removed)
             {
