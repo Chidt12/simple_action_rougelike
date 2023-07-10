@@ -3160,6 +3160,7 @@ GameObject:
   - component: {fileID: 175556549924124552}
   - component: {fileID: 7781217047381156918}
   - component: {fileID: 8237215583445436955}
+  - component: {fileID: 326754118872653336}
   m_Layer: 6
   m_Name: obstacles_collision
   m_TagString: Untagged
@@ -3498,6 +3499,19 @@ CompositeCollider2D:
       - {x: 4.000029, y: -3}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!114 &326754118872653336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369427811907408604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebbddb299dc4491499ff75d4f379b830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 8237215583445436955}
 --- !u!1 &4532465788493545316
 GameObject:
   m_ObjectHideFlags: 0

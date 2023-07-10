@@ -2016,7 +2016,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 19
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2026,7 +2026,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 5
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3899,8 +3899,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 156394881, guid: 8d623b5999afc2c4c9de8bf2ecf67bbe, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -3923,12 +3923,12 @@ Tilemap:
     m_Data: {fileID: 984662780, guid: 8d623b5999afc2c4c9de8bf2ecf67bbe, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 156394881, guid: 8d623b5999afc2c4c9de8bf2ecf67bbe, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1912641605, guid: 8d623b5999afc2c4c9de8bf2ecf67bbe, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -205888805, guid: 8d623b5999afc2c4c9de8bf2ecf67bbe, type: 3}
   - m_RefCount: 1
@@ -4480,6 +4480,7 @@ GameObject:
   - component: {fileID: 175556549924124552}
   - component: {fileID: 7781217047381156918}
   - component: {fileID: 8237215583445436955}
+  - component: {fileID: 2698508309321001319}
   m_Layer: 6
   m_Name: obstacles_collision
   m_TagString: Untagged
@@ -4882,6 +4883,19 @@ CompositeCollider2D:
       - {x: 1.0000293, y: -4.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!114 &2698508309321001319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369427811907408604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebbddb299dc4491499ff75d4f379b830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 8237215583445436955}
 --- !u!1 &4532465788493545316
 GameObject:
   m_ObjectHideFlags: 0

@@ -115,27 +115,30 @@ namespace Runtime.Gameplay.EntitySystem
             _skillDelayTimes = new();
             _autoInputStrategyTypes = new();
 
-            foreach (var index in indexes)
+            if(indexes.Count > 0)
             {
-                _skillModels.Add(_skillData.SkillModels[index]);
-                _skillDelayTimes.Add(_skillData.SkillDelayTimes[index]);
-                _autoInputStrategyTypes.Add(_autoInputData.AutoInputStrategyTypes[index]);
+                foreach (var index in indexes)
+                {
+                    _skillModels.Add(_skillData.SkillModels[index]);
+                    _skillDelayTimes.Add(_skillData.SkillDelayTimes[index]);
+                    _autoInputStrategyTypes.Add(_autoInputData.AutoInputStrategyTypes[index]);
+                }
+
+                _skillStrategies = new ISkillStrategy[_skillModels.Count];
+
+                for (int i = 0; i < _skillModels.Count; i++)
+                {
+                    var skillModel = _skillModels[i];
+                    var skillStrategy = SkillStrategyFactory.GetSkillStrategy(skillModel.SkillType);
+                    skillStrategy.Init(skillModel, _controlData);
+                    skillStrategy.SetTriggerEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
+                    _skillStrategies[i] = skillStrategy;
+                }
+
+                _currentlyUsedSkillIndex = 0;
+                _autoInputData.SetCurrentAutoInputStrategy(_autoInputStrategyTypes[_currentlyUsedSkillIndex]);
+                SetUpCurrentSkill(true);
             }
-
-            _skillStrategies = new ISkillStrategy[_skillModels.Count];
-
-            for (int i = 0; i < _skillModels.Count; i++)
-            {
-                var skillModel = _skillModels[i];
-                var skillStrategy = SkillStrategyFactory.GetSkillStrategy(skillModel.SkillType);
-                skillStrategy.Init(skillModel, _controlData);
-                skillStrategy.SetTriggerEventProxy(GetComponent<IEntityTriggerActionEventProxy>());
-                _skillStrategies[i] = skillStrategy;
-            }
-
-            _currentlyUsedSkillIndex = 0;
-            _autoInputData.SetCurrentAutoInputStrategy(_autoInputStrategyTypes[_currentlyUsedSkillIndex]);
-            SetUpCurrentSkill(true);
         }
 
 

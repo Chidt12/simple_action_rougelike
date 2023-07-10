@@ -41,7 +41,8 @@ namespace Runtime.Manager.Gameplay
         [Header("==== Sounds ====")]
         [SerializeField] private string _heroAppear;
 
-
+        protected const int NUMBER_OF_SELECT_ARTIFACT = 3;
+        protected const int NUMBER_OF_SELECT_SHOP_ITEM = 3;
         protected MechanicSystemManager mechanicSystemManager;
         protected ShopInGameManager shopInGameManager;
         protected GameplayMessageCenter messageCenter;
@@ -231,7 +232,7 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTaskVoid LoadGiveShopAsync()
         {
-            var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
+            var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems(shopInGameManager.CurrentShopInGameItems, NUMBER_OF_SELECT_SHOP_ITEM);
             var selectInGameShopData = new ModalGiveInGameShopData(shopItems.ToArray(), OnGiveShopItem);
             await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_INGAME_SHOP, false), selectInGameShopData);
         }
@@ -241,7 +242,7 @@ namespace Runtime.Manager.Gameplay
             if(!_isLoadedShopItems)
             {
                 _isLoadedShopItems = true;
-                _shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems();
+                _shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems(shopInGameManager.CurrentShopInGameItems, NUMBER_OF_SELECT_SHOP_ITEM);
             }
 
             if(_shopItems.Count <= 0)
@@ -293,7 +294,7 @@ namespace Runtime.Manager.Gameplay
             var heroEntityData = EntitiesManager.Instance.HeroData;
             var currentBuffs = mechanicSystemManager.GetCurrentBuffsInGame();
 
-            var suitableItems = await DataManager.Config.LoadCurrentSuitableArtifactItems(currentBuffs);
+            var suitableItems = await DataManager.Config.LoadCurrentSuitableArtifactItems(currentBuffs, NUMBER_OF_SELECT_ARTIFACT);
 
             var modalData = new ModalGiveArtifactData(heroEntityData, suitableItems.Select(x => x.identity).ToArray(), OnSelectBuffItem);
             ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_ARTIFACT, false), modalData).Forget();

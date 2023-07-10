@@ -88,16 +88,6 @@ namespace Runtime.Gameplay.EntitySystem
                 creatorData,
                 callbackData.target
             ));
-
-            var targetStatusData = (IEntityStatusData)callbackData.target;
-            if (targetStatusData != null)
-            {
-                SimpleMessenger.Publish(MessageScope.EntityMessage, new SentStatusEffectMessage(
-                    creatorData,
-                    targetStatusData,
-                    new StatusIdentity(0, StatusType.Stun)
-                ));
-            }
         }
     }
 }

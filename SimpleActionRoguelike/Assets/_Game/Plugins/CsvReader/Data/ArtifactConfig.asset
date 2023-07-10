@@ -109,3 +109,15 @@ MonoBehaviour:
       fieldSetValue: items
       isConvert: 0
       convertMethod: 
+  - className: Runtime.ConfigModel.UpgradeWeaponArtifactDataConfig
+    csvInformations:
+    - className: Runtime.ConfigModel.UpgradeWeaponArtifactDataConfig
+      csvFile: {fileID: 4900000, guid: 075b254c211d9fa4781caf05e48b8da2, type: 3}
+      csvPath: Assets/_Game/Csv/mechanics/artifact/upgrade_weapon_artifact.csv
+      usingFolder: 0
+      csvFolderPath: 
+      separateScriptableObject: 0
+      fileStartWith: 
+      fieldSetValue: items
+      isConvert: 0
+      convertMethod: 

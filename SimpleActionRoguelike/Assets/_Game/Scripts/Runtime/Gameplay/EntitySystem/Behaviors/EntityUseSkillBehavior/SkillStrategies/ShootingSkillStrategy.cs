@@ -7,6 +7,7 @@ using Runtime.Core.Message;
 using Runtime.Message;
 using System;
 using UnityRandom = UnityEngine.Random;
+using Runtime.Constants;
 
 namespace Runtime.Gameplay.EntitySystem
 {
@@ -19,7 +20,19 @@ namespace Runtime.Gameplay.EntitySystem
                 if(creatorData.Target != null && !creatorData.Target.IsDead)
                 {
                     var distance = Vector2.Distance(creatorData.Position, creatorData.Target.Position);
-                    return distance <= ownerModel.ProjectileMoveDistance;
+                    if (distance <= ownerModel.ProjectileMoveDistance)
+                    {
+                        var direction = creatorData.Target.Position - creatorData.Position;
+                        var rayCastChecks = Physics2D.RaycastAll(creatorData.Position, direction, distance);
+
+                        foreach (var rayCastCheck in rayCastChecks)
+                        {
+                            if (rayCastCheck.collider.gameObject.layer == Layers.OBJECT_LAYER)
+                                return false;
+                        }
+
+                        return true;
+                    }
                 }
                 return false;
             }

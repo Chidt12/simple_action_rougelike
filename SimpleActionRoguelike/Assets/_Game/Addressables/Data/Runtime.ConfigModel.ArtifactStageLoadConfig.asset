@@ -14,7 +14,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - identity:
-      artifactType: 7
+      artifactType: 1
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 2
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 2
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 2
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 2
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 2
+      level: 4
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 3
       level: 0
       dataId: 0
     weight: 1
+  - identity:
+      artifactType: 4
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 5
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 6
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 7
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 8
+      level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 9
+      level: 0
+      dataId: 0
+    weight: 0

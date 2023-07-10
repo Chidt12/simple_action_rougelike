@@ -193,6 +193,10 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.BuffAllStatsArtifactDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 0f92811c229ac914b958f94c08fc72a4
+    m_Address: Runtime.ConfigModel.UpgradeWeaponArtifactDataConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

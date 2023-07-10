@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
 using Runtime.Constants;
 using Runtime.Definition;
+using Runtime.Gameplay.EntitySystem;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,11 +10,11 @@ namespace Runtime.Manager.Data
 {
     public partial class ConfigDataManager
     {
-        public async UniTask<List<ShopInGameStageLoadConfigItem>> LoadCurrentSuitableShopInGameItems()
+        public async UniTask<List<ShopInGameStageLoadConfigItem>> LoadCurrentSuitableShopInGameItems(List<ShopInGameItem> currentShopInGames, int number)
         {
             var config = await Load<ShopInGameStageLoadConfig>();
             var suitableItems = config.items;
-            return suitableItems.ToList();
+            return suitableItems.Take(number).ToList();
         }
 
         public async UniTask<ShopInGameDataConfigItem> LoadShopInGameDataConfigItem(ShopInGameItemType shopInGameItemType, int dataId)
@@ -30,7 +31,7 @@ namespace Runtime.Manager.Data
         }
 
 
-        public async UniTask<List<ArtifactStageLoadConfigItem>> LoadCurrentSuitableArtifactItems(List<ArtifactIdentity> currentBuffedItems)
+        public async UniTask<List<ArtifactStageLoadConfigItem>> LoadCurrentSuitableArtifactItems(List<ArtifactIdentity> currentBuffedItems, int number)
         {
             var dataConfig = await Load<ArtifactStageLoadConfig>();
             var suitableItems = new List<ArtifactStageLoadConfigItem>();
@@ -49,7 +50,7 @@ namespace Runtime.Manager.Data
                 }
             }
 
-            return suitableItems;
+            return suitableItems.Take(number).ToList();
         }
 
         public async UniTask<ArtifactDataConfigItem> LoadArtifactDataConfigItem(ArtifactType artifactType, int level, int dataId)

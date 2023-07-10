@@ -1,2 +1,14 @@
-artifact_type,level,data_id,weight
+artifact_type,data_id,level,weight
+RotateOrbs,0,0,
+UpgradeWeapon,0,0,
+UpgradeWeapon,0,1,
+UpgradeWeapon,0,2,
+UpgradeWeapon,0,3,
+UpgradeWeapon,0,4,
 AutoStableGun,0,0,1
+StatusForwardArea,0,0,
+StatusStorm,0,0,
+StatusAroundArea,0,0,
+BuffAllStats,0,0,
+CreateBuffFlag,0,0,
+Boomerang,0,0,

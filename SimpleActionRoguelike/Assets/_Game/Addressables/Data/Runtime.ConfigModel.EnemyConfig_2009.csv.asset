@@ -30,7 +30,7 @@ MonoBehaviour:
         attackDamage: 3
         collideDamage: 1
       skillIdentities:
-      - skillType: 1
+      - skillType: 3
         skillDataId: 1
         skillAnimIndex: 0
       skillDelayTimes:
@@ -39,7 +39,7 @@ MonoBehaviour:
       - triggerPhaseType: 0
         triggerPhaseHealth: 0
         triggerPhaseEntityId: 0
-      autoInputStrategies: 00000000
+      autoInputStrategies: 01000000
       deathDataIdentity:
-        deathDataId: 1
-        deathType: 2
+        deathDataId: 0
+        deathType: 0

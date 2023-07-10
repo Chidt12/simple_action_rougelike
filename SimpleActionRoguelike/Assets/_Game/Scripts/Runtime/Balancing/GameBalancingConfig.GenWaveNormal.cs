@@ -41,8 +41,12 @@ namespace Runtime.Gameplay.Balancing
             List<EnemyLevelConfigItem> selectedEnemyConfigs = new();
             foreach (var enemyId in selectedEnemyTypes)
             {
+
                 var config = await DataManager.Config.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(enemyId.ToString()));
-                var enemyConfigItem = config.items.FirstOrDefault(x => x.id == uint.Parse(enemyId));
+                var enemyIdInt = int.Parse(enemyId);
+                var enemyConfigItem = config.items.FirstOrDefault(x => x.id == enemyIdInt);
+                Debug.LogWarning("Selected Enemy " + enemyIdInt);
+
                 var maxEnemyLevel = enemyConfigItem.levels.Max(x => x.level);
                 var enemyLevel = Mathf.Min(heroLevel, maxEnemyLevel);
                 var enemyLevelConfigItem = enemyConfigItem.levels.FirstOrDefault(x => x.level == enemyLevel);

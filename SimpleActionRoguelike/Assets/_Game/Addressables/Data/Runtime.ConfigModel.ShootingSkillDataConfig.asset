@@ -15,17 +15,17 @@ MonoBehaviour:
   items:
   - dataId: 1
     targetType: 3
-    castRange: 8
+    castRange: 6
     dependTarget: 1
     canBeCanceled: 1
     projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
-    numberOfBulletsInProjectile: 2
-    angleBetweenBullets: 15
+    numberOfBulletsInProjectile: 1
+    angleBetweenBullets: 25
     focusTargetDuringExecute: 1
     fireDeflectionAngle: 0
-    projectileMoveSpeed: 10
+    projectileMoveSpeed: 8
     projectileMoveDistance: 10
     projectileStrategyType: 0
     projectileDamageBonus: 0
@@ -40,11 +40,11 @@ MonoBehaviour:
     projectileId: bullet_red
     numberOfProjectiles: 1
     delayBetweenProjectiles: 0.2
-    numberOfBulletsInProjectile: 1
-    angleBetweenBullets: 15
+    numberOfBulletsInProjectile: 3
+    angleBetweenBullets: 25
     focusTargetDuringExecute: 1
     fireDeflectionAngle: 0
-    projectileMoveSpeed: 10
+    projectileMoveSpeed: 8
     projectileMoveDistance: 10
     projectileStrategyType: 0
     projectileDamageBonus: 0
@@ -57,14 +57,14 @@ MonoBehaviour:
     dependTarget: 1
     canBeCanceled: 1
     projectileId: bullet_red
-    numberOfProjectiles: 3
+    numberOfProjectiles: 2
     delayBetweenProjectiles: 0.2
-    numberOfBulletsInProjectile: 1
-    angleBetweenBullets: 15
+    numberOfBulletsInProjectile: 3
+    angleBetweenBullets: 25
     focusTargetDuringExecute: 1
     fireDeflectionAngle: 0
-    projectileMoveSpeed: 10
-    projectileMoveDistance: 8
+    projectileMoveSpeed: 8
+    projectileMoveDistance: 10
     projectileStrategyType: 0
     projectileDamageBonus: 0
     projectileDamageFactors:

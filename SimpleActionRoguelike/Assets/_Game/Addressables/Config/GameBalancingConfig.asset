@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberStackArtifact: 4
   minWave: 1
-  maxWave: 3
+  maxWave: 2
   minEnemyTypes: 1
   maxEnemyTypes: 4
   maxSpawnAwayFromHero: 8
@@ -22,13 +22,18 @@ MonoBehaviour:
   heroLevelConvert: 10
   allEnemyIds:
   - 2001
+  - 2002
+  - 2003
+  - 2008
+  - 2009
   allEliteEnemyIds:
-  - 2001
+  - 2010
   allBossIds:
-  - 2001
+  - 3001
+  - 3002
   waveTimeInSeconds: 30
-  lobbyMap: {fileID: 11400000, guid: c8bea8ce066c86c488c4a09b85a4150a, type: 2}
-  shopMap: {fileID: 11400000, guid: 4dee7c48a61cbb8408760ccffba6a041, type: 2}
+  lobbyMap: {fileID: 11400000, guid: cdd25c33f8d33ed479b14fde282ccfa8, type: 2}
+  shopMap: {fileID: 11400000, guid: cb788a48697469f4a8db986423ee4161, type: 2}
   bossMaps:
   - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
   maps:
@@ -46,8 +51,8 @@ MonoBehaviour:
   - stageNumber: 3
     roomType: 5
     setupGateType: 0
-  stageIntervalToFaceBoss: 4
-  stageEndGame: 90
+  stageIntervalToFaceBoss: 5
+  stageEndGame: 20
   numberOfGivingShopItemBeforeBoss: 3
   numberOfGivingArtifactBeforeBoss: 2
   eliteFactor: 1.5
@@ -55,7 +60,7 @@ MonoBehaviour:
   t: 1
   n: 1.1
   z: 0
-  cheat: 1
+  cheat: 0
   cheatStageEndGame: 100
   cheatMap: {fileID: 11400000, guid: cdd25c33f8d33ed479b14fde282ccfa8, type: 2}
   roomTypes: 05000000
@@ -65,9 +70,9 @@ MonoBehaviour:
       duration: -1
       entites:
       - entityConfigItem:
-          entityId: 2001
+          entityId: 2002
           entityType: 1
-          entityNumber: 5
+          entityNumber: 1
           entityLevel: 1
         delaySpawnTime: 0
         followHero: 1

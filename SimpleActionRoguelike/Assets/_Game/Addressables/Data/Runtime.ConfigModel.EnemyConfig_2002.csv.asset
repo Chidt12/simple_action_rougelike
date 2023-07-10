@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Runtime.ConfigModel.EnemyConfig_2002.csv
   m_EditorClassIdentifier: 
   items:
-  - id: 2001
+  - id: 2002
     levels:
     - point: 2
       level: 1
@@ -27,11 +27,11 @@ MonoBehaviour:
         critDamage: 0
         moveSpeed: 2.5
         lifeSteal: 0
-        attackDamage: 100
-        collideDamage: 47
+        attackDamage: 3
+        collideDamage: 0
       skillIdentities:
       - skillType: 1
-        skillDataId: 1
+        skillDataId: 2
         skillAnimIndex: 0
       skillDelayTimes:
       - value: 3
@@ -39,7 +39,7 @@ MonoBehaviour:
       - triggerPhaseType: 0
         triggerPhaseHealth: 0
         triggerPhaseEntityId: 0
-      autoInputStrategies: 00000000
+      autoInputStrategies: 01000000
       deathDataIdentity:
-        deathDataId: 1
-        deathType: 2
+        deathDataId: 0
+        deathType: 0

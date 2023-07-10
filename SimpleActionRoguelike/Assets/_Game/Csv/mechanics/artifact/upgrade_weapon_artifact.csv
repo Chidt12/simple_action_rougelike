@@ -1,6 +1,6 @@
-﻿data_id,level,rarity_type
-0,0,2
-0,1,3
-0,2,4
-0,3,5
-0,4,6
+﻿data_id,level,point,rarity_type
+0,0,0,2
+0,1,0,3
+0,2,0,4
+0,3,0,5
+0,4,0,6

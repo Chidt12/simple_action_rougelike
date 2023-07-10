@@ -30,7 +30,55 @@ MonoBehaviour:
       resourceNumber: 1
     weight: 1
   - identity:
+      shopInGameItemType: 3
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 1
+  - identity:
+      shopInGameItemType: 4
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 1
+  - identity:
+      shopInGameItemType: 5
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 1
+  - identity:
       shopInGameItemType: 6
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 1
+  - identity:
+      shopInGameItemType: 7
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 2
+  - identity:
+      shopInGameItemType: 8
+      dataId: 0
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 1
+    weight: 2
+  - identity:
+      shopInGameItemType: 9
       dataId: 0
     cost:
       resourceId: 0
@@ -44,4 +92,4 @@ MonoBehaviour:
       resourceId: 0
       resourceType: 1
       resourceNumber: 1
-    weight: 2
+    weight: 1
