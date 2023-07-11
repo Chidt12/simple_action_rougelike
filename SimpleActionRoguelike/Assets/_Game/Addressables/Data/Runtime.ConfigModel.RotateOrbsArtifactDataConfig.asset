@@ -23,10 +23,10 @@ MonoBehaviour:
     orbDamageBonus: 0
     orbDamageFactors:
     - damageFactorStatType: 14
-      damageFactorValue: 0.5
+      damageFactorValue: 0.1
     projectileDamageBonus: 0
     projectileDamageFactors:
     - damageFactorStatType: 14
-      damageFactorValue: 10
+      damageFactorValue: 1
     flySpeed: 15
     flyRange: 15

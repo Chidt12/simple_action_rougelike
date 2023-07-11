@@ -1,2 +1,2 @@
 ﻿data_id,level,point,orb_prefab_name,number_of_orbs,rotate_range,rotate_speed,orb_damage_bonus,orb_damage_factor_stat_type,orb_damage_factor_value,projectile_damage_bonus,projectile_damage_factor_stat_type,projectile_damage_factor_value,fly_speed,fly_range
-0,0,1,orb_blue,5,3,180,0,AttackDamage,0.5,0,AttackDamage,10,15,15
+0,0,1,orb_blue,5,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15

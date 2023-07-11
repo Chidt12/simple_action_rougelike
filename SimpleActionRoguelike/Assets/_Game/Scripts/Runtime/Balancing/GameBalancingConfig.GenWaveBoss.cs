@@ -51,7 +51,7 @@ namespace Runtime.Gameplay.Balancing
             var entities = new List<EntityStageLoadConfigItem>();
             var wavePoint = stagePoint;
 
-            var bossConfig = await DataManager.Config.Load<EnemyConfig>(GetConfigAssetName<EnemyConfig>(bossId));
+            var bossConfig = await DataManager.Config.Load<BossConfig>(GetConfigAssetName<BossConfig>(bossId));
             var bossConfigItem = bossConfig.items.FirstOrDefault(x => x.id == uint.Parse(bossId));
             var maxBossLevel = bossConfigItem.levels.Max(x => x.level);
             var bossLevel = Mathf.Min(heroLevel, maxBossLevel);
