@@ -99,7 +99,7 @@ namespace Runtime.Gameplay.EntitySystem
                 var availableDistance = ownerModel.JumpDistance;
                 foreach (var rayCastCheck in rayCastChecks)
                 {
-                    if (rayCastCheck.collider.gameObject.layer == Layers.OBJECT_LAYER)
+                    if (rayCastCheck.collider.gameObject.layer == Layers.OBSTACLE_LAYER)
                     {
                         var hitPoint = rayCastCheck.collider.ClosestPoint(creatorData.Position);
                         var distance = Vector2.Distance(creatorData.Position, hitPoint);

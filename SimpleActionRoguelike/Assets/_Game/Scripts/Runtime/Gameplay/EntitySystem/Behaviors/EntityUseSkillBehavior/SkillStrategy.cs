@@ -75,8 +75,9 @@ namespace Runtime.Gameplay.EntitySystem
             return true;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
+            CancelSkill();
             cancellationTokenSource?.Cancel();
         }
 

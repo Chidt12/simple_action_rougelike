@@ -4160,7 +4160,7 @@ GameObject:
   - component: {fileID: 3122137437328454434}
   - component: {fileID: 7775422072145440681}
   m_Layer: 0
-  m_Name: map_4_obstacles_arround
+  m_Name: map_4_obstacles_around
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

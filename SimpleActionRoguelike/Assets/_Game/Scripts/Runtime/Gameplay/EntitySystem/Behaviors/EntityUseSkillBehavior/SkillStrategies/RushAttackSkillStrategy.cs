@@ -46,7 +46,7 @@ namespace Runtime.Gameplay.EntitySystem
 
                         foreach (var rayCastCheck in rayCastChecks)
                         {
-                            if (rayCastCheck.collider.gameObject.layer == Layers.OBJECT_LAYER)
+                            if (rayCastCheck.collider.gameObject.layer == Layers.OBSTACLE_LAYER)
                                 return false;
                         }
 

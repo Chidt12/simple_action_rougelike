@@ -8,8 +8,8 @@ namespace Runtime.Definition
         Shop = 3,
         Boss = 4,
 
-        EliteHaveArtifact = 4,
-        NormalHaveArtifact = 5,
+        EliteHaveArtifact = 5,
+        NormalHaveArtifact = 6,
         Lobby = 1_000,
     }
 

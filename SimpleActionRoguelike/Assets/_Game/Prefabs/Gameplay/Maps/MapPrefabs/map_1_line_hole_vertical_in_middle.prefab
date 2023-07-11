@@ -3530,7 +3530,7 @@ GameObject:
   - component: {fileID: 8189846650973209681}
   - component: {fileID: 5940871373661945561}
   - component: {fileID: 8863586136083335004}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Holes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

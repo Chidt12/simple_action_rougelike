@@ -54,7 +54,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: a4d13bf6a3b307546bd0af02f3f28fee
-    m_Address: map_4_obstacles_arround
+    m_Address: map_4_obstacles_around
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: ec7df803cfe4bec4796fa5d1f20af722

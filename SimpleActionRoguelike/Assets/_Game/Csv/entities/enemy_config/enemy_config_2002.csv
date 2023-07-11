@@ -1,2 +1,2 @@
 ﻿id,point,level,detect_range,detected_priority,hp,armor,armor_penetration,crit_chance,crit_damage,move_speed,life_steal,attack_damage,collide_damage,death_type,death_data_id,skill_type,skill_data_id,skill_anim_index,skill_delay_time,auto_input_strategies,trigger_phase_type,trigger_phase_health,trigger_phase_entity_id
-2002,2,1,1000,0,234,0,0,0,0,2.5,0,3,0,,,Shooting,2,0,3,MoveTowardTarget,Normal,,
+2002,2,1,1000,0,50,0,0,0,0,2.5,0,3,0,,,Shooting,2,0,3,MoveTowardTarget,Normal,,

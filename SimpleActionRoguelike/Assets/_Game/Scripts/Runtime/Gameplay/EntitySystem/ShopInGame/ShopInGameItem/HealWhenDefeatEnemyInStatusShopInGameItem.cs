@@ -6,7 +6,7 @@ namespace Runtime.Gameplay.EntitySystem
 {
     public class HealWhenDefeatEnemyInStatusShopInGameItem : ShopInGameItem<HealWhenDefeatEnemyInStatusShopInGameDataConfigItem>, IFinalDamagedModifier
     {
-        public int Priority => throw new System.NotImplementedException();
+        public int Priority => 0;
 
         protected override void Apply()
         {

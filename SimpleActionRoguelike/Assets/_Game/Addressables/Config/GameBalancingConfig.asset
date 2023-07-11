@@ -37,21 +37,21 @@ MonoBehaviour:
   bossMaps:
   - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
   maps:
+  - {fileID: 11400000, guid: 9e1d45991b75f7d41932fdaf711893c4, type: 2}
+  - {fileID: 11400000, guid: 4f6e3fd93a960744da76d45722aa0edd, type: 2}
+  - {fileID: 11400000, guid: 6576d770aecd32548ba51423bc327524, type: 2}
+  - {fileID: 11400000, guid: 065885660c5bffc4ba2baaf5bbbdd215, type: 2}
+  - {fileID: 11400000, guid: cd9e945416503914f8124108ff096c92, type: 2}
+  - {fileID: 11400000, guid: 277630e4ac85c5b47bb7ba55a0d2a796, type: 2}
+  - {fileID: 11400000, guid: b575cb89a3f98b4458483139b8a4869d, type: 2}
+  - {fileID: 11400000, guid: 7aa12fe655f71f0459baaed29385e62c, type: 2}
+  - {fileID: 11400000, guid: eb07867c4e5479345bf62b3532e3bc91, type: 2}
   - {fileID: 11400000, guid: 0da4e20709357934d9c71512926a6cd0, type: 2}
   setupRoomTypes:
   - stageNumber: 0
     roomType: 1000
     setupGateType: 1
-  - stageNumber: 1
-    roomType: 5
-    setupGateType: 1
-  - stageNumber: 2
-    roomType: 1
-    setupGateType: 1
-  - stageNumber: 3
-    roomType: 5
-    setupGateType: 0
-  stageIntervalToFaceBoss: 5
+  stageIntervalToFaceBoss: 2
   stageEndGame: 20
   numberOfGivingShopItemBeforeBoss: 3
   numberOfGivingArtifactBeforeBoss: 2

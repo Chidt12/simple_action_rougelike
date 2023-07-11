@@ -20,7 +20,7 @@ MonoBehaviour:
       detectedPriority: 0
       enemyLevelStats:
         detectRange: 4
-        hp: 100
+        hp: 50
         armor: 0
         armorPenetration: 0
         critChance: 0
