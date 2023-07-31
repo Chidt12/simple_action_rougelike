@@ -1,2 +1,17 @@
 ﻿data_id,point,stat_type,stat_value,stat_modify_type
 0,1,DashNumber,1,0
+1,1,Health,5,0
+2,1,MoveSpeed,0.25,0
+3,1,CritChance,0.05,0
+4,1,CritDamage,0.5,0
+5,1,AttackDamage,5,0
+6,1,Health,10,0
+7,1,MoveSpeed,0.5,0
+8,1,CritChance,0.1,0
+9,1,CritDamage,1,0
+10,1,AttackDamage,10,0
+11,1,Health,15,0
+12,1,MoveSpeed,1,0
+13,1,CritChance,0.1,0
+14,1,CritDamage,1,0
+15,1,AttackDamage,10,0

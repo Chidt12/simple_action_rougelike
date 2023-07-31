@@ -29,5 +29,26 @@ MonoBehaviour:
         m_SheetsServiceProvider: {fileID: 11400000, guid: 79bf58ac6e9a4d141ba0f4e7786b8037, type: 2}
         m_SpreadsheetId: 10zlqlnOT2LPYcU2njd6O2LOfVGSlCJcU1tpp776naD8
         m_SheetId: 733609574
-        m_Columns: []
+        m_Columns:
+        - rid: 2485782103619534848
+        - rid: 2485782103619534849
+        - rid: 2485782103619534850
         m_RemoveMissingPulledKeys: 1
+    - rid: 2485782103619534848
+      type: {class: KeyColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_Column: A
+    - rid: 2485782103619534849
+      type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_Column: B
+        m_LocaleIdentifier:
+          m_Code: en
+        m_IncludeComments: 0
+    - rid: 2485782103619534850
+      type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_Column: C
+        m_LocaleIdentifier:
+          m_Code: vi
+        m_IncludeComments: 0

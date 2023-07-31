@@ -1,2 +1,2 @@
 ﻿data_id,point,number_enemies_to_increase,stat_type,value_each_turn,max_value
-0,1,1,AttackDamage,1,10
+0,1,1,AttackDamage,1,50

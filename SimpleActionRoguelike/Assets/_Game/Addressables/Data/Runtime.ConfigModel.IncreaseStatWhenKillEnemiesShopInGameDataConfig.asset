@@ -18,4 +18,4 @@ MonoBehaviour:
     numberEnemiesToIncrease: 1
     statType: 14
     valueEachTurn: 1
-    maxValue: 10
+    maxValue: 50

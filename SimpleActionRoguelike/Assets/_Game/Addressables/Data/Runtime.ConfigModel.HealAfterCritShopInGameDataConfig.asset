@@ -15,4 +15,4 @@ MonoBehaviour:
   items:
   - point: 1
     dataId: 0
-    healAmount: 3
+    healAmount: 1

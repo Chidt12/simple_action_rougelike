@@ -17,5 +17,5 @@ MonoBehaviour:
     dataId: 0
     buffStat:
       statType: 14
-      value: 100
-      statModifyType: 0
+      value: 1
+      statModifyType: 1

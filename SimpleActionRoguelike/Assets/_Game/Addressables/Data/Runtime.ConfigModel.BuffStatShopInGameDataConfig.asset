@@ -15,6 +15,81 @@ MonoBehaviour:
   items:
   - point: 1
     dataId: 0
+    statType: 101
+    statValue: 1
+    statModifyType: 0
+  - point: 1
+    dataId: 1
+    statType: 2
+    statValue: 5
+    statModifyType: 0
+  - point: 1
+    dataId: 2
+    statType: 7
+    statValue: 0.25
+    statModifyType: 0
+  - point: 1
+    dataId: 3
+    statType: 5
+    statValue: 0.05
+    statModifyType: 0
+  - point: 1
+    dataId: 4
+    statType: 6
+    statValue: 0.5
+    statModifyType: 0
+  - point: 1
+    dataId: 5
     statType: 14
-    statValue: 30
+    statValue: 5
+    statModifyType: 0
+  - point: 1
+    dataId: 6
+    statType: 2
+    statValue: 10
+    statModifyType: 0
+  - point: 1
+    dataId: 7
+    statType: 7
+    statValue: 0.5
+    statModifyType: 0
+  - point: 1
+    dataId: 8
+    statType: 5
+    statValue: 0.1
+    statModifyType: 0
+  - point: 1
+    dataId: 9
+    statType: 6
+    statValue: 1
+    statModifyType: 0
+  - point: 1
+    dataId: 10
+    statType: 14
+    statValue: 10
+    statModifyType: 0
+  - point: 1
+    dataId: 11
+    statType: 2
+    statValue: 15
+    statModifyType: 0
+  - point: 1
+    dataId: 12
+    statType: 7
+    statValue: 1
+    statModifyType: 0
+  - point: 1
+    dataId: 13
+    statType: 5
+    statValue: 0.1
+    statModifyType: 0
+  - point: 1
+    dataId: 14
+    statType: 6
+    statValue: 1
+    statModifyType: 0
+  - point: 1
+    dataId: 15
+    statType: 14
+    statValue: 10
     statModifyType: 0

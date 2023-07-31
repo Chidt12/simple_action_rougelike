@@ -15,16 +15,204 @@ MonoBehaviour:
   m_TableCollectionName: ShopItem
   m_TableCollectionNameGuidString: bc090fb0cd1933048abd836161514f7f
   m_Entries:
-  - m_Id: 3423209376387072
-    m_Key: shop_item_1_0_name
+  - m_Id: 15769533992079360
+    m_Key: shop_item_name_1_0
     m_Metadata:
       m_Items: []
-  - m_Id: 3423209397358592
-    m_Key: shop_item_1_description
+  - m_Id: 15769534004662272
+    m_Key: shop_item_name_1_1
     m_Metadata:
       m_Items: []
-  - m_Id: 3423209397358593
-    m_Key: shop_item_2_description
+  - m_Id: 15769534004662273
+    m_Key: shop_item_name_1_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662274
+    m_Key: shop_item_name_1_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662275
+    m_Key: shop_item_name_1_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662276
+    m_Key: shop_item_name_1_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662277
+    m_Key: shop_item_name_1_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662278
+    m_Key: shop_item_name_1_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662279
+    m_Key: shop_item_name_1_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662280
+    m_Key: shop_item_name_1_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662281
+    m_Key: shop_item_name_1_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662282
+    m_Key: shop_item_name_1_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662283
+    m_Key: shop_item_name_1_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662284
+    m_Key: shop_item_name_1_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662285
+    m_Key: shop_item_name_1_14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662286
+    m_Key: shop_item_name_1_15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662287
+    m_Key: shop_item_name_2_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662288
+    m_Key: shop_item_name_3_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662289
+    m_Key: shop_item_name_4_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662290
+    m_Key: shop_item_name_5_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662291
+    m_Key: shop_item_name_6_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662292
+    m_Key: shop_item_name_7_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662293
+    m_Key: shop_item_name_8_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662294
+    m_Key: shop_item_name_9_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662295
+    m_Key: shop_item_name_10_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662296
+    m_Key: shop_item_description_1_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662297
+    m_Key: shop_item_description_1_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662298
+    m_Key: shop_item_description_1_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662299
+    m_Key: shop_item_description_1_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662300
+    m_Key: shop_item_description_1_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662301
+    m_Key: shop_item_description_1_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662302
+    m_Key: shop_item_description_1_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662303
+    m_Key: shop_item_description_1_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662304
+    m_Key: shop_item_description_1_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662305
+    m_Key: shop_item_description_1_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662306
+    m_Key: shop_item_description_1_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662307
+    m_Key: shop_item_description_1_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662308
+    m_Key: shop_item_description_1_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662309
+    m_Key: shop_item_description_1_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662310
+    m_Key: shop_item_description_1_14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662311
+    m_Key: shop_item_description_1_15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662312
+    m_Key: shop_item_description_2_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662313
+    m_Key: shop_item_description_3_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662314
+    m_Key: shop_item_description_4_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662315
+    m_Key: shop_item_description_5_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662316
+    m_Key: shop_item_description_6_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662317
+    m_Key: shop_item_description_7_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662318
+    m_Key: shop_item_description_8_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662319
+    m_Key: shop_item_description_9_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662320
+    m_Key: shop_item_description_10_0
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -18,8 +18,206 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 3423209376387072
-    m_Localized: Dash more
+  - m_Id: 15769533992079360
+    m_Localized: Dash crystal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662272
+    m_Localized: Health crystal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662273
+    m_Localized: Move crystal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662274
+    m_Localized: Crit chance crystal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662275
+    m_Localized: Crit damage crystal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662276
+    m_Localized: Attack crystal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662277
+    m_Localized: Health diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662278
+    m_Localized: Move diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662279
+    m_Localized: Crit chance diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662280
+    m_Localized: Crit damage diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662281
+    m_Localized: Attack diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662282
+    m_Localized: Health gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662283
+    m_Localized: Move gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662284
+    m_Localized: Crit chance gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662285
+    m_Localized: Crit damage gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662286
+    m_Localized: Attack gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662287
+    m_Localized: Stun boom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662288
+    m_Localized: Heal with effort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662289
+    m_Localized: More rocks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662290
+    m_Localized: Crit boom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662291
+    m_Localized: Heal reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662292
+    m_Localized: Increase Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662293
+    m_Localized: Attack Persistant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662294
+    m_Localized: Heal with luck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662295
+    m_Localized: Weak Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662296
+    m_Localized: Add <color=#02cf32>1</color> more dash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662297
+    m_Localized: Add <color=#02cf32>5</color> max hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662298
+    m_Localized: Add <color=#02cf32>0.25</color> move speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662299
+    m_Localized: Add <color=#02cf32>5%</color> crit chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662300
+    m_Localized: Add <color=#02cf32>50%</color> crit damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662301
+    m_Localized: Add <color=#02cf32>5</color> attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662302
+    m_Localized: Add <color=#02cf32>10</color> max hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662303
+    m_Localized: Add <color=#02cf32>0.5</color> move speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662304
+    m_Localized: Add <color=#02cf32>10%</color> crit chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662305
+    m_Localized: Add <color=#02cf32>100%</color> crit damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662306
+    m_Localized: Add <color=#02cf32>10</color> attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662307
+    m_Localized: Add <color=#02cf32>15</color> max hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662308
+    m_Localized: Add <color=#02cf32>1</color> move speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662309
+    m_Localized: Add <color=#02cf32>20%</color> crit chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662310
+    m_Localized: Add <color=#02cf32>200%</color> crit damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662311
+    m_Localized: Add <color=#02cf32>20</color> attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662312
+    m_Localized: <color=#02cf32>Stun</color> enemy for <color=#02cf32>1s</color>
+      in <color=#02cf32>5th</color> attack.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662313
+    m_Localized: Heal <color=#02cf32>2 hp</color> when killed a stunned enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662314
+    m_Localized: Get <color=#02cf32>10</color> rocks when you meet Matty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662315
+    m_Localized: Crit at <color=#02cf32>4th</color> attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662316
+    m_Localized: Heal <color=#02cf32>5 hp</color> after finish a stage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662317
+    m_Localized: Increase <color=#02cf32>1</color> attack after kill a enemy (max
+      <color=#02cf32>50</color>)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662318
+    m_Localized: Attack increase by <color=#02cf32>20%</color> when hp above <color=#02cf32>60%</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662319
+    m_Localized: Heal <color=#02cf32>1hp</color> after crit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15769534004662320
+    m_Localized: Lower your health, higher your attack
     m_Metadata:
       m_Items: []
   references:

@@ -19,5 +19,5 @@ MonoBehaviour:
     healthPercent: 0.6
     buffStat:
       statType: 14
-      value: 5
-      statModifyType: 0
+      value: 0.2
+      statModifyType: 1
