@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c6161a918c7f847aac03c4c6f76cfd, type: 3}
   m_Name: map_2_obstacles
   m_EditorClassIdentifier: 
-  prefabName: map_2_obstacle
+  prefabName: map_2_obstacles
   point: 0
   limitDistanceToHero: 0
   exceptEnemyIds: []

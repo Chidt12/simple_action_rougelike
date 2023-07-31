@@ -1,13 +1,16 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
+
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEditor.Localization.Plugins.Google;
+
 
 namespace GameEditor.Localization
 {
@@ -149,3 +152,5 @@ namespace GameEditor.Localization
         #endregion Class Methods
     }
 }
+
+#endif

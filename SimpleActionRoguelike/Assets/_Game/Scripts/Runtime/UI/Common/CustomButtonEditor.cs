@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEditor;
 
 namespace Runtime.UI
@@ -14,3 +16,4 @@ namespace Runtime.UI
         }
     }
 }
+#endif

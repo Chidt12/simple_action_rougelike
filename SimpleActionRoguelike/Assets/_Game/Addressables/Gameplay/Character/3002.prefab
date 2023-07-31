@@ -159,7 +159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3529253724500729492}
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2, y: -1, z: 0}
+  m_LocalPosition: {x: -1.2, y: 1.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -190,7 +190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4855006754566877788}
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -2.5, z: 0}
+  m_LocalPosition: {x: -1.5, y: 0.120000064, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,20 +325,24 @@ MonoBehaviour:
     animationType: 2
     stateName: 3002_run
     vfxSpawnPoints: []
+    rotateTowardFaceDirection: 0
     soundFx: 
   - isMainPart: 1
     animationType: 9
     stateName: 3002_attack_1
     vfxSpawnPoints:
     - {fileID: 5588314581383290775}
+    rotateTowardFaceDirection: 0
     soundFx: 
   - isMainPart: 1
     animationType: 10
     stateName: 3002_attack_2
     vfxSpawnPoints:
     - {fileID: 2183436885966397172}
+    rotateTowardFaceDirection: 0
     soundFx: 
   defaultState: 3002_idle
+  defaultRotateTowardFaceDirection: 0
   changeColorSprite: {fileID: 7386596438361353229}
 --- !u!1 &7386596438375481929
 GameObject:

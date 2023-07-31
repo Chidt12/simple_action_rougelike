@@ -9,5 +9,8 @@ namespace Runtime.Definition
         Idle = 4,
         MoveOnPreDefinedPath = 5,
         MoveOnPreDefinedPathFollowTarget = 6,
+
+        FlyToHero = 7,
+        FlyRandomAroundHero = 8,
     }
 }
