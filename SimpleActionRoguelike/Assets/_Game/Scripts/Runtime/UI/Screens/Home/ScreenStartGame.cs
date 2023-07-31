@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Constants;
 using Runtime.Manager;
+using Runtime.Manager.Data;
 using Runtime.Message;
 using System;
 using UnityEngine;
@@ -20,8 +21,15 @@ namespace Runtime.UI
             _startButton.onClick.AddListener(() => {
                 if (!GameManager.Instance.IsTest)
                 {
-                    var windowOptions = new WindowOptions(ScreenIds.HOME);
-                    ScreenNavigator.Instance.LoadSingleScreen(windowOptions, true).Forget();
+                    if(!DataManager.Local.playerBasicLocalData.CheckCompletedTut(TutorialType.GuideGameplay))
+                    {
+
+                    }
+                    else
+                    {
+                        var windowOptions = new WindowOptions(ScreenIds.HOME);
+                        ScreenNavigator.Instance.LoadSingleScreen(windowOptions, true).Forget();
+                    }
                 }
                 else
                 {

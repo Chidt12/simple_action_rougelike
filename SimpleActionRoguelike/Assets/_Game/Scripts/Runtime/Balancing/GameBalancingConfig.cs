@@ -45,6 +45,7 @@ namespace Runtime.Gameplay.Balancing
         [HideIf(nameof(cheat))]
         [Header("=== Map Config ===")]
         [HideIf(nameof(cheat))] public MapLevelScriptableObject lobbyMap;
+        [HideIf(nameof(cheat))] public MapLevelScriptableObject tutorialMap;
         [HideIf(nameof(cheat))] public MapLevelScriptableObject shopMap;
         [HideIf(nameof(cheat))] public MapLevelScriptableObject[] bossMaps;
         [HideIf(nameof(cheat))] public MapLevelScriptableObject[] maps;
@@ -59,6 +60,10 @@ namespace Runtime.Gameplay.Balancing
         [HideIf(nameof(cheat))] public float eliteFactor = 1.5f;
         [HideIf(nameof(cheat))] public float bossFactor = 2f;
 
+        [HideIf(nameof (cheat))]
+        [Header("==== Tutorial Config ===")]
+        [HideIf(nameof(cheat))] public StageLoadConfigItem tutorialStageLoadConfigItem;
+
         [HideIf(nameof(cheat))]
         [Header("=== Artifact Config ===")]
 
@@ -69,6 +74,7 @@ namespace Runtime.Gameplay.Balancing
         [HideIf(nameof(cheat))] public float t;
         [HideIf(nameof(cheat))] public float n;
         [HideIf(nameof(cheat))] public float z;
+
 
         [Header("==== Cheat ====")]
         public bool cheat;
@@ -90,19 +96,23 @@ namespace Runtime.Gameplay.Balancing
             if (cheat)
             {
                 var index = currentStageData.StageNumber % roomTypes.Length;
-                    
+
                 return (cheatMap, stageLoadConfigItems[index], this.roomTypes[index], GameplayGateSetupType.None);
             }
             else
             {
                 var havePresetUpRoom = false;
                 var gateSetUpType = GameplayGateSetupType.None;
-                var preSetUpRoom = setupRoomTypes.FirstOrDefault(x => x.stageNumber == currentStageData.StageNumber);
-                if (preSetUpRoom != null)
+
+                if(roomType != GameplayRoomType.TutorialStage) 
                 {
-                    havePresetUpRoom = true;
-                    roomType = preSetUpRoom.roomType;
-                    gateSetUpType = preSetUpRoom.setupGateType;
+                    var preSetUpRoom = setupRoomTypes.FirstOrDefault(x => x.stageNumber == currentStageData.StageNumber);
+                    if (preSetUpRoom != null)
+                    {
+                        havePresetUpRoom = true;
+                        roomType = preSetUpRoom.roomType;
+                        gateSetUpType = preSetUpRoom.setupGateType;
+                    }
                 }
 
                 if (roomType == GameplayRoomType.Lobby)
@@ -111,6 +121,13 @@ namespace Runtime.Gameplay.Balancing
                     if (gateSetUpType == GameplayGateSetupType.None)
                         gateSetUpType = GameplayGateSetupType.Normal;
                     return (lobbyMap, default, GameplayRoomType.Lobby, gateSetUpType);
+                }
+                else if (roomType == GameplayRoomType.TutorialStage)
+                {
+                    // Load Tutorial Stage.
+                    if (gateSetUpType == GameplayGateSetupType.None)
+                        gateSetUpType = CalculateForGateSetUp(roomType, currentStageData);
+                    return (tutorialMap, tutorialStageLoadConfigItem, GameplayRoomType.TutorialStage, gateSetUpType);
                 }
                 else if (roomType == GameplayRoomType.Shop)
                 {

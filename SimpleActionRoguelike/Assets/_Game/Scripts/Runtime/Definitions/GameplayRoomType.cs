@@ -11,6 +11,7 @@ namespace Runtime.Definition
         EliteHaveArtifact = 5,
         NormalHaveArtifact = 6,
         Lobby = 1_000,
+        TutorialStage = 2_000,
     }
 
     public enum GameplayGateSetupType

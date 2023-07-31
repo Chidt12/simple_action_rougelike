@@ -85,11 +85,13 @@ namespace Runtime.Manager.Gameplay
             _isLoadedShopItems = false;
 
             otherDisposables = new();
-            subscriptions = new();
-            subscriptions.Add(SimpleMessenger.Subscribe<EntityNotifyDiedMessage>(OnEntityDied));
-            subscriptions.Add(SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage));
-            subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
-            
+            subscriptions = new()
+            {
+                SimpleMessenger.Subscribe<EntityNotifyDiedMessage>(OnEntityDied),
+                SimpleMessenger.Subscribe<SendToGameplayMessage>(OnReceiveMessage),
+                SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned)
+            };
+
 
             _cameraManager.Init();
 
@@ -159,7 +161,15 @@ namespace Runtime.Manager.Gameplay
         {
             // Load Level
             _currentStageData = new();
-            await LoadLevelAsync(GameplayRoomType.Lobby);
+
+            if (!GameManager.Instance.IsTest)
+            {
+                await LoadLevelAsync(GameplayRoomType.Lobby);
+            }
+            else
+            {
+                await LoadLevelAsync(GameplayRoomType.TutorialStage);
+            }
 
             // Load Hero.
             await EntitiesManager.Instance.CreateEntityAsync(
