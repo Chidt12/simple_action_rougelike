@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Localization;
 using System;
 
 namespace Runtime.ConfigModel
@@ -18,9 +19,11 @@ namespace Runtime.ConfigModel
 
     public class CreateBuffFlagArtifactDataConfig : ArtifactDataConfig<CreateBuffFlagArtifactDataConfigItem>
     {
-        protected override UniTask<string> GetDescription(IEntityData entityData, CreateBuffFlagArtifactDataConfigItem itemData, CreateBuffFlagArtifactDataConfigItem previousItemData)
+        protected async override UniTask<(string, string)> GetDescription(IEntityData entityData, CreateBuffFlagArtifactDataConfigItem itemData, CreateBuffFlagArtifactDataConfigItem previousItemData)
         {
-            return UniTask.FromResult(string.Empty);
+            var currentDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(itemData.ArtifactType));
+            var previousDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType));
+            return (currentDescription, previousDescription);
         }
     }
 }

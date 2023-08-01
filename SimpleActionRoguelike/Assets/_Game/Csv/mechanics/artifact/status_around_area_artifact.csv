@@ -1,2 +1,6 @@
 ﻿data_id,level,point,rune_life_time,rune_interval,status_data_id,status_type,damage_bonus,damage_factor_stat_type,damage_factor_value,damage_box_height,damage_box_width,damage_box_prefab_name,status_around_spawn_position
 0,0,1,5,5,0,Stun,0,AttackDamage,0.5,5,6,area_around,0
+0,1,1,6,5,0,Stun,0,AttackDamage,1,5,6,area_around,0
+0,2,1,6,4,0,Stun,0,AttackDamage,1.5,5,6,area_around,0
+0,3,1,6,3,0,Stun,0,AttackDamage,2,5,6,area_around,0
+0,4,1,6,3,0,Stun,0,AttackDamage,2.5,5,6,area_around,0

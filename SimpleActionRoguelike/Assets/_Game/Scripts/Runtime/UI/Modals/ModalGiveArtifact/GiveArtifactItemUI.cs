@@ -26,7 +26,7 @@ namespace Runtime.UI
             var description = await buffInGameDataConfig.GetDescription(entityData, identity.level, identity.dataId);
 
             _level.text = $"Level {identity.level}";
-            _description.text = description;
+            _description.text = description.Item1;
             _title.text = identity.artifactType.ToString();
 
             _selectButton.onClick.RemoveAllListeners();

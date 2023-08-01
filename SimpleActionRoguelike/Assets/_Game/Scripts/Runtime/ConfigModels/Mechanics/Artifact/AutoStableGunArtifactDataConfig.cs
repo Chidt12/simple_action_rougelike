@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Localization;
 using System;
 
 namespace Runtime.ConfigModel
@@ -22,9 +23,11 @@ namespace Runtime.ConfigModel
 
     public class AutoStableGunArtifactDataConfig : ArtifactDataConfig<AutoStableGunArtifactDataConfigItem>
     {
-        protected override UniTask<string> GetDescription(IEntityData entityData, AutoStableGunArtifactDataConfigItem itemData, AutoStableGunArtifactDataConfigItem previousItemData)
+        protected override async UniTask<(string, string)> GetDescription(IEntityData entityData, AutoStableGunArtifactDataConfigItem itemData, AutoStableGunArtifactDataConfigItem previousItemData)
         {
-            return UniTask.FromResult(string.Empty);
+            var currentDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(itemData.ArtifactType));
+            var previousDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType));
+            return (currentDescription, previousDescription);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Runtime.UI
             var buffInGameDataConfig = await DataManager.Config.LoadArtifactDataConfig(_artifactType);
             var heroData = EntitiesManager.Instance.HeroData;
             var description = await buffInGameDataConfig.GetDescription(heroData, _level, _dataId);
-            _loadInfoAction?.Invoke(description);
+            _loadInfoAction?.Invoke(description.Item1);
         }
     }
 }

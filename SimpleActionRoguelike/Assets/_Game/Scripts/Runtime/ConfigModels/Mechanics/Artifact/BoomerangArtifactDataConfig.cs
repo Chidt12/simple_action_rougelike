@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Localization;
 using System;
 
 namespace Runtime.ConfigModel
@@ -21,9 +22,11 @@ namespace Runtime.ConfigModel
 
     public class BoomerangArtifactDataConfig : ArtifactDataConfig<BoomerangArtifactDataConfigItem>
     {
-        protected async override UniTask<string> GetDescription(IEntityData entityData, BoomerangArtifactDataConfigItem itemData, BoomerangArtifactDataConfigItem previousItemData)
+        protected async override UniTask<(string, string)> GetDescription(IEntityData entityData, BoomerangArtifactDataConfigItem itemData, BoomerangArtifactDataConfigItem previousItemData)
         {
-            return string.Empty;
+            var currentDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(itemData.ArtifactType));
+            var previousDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType));
+            return (currentDescription, previousDescription);
         }
     }
 }

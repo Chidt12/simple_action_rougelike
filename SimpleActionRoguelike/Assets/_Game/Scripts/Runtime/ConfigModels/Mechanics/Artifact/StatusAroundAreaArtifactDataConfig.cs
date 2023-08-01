@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Localization;
 using System;
 
 namespace Runtime.ConfigModel
@@ -27,9 +28,11 @@ namespace Runtime.ConfigModel
 
     public class StatusAroundAreaArtifactDataConfig : ArtifactDataConfig<StatusArroundAreaArtifactDataConfigItem>
     {
-        protected async override UniTask<string> GetDescription(IEntityData entityData, StatusArroundAreaArtifactDataConfigItem itemData, StatusArroundAreaArtifactDataConfigItem previousItemData)
+        protected async override UniTask<(string, string)> GetDescription(IEntityData entityData, StatusArroundAreaArtifactDataConfigItem itemData, StatusArroundAreaArtifactDataConfigItem previousItemData)
         {
-            return string.Empty;
+            var currentDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(itemData.ArtifactType));
+            var previousDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType));
+            return (currentDescription, previousDescription);
         }
     }
 }

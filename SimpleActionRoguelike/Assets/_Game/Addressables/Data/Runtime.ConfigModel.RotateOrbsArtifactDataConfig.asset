@@ -17,7 +17,7 @@ MonoBehaviour:
     dataId: 0
     level: 0
     orbPrefabName: orb_blue
-    numberOfOrbs: 5
+    numberOfOrbs: 3
     rotateRange: 3
     rotateSpeed: 180
     orbDamageBonus: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
     dataId: 0
     level: 1
     orbPrefabName: orb_blue
-    numberOfOrbs: 5
+    numberOfOrbs: 4
     rotateRange: 3
     rotateSpeed: 180
     orbDamageBonus: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
     dataId: 0
     level: 3
     orbPrefabName: orb_blue
-    numberOfOrbs: 5
+    numberOfOrbs: 6
     rotateRange: 3
     rotateSpeed: 180
     orbDamageBonus: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
     dataId: 0
     level: 4
     orbPrefabName: orb_blue
-    numberOfOrbs: 5
+    numberOfOrbs: 7
     rotateRange: 3
     rotateSpeed: 180
     orbDamageBonus: 0

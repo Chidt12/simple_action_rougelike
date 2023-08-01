@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Localization;
 using Runtime.Manager.Data;
 using System;
 
@@ -16,16 +17,11 @@ namespace Runtime.ConfigModel
 
     public class UpgradeWeaponArtifactDataConfig : ArtifactDataConfig<UpgradeWeaponArtifactDataConfigItem>
     {
-        protected override async UniTask<string> GetDescription(IEntityData entityData, UpgradeWeaponArtifactDataConfigItem itemData, UpgradeWeaponArtifactDataConfigItem previousItemData)
+        protected override async UniTask<(string, string)> GetDescription(IEntityData entityData, UpgradeWeaponArtifactDataConfigItem itemData, UpgradeWeaponArtifactDataConfigItem previousItemData)
         {
-            var weaponData = entityData as IEntityWeaponData;
-            if (weaponData != null)
-            {
-                var weaponDataConfigItem = await DataManager.Config.LoadWeaponConfigItem(weaponData.WeaponModel.WeaponType);
-                var description = await weaponDataConfigItem.GetDescription(itemData.rarityType);
-                return description;
-            }
-            return string.Empty;
+            var currentDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(itemData.ArtifactType));
+            var previousDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType));
+            return (currentDescription, previousDescription);
         }
     }
 }

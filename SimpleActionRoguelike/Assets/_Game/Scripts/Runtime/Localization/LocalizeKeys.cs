@@ -22,8 +22,10 @@ namespace Runtime.Localization
         #endregion UI
 
         public static string GetStatName(StatType statType) => $"stat_{(int)statType}";
-        public static string GetShopItemName(ShopInGameItemType shopInGameItemType, int dataId) => $"shop_item_{(int)shopInGameItemType}_{dataId}_name";
-        public static string GetArtifactName(ArtifactType artifactType) => $"artifact_item_{(int)artifactType}_name";
+        public static string GetShopItemName(ShopInGameItemType shopInGameItemType, int dataId) => $"shop_item_name_{(int)shopInGameItemType}_{dataId}";
+        public static string GetShopItemDescription(ShopInGameItemType shopInGameItemType, int dataId) => $"shop_item_description_{(int)shopInGameItemType}_{dataId}";
+        public static string GetArtifactName(ArtifactType artifactType) => $"artifact_name_{(int)artifactType}";
+        public static string GetArtifactDescription(ArtifactType artifactType) => $"artifact_description_{(int)artifactType}";
         public static string GetEntityName(int entityId) => $"{entityId}_name";
     }
 }

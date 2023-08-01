@@ -1,6 +1,6 @@
 ﻿data_id,level,point,orb_prefab_name,number_of_orbs,rotate_range,rotate_speed,orb_damage_bonus,orb_damage_factor_stat_type,orb_damage_factor_value,projectile_damage_bonus,projectile_damage_factor_stat_type,projectile_damage_factor_value,fly_speed,fly_range
-0,0,1,orb_blue,5,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
-0,1,1,orb_blue,5,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
+0,0,1,orb_blue,3,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
+0,1,1,orb_blue,4,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
 0,2,1,orb_blue,5,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
-0,3,1,orb_blue,5,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
-0,4,1,orb_blue,5,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
+0,3,1,orb_blue,6,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15
+0,4,1,orb_blue,7,3,180,0,AttackDamage,0.1,0,AttackDamage,1,15,15

@@ -22,7 +22,7 @@ namespace Runtime.ConfigModel
     public abstract class ArtifactDataConfig : ScriptableObject
     {
         public abstract ArtifactDataConfigItem GetArtifactItem(int level, int dataId);
-        public abstract UniTask<string> GetDescription(IEntityData entityData, int level, int dataId);
+        public abstract UniTask<(string, string)> GetDescription(IEntityData entityData, int level, int dataId);
     }
 
     public abstract class ArtifactDataConfig<T> : ArtifactDataConfig  where T : ArtifactDataConfigItem, new()
@@ -34,7 +34,7 @@ namespace Runtime.ConfigModel
             return items.FirstOrDefault(x => x.level == level && x.dataId == dataId);
         }
 
-        public async override UniTask<string> GetDescription(IEntityData entityData, int level, int dataId)
+        public async override UniTask<(string, string)> GetDescription(IEntityData entityData, int level, int dataId)
         {
             var item = GetArtifactItem(level, dataId) as T;
             if(level > 0)
@@ -45,6 +45,6 @@ namespace Runtime.ConfigModel
             return await GetDescription(entityData, item, null);
         }
 
-        protected abstract UniTask<string> GetDescription(IEntityData entityData, T itemData, T previousItemData);
+        protected abstract UniTask<(string, string)> GetDescription(IEntityData entityData, T itemData, T previousItemData);
     }
 }

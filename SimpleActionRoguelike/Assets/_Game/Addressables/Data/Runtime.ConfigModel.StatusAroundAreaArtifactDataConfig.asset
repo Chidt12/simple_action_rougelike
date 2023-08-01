@@ -29,3 +29,67 @@ MonoBehaviour:
     damageBoxWidth: 6
     damageBoxPrefabName: area_around
     statusAroundSpawnPosition: 0
+  - point: 1
+    dataId: 0
+    level: 1
+    runeLifeTime: 6
+    runeInterval: 5
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+    triggeredStatus:
+      statusDataId: 0
+      statusType: 900
+    damageBoxHeight: 5
+    damageBoxWidth: 6
+    damageBoxPrefabName: area_around
+    statusAroundSpawnPosition: 0
+  - point: 1
+    dataId: 0
+    level: 2
+    runeLifeTime: 6
+    runeInterval: 4
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1.5
+    triggeredStatus:
+      statusDataId: 0
+      statusType: 900
+    damageBoxHeight: 5
+    damageBoxWidth: 6
+    damageBoxPrefabName: area_around
+    statusAroundSpawnPosition: 0
+  - point: 1
+    dataId: 0
+    level: 3
+    runeLifeTime: 6
+    runeInterval: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 2
+    triggeredStatus:
+      statusDataId: 0
+      statusType: 900
+    damageBoxHeight: 5
+    damageBoxWidth: 6
+    damageBoxPrefabName: area_around
+    statusAroundSpawnPosition: 0
+  - point: 1
+    dataId: 0
+    level: 4
+    runeLifeTime: 6
+    runeInterval: 3
+    damageBonus: 0
+    damageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 2.5
+    triggeredStatus:
+      statusDataId: 0
+      statusType: 900
+    damageBoxHeight: 5
+    damageBoxWidth: 6
+    damageBoxPrefabName: area_around
+    statusAroundSpawnPosition: 0
