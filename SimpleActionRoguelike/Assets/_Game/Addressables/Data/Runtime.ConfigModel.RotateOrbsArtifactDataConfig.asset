@@ -30,3 +30,71 @@ MonoBehaviour:
       damageFactorValue: 1
     flySpeed: 15
     flyRange: 15
+  - point: 1
+    dataId: 0
+    level: 1
+    orbPrefabName: orb_blue
+    numberOfOrbs: 5
+    rotateRange: 3
+    rotateSpeed: 180
+    orbDamageBonus: 0
+    orbDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.1
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+    flySpeed: 15
+    flyRange: 15
+  - point: 1
+    dataId: 0
+    level: 2
+    orbPrefabName: orb_blue
+    numberOfOrbs: 5
+    rotateRange: 3
+    rotateSpeed: 180
+    orbDamageBonus: 0
+    orbDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.1
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+    flySpeed: 15
+    flyRange: 15
+  - point: 1
+    dataId: 0
+    level: 3
+    orbPrefabName: orb_blue
+    numberOfOrbs: 5
+    rotateRange: 3
+    rotateSpeed: 180
+    orbDamageBonus: 0
+    orbDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.1
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+    flySpeed: 15
+    flyRange: 15
+  - point: 1
+    dataId: 0
+    level: 4
+    orbPrefabName: orb_blue
+    numberOfOrbs: 5
+    rotateRange: 3
+    rotateSpeed: 180
+    orbDamageBonus: 0
+    orbDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 0.1
+    projectileDamageBonus: 0
+    projectileDamageFactors:
+    - damageFactorStatType: 14
+      damageFactorValue: 1
+    flySpeed: 15
+    flyRange: 15

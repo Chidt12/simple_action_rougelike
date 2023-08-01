@@ -1,2 +1,6 @@
 ﻿data_id,level,point,rune_life_time,rune_interval,number_of_hits,damage_bonus,damage_factor_stat_type,damage_factor_value,status_data_id,status_type,fly_speed,fly_distance,projectile_id
 0,0,1,5,5,3,0,AttackDamage,1,0,Stun,15,6,zigzag_projectile
+0,1,1,6,4,3,0,AttackDamage,1.5,0,Stun,15,6,zigzag_projectile
+0,2,1,6,3,4,0,AttackDamage,1.5,0,Stun,15,6,zigzag_projectile
+0,3,1,6,2,4,0,AttackDamage,2,0,Stun,15,6,zigzag_projectile
+0,4,1,6,2,5,0,AttackDamage,2,0,Stun,15,6,zigzag_projectile

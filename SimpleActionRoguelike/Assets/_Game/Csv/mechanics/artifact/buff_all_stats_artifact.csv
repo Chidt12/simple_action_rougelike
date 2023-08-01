@@ -1,3 +1,11 @@
 ﻿data_id,level,point,rune_life_time,rune_interval,change_form_prefab,form_id,buff_duration,buff_stat_type,buff_value,buff_stat_modify_type
-0,0,0,6,5,holy_vfx,1,5,MoveSpeed,5,0
-,,,,,,,,AttackSpeed,5,1
+0,0,0,5,5,holy_vfx,1,5,MoveSpeed,1,0
+,,,,,,,,AttackDamage,0.1,1
+0,1,0,6,4,holy_vfx,1,5,MoveSpeed,1.5,0
+,,,,,,,,AttackDamage,0.1,1
+0,2,0,6,4,holy_vfx,1,5,MoveSpeed,2,0
+,,,,,,,,AttackDamage,0.2,1
+0,3,0,6,4,holy_vfx,1,5,MoveSpeed,2,0
+,,,,,,,,AttackDamage,0.3,1
+0,4,0,6,4,holy_vfx,1,5,MoveSpeed,2,0
+,,,,,,,,AttackDamage,0.4,1

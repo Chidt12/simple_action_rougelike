@@ -16,15 +16,75 @@ MonoBehaviour:
   - point: 0
     dataId: 0
     level: 0
-    runeLifeTime: 6
+    runeLifeTime: 5
     runeInterval: 5
     changeFormPrefab: holy_vfx
     formId: 1
     buffStats:
     - statType: 7
-      value: 5
+      value: 1
       statModifyType: 0
-    - statType: 9
-      value: 5
+    - statType: 14
+      value: 0.1
+      statModifyType: 1
+    buffDuration: 5
+  - point: 0
+    dataId: 0
+    level: 1
+    runeLifeTime: 6
+    runeInterval: 4
+    changeFormPrefab: holy_vfx
+    formId: 1
+    buffStats:
+    - statType: 7
+      value: 1.5
+      statModifyType: 0
+    - statType: 14
+      value: 0.1
+      statModifyType: 1
+    buffDuration: 5
+  - point: 0
+    dataId: 0
+    level: 2
+    runeLifeTime: 6
+    runeInterval: 4
+    changeFormPrefab: holy_vfx
+    formId: 1
+    buffStats:
+    - statType: 7
+      value: 2
+      statModifyType: 0
+    - statType: 14
+      value: 0.2
+      statModifyType: 1
+    buffDuration: 5
+  - point: 0
+    dataId: 0
+    level: 3
+    runeLifeTime: 6
+    runeInterval: 4
+    changeFormPrefab: holy_vfx
+    formId: 1
+    buffStats:
+    - statType: 7
+      value: 2
+      statModifyType: 0
+    - statType: 14
+      value: 0.3
+      statModifyType: 1
+    buffDuration: 5
+  - point: 0
+    dataId: 0
+    level: 4
+    runeLifeTime: 6
+    runeInterval: 4
+    changeFormPrefab: holy_vfx
+    formId: 1
+    buffStats:
+    - statType: 7
+      value: 2
+      statModifyType: 0
+    - statType: 14
+      value: 0.4
       statModifyType: 1
     buffDuration: 5

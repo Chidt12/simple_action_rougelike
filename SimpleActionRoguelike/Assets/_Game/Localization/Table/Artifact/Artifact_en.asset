@@ -17,7 +17,79 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: abb0f6a2125c26c47b62b40edea5bb5f, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 16081021355626496
+    m_Localized: Rotate Orbs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021393375232
+    m_Localized: Upgrade Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569536
+    m_Localized: Auto Gun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569537
+    m_Localized: Frozen Strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569538
+    m_Localized: Lightning Storm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569539
+    m_Localized: Fire Circle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569540
+    m_Localized: Better Me
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569541
+    m_Localized: Buff Flag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569542
+    m_Localized: Boomerang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569544
+    m_Localized: Create an orb after kill an enemy, trigger to release attack enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569545
+    m_Localized: Upgrade current weapon to another level!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569546
+    m_Localized: Create an gun that auto attack enemies around
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569547
+    m_Localized: Spawn frozen thorns forward that attacks and stun enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569548
+    m_Localized: Create lightning storm that stun enemies around
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569549
+    m_Localized: Create fire around, cause damage and stun enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569550
+    m_Localized: Change your level and become faster in certain time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569551
+    m_Localized: Create a flag and you're stronger when inside the flag area effect.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081021397569552
+    m_Localized: Create an boomerang that stun target enemy and some enemies nearby
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
