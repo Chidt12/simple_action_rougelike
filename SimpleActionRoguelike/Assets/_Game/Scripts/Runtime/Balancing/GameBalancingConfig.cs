@@ -3,6 +3,7 @@ using Runtime.ConfigModel;
 using Runtime.Constants;
 using Runtime.Definition;
 using Runtime.Gameplay.Manager;
+using Runtime.Manager.Data;
 using Runtime.Manager.Gameplay;
 using Sirenix.OdinInspector;
 using System;
@@ -141,7 +142,7 @@ namespace Runtime.Gameplay.Balancing
                     // Set up room and gate types.
                     if (!havePresetUpRoom)
                     {
-                        roomType = CalculateForGameplayRoomType(roomType, currentStageData);
+                        roomType = await CalculateForGameplayRoomType(roomType, currentStageData);
                     }
 
                     if(gateSetUpType == GameplayGateSetupType.None)
@@ -151,7 +152,7 @@ namespace Runtime.Gameplay.Balancing
                     var heroLevel = heroPoint / heroLevelConvert;
                     var stagePoint = t * Mathf.Pow(heroPoint, n) + z;
 
-                    if (roomType == GameplayRoomType.Elite || roomType == GameplayRoomType.EliteHaveArtifact)
+                    if (roomType == GameplayRoomType.ElitePower || roomType == GameplayRoomType.EliteSpeed)
                     {
                         // Set up for the room of elite.
                         return await SetUpForEliteRoomAsync(stagePoint, heroLevel, gateSetUpType, roomType, currentStageData);
@@ -192,14 +193,14 @@ namespace Runtime.Gameplay.Balancing
                     return GameplayGateSetupType.NormalAndShop;
                 }
 
-                var numberOfEnteredElite = currentStageData.GetNumberOfGateSetUpPassed(GameplayGateSetupType.NormalAndElite);
+                var numberOfEnteredElite = currentStageData.GetNumberOfGateSetUpPassed(GameplayGateSetupType.Elite);
 
                 // Giving shop chance => dont have to be enough limit.
                 if(numberOfEnteredElite < numberOfGivingShopItemBeforeBoss)
                 {
                     var random = Random.Range(0, 2);
                     if(random > 0)
-                        return GameplayGateSetupType.NormalAndElite;
+                        return GameplayGateSetupType.Elite;
                     else
                         return GameplayGateSetupType.Normal;
                 }
@@ -208,21 +209,19 @@ namespace Runtime.Gameplay.Balancing
             }
         }
 
-        private GameplayRoomType CalculateForGameplayRoomType(GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
+        private async UniTask<GameplayRoomType> CalculateForGameplayRoomType(GameplayRoomType roomType, CurrentLoadedStageData currentStageData)
         {
             // Set up room type for get artifact reason.
 
-            var numberOfEnteredElite = currentStageData.GetNumberRoomPassed(GameplayRoomType.NormalHaveArtifact) + currentStageData.GetNumberRoomPassed(GameplayRoomType.EliteHaveArtifact);
-            if (numberOfEnteredElite < numberOfGivingArtifactBeforeBoss)
+            var numberOfArtifact = currentStageData.GetNumberRoomPassed(GameplayRoomType.NormalHaveArtifact);
+            if (numberOfArtifact < numberOfGivingArtifactBeforeBoss)
             {
                 // Giving shop chance => must have to be enough limit.
-                var lackNumber = numberOfGivingArtifactBeforeBoss - numberOfEnteredElite;
+                var lackNumber = numberOfGivingArtifactBeforeBoss - numberOfArtifact;
                 if(currentStageData.StageNumber + lackNumber >= stageIntervalToFaceBoss)
                 {
                     if (roomType == GameplayRoomType.Normal)
                         return GameplayRoomType.NormalHaveArtifact;
-                    else if (roomType == GameplayRoomType.Elite)
-                        return GameplayRoomType.EliteHaveArtifact;
                 }
                 else
                 {
@@ -231,10 +230,15 @@ namespace Runtime.Gameplay.Balancing
                     {
                         if (roomType == GameplayRoomType.Normal)
                             return GameplayRoomType.NormalHaveArtifact;
-                        else if (roomType == GameplayRoomType.Elite)
-                            return GameplayRoomType.EliteHaveArtifact;
                     }
                 }
+            }
+
+            if(roomType == GameplayRoomType.NormalHaveArtifact)
+            {
+                var items = await DataManager.Config.LoadCurrentSuitableArtifactItems(GameplayManager.Instance.CurrentBuffInGameItems, GameplayManager.NUMBER_OF_SELECT_ARTIFACT);
+                if (items.Count < GameplayManager.NUMBER_OF_SELECT_ARTIFACT)
+                    return GameplayRoomType.Normal;
             }
 
             return roomType;

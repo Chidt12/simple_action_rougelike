@@ -52,7 +52,7 @@ MonoBehaviour:
   - stageNumber: 0
     roomType: 1000
     setupGateType: 1
-  stageIntervalToFaceBoss: 2
+  stageIntervalToFaceBoss: 5
   stageEndGame: 20
   numberOfGivingShopItemBeforeBoss: 3
   numberOfGivingArtifactBeforeBoss: 2

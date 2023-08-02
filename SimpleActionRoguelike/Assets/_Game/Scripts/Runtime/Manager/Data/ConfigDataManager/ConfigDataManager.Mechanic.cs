@@ -3,18 +3,69 @@ using Runtime.ConfigModel;
 using Runtime.Constants;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Runtime.Manager.Data
 {
+    public enum ShopItemCategoryType
+    {
+        Power,
+        Speed,
+        Both,
+    }
+
+    public static class ListExtensions
+    {
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            Random rng = new Random();
+
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }   
+    }
+
     public partial class ConfigDataManager
     {
-        public async UniTask<List<ShopInGameStageLoadConfigItem>> LoadCurrentSuitableShopInGameItems(List<ShopInGameItem> currentShopInGames, int number)
+        public async UniTask<List<ShopInGameStageLoadConfigItem>> LoadCurrentSuitableShopInGameItems(List<ShopInGameItem> currentShopInGames, int number, ShopItemCategoryType type)
         {
             var config = await Load<ShopInGameStageLoadConfig>();
-            var suitableItems = config.items;
-            return suitableItems.Take(number).ToList();
+
+            var suitableList = new List<ShopInGameStageLoadConfigItem>();
+            foreach (var item in config.items)
+            {
+                if (item.isPower && type == ShopItemCategoryType.Speed)
+                    continue;
+
+                if (!item.isPower && type == ShopItemCategoryType.Power)
+                    continue;
+
+                if (item.canAppear > 0)
+                {
+                    var current = currentShopInGames.Count(x => x.DataId == item.identity.dataId && x.ShopInGameItemType == item.identity.shopInGameItemType);
+                    if(current < item.canAppear)
+                    {
+                        suitableList.Add(item);
+                    }
+                }
+                else
+                {
+                    suitableList.Add(item);
+                }
+            }
+
+            var shuffleList = suitableList.ToList();
+            shuffleList.Shuffle();
+            return shuffleList.Take(number).ToList();
         }
 
         public async UniTask<ShopInGameDataConfigItem> LoadShopInGameDataConfigItem(ShopInGameItemType shopInGameItemType, int dataId)
@@ -50,6 +101,8 @@ namespace Runtime.Manager.Data
                 }
             }
 
+            var shuffleList = suitableItems.ToList();
+            shuffleList.Shuffle();
             return suitableItems.Take(number).ToList();
         }
 

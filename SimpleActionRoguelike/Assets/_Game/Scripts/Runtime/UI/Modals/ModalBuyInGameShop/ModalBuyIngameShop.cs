@@ -1,6 +1,9 @@
 using Cysharp.Threading.Tasks;
 using Runtime.ConfigModel;
+using Runtime.Definition;
 using Runtime.Manager;
+using Runtime.Manager.Data;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
 using System.Collections.Generic;
@@ -31,6 +34,7 @@ namespace Runtime.UI
         private int _currentSelectedIndex;
         private bool _isSelectedResetButton;
         private ModalBuyIngameShopData _data;
+        private ShopInGameStageLoadConfigItem[] _items;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -41,8 +45,12 @@ namespace Runtime.UI
         public async override UniTask Initialize(ModalBuyIngameShopData data)
         {
             _data = data;
+            _items = data.items.ToArray();
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayBuyingItem, true);
             await UpdateUI();
+
+            _resetButton.onClick.RemoveAllListeners();
+            _resetButton.onClick.AddListener(OnReset);
         }
 
         private async UniTask UpdateUI()
@@ -58,15 +66,37 @@ namespace Runtime.UI
             _currentSelectedIndex = -1;
             _isSelectedResetButton = false;
 
-            for (int i = 0; i < _data.items.Count; i++)
+            for (int i = 0; i < _items.Length; i++)
             {
-                await _itemUIs[i].Init(_data.items[i], _data.onSelectShopInGameItem, OnConfirmedBuy);
+                await _itemUIs[i].Init(_items[i], _data.onSelectShopInGameItem, OnConfirmedBuy);
             }
 
             for (int i = 0; i < _itemUIs.Length; i++)
             {
-                _itemUIs[i].gameObject.SetActive(i < _data.items.Count);
+                _itemUIs[i].gameObject.SetActive(i < _items.Length);
             }
+        }
+
+        private void OnReset()
+        {
+            var value = DataManager.Transient.GetGameMoneyType(InGameMoneyType.Gold);
+            if (value < GameplayManager.RESET_COST)
+            {
+                ToastController.Instance.Show("Not Enough Resource!");
+                return;
+            }
+
+            DataManager.Transient.RemoveMoney(InGameMoneyType.Gold, GameplayManager.RESET_COST);
+            OnResetAsync().Forget();
+        }
+
+        private async UniTaskVoid OnResetAsync()
+        {
+            var shopType = GameplayManager.Instance.CurrentStageData.CurrentRoomType == GameplayRoomType.ElitePower ? ShopItemCategoryType.Power : ShopItemCategoryType.Speed;
+            var items = await DataManager.Config.LoadCurrentSuitableShopInGameItems(GameplayManager.Instance.CurrentShopInGameItems, GameplayManager.NUMBER_OF_SELECT_SHOP_ITEM, shopType);
+            _items = items.ToArray();
+
+            await UpdateUI();
         }
 
         private void OnConfirmedBuy(ShopInGameStageLoadConfigItem obj)

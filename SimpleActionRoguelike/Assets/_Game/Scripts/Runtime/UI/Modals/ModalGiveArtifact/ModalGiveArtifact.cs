@@ -7,6 +7,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using Runtime.Message;
+using static UnityEditor.Progress;
+using Runtime.Definition;
+using Runtime.Manager.Data;
+using Runtime.Manager.Gameplay;
 
 namespace Runtime.UI
 {
@@ -34,6 +38,7 @@ namespace Runtime.UI
         private bool _isSelected;
         private bool _isSelectedResetButton;
         private ModalGiveArtifactData _data;
+        private ArtifactIdentity[] _items;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -46,21 +51,30 @@ namespace Runtime.UI
         public override async UniTask Initialize(ModalGiveArtifactData data)
         {
             _data = data;
+            _items = data.Items;
             _currentSelectedIndex = -1;
             _isSelectedResetButton = false;
             _isSelected = false;
 
             GameManager.Instance.SetGameStateType(Definition.GameStateType.GameplayChoosingItem, true);
 
-            for (int i = 0; i < data.Items.Length; i++)
+            await UpdateUI();
+
+            _resetButton.onClick.RemoveAllListeners();
+            _resetButton.onClick.AddListener(OnReset);
+        }
+
+        private async UniTask UpdateUI()
+        {
+            for (int i = 0; i < _items.Length; i++)
             {
                 var index = i;
-                await _itemUIs[index].Init(data.EntityData, data.Items[index], (input) =>
+                await _itemUIs[index].Init(_data.EntityData, _items[index], (input) =>
                 {
                     if (!_isSelected)
                     {
                         _isSelected = true;
-                        data.OnSelectArtifact?.Invoke(input);
+                        _data.OnSelectArtifact?.Invoke(input);
                         ScreenNavigator.Instance.PopModal(true).Forget();
                     }
                 });
@@ -70,8 +84,28 @@ namespace Runtime.UI
             {
                 var index = i;
                 var go = _itemUIs[index].gameObject;
-                go.SetActive(index < data.Items.Length);
+                go.SetActive(index < _items.Length);
             }
+        }
+
+        private void OnReset()
+        {
+            var value = DataManager.Transient.GetGameMoneyType(InGameMoneyType.Gold);
+            if (value < GameplayManager.RESET_COST)
+            {
+                ToastController.Instance.Show("Not Enough Resource!");
+                return;
+            }
+
+            DataManager.Transient.RemoveMoney(InGameMoneyType.Gold, GameplayManager.RESET_COST);
+            OnResetAsync().Forget();
+        }
+
+        private async UniTaskVoid OnResetAsync()
+        {
+            var items = await DataManager.Config.LoadCurrentSuitableArtifactItems(GameplayManager.Instance.CurrentBuffInGameItems, GameplayManager.NUMBER_OF_SELECT_ARTIFACT);
+            _items = items.Select(x => x.identity).ToArray();
+            await UpdateUI();
         }
 
         protected override void OnKeyPress(InputKeyPressMessage message)

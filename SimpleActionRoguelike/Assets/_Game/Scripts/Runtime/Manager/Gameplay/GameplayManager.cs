@@ -41,8 +41,9 @@ namespace Runtime.Manager.Gameplay
         [Header("==== Sounds ====")]
         [SerializeField] private string _heroAppear;
 
-        protected const int NUMBER_OF_SELECT_ARTIFACT = 3;
-        protected const int NUMBER_OF_SELECT_SHOP_ITEM = 3;
+        public const int NUMBER_OF_SELECT_ARTIFACT = 3;
+        public const int NUMBER_OF_SELECT_SHOP_ITEM = 3;
+        public const int RESET_COST = 5;
         protected MechanicSystemManager mechanicSystemManager;
         protected ShopInGameManager shopInGameManager;
         protected GameplayMessageCenter messageCenter;
@@ -50,7 +51,7 @@ namespace Runtime.Manager.Gameplay
         private List<ISubscription> subscriptions;
         private List<IDisposable> otherDisposables;
 
-        protected int RewardCoins = 20;
+        protected int RewardCoins = 15;
 
         protected bool hasFinishedSpawnWave;
         protected int maxWaveIndex;
@@ -243,7 +244,8 @@ namespace Runtime.Manager.Gameplay
 
         private async UniTaskVoid LoadGiveShopAsync()
         {
-            var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems(shopInGameManager.CurrentShopInGameItems, NUMBER_OF_SELECT_SHOP_ITEM);
+            var shopType = CurrentStageData.CurrentRoomType == GameplayRoomType.ElitePower ? ShopItemCategoryType.Power : ShopItemCategoryType.Speed;
+            var shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems(shopInGameManager.CurrentShopInGameItems, NUMBER_OF_SELECT_SHOP_ITEM, shopType);
             var selectInGameShopData = new ModalGiveInGameShopData(shopItems.ToArray(), OnGiveShopItem);
             await ScreenNavigator.Instance.LoadModal(new WindowOptions(ModalIds.GIVE_INGAME_SHOP, false), selectInGameShopData);
         }
@@ -253,7 +255,7 @@ namespace Runtime.Manager.Gameplay
             if(!_isLoadedShopItems)
             {
                 _isLoadedShopItems = true;
-                _shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems(shopInGameManager.CurrentShopInGameItems, NUMBER_OF_SELECT_SHOP_ITEM);
+                _shopItems = await ConfigDataManager.Instance.LoadCurrentSuitableShopInGameItems(shopInGameManager.CurrentShopInGameItems, NUMBER_OF_SELECT_SHOP_ITEM, ShopItemCategoryType.Both);
             }
 
             if(_shopItems.Count <= 0)
@@ -297,7 +299,7 @@ namespace Runtime.Manager.Gameplay
             await shopInGameManager.AddShopInGameItem(EntitiesManager.Instance.HeroData as IEntityModifiedStatData, identity.shopInGameItemType, identity.dataId);
             var dataConfig = await ConfigDataManager.Instance.LoadShopInGameDataConfig(identity.shopInGameItemType);
             var (title, description) = await dataConfig.GetDescription(identity.dataId);
-            ToastController.Instance.Show(description);
+            ToastController.Instance.Show("Received " + title);
         }
 
         private async UniTaskVoid LoadGiveArtifactAsync()
@@ -399,11 +401,11 @@ namespace Runtime.Manager.Gameplay
                     mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
                     mapLevel.gates[1].gameObject.SetActive(false);
                     break;
-                case GameplayGateSetupType.NormalAndElite:
+                case GameplayGateSetupType.Elite:
                     mapLevel.gates[0].gameObject.SetActive(true);
-                    mapLevel.gates[0].SetUp(GameplayRoomType.Normal);
+                    mapLevel.gates[0].SetUp(GameplayRoomType.EliteSpeed);
                     mapLevel.gates[1].gameObject.SetActive(true);
-                    mapLevel.gates[1].SetUp(GameplayRoomType.Elite);
+                    mapLevel.gates[1].SetUp(GameplayRoomType.ElitePower);
                     break;
                 case GameplayGateSetupType.NormalAndShop:
                     mapLevel.gates[0].gameObject.SetActive(true);
@@ -546,11 +548,13 @@ namespace Runtime.Manager.Gameplay
                 PoolManager.Instance.Return(item.gameObject);
             }
 
-            if (_currentStageData.CurrentRoomType == GameplayRoomType.EliteHaveArtifact 
-                || _currentStageData.CurrentRoomType == GameplayRoomType.Elite
+            if (_currentStageData.CurrentRoomType == GameplayRoomType.EliteSpeed 
+                || _currentStageData.CurrentRoomType == GameplayRoomType.ElitePower
                 || _currentStageData.CurrentRoomType == GameplayRoomType.NormalHaveArtifact)
             {
-                if (_currentStageData.CurrentRoomType == GameplayRoomType.Elite)
+                if (_currentStageData.CurrentRoomType == GameplayRoomType.ElitePower
+                    || _currentStageData.CurrentRoomType == GameplayRoomType.EliteSpeed
+                    )
                 {
                     var shopChest = Instantiate(_shopChest);
                     _checkEndStageConditions.Add(shopChest);
@@ -561,15 +565,6 @@ namespace Runtime.Manager.Gameplay
                     var artifactChest = Instantiate(_artifactChest);
                     _checkEndStageConditions.Add(artifactChest);
                     artifactChest.transform.position = MapManager.Instance.SpawnPoints[1].transform.position;
-                }
-                else if (_currentStageData.CurrentRoomType == GameplayRoomType.EliteHaveArtifact)
-                {
-                    var shopChest = Instantiate(_shopChest);
-                    _checkEndStageConditions.Add(shopChest);
-                    shopChest.transform.position = MapManager.Instance.SpawnPoints[1].transform.position;
-                    var artifactChest = Instantiate(_artifactChest);
-                    _checkEndStageConditions.Add(artifactChest);
-                    artifactChest.transform.position = MapManager.Instance.SpawnPoints[2].transform.position;
                 }
             }
             else

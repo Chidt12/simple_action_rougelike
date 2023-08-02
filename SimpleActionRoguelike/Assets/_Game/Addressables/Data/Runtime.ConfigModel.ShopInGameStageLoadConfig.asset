@@ -19,77 +19,247 @@ MonoBehaviour:
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 1
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 2
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 3
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 4
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: -1
+    isPower: 1
+  - identity:
+      shopInGameItemType: 1
+      dataId: 5
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: -1
+    isPower: 1
+  - identity:
+      shopInGameItemType: 1
+      dataId: 6
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 20
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 7
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 20
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 8
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 20
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 9
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 20
+    weight: 0
+    canAppear: -1
+    isPower: 1
+  - identity:
+      shopInGameItemType: 1
+      dataId: 10
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 20
+    weight: 0
+    canAppear: -1
+    isPower: 1
+  - identity:
+      shopInGameItemType: 1
+      dataId: 11
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 30
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 12
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 30
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 13
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 30
+    weight: 0
+    canAppear: -1
+    isPower: 0
+  - identity:
+      shopInGameItemType: 1
+      dataId: 14
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 30
+    weight: 0
+    canAppear: -1
+    isPower: 1
+  - identity:
+      shopInGameItemType: 1
+      dataId: 15
+    cost:
+      resourceId: 0
+      resourceType: 1
+      resourceNumber: 30
+    weight: 0
+    canAppear: -1
+    isPower: 1
   - identity:
       shopInGameItemType: 2
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 1
   - identity:
       shopInGameItemType: 3
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 0
   - identity:
       shopInGameItemType: 4
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 1
   - identity:
       shopInGameItemType: 5
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 0
   - identity:
       shopInGameItemType: 6
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 1
   - identity:
       shopInGameItemType: 7
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 2
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 0
   - identity:
       shopInGameItemType: 8
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 2
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 1
   - identity:
       shopInGameItemType: 9
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 0
   - identity:
       shopInGameItemType: 10
       dataId: 0
     cost:
       resourceId: 0
       resourceType: 1
-      resourceNumber: 1
-    weight: 1
+      resourceNumber: 10
+    weight: 0
+    canAppear: 1
+    isPower: 1

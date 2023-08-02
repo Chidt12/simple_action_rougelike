@@ -19,6 +19,26 @@ MonoBehaviour:
       dataId: 0
     weight: 0
   - identity:
+      artifactType: 1
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 1
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 1
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 1
+      level: 4
+      dataId: 0
+    weight: 0
+  - identity:
       artifactType: 2
       level: 0
       dataId: 0
@@ -47,10 +67,50 @@ MonoBehaviour:
       artifactType: 3
       level: 0
       dataId: 0
-    weight: 1
+    weight: 0
+  - identity:
+      artifactType: 3
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 3
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 3
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 3
+      level: 4
+      dataId: 0
+    weight: 0
   - identity:
       artifactType: 4
       level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 4
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 4
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 4
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 4
+      level: 4
       dataId: 0
     weight: 0
   - identity:
@@ -59,8 +119,48 @@ MonoBehaviour:
       dataId: 0
     weight: 0
   - identity:
+      artifactType: 5
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 5
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 5
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 5
+      level: 4
+      dataId: 0
+    weight: 0
+  - identity:
       artifactType: 6
       level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 6
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 6
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 6
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 6
+      level: 4
       dataId: 0
     weight: 0
   - identity:
@@ -69,12 +169,72 @@ MonoBehaviour:
       dataId: 0
     weight: 0
   - identity:
+      artifactType: 7
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 7
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 7
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 7
+      level: 4
+      dataId: 0
+    weight: 0
+  - identity:
       artifactType: 8
       level: 0
       dataId: 0
     weight: 0
   - identity:
+      artifactType: 8
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 8
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 8
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 8
+      level: 4
+      dataId: 0
+    weight: 0
+  - identity:
       artifactType: 9
       level: 0
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 9
+      level: 1
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 9
+      level: 2
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 9
+      level: 3
+      dataId: 0
+    weight: 0
+  - identity:
+      artifactType: 9
+      level: 4
       dataId: 0
     weight: 0

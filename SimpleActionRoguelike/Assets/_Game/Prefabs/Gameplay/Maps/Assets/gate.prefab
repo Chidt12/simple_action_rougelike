@@ -102,13 +102,15 @@ MonoBehaviour:
   _collider2D: {fileID: 958659742984185185}
   _graphics:
   - gateType: 1
-    icon: {fileID: 82770838, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
+    icon: {fileID: 632041388, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
   - gateType: 2
     icon: {fileID: -1284115067, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
   - gateType: 3
     icon: {fileID: -1081543089, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
   - gateType: 4
-    icon: {fileID: 798944756, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
+    icon: {fileID: -2022440852, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
+  - gateType: 5
+    icon: {fileID: 82770838, guid: 7a8048f5a895aba41a6a7f146bc168c1, type: 3}
 --- !u!210 &6442892501446929941
 SortingGroup:
   m_ObjectHideFlags: 0

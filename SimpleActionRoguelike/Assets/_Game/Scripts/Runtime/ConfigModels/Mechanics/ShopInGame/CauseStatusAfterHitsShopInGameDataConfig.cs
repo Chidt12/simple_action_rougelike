@@ -19,7 +19,7 @@ namespace Runtime.ConfigModel
         protected async override UniTask<(string, string)> GetDescription(CauseStatusAfterHitsShopInGameDataConfigItem itemData)
         {
             var title = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemName(itemData.ShopInGameType, itemData.dataId));
-            var description = string.Empty;
+            var description = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemDescription(itemData.ShopInGameType, itemData.dataId));
             return (title, description);
         }
     }

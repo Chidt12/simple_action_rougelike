@@ -18,11 +18,9 @@ namespace Runtime.ConfigModel
     {
         protected override async UniTask<(string, string)> GetDescription(BuffStatShopInGameDataConfigItem itemData)
         {
-            var isPercentValue = itemData.statType.IsPercentValue() || itemData.statModifyType.IsPercentValue();
             var title = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemName(itemData.ShopInGameType, itemData.dataId));
-            var statName = await LocalizeManager.GetLocalizeAsync(LocalizeTable.GENERAL, LocalizeKeys.GetStatName(itemData.statType));
-            var description = $"{statName} +{(isPercentValue ? itemData.statValue * 100 : itemData.statValue)} {(isPercentValue?"%":"")}";
-            return(title, description);
+            var description = await LocalizeManager.GetLocalizeAsync(LocalizeTable.SHOP_ITEM, LocalizeKeys.GetShopItemDescription(itemData.ShopInGameType, itemData.dataId));
+            return (title, description);
         }
     }
 }

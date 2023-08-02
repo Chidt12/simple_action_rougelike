@@ -23,6 +23,8 @@ namespace Runtime.ConfigModel
         public ShopInGameIdentity identity;
         public ResourceData cost;
         public float weight;
+        public int canAppear;
+        public bool isPower;
     } 
 
     public class ShopInGameStageLoadConfig : ScriptableObject
