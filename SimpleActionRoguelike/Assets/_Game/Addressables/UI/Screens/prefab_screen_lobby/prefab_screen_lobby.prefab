@@ -381,6 +381,7 @@ MonoBehaviour:
   _previousWeaponButton: {fileID: 1615337889395400532}
   _nextWeaponButton: {fileID: 7116240870278256103}
   _startGameButton: {fileID: 592698484904186589}
+  _weaponDescription: {fileID: 5530864173672434671}
 --- !u!1 &3194603088979160835
 GameObject:
   m_ObjectHideFlags: 0

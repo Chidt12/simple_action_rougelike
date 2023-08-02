@@ -25,7 +25,7 @@ MonoBehaviour:
         armorPenetration: 0
         critChance: 0
         critDamage: 0
-        moveSpeed: 1.5
+        moveSpeed: 4
         lifeSteal: 0
         attackDamage: 3
         collideDamage: 1

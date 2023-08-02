@@ -26,17 +26,14 @@ namespace Runtime.UI
             _selectButtons[0].onClick.AddListener(OnClickNewGame);
 
             _selectButtons[1].onClick.RemoveAllListeners();
-            _selectButtons[1].onClick.AddListener(() => { });
-
-            _selectButtons[2].onClick.RemoveAllListeners();
-            _selectButtons[2].onClick.AddListener(() =>
+            _selectButtons[1].onClick.AddListener(() =>
             {
                 var options = new WindowOptions(ModalIds.GAME_SETTINGS);
                 ScreenNavigator.Instance.LoadModal(options).Forget();
             });
 
-            _selectButtons[3].onClick.RemoveAllListeners();
-            _selectButtons[3].onClick.AddListener(OnClickQuit);
+            _selectButtons[2].onClick.RemoveAllListeners();
+            _selectButtons[2].onClick.AddListener(OnClickQuit);
 
             EnterAButton(_selectButtons[0]);
             currentSelectedIndex = 0;

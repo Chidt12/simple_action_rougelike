@@ -27,14 +27,14 @@ MonoBehaviour:
         critDamage: 0
         moveSpeed: 1.5
         lifeSteal: 0
-        attackDamage: 3
+        attackDamage: 8
         collideDamage: 1
       skillIdentities:
       - skillType: 5
         skillDataId: 1
         skillAnimIndex: 0
       skillDelayTimes:
-      - value: 3
+      - value: 2
       skillTriggerPhases:
       - triggerPhaseType: 0
         triggerPhaseHealth: 0

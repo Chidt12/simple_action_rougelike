@@ -18,6 +18,7 @@ namespace Runtime.UI
 {
     public class ScreenGameplay : Screen
     {
+        [SerializeField] private TextMeshProUGUI _currentStageText;
         [SerializeField] private Image _progress;
         [SerializeField] private TextMeshProUGUI _progressText;
         [SerializeField] private Animator _hurtAnimator;
@@ -53,13 +54,18 @@ namespace Runtime.UI
             _stackArtifactIcons = new();
             _cancellationTokenSource = new();
 
-            _subscriptions = new();
-            _subscriptions.Add(SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned));
-            _subscriptions.Add(SimpleMessenger.Subscribe<EntitySpawnedMessage>(OnEntitySpawned));
-            _subscriptions.Add(SimpleMessenger.Subscribe<FinishedLoadNextLevelMessage>(OnLoadNextLevel));
-            _subscriptions.Add(SimpleMessenger.Subscribe<UpdateCurrentArtifactMessage>(OnUpdateCurrentArtifact));
-            _subscriptions.Add(SimpleMessenger.Subscribe<UpdateCurrentCollectedArtifactMessage>(OnUpdateCollectedArtifact));
-            _subscriptions.Add(SimpleMessenger.Subscribe<EntityIntroducedMessage>(OnEntityIntroduced));
+            _subscriptions = new()
+            {
+                SimpleMessenger.Subscribe<HeroSpawnedMessage>(OnHeroSpawned),
+                SimpleMessenger.Subscribe<EntitySpawnedMessage>(OnEntitySpawned),
+                SimpleMessenger.Subscribe<FinishedLoadNextLevelMessage>(OnLoadNextLevel),
+                SimpleMessenger.Subscribe<UpdateCurrentArtifactMessage>(OnUpdateCurrentArtifact),
+                SimpleMessenger.Subscribe<UpdateCurrentCollectedArtifactMessage>(OnUpdateCollectedArtifact),
+                SimpleMessenger.Subscribe<EntityIntroducedMessage>(OnEntityIntroduced),
+                SimpleMessenger.Subscribe<EnteredNextLevelMessage>(OnEnteredNextLevel)
+            };
+
+            _currentStageText.text = $"Stage 1";
 
             InitializeStackArtifacts();
             InitializeRuneArtifacts();
@@ -116,6 +122,11 @@ namespace Runtime.UI
                     StartIntroduce(message).Forget();
                 }
             }
+        }
+
+        private void OnEnteredNextLevel(EnteredNextLevelMessage message)
+        {
+            _currentStageText.text = $"Stage {GameplayManager.Instance.CurrentStageData.StageNumber}";
         }
 
         private async UniTaskVoid StartIntroduce(EntityIntroducedMessage message)

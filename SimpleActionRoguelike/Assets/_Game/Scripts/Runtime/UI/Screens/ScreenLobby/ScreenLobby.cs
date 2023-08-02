@@ -9,6 +9,7 @@ using Runtime.Message;
 using System;
 using System.Linq;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ namespace Runtime.UI
         [SerializeField] private Button _previousWeaponButton;
         [SerializeField] private Button _nextWeaponButton;
         [SerializeField] private Button _startGameButton;
+        [SerializeField] private TextMeshProUGUI _weaponDescription;
 
         private CancellationTokenSource _updateUICancellationTokenSource;
 
@@ -97,6 +99,15 @@ namespace Runtime.UI
                 var stringValue = $"{(statBonus.statType.IsPercentValue() ? statBonus.value * 100 + "%" : statBonus.value)}";
                 item.SetValue(stringValue);
                 item.gameObject.SetActive(true);
+            }
+
+            if (weaponType == WeaponType.ShortGun)
+            {
+                _weaponDescription.text = "Fires a bullet straight towards the target";
+            }
+            else if (weaponType == WeaponType.Boomerang)
+            {
+                _weaponDescription.text = "Fires a boomerang in the target direction, the boomerang then returns to deal damage along the way";
             }
         }
 
