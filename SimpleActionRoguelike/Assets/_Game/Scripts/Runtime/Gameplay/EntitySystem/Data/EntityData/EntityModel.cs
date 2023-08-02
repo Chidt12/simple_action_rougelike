@@ -25,6 +25,7 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsPausedMove { get; set; }
         public bool IsInvincible { get; set; }
         public Vector2 Position { get; set; }
+        public Vector2 CenterPosition { get; set; }
         public Action DeathEvent { get; set; }
         public Action<EntityReactionType> ReactionChangedEvent { get; set; }
         public Action<Vector2, bool> ForceUpdatePosition { get; set; }

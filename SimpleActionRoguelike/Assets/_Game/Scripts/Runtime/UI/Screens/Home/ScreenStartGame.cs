@@ -23,7 +23,7 @@ namespace Runtime.UI
                 {
                     if(!DataManager.Local.playerBasicLocalData.CheckCompletedTut(TutorialType.GuideGameplay))
                     {
-
+                        GameManager.Instance.StartLoadingGameplayAsync().Forget();
                     }
                     else
                     {

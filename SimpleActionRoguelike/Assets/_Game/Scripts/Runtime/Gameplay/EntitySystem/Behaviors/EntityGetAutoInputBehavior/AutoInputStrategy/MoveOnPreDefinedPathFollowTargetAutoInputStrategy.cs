@@ -40,6 +40,7 @@ namespace Runtime.Gameplay.EntitySystem
             if(indexPointOfTarget == indexPointOfCreator)
             {
                 findingNewPath = false;
+                hasFoundAPath = false;
             }
             else
             {

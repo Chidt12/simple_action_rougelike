@@ -42,6 +42,7 @@ namespace Runtime.Gameplay.EntitySystem
             }
             else
             {
+                hasFoundAPath = false;
                 findingNewPath = false;
             }
         }

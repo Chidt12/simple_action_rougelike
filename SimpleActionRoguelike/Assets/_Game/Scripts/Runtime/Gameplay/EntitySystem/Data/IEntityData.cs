@@ -20,6 +20,7 @@ namespace Runtime.Gameplay.EntitySystem
         public bool IsInvincible { get; set; }
         int EntityUID { get; }
         public Vector2 Position { get; set; }
+        public Vector2 CenterPosition { get; set; }
         public Transform EntityTransform { get; set; }
         Action DeathEvent { get; set; }
         Action<EntityReactionType> ReactionChangedEvent { get; set; }

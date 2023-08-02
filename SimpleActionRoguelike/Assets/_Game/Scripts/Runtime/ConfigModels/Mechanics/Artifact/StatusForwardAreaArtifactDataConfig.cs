@@ -24,7 +24,9 @@ namespace Runtime.ConfigModel
         protected override async UniTask<(string, string)> GetDescription(IEntityData entityData, StatusForwardAreaArtifactDataConfigItem itemData, StatusForwardAreaArtifactDataConfigItem previousItemData)
         {
             var currentDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(itemData.ArtifactType));
-            var previousDescription = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType));
+            var previousDescription = previousItemData != null ?
+                await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactDescription(previousItemData.ArtifactType))
+                : string.Empty;
             return (currentDescription, previousDescription);
         }
     }

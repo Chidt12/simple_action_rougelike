@@ -84,7 +84,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual bool CanFindPath()
         {
-            return !findingNewPath && currentRefindTargetTime > RefindTargetMinTime;
+            return !findingNewPath && !hasFoundAPath && currentRefindTargetTime > RefindTargetMinTime;
         }
 
         protected abstract void FindNewPath();
@@ -137,6 +137,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual void PathFoundCompleted(List<Vector3> positions, bool makeSmooth = true)
         {
+            findingNewPath = false;
             reachedEndOfPath = false;
             pathPositions = positions;
             if(makeSmooth)

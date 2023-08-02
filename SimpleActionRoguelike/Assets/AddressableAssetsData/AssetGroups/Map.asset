@@ -65,6 +65,10 @@ MonoBehaviour:
     m_Address: sfx_enter_gate
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 8c18e8d4d6f4ac0408f564b142e74769
+    m_Address: map_tutorial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

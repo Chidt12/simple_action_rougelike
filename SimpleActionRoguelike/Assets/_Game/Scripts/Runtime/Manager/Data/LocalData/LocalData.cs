@@ -40,6 +40,11 @@ namespace Runtime.Manager.Data
             ObscuredFilePrefs.Save();
         }
 
+        public void ClearAllData()
+        {
+            ObscuredFilePrefs.DeleteAll();
+        }
+
         public void SavePlayerData()
         {
             Set(playerBasicLocalData);

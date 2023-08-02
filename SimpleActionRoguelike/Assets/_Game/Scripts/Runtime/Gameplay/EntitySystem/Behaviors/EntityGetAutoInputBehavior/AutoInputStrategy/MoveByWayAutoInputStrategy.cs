@@ -45,6 +45,7 @@ namespace Runtime.Gameplay.EntitySystem
             else
             {
                 findingNewPath = false;
+                hasFoundAPath = false;
             }
         }
 

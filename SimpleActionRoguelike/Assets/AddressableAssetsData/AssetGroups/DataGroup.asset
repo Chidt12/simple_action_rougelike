@@ -197,6 +197,14 @@ MonoBehaviour:
     m_Address: Runtime.ConfigModel.UpgradeWeaponArtifactDataConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: c5269459452c9ba47b02949db3e8f15c
+    m_Address: Runtime.ConfigModel.EnemyConfig_2001 1.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e3a07da200436a447baeea82aa9e3c22
+    m_Address: Runtime.ConfigModel.EnemyConfig_2000.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 96b4f3d5d5b441a4eb047971affb0f97, type: 2}
   m_SchemaSet:

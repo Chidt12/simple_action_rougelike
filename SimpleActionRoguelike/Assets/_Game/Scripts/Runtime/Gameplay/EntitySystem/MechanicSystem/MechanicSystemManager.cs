@@ -8,6 +8,7 @@ using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using ZBase.Foundation.PubSub;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -37,8 +38,10 @@ namespace Runtime.Gameplay.EntitySystem
             _artifacts = new();
             _collectedArtifacts = new();
 
-            _subscriptions = new();
-            _subscriptions.Add(SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPress));
+            _subscriptions = new()
+            {
+                SimpleMessenger.Subscribe<InputKeyPressMessage>(OnKeyPress)
+            };
         }
 
         private void OnKeyPress(InputKeyPressMessage keyPressMessage)
@@ -84,6 +87,13 @@ namespace Runtime.Gameplay.EntitySystem
                     buffItem.Dispose();
                 _artifacts.Clear();
             }
+
+            foreach (var item in _subscriptions)
+            {
+                item.Dispose();
+            }
+
+            _subscriptions.Clear();
         }
 
         public async UniTask ResetForNextStage()
@@ -96,6 +106,15 @@ namespace Runtime.Gameplay.EntitySystem
 
         public void AddCollectedArtifact(ArtifactType artifactType, int dataId)
         {
+            if(GameplayManager.Instance.CurrentStageData.CurrentRoomType == GameplayRoomType.TutorialStage)
+            {
+                var tutorialManager = GameObject.FindAnyObjectByType<TutorialManager>();
+                if (tutorialManager)
+                {
+                    tutorialManager.SetText("Right Click To Trigger Skill");
+                }
+            }
+
             _collectedArtifacts.Push(new CollectedArtifact(dataId, artifactType));
             SimpleMessenger.Publish(new UpdateCurrentCollectedArtifactMessage(artifactType, dataId, UpdatedCurrentCollectedArtifactType.Add));
         }

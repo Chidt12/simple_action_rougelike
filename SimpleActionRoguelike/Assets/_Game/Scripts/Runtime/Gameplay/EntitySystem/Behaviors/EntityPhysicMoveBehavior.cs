@@ -10,6 +10,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         [SerializeField]
         private Rigidbody2D _rb;
+        [SerializeField]
+        private Transform _centerTransform;
 
         private IEntityControlData _controlData;
         private float _moveSpeed;
@@ -54,6 +56,7 @@ namespace Runtime.Gameplay.EntitySystem
                     Vector3 nextPosition = _rb.position + Time.fixedDeltaTime * _controlData.MoveDirection * _moveSpeed;
                     _rb.MovePosition(nextPosition);
                     _controlData.Position = _rb.position;
+                    _controlData.CenterPosition = _centerTransform.position;
                 }
                 await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken: _fixedUpdateTokenSource.Token);
             }
@@ -65,11 +68,13 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 transform.position = position;
                 _controlData.Position = position;
+                _controlData.CenterPosition = _centerTransform.position;
             }
             else
             {
                 _rb.MovePosition(position);
                 _controlData.Position = _rb.position;
+                _controlData.CenterPosition = _centerTransform.position;
             }
         }
 

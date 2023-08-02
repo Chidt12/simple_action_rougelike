@@ -74,6 +74,7 @@ namespace Runtime.Manager.Gameplay
         public ShopInGameManager ShopInGameManager => shopInGameManager;
         public List<ArtifactIdentity> CurrentBuffInGameItems => mechanicSystemManager.GetCurrentBuffsInGame();
         public List<ShopInGameItem> CurrentShopInGameItems => shopInGameManager.CurrentShopInGameItems;
+        public CurrentLoadedStageData CurrentStageData => _currentStageData;
         public GameBalancingConfig GameBalancingConfig => GameplayDataManager.Instance.GetGameBalancingConfig();
         public int CurrentGameplayTimeInSecond => waveTimer.CurrentGameplayTime;
         public int CurrentWaveIndex { get; protected set; }
@@ -134,9 +135,9 @@ namespace Runtime.Manager.Gameplay
             waveTimer.Dispose();
             _cameraManager.Dispose();
 
-            CollisionSystem.Instance.Dispose();
             EntitiesManager.Instance.Dipose();
             MapManager.Instance.Dispose();
+            CollisionSystem.Instance.Dispose();
 
             // Clear Map
             if (_checkEndStageConditions != null)
@@ -162,7 +163,7 @@ namespace Runtime.Manager.Gameplay
             // Load Level
             _currentStageData = new();
 
-            if (!GameManager.Instance.IsTest)
+            if (DataManager.Local.playerBasicLocalData.CheckCompletedTut(TutorialType.GuideGameplay))
             {
                 await LoadLevelAsync(GameplayRoomType.Lobby);
             }
@@ -479,6 +480,17 @@ namespace Runtime.Manager.Gameplay
             }
             else
             {
+                // Give player card for tutorial
+                if(CurrentWaveIndex == 0 && _currentStageData.CurrentRoomType == GameplayRoomType.TutorialStage)
+                {
+                    ToastController.Instance.Show("Received auto gun skill!");
+                    OnSelectBuffItemAsync(new ArtifactIdentity(ArtifactType.AutoStableGun, 0, 0)).Forget();
+
+                    var tutorialManager = FindObjectOfType<TutorialManager>();
+                    if (tutorialManager)
+                        tutorialManager.SetText("Wait to collect rune on map!");
+                }
+
                 CurrentWaveIndex += 1;
                 StartWave();
             }
@@ -503,6 +515,12 @@ namespace Runtime.Manager.Gameplay
 
         private UniTask HandleWinLevelAsync()
         {
+            if(_currentStageData.CurrentRoomType == GameplayRoomType.TutorialStage)
+            {
+                DataManager.Local.playerBasicLocalData.SetCompleteTut(TutorialType.GuideGameplay);
+                DataManager.Local.SavePlayerData();
+            }
+
             if(_currentStageData.StageNumber >= GameBalancingConfig.StageEndGame)
             {
                 SimpleMessenger.Publish(new FinishedCurrentLevelMessage(true, true));

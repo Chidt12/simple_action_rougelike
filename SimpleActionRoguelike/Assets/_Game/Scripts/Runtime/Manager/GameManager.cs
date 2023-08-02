@@ -4,8 +4,10 @@ using Runtime.Core.Singleton;
 using Runtime.Definition;
 using Runtime.Localization;
 using Runtime.Manager.Audio;
+using Runtime.Manager.Data;
 using Runtime.Manager.Gameplay;
 using Runtime.UI;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -131,6 +133,12 @@ namespace Runtime.Manager
             GameplayDataManager.Instance.Dispose();
             GameplayManager.Instance.Dispose();
             await StartLoadingGameplayAsync();
+        }
+
+        [Button("Clear All Data")]
+        public void ClearAllData()
+        {
+            DataManager.Local.ClearAllData();
         }
     }
 }

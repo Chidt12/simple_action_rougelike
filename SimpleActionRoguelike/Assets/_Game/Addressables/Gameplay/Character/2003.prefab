@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveWithRandomSpeed: 1
+  _centerPosition: {fileID: 3073519060712474542}
   _moveRandomOffset: 0.4
 --- !u!114 &5675825263781601908
 MonoBehaviour:
@@ -494,11 +495,11 @@ MonoBehaviour:
   animations:
   - isMainPart: 1
     animationType: 2
-    stateName: 2001_run
+    stateName: 2003_run
     vfxSpawnPoints: []
     rotateTowardFaceDirection: 0
     soundFx: 
-  defaultState: 2001_idle
+  defaultState: 2003_idle
   defaultRotateTowardFaceDirection: 0
   changeColorSprite: {fileID: 6882819894183790082}
 --- !u!1001 &3137334094845904114

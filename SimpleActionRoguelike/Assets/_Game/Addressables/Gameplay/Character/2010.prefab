@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveWithRandomSpeed: 1
+  _centerPosition: {fileID: 8172275554399054075}
   _moveRandomOffset: 0.4
 --- !u!114 &1516025449373453601
 MonoBehaviour:

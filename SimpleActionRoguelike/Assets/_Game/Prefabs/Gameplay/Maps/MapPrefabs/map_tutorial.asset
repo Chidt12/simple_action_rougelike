@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: def087e8471008e419ebbe074e2830c4, type: 3}
-  m_Name: Runtime.ConfigModel.StunStatusDataConfig
+  m_Script: {fileID: 11500000, guid: f5c6161a918c7f847aac03c4c6f76cfd, type: 3}
+  m_Name: map_tutorial
   m_EditorClassIdentifier: 
-  items:
-  - dataId: 0
-    chance: 1
-    duration: 0.2
-  - dataId: 1
-    chance: 1
-    duration: 0.2
+  prefabName: map_tutorial
+  point: 0
+  limitDistanceToHero: 0
+  exceptEnemyIds: []
+  includedEnemyIds: []

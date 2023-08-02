@@ -91,7 +91,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             if (_currentTarget != null)
             {
-                var direction = _currentTarget.Position - (Vector2)_rotateTransform.position;
+                var direction = _currentTarget.CenterPosition - (Vector2)_rotateTransform.position;
                 var toRotation = direction.ToQuaternion(0);
                 _rotateTransform.rotation = Quaternion.RotateTowards(_rotateTransform.rotation, toRotation, ROTATE_SPEED * Time.deltaTime);
                 var degree = Quaternion.Angle(_rotateTransform.rotation, Quaternion.identity);

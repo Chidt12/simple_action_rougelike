@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ed00ae9b9220846b6297aeff7a2873, type: 3}
+  m_Name: Runtime.ConfigModel.EnemyConfig_2000.csv
+  m_EditorClassIdentifier: 
+  items:
+  - id: 2000
+    levels:
+    - point: 0
+      level: 1
+      detectedPriority: 0
+      enemyLevelStats:
+        detectRange: 4
+        hp: 40
+        armor: 0
+        armorPenetration: 0
+        critChance: 0
+        critDamage: 0
+        moveSpeed: 0
+        lifeSteal: 0
+        attackDamage: 0
+        collideDamage: 0
+      skillIdentities: []
+      skillDelayTimes: []
+      skillTriggerPhases: []
+      autoInputStrategies: 
+      deathDataIdentity:
+        deathDataId: 0
+        deathType: 0

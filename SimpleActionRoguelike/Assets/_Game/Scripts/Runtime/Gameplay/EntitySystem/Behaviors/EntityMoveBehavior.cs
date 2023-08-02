@@ -10,6 +10,8 @@ namespace Runtime.Gameplay.EntitySystem
     {
         [SerializeField]
         private bool _moveWithRandomSpeed;
+        [SerializeField]
+        private Transform _centerPosition;
         [ShowIf(nameof(_moveWithRandomSpeed))]
         [SerializeField]
         private float _moveRandomOffset;
@@ -24,6 +26,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             _controlData = controlData;
             _controlData.Position = transform.position;
+            _controlData.CenterPosition = _centerPosition.position;
             _controlData.ForceUpdatePosition = OnForceUpdatePosition;
 
             if (entityStatData.TryGetStat(StatType.MoveSpeed, out var moveSpeedStat))
@@ -57,6 +60,7 @@ namespace Runtime.Gameplay.EntitySystem
                 Vector3 nextPosition = _controlData.Position + _controlData.MoveDirection.normalized * moveSpeed * deltaTime;
                 transform.position = Vector2.MoveTowards(_controlData.Position, nextPosition, moveSpeed * deltaTime);
                 _controlData.Position = nextPosition;
+                _controlData.CenterPosition = _centerPosition.position;
             }
         }
 
@@ -64,6 +68,7 @@ namespace Runtime.Gameplay.EntitySystem
         {
             transform.position = position;
             _controlData.Position = position;
+            _controlData.CenterPosition = _centerPosition.position;
         }
 
         private void OnStatChanged(float updatedValue)

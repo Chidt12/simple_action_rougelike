@@ -110,7 +110,7 @@ namespace Runtime.Gameplay.EntitySystem
                             orb.transform.SetParent(null);
                             var projectileStrategyData = new FlyFollowThroughProjectileStrategyData(false, 0, ownerData.flyRange, ownerData.flySpeed, OnProjectileCallback);
                             var projectileStrategy = ProjectileStrategyFactory.GetProjectileStrategy(ProjectileStrategyType.FlyFollowThrough);
-                            var projectileDirection = currentTarget.Position - orb.CenterPosition;
+                            var projectileDirection = currentTarget.CenterPosition - orb.CenterPosition;
                             projectileStrategy.Init(projectileStrategyData, orb, projectileDirection, orb.CenterPosition, default, currentTarget);
                             orb.InitStrategy(projectileStrategy);
                         }
