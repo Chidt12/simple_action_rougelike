@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using Runtime.Message;
-using static UnityEditor.Progress;
 using Runtime.Definition;
 using Runtime.Manager.Data;
 using Runtime.Manager.Gameplay;
