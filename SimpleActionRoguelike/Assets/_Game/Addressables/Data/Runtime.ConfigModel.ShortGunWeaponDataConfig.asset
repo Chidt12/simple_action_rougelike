@@ -18,7 +18,7 @@ MonoBehaviour:
       value: 10
       statModifyType: 0
     - statType: 2
-      value: 40
+      value: 15
       statModifyType: 0
     - statType: 5
       value: 0.1

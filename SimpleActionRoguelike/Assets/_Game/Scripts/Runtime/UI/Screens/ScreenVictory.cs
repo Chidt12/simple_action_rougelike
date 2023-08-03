@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using Runtime.Definition;
 using Runtime.Manager;
+using Runtime.Manager.Data;
+using Runtime.Manager.Gameplay;
 using Runtime.Message;
 using System;
 using TMPro;
@@ -13,7 +15,6 @@ namespace Runtime.UI
         #region Members
 
         [SerializeField] private CustomButton[] _selectButtons;
-        [SerializeField] private TextMeshProUGUI _timeText;
         [SerializeField] private float _delayInteract = 1f;
 
         private float _startTime;
@@ -24,6 +25,13 @@ namespace Runtime.UI
 
         public override UniTask Initialize(Memory<object> args)
         {
+            var currentStage = GameplayManager.Instance.CurrentStageData.StageNumber;
+            if(DataManager.Local.playerBasicLocalData.highestStage < currentStage)
+            {
+                DataManager.Local.playerBasicLocalData.highestStage = currentStage;
+                DataManager.Local.SavePlayerData();
+            }
+
             GameManager.Instance.SetGameStateType(GameStateType.WinGameplay);
             for (int i = 0; i < _selectButtons.Length; i++)
             {

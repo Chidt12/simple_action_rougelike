@@ -23,7 +23,6 @@ MonoBehaviour:
   allEnemyIds:
   - 2001
   - 2002
-  - 2003
   - 2008
   - 2009
   allEliteEnemyIds:

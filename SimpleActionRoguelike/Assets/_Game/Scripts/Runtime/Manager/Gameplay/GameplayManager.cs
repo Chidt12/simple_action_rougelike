@@ -147,7 +147,7 @@ namespace Runtime.Manager.Gameplay
 
             if (_currentLevelMap)
             {
-                Destroy(_currentLevelMap.gameObject);
+                PoolManager.Instance.Return(_currentLevelMap.gameObject);
                 _currentLevelMap = null;
             }
 

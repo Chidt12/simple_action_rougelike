@@ -103,7 +103,7 @@ namespace Runtime.Manager.Data
 
             var shuffleList = suitableItems.ToList();
             shuffleList.Shuffle();
-            return suitableItems.Take(number).ToList();
+            return shuffleList.Take(number).ToList();
         }
 
         public async UniTask<ArtifactDataConfigItem> LoadArtifactDataConfigItem(ArtifactType artifactType, int level, int dataId)

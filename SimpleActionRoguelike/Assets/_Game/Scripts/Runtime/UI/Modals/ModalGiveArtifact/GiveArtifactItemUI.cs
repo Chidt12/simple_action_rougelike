@@ -4,6 +4,7 @@ using Runtime.Constants;
 using Runtime.Core.Pool;
 using Runtime.Definition;
 using Runtime.Gameplay.EntitySystem;
+using Runtime.Localization;
 using Runtime.Manager.Data;
 using System;
 using TMPro;
@@ -27,7 +28,7 @@ namespace Runtime.UI
 
             _level.text = $"Level {identity.level}";
             _description.text = description.Item1;
-            _title.text = identity.artifactType.ToString();
+            _title.text = await LocalizeManager.GetLocalizeAsync(LocalizeTable.ARTIFACT, LocalizeKeys.GetArtifactName(identity.artifactType));
 
             _selectButton.onClick.RemoveAllListeners();
             _selectButton.onClick.AddListener(() =>

@@ -24,6 +24,9 @@ namespace Runtime.Manager.Data
         [JsonProperty("3")]
         public int sfxSettings;
 
+        [JsonProperty("5")]
+        public int highestStage;
+
         [JsonProperty("4")]
         public Dictionary<TutorialType, bool> TutorialGuides { get; private set; }
 

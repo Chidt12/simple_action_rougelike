@@ -363,6 +363,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   selectedGameObject: {fileID: 97739022070185123}
+  _soundFx: 
+  _selectedSoundFx: 
 --- !u!1 &2104937226348812882
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +489,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   selectedGameObject: {fileID: 7525339718618935024}
+  _soundFx: 
+  _selectedSoundFx: 
 --- !u!1 &3673232807947222572
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +745,8 @@ MonoBehaviour:
   _selectButtons:
   - {fileID: 6578936051044018354}
   - {fileID: 5470497930009910540}
-  _timeText: {fileID: 8607742511789986568}
+  _currentStage: {fileID: 2412212093802143953}
+  _highestStage: {fileID: 8607742511789986568}
   _delayInteract: 1
 --- !u!1 &5525286753345716235
 GameObject:
@@ -755,7 +760,7 @@ GameObject:
   - component: {fileID: 6524333854529278928}
   - component: {fileID: 8607742511789986568}
   m_Layer: 5
-  m_Name: time_text
+  m_Name: highest_score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

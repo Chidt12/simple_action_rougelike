@@ -57,7 +57,13 @@ namespace Runtime.Manager.Gameplay
         {
             _spawnPoints = mapLevel.mapSpawnPoints;
             _pathCreators = mapLevel.pathCreators;
-            AstarPath.active.Scan();
+
+            if (AstarPath.active != null)
+                AstarPath.active.Scan();
+            else
+            {
+                FindObjectOfType<AstarPath>().Scan();
+            }
         }
 
         public void FindPathWithRandomness(Vector2 startPosition, Vector2 endPosition, OnPathDelegate onPathCompleteCallback)
