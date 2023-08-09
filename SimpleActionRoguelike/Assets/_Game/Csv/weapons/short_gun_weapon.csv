@@ -1,6 +1,6 @@
 ﻿weapon_prefab_name,stat_type,value,stat_modify_type,projectile_id,projectile_speed,trigger_rarity_type,point,bonus_projectile_vertical,bonus_projectile_horizontal,go_through
 weapon_1,AttackDamage,10,0,bullet_blue,10,1,1,,,
-,Health,15,0,,,2,2,1,,
+,Health,24,0,,,2,2,1,,
 ,CritChance,0.1,0,,,3,3,1,,
 ,CritDamage,1,0,,,4,4,,,TRUE
 ,AttackRange,8,0,,,5,5,,2,

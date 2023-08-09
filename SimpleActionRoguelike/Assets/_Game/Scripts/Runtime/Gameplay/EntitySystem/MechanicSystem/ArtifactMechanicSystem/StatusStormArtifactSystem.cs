@@ -20,7 +20,7 @@ namespace Runtime.Gameplay.EntitySystem
         public override void Dispose()
         {
             base.Dispose();
-            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource?.Cancel();
         }
 
         public override bool Trigger()

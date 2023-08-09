@@ -102,10 +102,7 @@ namespace Runtime.UI
         private void OnConfirmedBuy(ShopInGameStageLoadConfigItem obj)
         {
             _data.items.Remove(obj);
-            if (_data.items.Count <= 0)
-                ScreenNavigator.Instance.PopModal(true).Forget();
-            else
-                UpdateUI().Forget();
+            ScreenNavigator.Instance.PopModal(true).Forget();
         }
 
         public override UniTask Cleanup()

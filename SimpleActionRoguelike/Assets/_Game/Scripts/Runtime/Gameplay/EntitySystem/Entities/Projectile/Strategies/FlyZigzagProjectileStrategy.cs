@@ -84,7 +84,7 @@ namespace Runtime.Gameplay.EntitySystem
 
             if(currentTarget != null && !currentTarget.IsDead)
             {
-                var moveToPosition = Vector2.MoveTowards(controllerProjectile.CenterPosition, currentTarget.Position, strategyData.moveSpeed * Time.deltaTime);
+                var moveToPosition = Vector2.MoveTowards(controllerProjectile.CenterPosition, currentTarget.CenterPosition, strategyData.moveSpeed * Time.deltaTime);
                 
                 controllerProjectile.UpdatePosition(moveToPosition);
             }

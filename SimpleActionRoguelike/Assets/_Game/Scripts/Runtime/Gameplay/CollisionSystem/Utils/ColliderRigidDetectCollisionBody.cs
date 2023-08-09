@@ -26,30 +26,30 @@ namespace Runtime.Gameplay.CollisionDetection
         {
         }
 
-        //private void OnTriggerEnter2D(Collider2D collision)
-        //{
-        //    var collisionBody = collision.GetComponent<ICollisionBody>();
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            var collisionBody = collision.GetComponent<ICollisionBody>();
 
-        //    if(collisionBody != null)
-        //    {
-        //        var collisionResult = new CollisionResult();
-        //        collisionResult.collided = true;
-        //        collisionResult.collisionType = CollisionType.Enter;
-        //        collisionBody.OnCollision(collisionResult, this);
-        //    }
-        //}
+            if(collisionBody != null)
+            {
+                var collisionResult = new CollisionResult();
+                collisionResult.collided = true;
+                collisionResult.collisionType = CollisionType.Enter;
+                collisionBody.OnCollision(collisionResult, this);
+            }
+        }
 
-        //private void OnTriggerExit2D(Collider2D collision)
-        //{
-        //    var collisionBody = collision.GetComponent<ICollisionBody>();
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            var collisionBody = collision.GetComponent<ICollisionBody>();
 
-        //    if (collisionBody != null)
-        //    {
-        //        var collisionResult = new CollisionResult();
-        //        collisionResult.collided = true;
-        //        collisionResult.collisionType = CollisionType.Exit;
-        //        collisionBody.OnCollision(collisionResult, this);
-        //    }
-        //}
+            if (collisionBody != null)
+            {
+                var collisionResult = new CollisionResult();
+                collisionResult.collided = true;
+                collisionResult.collisionType = CollisionType.Exit;
+                collisionBody.OnCollision(collisionResult, this);
+            }
+        }
     }
 }

@@ -120,11 +120,11 @@ namespace Runtime.Gameplay.EntitySystem
             {
                 currentTime += Time.deltaTime;
                 var moveToPosition = Helper.Helper.Bezier(originPosition, middlePosition, predictJumpPosition, Mathf.Clamp01(currentTime / ownerModel.JumpDuration));
-
-                if (MapManager.Instance.IsWalkable(moveToPosition))
-                    creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
-                else
-                    break;
+                creatorData.ForceUpdatePosition?.Invoke(moveToPosition, false);
+                //if (MapManager.Instance.IsWalkable(moveToPosition))
+                //    
+                //else
+                //    break;
 
                 await UniTask.Yield(token);
             }

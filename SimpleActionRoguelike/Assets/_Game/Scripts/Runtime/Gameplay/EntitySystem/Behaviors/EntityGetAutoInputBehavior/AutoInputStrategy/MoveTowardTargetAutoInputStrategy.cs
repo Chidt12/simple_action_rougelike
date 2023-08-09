@@ -36,6 +36,9 @@ namespace Runtime.Gameplay.EntitySystem
 
         private void OnRunFindPathToTargetComplete(Path path)
         {
+            if (!findingNewPath)
+                return;
+
             currentRefindTargetTime = 0.0f;
             if (!path.error && path.hasPath)
             {

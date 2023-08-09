@@ -15,7 +15,7 @@ MonoBehaviour:
   items:
   - dataId: 0
     chance: 1
-    duration: 0.2
+    duration: 1
   - dataId: 1
     chance: 1
-    duration: 0.2
+    duration: 1

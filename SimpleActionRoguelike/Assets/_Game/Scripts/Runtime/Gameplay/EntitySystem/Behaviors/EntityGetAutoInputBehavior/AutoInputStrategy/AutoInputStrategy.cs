@@ -11,6 +11,7 @@ namespace Runtime.Gameplay.EntitySystem
         protected const int PATH_FINDING_COST_MULTIPLIER = 1000;
         protected const float REACH_END_DISTANCE = 0.2f;
         protected static readonly float RefindTargetBonusRange = 2.0f;
+        protected static float OFFSET_TIME_TO_FORCE_FIND_PATH = 2;
 
         protected bool reachedEndOfPath;
         protected bool findingNewPath;
@@ -21,6 +22,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual float RefindTargetMinTime => 2f;
 
+        protected float currentForceRefindTime;
         protected float currentRefindTargetTime;
         protected List<Vector3> pathPositions;
         protected Vector2 moveToPosition;
@@ -74,8 +76,14 @@ namespace Runtime.Gameplay.EntitySystem
 
             if (CanFindPath())
             {
+                Debug.LogWarning("Start Find Path " + ControlData.EntityUID);
                 findingNewPath = true;
+                currentForceRefindTime = OFFSET_TIME_TO_FORCE_FIND_PATH;
                 FindNewPath();
+            }
+            else
+            {
+                currentForceRefindTime -= Time.deltaTime;
             }
 
             if (hasFoundAPath)
@@ -84,7 +92,7 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected virtual bool CanFindPath()
         {
-            return !findingNewPath && !hasFoundAPath && currentRefindTargetTime > RefindTargetMinTime;
+            return (!findingNewPath || currentForceRefindTime < 0 ) && !hasFoundAPath && currentRefindTargetTime > RefindTargetMinTime;
         }
 
         protected abstract void FindNewPath();
