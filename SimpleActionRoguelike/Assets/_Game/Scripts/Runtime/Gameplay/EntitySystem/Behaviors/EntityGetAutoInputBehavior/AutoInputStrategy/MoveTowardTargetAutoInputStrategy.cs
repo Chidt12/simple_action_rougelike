@@ -1,5 +1,6 @@
 using Pathfinding;
 using Runtime.Manager.Gameplay;
+using TMPro;
 using UnityEngine;
 
 namespace Runtime.Gameplay.EntitySystem
@@ -24,8 +25,12 @@ namespace Runtime.Gameplay.EntitySystem
 
         protected override void FindNewPath()
         {
+            // Avoid get the same path.
+            var positionsAround = MapManager.Instance.GetWalkablePositionsAroundPosition(ControlData.Target.Position, 1.5f, numberOfDirections: 32);
+            var targetPosition = positionsAround[Random.Range(0, positionsAround.Count)];
+
             MapManager.Instance.FindPathWithRandomness(ControlData.Position,
-                                         ControlData.Target.Position,
+                                         targetPosition,
                                          OnRunFindPathToTargetComplete);
         }
 

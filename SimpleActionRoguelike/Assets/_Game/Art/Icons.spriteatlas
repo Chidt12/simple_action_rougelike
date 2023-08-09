@@ -77,10 +77,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 956f04b6ab258034aa4d87c933d6528a, type: 3}
   - {fileID: 21300000, guid: fb77fbf6978e7954988107984756afb2, type: 3}
   - {fileID: 21300000, guid: 9ab00a9718fd7714cbf60ffe3980d1b7, type: 3}
+  - {fileID: 21300000, guid: 43921ba71e09f00479c84bbc9e8e10b8, type: 3}
   - {fileID: 21300000, guid: a524f3289d3839a46b4e42c5825bec68, type: 3}
   - {fileID: 21300000, guid: 71bf61886540d544c840860a78c5f76f, type: 3}
   - {fileID: 21300000, guid: 8b791498951db844eb33477329fa618a, type: 3}
-  - {fileID: 21300000, guid: 40f934a8e2091444c808a18f20bcc256, type: 3}
   - {fileID: 21300000, guid: 384b7629b2e36a54eae4d9d939a36d02, type: 3}
   - {fileID: 21300000, guid: 7ce61f594b327fd4ba9024c0fbe930aa, type: 3}
   - {fileID: 21300000, guid: a0aeda697ad509041a3edbcfb728755c, type: 3}
@@ -132,10 +132,10 @@ SpriteAtlas:
   - dash_icon_1
   - shop_item_icon_1_15
   - weapon_icon6
+  - weapon_icon1
   - stats_icon_2
   - stats_icon_5
   - shop_item_icon_8_0
-  - weapon_icon1
   - shop_item_icon_1_4
   - shop_item_icon_7_0
   - shop_item_icon_1_9

@@ -74,24 +74,20 @@ namespace Runtime.Gameplay.CollisionDetection
 
         public bool AddBody(ICollisionBody body)
         {
-            if (!_bodyList.Contains(body))
+            if (_refIdsQueue.Count > 0)
             {
-                if (_refIdsQueue.Count > 0)
-                {
-                    body.RefId = _refIdsQueue.Dequeue();
-                    _bodyList[body.RefId] = body;
-                    AddBodyToQuadTree(body);
-                }
-                else if (_currentBodyCount < MAX_COLLISION_BODIES)
-                {
-                    body.RefId = _currentBodyCount;
-                    _bodyList[_currentBodyCount] = body;
-                    AddBodyToQuadTree(body);
-                    _currentBodyCount++;
-                }
-                return true;
+                body.RefId = _refIdsQueue.Dequeue();
+                _bodyList[body.RefId] = body;
+                AddBodyToQuadTree(body);
             }
-            return false;
+            else if (_currentBodyCount < MAX_COLLISION_BODIES)
+            {
+                body.RefId = _currentBodyCount;
+                _bodyList[_currentBodyCount] = body;
+                AddBodyToQuadTree(body);
+                _currentBodyCount++;
+            }
+            return true;
         }
 
         private void AddBodyToQuadTree(ICollisionBody collisionBody)

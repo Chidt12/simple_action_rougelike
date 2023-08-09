@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0405a2cf474d04c8a11917a1669462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diedPrefab: 
+  _diedPrefab: enemy_death_small
   _spawnVFXPosition: {fileID: 0}
   _flipTransform: {fileID: 0}
 --- !u!114 &1203526588646341929
