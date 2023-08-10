@@ -2497,6 +2497,10 @@ PrefabInstance:
       propertyPath: _weaponType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7349632693762175245, guid: a06ccd11364a5d2449514cd4690c9145, type: 3}
+      propertyPath: _icons.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 40f934a8e2091444c808a18f20bcc256, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a06ccd11364a5d2449514cd4690c9145, type: 3}
 --- !u!224 &1558787240747734385 stripped
@@ -2985,6 +2989,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7349632693762175245, guid: a06ccd11364a5d2449514cd4690c9145, type: 3}
+      propertyPath: _icons.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 40f934a8e2091444c808a18f20bcc256, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a06ccd11364a5d2449514cd4690c9145, type: 3}
 --- !u!114 &1865740600753595800 stripped
